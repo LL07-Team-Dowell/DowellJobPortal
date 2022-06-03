@@ -48,7 +48,7 @@ export default function SimpleBottomNavigation() {
     
       >
 
-        <BottomNavigationAction classes={classes.root} 
+        <BottomNavigationAction classes={classes} 
         style={{color: '#838383', activeColor:'#000000'}} label="Home" 
         icon={<AiIcons.AiOutlineHome  fontSize="24px"  color="#838383"/>}  component={Link} to="/home"/>
         <BottomNavigationAction label="Applied" 

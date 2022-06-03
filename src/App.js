@@ -1,10 +1,9 @@
 import React, { StrictMode } from 'react';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import SignIn from './component/candidate/Login';
 import SignUP from './component/candidate/Register';
 import CandidateHomeScreen from './component/candidate/screens/CandidateHomeScreen';
-import {  HashRouter } from 'react-router-dom';
 import Logout from './component/candidate/Logout';
 import AlertScreen from './component/candidate/screens/AlertScreen';
 import UserScreen from './component/candidate/screens/UserScreen';
@@ -16,32 +15,21 @@ function App() {
   
  
     return (
-      <div className="App">
-         <Router> 
-         <Routes>
-         <Route exact path="/login" element={<SignIn/>}/>
-          
-             <Route exact path="/" element={<SignUP/>}/> 
+        <Routes>
+
+          <Route path="/" element={<SignUP/>}/> 
             
+          <Route path="/login" element={<SignIn/>}/>
             
-            <Route exact path="/home" element={<CandidateHomeScreen/>}/>
-            <Route exact path="/logout" element={<Logout/>}/>
-            <Route exact path="/alerts" element={<AlertScreen/>}/>
-            <Route exact path="/user" element={<UserScreen/>}/>
-            <Route exact path="/task" element={<TaskScreen/>}/>
-            <Route exact path="/applied" element={<AppliedScreen/>}/>
-            <Route exact path="/hr_screen" element={<Hr_JobScreen/>}/>
+          <Route path="/home" element={<CandidateHomeScreen/>}/>
+          <Route path="/logout" element={<Logout/>}/>
+          <Route path="/alerts" element={<AlertScreen/>}/>
+          <Route path="/user" element={<UserScreen/>}/>
+          <Route path="/task" element={<TaskScreen/>}/>
+          <Route path="/applied" element={<AppliedScreen/>}/>
+          <Route path="/hr_screen" element={<Hr_JobScreen/>}/>
 
-
-
-
-            
-
-            </Routes>
-      
-         </Router> 
-        
-      </div>
+        </Routes>
     );
 
 }
