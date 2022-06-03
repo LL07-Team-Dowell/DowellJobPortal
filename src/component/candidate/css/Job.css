@@ -1,0 +1,319 @@
+.container-wrapper{
+  position:relative;
+  align-content: center;
+  max-width:100%;
+  top: -43px;
+  padding-top: 114px;
+  
+}
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width:335px;
+    height: 136px;
+    border-radius: 10px;
+    top: 122px;
+    left: 20px;
+    background: #F9F9F9;
+    /* cursor: pointer; */
+    z-index: 1;
+    margin: 20px;
+  
+  }
+  
+  .card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  .container {
+    padding: 2px 16px;
+    width: 300px;
+  }
+  .detail{
+    width: 165px;
+    height: 19px;
+
+    
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    
+    color: #838383;
+  }
+ .dowell{
+      line-height: 40px;
+  }
+  .skill{
+      line-height: 81px;
+      
+  }
+  .apply-button{
+      left:40px;
+      margin-left: 230px;
+      margin-top: -40px;
+      width: 80px;
+      height: 40px;
+      background-color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family:"inter";
+      font-size: '14px';
+      font-weight: 500;
+      line-height: '16.94px';
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      transition: 0.3s;
+      border: 1px solid #000;
+
+
+
+  }
+ 
+  .apply-button:hover{
+     background: #838383;
+     transition: 0.5s;
+
+    
+  }
+  .apply-button:active{
+    background: #C4C4C4;
+    border: none;
+
+  }
+  .row-text{
+      max-width: 100%;
+      display: inline;
+
+      
+  }
+  ul{
+      display: block;
+      list-style-type: none;
+      /* margin-right: '20px'; */
+      /* padding: '10px 10px 10px 0'; */
+      padding-top:10px;
+      padding-bottom: 10px;
+      padding-right: 10px;
+      padding-left: 0;
+          
+
+      
+  }
+  li{
+      display: inline;
+      margin: 3px;
+      font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        color: #838383;
+
+  }
+  .row-bottom{
+      margin-right: 20px;
+  }
+  .free{
+    background: #E0E0E0;
+    border-radius:8px ;
+    width: 80px;
+    height: 18px;
+
+  }
+  
+  .column {
+    float: left;
+    padding: 0px 0px 20px 10px;  
+  }
+  .row {
+    top:10%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 83px;
+      z-index: -1;
+
+    }
+
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  @media screen and (max-width: 1150px) {
+    .column {
+      padding-left: 33px;
+      margin-left: 41px;
+
+      
+    }
+    .row{
+      padding-left: 25px;
+    }
+
+  }
+
+  @media screen and (max-width: 1000px) {
+    .column {
+      padding-left: 27px;
+    }
+
+  }
+
+  @media screen and (max-width: 950px) {
+    .column {
+      padding-left: 19px;   
+    }
+    .row{
+      padding-left: 30px;
+    }
+ 
+    
+  }
+  @media screen and (max-width: 950px) {
+    .column{
+      padding-left: 15px;
+      margin-left: 20px;
+    }
+
+  }
+
+
+
+  @media screen and (max-width: 900px) {
+    .column {
+
+      padding-left: 0;
+    }
+    .row{
+      padding-left: 20px;
+    }
+ 
+  }
+
+  @media screen and (max-width: 850px) {
+    .column {
+      padding-left: 0px;
+      margin-left: 9px;
+
+      
+    }
+
+  }
+
+
+  @media screen and (max-width: 770px) {
+    .column {
+      padding-left: 1px;
+      margin-left: 0;
+      
+
+    }
+    .row{
+      padding-left: 6px;
+    }
+ 
+   
+  }
+  @media screen and (max-width: 676px) {
+    .column{
+      padding-left: 72px;
+      margin-left: 50px;
+    }
+  }
+  @media screen and (max-width: 590px) {
+    .column {
+ 
+      padding-left: 30px;
+      margin-left: -34px;
+      margin-bottom: -21px;
+
+    }
+    .row{
+      margin-left: 28px;
+    }
+   
+  }
+  @media screen and (max-width: 428px) {
+    .column {
+    
+      padding-left: 0;
+      margin-left: -29px;
+      margin-bottom: -21px;
+
+
+      
+
+    }
+    .row{
+      padding-left: 20px;
+
+    }
+  
+  }
+  @media screen and (max-width: 393px) {
+    .column {
+     
+      padding-left: 0;
+      
+
+    }
+    .row{
+      padding-left: 9px;
+
+    }
+ 
+    
+  }
+  @media screen and (max-width: 379px) {
+    .column {
+      /* width: 100%; */
+      padding-left: 0px;
+      margin-left: -28px;
+      margin-bottom: -21px;
+
+
+      
+
+    }
+   
+    .row {
+     
+      padding-left: 0px;
+     
+      }
+    
+  }
+  
+  
+  @media screen and (max-width: 365px) {
+    .column {
+      width: 100%;
+      padding-left: 26px;
+      
+
+    }
+    .row {
+      margin-left: -6px;
+      padding-left: 0px;
+     
+      }
+ 
+    
+  }
+
+  @media screen and (max-width: 320px) {
+    .card{
+      width: 257px;
+
+    }
+    .apply-button{
+      width: 66px;
+      margin-left: 169px;
+    }
+
+  }
+
+  
+    
+  

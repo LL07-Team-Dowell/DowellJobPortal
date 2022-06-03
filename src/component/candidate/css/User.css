@@ -1,0 +1,152 @@
+div.user__body{
+    position: relative;
+    /* z-index: -1; */
+    padding-top: 20px;
+    top: 60px;
+}
+
+div.user__body div.user__row{
+    max-width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+div.user__body div.user__row div.username{
+    padding:0;
+    margin: 0;
+
+}
+div.user__body div.user__row div.discord{
+    padding:0;
+    margin: 0;
+
+}
+div.user__body div h3 {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.5vw;
+    line-height: 19px;
+    padding-bottom: 10px;
+
+}
+div.user__body div p {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.2vw;
+    line-height: 19px;
+    padding-bottom: 5px;
+    color: #838383;
+
+
+}
+
+ .username > h3 > span.user__edit{
+    padding-left: 553px;
+    text-align: end;
+} 
+.user__edit :hover{
+    
+    cursor: pointer;
+    color: red;
+    text-decoration: underline;
+}
+.name{
+    
+    text-align: initial;
+    /* padding-right: 10px; */
+    
+    color: #000;
+}
+.email__id{
+    margin-left: 10pxpx;
+}
+span{
+    margin-left: 3px;
+}
+hr{
+    
+    border: 1px solid #ABABAB;
+
+    
+}
+@media screen and (max-width: 1000px) {
+    .username > h3 > span.user__edit{
+        padding-left: 523px;
+        text-align: end;
+    }
+
+}
+
+
+@media screen and (max-width: 900px) {
+    div.user__body div.user__row{
+      max-width: 100%;    
+      
+
+    }
+    
+div.user__body div p {
+        font-size: 12px;
+    
+    }
+    div.user__body div h3{
+        font-size: 16px;
+    }
+    .username > h3 > span.user__edit{
+        padding-left: 230px;
+        text-align: end;
+    }
+    div.user__body div.user__row div.username{
+        padding:10px 10px 0 20px;
+        margin: 0;
+    
+    }
+    div.user__body div.user__row div.discord{
+        padding:10px 10px 0 20px;
+        margin: 0;
+    
+    }
+}
+@media screen and (max-width: 820px) {
+    .username > h3 > span.user__edit{
+        text-align: end;
+        padding-left: 609px;
+    
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .username > h3 > span.user__edit{
+        text-align: end;
+        padding-left: 333px;
+    
+    }
+}
+@media screen and (max-width: 396px) {
+    .username > h3 > span.user__edit{
+        text-align: end;
+        padding-left: 196px;
+    
+    }
+
+}
+
+@media screen and (max-width: 360px) {
+    .username > h3 > span.user__edit{
+        text-align: end;
+        padding-left: 202px;
+    
+    }
+}
+
+@media screen and (max-width: 290px) {
+    .user__edit{
+        text-align: end;
+        padding-left: 166px;
+    
+    }
+
+}

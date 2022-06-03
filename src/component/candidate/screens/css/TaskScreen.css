@@ -1,0 +1,220 @@
+.taskScreen{
+    height: 100vh;
+    
+}
+
+.taskScreen__body{
+    padding-top: 10%;
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px;
+
+
+}
+.taskScreen__row{
+    padding-top: 20px;
+    
+}
+
+.task__content{
+
+}
+
+
+.task__status{
+
+background-color: #E0E0E0;
+margin-left: 498px;
+padding: 10px;
+border-radius: 5px;
+    
+}
+.date{
+ padding-top:15px ;  
+ padding-bottom: 10px; 
+ color: #838383;
+}
+.given__date{
+
+}
+.status__date{
+    text-align: end;
+    padding-left: 59%;
+}
+.taskScreen__title{
+    padding-bottom: 15px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+}
+.project__title{
+    margin-left: 5px;
+    padding: 10px;
+    background-color: #E0E0E0;
+    color: #838383;
+    border-radius: 5px;
+
+}
+
+.project{
+    margin-left: 471px;
+
+}
+.new__task >ul>li{
+    float: right;
+    /* padding-left: 86%; */
+    display: inline;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #838383;
+    text-align: center;
+
+}
+.new__task{
+    padding-top: 10px;
+}
+.new__task >ul{
+    display: block;
+}
+.add{
+    padding-top: 6px;
+}
+
+@media screen and (max-width: 1200px) {
+    .taskScreen__body{
+        /* padding-top: 15%; */
+        width: 100%;
+
+    }
+    .project{
+        margin-left: 496px;
+    }
+    .task__status{
+        margin-left: 541px;
+    }
+    .status__date{
+        padding-left: 65%;
+    }
+
+  }
+
+
+@media screen and (max-width: 1000px) {
+    .taskScreen__body{
+        /* padding-top: 15%; */
+        width: 100%;
+
+    }
+    .project{
+        margin-left: 565px;
+    }
+    .task__status{
+        margin-left: 617px;
+    }
+    .status__date{
+        padding-left: 74%;
+    }
+
+  }
+
+  @media screen and (max-width: 780px) {
+    .project{
+        margin-left: 508px;
+    }
+    .status__date{
+        padding-left: 69%;
+    }
+    .task__status{
+        margin-left: 552px;
+    }
+
+  }
+
+  @media screen and (max-width: 600px) {
+    .taskScreen__body{
+        padding-top: 18%;
+      
+
+    }
+    .project{
+        margin-left: 306px;
+    }
+    .status__date{
+        padding-left: 62%;
+    }
+    .task__status{
+        margin-left: 354px;
+    }
+    .taskScreen__task{
+        padding-left: 6px;
+    }
+    .taskScreen__title{
+        padding-left: 6px;
+    }
+    .date{
+        padding-left: 6px;
+    }
+   
+  }
+
+  @media screen and (max-width: 450px) {
+    .project{
+        margin-left: 185px;
+    }
+    .status__date{
+        padding-left: 51%;
+    }
+    .task__status{
+        margin-left: 233px;
+    }
+    .taskScreen__task{
+        padding-left: 6px;
+    }
+    .taskScreen__title{
+        padding-left: 6px;
+    }
+    .date{
+        padding-left: 6px;
+    }
+
+  }
+
+
+  @media screen and (max-width: 394px) {
+    .project{
+        margin-left: 155px;
+    }
+    .status__date{
+        padding-left: 48%;
+    }
+    .task__status{
+        margin-left: 199px;
+    }
+    
+
+  }
+
+
+
+  @media screen and (max-width: 370px) {
+    .project{
+        margin-left: 133px;
+    }
+    .status__date{
+        padding-left: 45%;
+    }
+    .task__status{
+        margin-left: 181px;
+    }
+    
+
+  }

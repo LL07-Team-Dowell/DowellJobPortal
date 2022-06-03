@@ -1,0 +1,9 @@
+.applied__body{
+    position: relative;
+    padding-top: 30%;
+    margin-left: auto;
+    margin-left: auto;
+}
+.applied__body > h1{
+    text-align: center;
+}
