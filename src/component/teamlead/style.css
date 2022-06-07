@@ -1,0 +1,16 @@
+.jobs-container, .tasks-container{
+    padding: 0 7%;
+    margin-bottom: 30%;
+}
+
+@media (min-width: 1200px){
+    .jobs-container, .tasks-container{
+        width: 86%;
+        margin: 0 auto 10%;
+    }
+    .jobs-container > *, .tasks-container > *{
+        width: calc(94% /3);
+        display: inline-block;
+        margin-right: 2%;
+    }   
+}

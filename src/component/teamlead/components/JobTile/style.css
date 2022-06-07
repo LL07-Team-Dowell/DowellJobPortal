@@ -1,0 +1,60 @@
+.job-tile-container{
+    --grey-color: #838383;
+    --light-grey: #ABABAB;
+    --very-light-grey: #F9F9F9;
+    --box-shadow-color: rgba(0, 0, 0, 0.15);
+    font-family: 'Inter', sans-serif;
+}
+
+.job-tile-container{
+    box-shadow: 0px 4px 8px var(--box-shadow-color);
+    border: 1px solid var(--light-grey);
+    border-radius: 5px;
+    transition: 0.35s ease-in-out;
+    padding: 2%;
+    margin-bottom: 4%;
+}
+
+.job-tile-container:hover, .job-tile-container:focus{
+    background: var(--very-light-grey);
+    cursor: pointer;
+}
+
+.job-tile-container p, .job-tile-container span{
+    font-size: 0.875rem;
+    line-height: 16.94px;
+    color: var(--grey-color);
+}
+
+.job-tile-container > p{
+    margin: 4% 0;
+}
+
+.applicant-details h2{
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 19.36px;
+}
+
+.applicant-details, .applicant-qualifications-container, .applicant-experience, .view-application-btn{
+    display: flex;
+    align-items: center;
+}
+
+.applicant-details, .applicant-qualifications-container{
+    justify-content: space-between;
+}
+
+.applicant-qualifications-container .view-application-btn{
+    cursor: pointer;
+}
+
+.applicant-qualifications-container.task-active{
+    justify-content: flex-end;
+}
+
+@media (min-width: 1200px){
+    .applicant-qualifications-container{
+        margin-top: 10%;
+    }
+}

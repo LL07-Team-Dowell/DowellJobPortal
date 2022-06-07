@@ -1,0 +1,42 @@
+.project-details-container, .project-details-container .project-info-container, .project-details-container .project-name{
+    display: flex;
+    align-items: center;
+}
+
+.project-details-container{
+    width: 100%;
+    margin: 25% 0 15%;
+    justify-content: space-between;
+}
+
+.project-details-container .project-info-container{
+    width: 80%;
+    justify-content: flex-end;
+}
+
+.project-details-container p{
+    font-size: 1rem;
+    color: var(--black);
+}
+
+.project-details-container .project-name {
+    font-size: 0.875rem;
+    line-height: 16.94px;
+    background: var(--light-grey-color);
+    border-radius: 5px;
+    padding: 2% 4%;
+    margin-left: 5%;
+    cursor: pointer;
+}
+
+.project-details-container .project-name span{
+    margin: 0;
+    /* margin-right: 1%; */
+}
+
+@media (min-width: 1200px){
+    .project-details-container{
+        margin: 15% auto 10%;
+        width: 82%;
+    }
+}
