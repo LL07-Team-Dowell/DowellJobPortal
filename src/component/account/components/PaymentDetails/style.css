@@ -1,0 +1,25 @@
+.payment-details-container, .payment-details-container .payment-info-container{
+    display: flex;
+    align-items: center;
+}
+
+.payment-details-container{
+    width: 100%;
+    margin: 25% 0 15%;
+    justify-content: space-between;
+}
+
+.payment-details-container .payment-info-container{
+    width: 60%;
+}
+
+.payment-details-container .payment-info-container p{
+    margin-right: 5%;
+}
+
+@media (min-width: 1200px){
+    .payment-details-container{
+        margin: 15% auto 10%;
+        width: 82%;
+    }
+}
