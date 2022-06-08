@@ -34,6 +34,12 @@
     color: var(--grey-color);
 }
 
+@media (min-width: 768px) and (max-width: 991.98px) { 
+    .bottom-nav-container{
+        padding: 3% 7%;
+    }
+}
+
 @media (min-width: 1200px){
     .bottom-nav-container{
         padding: 1.5% 15.5% 1.5% 14%;
