@@ -1,12 +1,36 @@
-import React, { useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useRef } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import "./style.css";
 
 const NavigationItemSelection = ({ items }) => {
-    const itemSelectionRef = useRef(null);
+    const linksRef = useRef([]);
+    const [searchParams, setSearchParams] = useSearchParams();
 
-    const handleClick = (currentItem) => {
-        console.log(currentItem)
+    useEffect(() => {
+        
+        const currentTab = searchParams.get("tab");
+
+        if (linksRef.current.length < 1) return;
+        
+        linksRef.current.filter(linkRef => {
+            if (linkRef.parentElement.classList.contains("active")){
+                linkRef.parentElement.classList.remove("active");
+            }
+        })
+
+        linksRef.current.forEach(linkRef => {
+            if ( currentTab === linkRef.href.split("=")[1] ) {
+                linkRef.parentElement.classList.add("active")
+            }
+            return
+        })
+
+        linksRef.current[0].parentElement.classList.add("active");
+
+    }, [searchParams]);
+
+    const addToLinksRef = (elem) => {
+        if (elem && !linksRef.current.includes(elem)) linksRef.current.push(elem);
     }
     
     return <>
@@ -14,8 +38,8 @@ const NavigationItemSelection = ({ items }) => {
             {
                 items ? React.Children.toArray(items.map((item, index) => {
                     return <>
-                    <div className={`item-selection-${index + 1}`} ref={itemSelectionRef} onClick={() => handleClick(itemSelectionRef)}>
-                        <Link to={`?tab=${item.toLocaleLowerCase()}`}><span>{ item }</span></Link>
+                    <div className="item-selection-item">
+                        <Link to={`?tab=${item.toLocaleLowerCase()}`} ref={elem => addToLinksRef(elem)}><span>{ item }</span></Link>
                         <span className="item-selection-indicator"></span>
                     </div>
                     

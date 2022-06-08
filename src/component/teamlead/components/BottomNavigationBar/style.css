@@ -1,6 +1,7 @@
 .bottom-nav-container{
     --grey-color: #838383;
     --light-grey: #C4C4C4;
+    --black: #000;
     font-family: 'Inter', sans-serif;
 }
 
@@ -32,6 +33,10 @@
     margin-top: 10%;
     text-decoration: none;
     color: var(--grey-color);
+}
+
+.bottom-nav-container .bottom-navigation-item a.active{
+    color: var(--black);
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) { 
