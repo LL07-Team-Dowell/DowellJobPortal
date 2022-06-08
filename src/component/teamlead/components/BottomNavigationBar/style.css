@@ -20,16 +20,18 @@
     cursor: pointer;
 }
 
-.bottom-nav-container .bottom-navigation-item > *{
+.bottom-nav-container .bottom-navigation-item a > *{
     display: block;
     margin: 0 auto;
     font-size: 1.4rem;
 }
 
-.bottom-nav-container .bottom-navigation-item span{
+.bottom-nav-container .bottom-navigation-item a{
     line-height: 12.1px;
     font-size: 0.625rem;
     margin-top: 10%;
+    text-decoration: none;
+    color: var(--grey-color);
 }
 
 @media (min-width: 1200px){

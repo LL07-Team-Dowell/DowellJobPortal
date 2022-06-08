@@ -16,7 +16,7 @@
 }
 
 .candidate-task-screen-container .add-task-btn{
-    margin-bottom: 50%;
+    margin: 25% auto 50%;
     display: flex;
     align-items: center;
     justify-content: flex-end;

@@ -1,0 +1,49 @@
+.candidate-task-container{
+    --black-color: #000;
+    --grey-color: #838383;
+    --light-grey: #E0E0E0;
+    font-family: 'Inter', sans-serif;
+}
+
+.candidate-task-container{
+    color: var(--grey-color);
+}
+
+.candidate-task-status-container, .candidate-task-date-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.candidate-task-status-container .candidate-task-details .edit-icon{
+    color: var(--grey-color);
+    cursor: pointer;
+}
+
+.candidate-task-status-container .candidate-task-details span{
+    color: var(--black-color);
+    font-size: 0.875rem;
+    line-height: 16.94px;
+    margin-left: 0;
+}
+
+.candidate-task-container{
+    margin: 18% auto 11%;
+    position: relative;
+}
+
+.candidate-task-date-container{
+    font-size: 0.75rem;
+    line-height: 14.52px;
+}
+
+.candidate-task-date-container span{
+    margin-left: 0;
+}
+
+@media (min-width: 1200px){
+    .candidate-task-container{
+        width: 82%;
+        margin: 10% auto 5%;
+    }
+}

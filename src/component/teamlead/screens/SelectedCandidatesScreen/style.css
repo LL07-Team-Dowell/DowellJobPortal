@@ -19,6 +19,10 @@
     color: var(--black);
 }
 
+.comments-container.hire-comment{
+    margin-bottom: 15%;
+}
+
 .comments-container h2{
     font-weight: 400;
     font-size: 1rem;
@@ -43,6 +47,7 @@
 
 .candidate-status-container{
     margin-top: 12%;
+    margin-bottom: 52%;
 }
 
 .candidate-status-container h2{
@@ -50,6 +55,30 @@
     font-weight: 400;
     line-height: 19px;
     color: var(--black);
+    margin-bottom: 10%;
+}
+
+.candidate-status-container h2.top-m{
+    margin-top: 10%;
+}
+
+.candidate-status-container.onboarding-active > *, .candidate-status-container.onboarding-active .status-options-container .status-option > *{
+    display: inline-block;
+}
+
+.candidate-status-container.onboarding-active .status-options-container{
+    display: inline-flexbox;
+    width: 40%;
+    margin-left: 10%;
+    align-items: center;
+}
+
+.candidate-status-container.onboarding-active .status-options-container .textt{
+    margin-left: 10%;
+}
+.comments-container h2 span, .candidate-status-container h2 span{
+    margin-left: 3px;
+    color: var(--grey-color);
 }
 
 .status-options-container{
@@ -69,6 +98,10 @@
     margin-right: 25%;
 }
 
+.status-options-container.rehire > *{
+    margin-right: 20%;
+}
+
 .status-options-container .textt{
     margin-top: 15%;
 }
@@ -85,6 +118,11 @@
     color: var(--red-color);
 }
 
+.custom-hr.rehire-hr{
+    position: relative;
+    margin-top: 10%;
+}
+
 @media (min-width: 1200px){
     .comments-container, .candidate-status-container{
         width: 82%;
@@ -96,7 +134,20 @@
         padding: 3%;
     }
 
+    .comments-container.hire-comment{
+        margin-bottom: 5%;
+    }
+
     .candidate-status-container{
         margin-bottom: 10%;
     }
+
+    .candidate-status-container h2{
+        margin-bottom: 0;
+    }
+
+    .candidate-status-container.onboarding-active .status-options-container .textt{
+        margin-top: 0;
+    }
+    
 }

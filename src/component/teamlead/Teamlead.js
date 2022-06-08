@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import BottomNavigationBar from "./BottomNavigationBar/BottomNavigationBar";
+import React, { useEffect, useState } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
+import BottomNavigationBar from "./components/BottomNavigationBar/BottomNavigationBar";
 import JobTile from "./components/JobTile/JobTile";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
 import NavigationItemSelection from "./components/NavigationItemSelection/NavigationItemSelection";
@@ -14,16 +15,28 @@ const Teamlead = () => {
     const testData = ["a", "a", "a", "a", "a", "a", "a", "a", "a"]
     const [showCandidate, setShowCandidate] = useState(false);
     const [showCandidateTask, setShowCandidateTask] = useState(false);
-    const [currentSection, setCurrentSection] = useState("home");
+    const { section } = useParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [rehireTabActive, setRehireTabActive] = useState(false);
+
+    
+    useEffect(() => {
+        const currentTab = searchParams.get("tab");
+        
+        if (currentTab === "rehire") return setRehireTabActive(true);
+
+        setRehireTabActive(false);
+
+    }, [searchParams])
 
     return <>
 
-        <NavigationBar showCandidate={showCandidate} setShowCandidate={setShowCandidate} />
+        <NavigationBar showCandidate={showCandidate} setShowCandidate={setShowCandidate} showCandidateTask={showCandidateTask} setShowCandidateTask={setShowCandidateTask} />
         
         {
-            currentSection === "home" ? 
-            showCandidate ? <SelectedCandidatesScreen /> : <>
-                <NavigationItemSelection />
+            section === "home" || section == undefined ? 
+            showCandidate ? <SelectedCandidatesScreen rehireTabActive={rehireTabActive} /> : <>
+                <NavigationItemSelection items={["Interview", "Selected", "Rehire"]} />
                 <SelectedCandidates  />
 
                 <div className="jobs-container">
@@ -35,7 +48,7 @@ const Teamlead = () => {
                 </div>
             </> : 
             
-            currentSection === "task" ? 
+            section === "task" ? 
 
             showCandidateTask ? <TaskScreen /> :
             <>
@@ -44,16 +57,21 @@ const Teamlead = () => {
                 <div className="tasks-container">
                     {
                         React.Children.toArray(testData.map(dataitem => {
-                            return <JobTile showTask={true} setShowCandidate={setShowCandidateTask} />
+                            return <JobTile showTask={true} setShowCandidateTask={setShowCandidateTask} />
                         }))
                     }
                 </div>
             </> : 
             
-            currentSection === "user" ? <></> : <></>
+            section === "user" ? <></> : <></>
         }
         
-        <BottomNavigationBar setCurrentSection={setCurrentSection} />
+        <BottomNavigationBar 
+        currentPage={'teamlead'}
+        firstLink={'home'}
+        secondLink={'task'}
+        thirdLink={'user'}
+        updateNav={showCandidate ? setShowCandidate: showCandidateTask ? setShowCandidateTask : () => {} } />
     </>
 }
 

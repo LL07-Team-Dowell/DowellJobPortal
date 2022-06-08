@@ -3,9 +3,9 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 import "./style.css";
 
-const JobTile = ({ setShowCandidate, showTask, setShowTask }) => {
+const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClick }) => {
     return <>
-        <div className="job-tile-container" onClick={() => setShowCandidate(true)}>
+        <div className="job-tile-container" onClick={() => disableClick ? {} :  showTask ? setShowCandidateTask(true) : setShowCandidate(true)}>
             <div className="applicant-details">
                 <h2>Faizan</h2>
                 <p>10th April</p>
@@ -21,7 +21,7 @@ const JobTile = ({ setShowCandidate, showTask, setShowTask }) => {
                     </div>
                 }
 
-                <div className="view-application-btn" onClick={() => showTask ? setShowTask(true) : setShowCandidate(true)}>
+                <div className="view-application-btn" onClick={() => showTask ? setShowCandidateTask(true) : setShowCandidate(true)}>
                     <span>View</span>
                     <ArrowForwardIcon />
                 </div>

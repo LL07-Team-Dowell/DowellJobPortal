@@ -30,8 +30,12 @@ function App() {
           <Route path="/task" element={<TaskScreen/>}/>
           <Route path="/applied" element={<AppliedScreen/>}/>
           <Route path="/hr_screen" element={<Hr_JobScreen/>}/>
-          <Route path="/teamlead" element={<Teamlead />} />
-          <Route path="/account" element={<AccountPage />} />
+          <Route path="/teamlead" element={<Teamlead />} >
+            <Route path=':section' element={<Teamlead />} />
+          </Route>
+          <Route path="/account" element={<AccountPage />} >
+            <Route path=':section' element={<AccountPage />} />
+          </Route>
 
         </Routes>
     );

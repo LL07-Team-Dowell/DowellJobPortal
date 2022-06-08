@@ -1,7 +1,7 @@
 import "./style.css";
 
-const CustomHr = () => {
-    return <hr className="custom-hr" />
+const CustomHr = ({ className }) => {
+    return <hr className={`custom-hr ${className ? className : '' }`} />
 }
 
 export default CustomHr;

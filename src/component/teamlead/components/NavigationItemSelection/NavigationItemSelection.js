@@ -1,25 +1,27 @@
+import React, { useRef } from "react";
+import { Link } from "react-router-dom";
 import "./style.css";
 
-const NavigationItemSelection = () => {
+const NavigationItemSelection = ({ items }) => {
+    const itemSelectionRef = useRef(null);
 
-    const handleClick = (e) => {
-        console.log(e.target)
+    const handleClick = (currentItem) => {
+        console.log(currentItem)
     }
     
     return <>
         <div className="item-selection-container">
-            <div className="item-selection-1" onClick={(e) => handleClick(e)}>
-                <span>Interview</span>
-                <span className="item-selection-indicator"></span>
-            </div>
-            <div className="item-selection-2" onClick={(e) => handleClick(e)}>
-                <span>Selected</span>
-                <span className="item-selection-indicator"></span>
-            </div>
-            <div className="item-selection-3" onClick={(e) => handleClick(e)}>
-                <span>Rehire</span>
-                <span className="item-selection-indicator"></span>
-            </div>
+            {
+                items ? React.Children.toArray(items.map((item, index) => {
+                    return <>
+                    <div className={`item-selection-${index + 1}`} ref={itemSelectionRef} onClick={() => handleClick(itemSelectionRef)}>
+                        <Link to={`?tab=${item.toLocaleLowerCase()}`}><span>{ item }</span></Link>
+                        <span className="item-selection-indicator"></span>
+                    </div>
+                    
+                    </>
+                })): <></>
+            }
         </div>
     </>
 }

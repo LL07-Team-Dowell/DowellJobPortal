@@ -19,8 +19,10 @@
     position: relative;
 }
 
-.item-selection-container > * > span:first-child{
+.item-selection-container a{
     cursor: pointer;
+    text-decoration: none;
+    color: var(--dark-grey-color);
 }
 
 .item-selection-container.active{

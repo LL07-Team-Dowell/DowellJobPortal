@@ -1,4 +1,5 @@
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import DropdownButton from "../DropdownButton/Dropdown";
+
 
 import "./style.css";
 
@@ -9,12 +10,9 @@ const AssignedProjectDetails = ({ showTask }) => {
             {
                 showTask ? <p>Task Details</p> : <></>
             }
-            <div className="project-info-container">
+            <div className={`project-info-container ${showTask ? 'flex-end' : ''}`}>
                 <p>Project</p>
-                <div className="project-name">
-                    <span>Hr Hiring</span>
-                    <KeyboardArrowDownIcon className="down-icon" />
-                </div>
+                <DropdownButton currentSelection={'Hr Hiring'} />
             </div>
         </div>
     </>
