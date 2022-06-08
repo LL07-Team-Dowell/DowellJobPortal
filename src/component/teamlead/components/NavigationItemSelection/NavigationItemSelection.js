@@ -18,14 +18,17 @@ const NavigationItemSelection = ({ items }) => {
             }
         })
 
+        if (currentTab == null) {
+            linksRef.current[0].parentElement.classList.add("active")
+            return
+        };
+
         linksRef.current.forEach(linkRef => {
             if ( currentTab === linkRef.href.split("=")[1] ) {
                 linkRef.parentElement.classList.add("active")
             }
             return
         })
-
-        linksRef.current[0].parentElement.classList.add("active");
 
     }, [searchParams]);
 
