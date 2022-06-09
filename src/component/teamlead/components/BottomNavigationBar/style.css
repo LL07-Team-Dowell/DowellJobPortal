@@ -15,6 +15,7 @@
     bottom: 0;
     padding: 5% 7%;
     max-width: 100%;
+    z-index: 10;
 }
 
 .bottom-nav-container > * {
@@ -45,8 +46,15 @@
     }
 }
 
+@media (min-width: 992px) and (max-width: 1199.98px){
+    .bottom-nav-container{
+        padding: 2% 7%;
+    }
+}
+
+
 @media (min-width: 1200px){
     .bottom-nav-container{
-        padding: 1.5% 15.5% 1.5% 14%;
+        padding: 1% 15.5% 1% 14%;
     }   
 }
