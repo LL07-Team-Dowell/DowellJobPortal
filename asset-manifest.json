@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/DowellJobPortal/static/css/main.06eb10ae.chunk.css",
-    "main.js": "/DowellJobPortal/static/js/main.5de5549d.chunk.js",
-    "main.js.map": "/DowellJobPortal/static/js/main.5de5549d.chunk.js.map",
+    "main.css": "/DowellJobPortal/static/css/main.a0b0cce9.chunk.css",
+    "main.js": "/DowellJobPortal/static/js/main.56131354.chunk.js",
+    "main.js.map": "/DowellJobPortal/static/js/main.56131354.chunk.js.map",
     "runtime-main.js": "/DowellJobPortal/static/js/runtime-main.4944b2cf.js",
     "runtime-main.js.map": "/DowellJobPortal/static/js/runtime-main.4944b2cf.js.map",
-    "static/js/2.fdc7f937.chunk.js": "/DowellJobPortal/static/js/2.fdc7f937.chunk.js",
-    "static/js/2.fdc7f937.chunk.js.map": "/DowellJobPortal/static/js/2.fdc7f937.chunk.js.map",
+    "static/js/2.336f4e22.chunk.js": "/DowellJobPortal/static/js/2.336f4e22.chunk.js",
+    "static/js/2.336f4e22.chunk.js.map": "/DowellJobPortal/static/js/2.336f4e22.chunk.js.map",
     "index.html": "/DowellJobPortal/index.html",
-    "static/css/main.06eb10ae.chunk.css.map": "/DowellJobPortal/static/css/main.06eb10ae.chunk.css.map",
-    "static/js/2.fdc7f937.chunk.js.LICENSE.txt": "/DowellJobPortal/static/js/2.fdc7f937.chunk.js.LICENSE.txt",
+    "static/css/main.a0b0cce9.chunk.css.map": "/DowellJobPortal/static/css/main.a0b0cce9.chunk.css.map",
+    "static/js/2.336f4e22.chunk.js.LICENSE.txt": "/DowellJobPortal/static/js/2.336f4e22.chunk.js.LICENSE.txt",
     "static/media/logo.13305dc0.png": "/DowellJobPortal/static/media/logo.13305dc0.png"
   },
   "entrypoints": [
     "static/js/runtime-main.4944b2cf.js",
-    "static/js/2.fdc7f937.chunk.js",
-    "static/css/main.06eb10ae.chunk.css",
-    "static/js/main.5de5549d.chunk.js"
+    "static/js/2.336f4e22.chunk.js",
+    "static/css/main.a0b0cce9.chunk.css",
+    "static/js/main.56131354.chunk.js"
   ]
 }
