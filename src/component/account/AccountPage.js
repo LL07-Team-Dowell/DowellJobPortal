@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 import BottomNavigationBar from "../teamlead/components/BottomNavigationBar/BottomNavigationBar";
 import JobTile from "../teamlead/components/JobTile/JobTile";
@@ -7,6 +7,8 @@ import NavigationItemSelection from "../teamlead/components/NavigationItemSelect
 import SelectedCandidates from "../teamlead/components/SelectedCandidates/SelectedCandidates";
 import SelectedCandidatesScreen from "../teamlead/screens/SelectedCandidatesScreen/SelectedCandidatesScreen";
 import RejectedCandidates from "./components/RejectedCandidates/RejectedCandidates";
+import SideNavigationBar from "./components/SideNavigationBar/SideNavigationBar";
+import useClickOutside from "./hooks/useClickOutside";
 
 const AccountPage = () => {
     const accountData = ["a", "a", "a", "a", "a", "a", "a", "a"];
@@ -16,6 +18,11 @@ const AccountPage = () => {
     const [rehireTabActive, setRehireTabActive] = useState(false);
     const [hireTabActive, setHireTabActive] = useState(false);
     const [showOnboarding, setShowOnboarding] = useState(false);
+    const [isSideNavbarActive, setSideNavbarActive] = useState(false);
+    const [isNotificationEnabled, setNotificationStatus] = useState(false);
+    const sideNavbarRef = useRef(null);
+
+    useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
 
     useEffect(() => {
@@ -42,7 +49,21 @@ const AccountPage = () => {
     }, [searchParams])
 
     return <>
-        <NavigationBar showCandidate={showCandidate} setShowCandidate={setShowCandidate} />
+        <NavigationBar 
+            showCandidate={showCandidate} 
+            setShowCandidate={setShowCandidate} 
+            handleMenuIconClick={() => setSideNavbarActive(true)} 
+        />
+
+        {
+            isSideNavbarActive && 
+            <SideNavigationBar 
+                sideNavRef={sideNavbarRef}
+                closeSideNavbar={() => setSideNavbarActive(false)} 
+                isNotificationEnabled={isNotificationEnabled}
+                setNotificationStatus={() => setNotificationStatus(prevValue => { return !prevValue } )}
+            />
+        }
 
         {   
             section === "home" || section == undefined ?

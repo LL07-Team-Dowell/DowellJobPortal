@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
+import SideNavigationBar from "../account/components/SideNavigationBar/SideNavigationBar";
+import useClickOutside from "../account/hooks/useClickOutside";
 import BottomNavigationBar from "./components/BottomNavigationBar/BottomNavigationBar";
 import JobTile from "./components/JobTile/JobTile";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
@@ -18,6 +20,11 @@ const Teamlead = () => {
     const { section } = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
     const [rehireTabActive, setRehireTabActive] = useState(false);
+    const [isSideNavbarActive, setSideNavbarActive] = useState(false);
+    const [isNotificationEnabled, setNotificationStatus] = useState(false);
+    const sideNavbarRef = useRef(null);
+
+    useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
     
     useEffect(() => {
@@ -31,8 +38,23 @@ const Teamlead = () => {
 
     return <>
 
-        <NavigationBar showCandidate={showCandidate} setShowCandidate={setShowCandidate} showCandidateTask={showCandidateTask} setShowCandidateTask={setShowCandidateTask} />
+        <NavigationBar 
+            showCandidate={showCandidate} 
+            setShowCandidate={setShowCandidate} 
+            showCandidateTask={showCandidateTask} setShowCandidateTask={setShowCandidateTask} 
+            handleMenuIconClick={() => setSideNavbarActive(true)}
+        />
         
+        {
+            isSideNavbarActive &&
+            <SideNavigationBar 
+                sideNavRef={sideNavbarRef}
+                closeSideNavbar={() => setSideNavbarActive(false)} 
+                isNotificationEnabled={isNotificationEnabled}
+                setNotificationStatus={() => setNotificationStatus(prevValue => { return !prevValue } )}
+            />
+        }
+
         {
             section === "home" || section == undefined ? 
             showCandidate ? <SelectedCandidatesScreen rehireTabActive={rehireTabActive} /> : <>
