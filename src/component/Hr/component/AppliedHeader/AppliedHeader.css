@@ -1,0 +1,32 @@
+
+.appliedheader__container {
+    --black-color: #000000;
+    --grey-color: #A1A1A1;
+    font-family: 'Inter', sans-serif;
+}
+
+
+.appliedheader__container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--grey-color);
+    padding-top: 3% ;
+}
+
+.appliedheader__counter h2{
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--black-color);
+    line-height: 19.36px;
+    margin-bottom: 2.5%;
+}
+
+.appliedheader__counter p, .appliedheader__container p{
+    font-size: 0.8125rem;
+}
+
+.appliedheader__container p{
+    cursor: pointer;
+}
+
