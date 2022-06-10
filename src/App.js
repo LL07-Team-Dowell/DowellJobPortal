@@ -1,5 +1,5 @@
-import React, { StrictMode } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Routes, Route, useParams, useSearchParams } from 'react-router-dom';
 import './App.css';
 import SignIn from './component/candidate/Login';
 import SignUP from './component/candidate/Register';
@@ -12,9 +12,12 @@ import AppliedScreen from'./component/candidate/screens/AppliedScreen';
 import Hr_JobScreen from './component/Hr/hr_screens/Hr_JobScreen';
 import Teamlead from './component/teamlead/Teamlead';
 import AccountPage from './component/account/AccountPage';
+import { NavigationContext } from './contexts/NavigationContext';
 
 function App() {
-  
+    const { section } = useParams();
+    const [ searchParams, setSearchParams ] = useSearchParams();
+    const [ isNotificationEnabled, setNotificationStatus ] = useState(false);
  
     return (
         <Routes>
@@ -30,10 +33,19 @@ function App() {
           <Route path="/task" element={<TaskScreen/>}/>
           <Route path="/applied" element={<AppliedScreen/>}/>
           <Route path="/hr_screen" element={<Hr_JobScreen/>}/>
-          <Route path="/teamlead" element={<Teamlead />} >
+
+          <Route path="/teamlead" element={
+            <NavigationContext.Provider value={{ section, searchParams, isNotificationEnabled, setNotificationStatus }}>
+              <Teamlead />
+            </NavigationContext.Provider>
+          } >
             <Route path=':section' element={<Teamlead />} />
           </Route>
-          <Route path="/account" element={<AccountPage />} >
+          <Route path="/account" element={
+            <NavigationContext.Provider value={{ section, searchParams, isNotificationEnabled, setNotificationStatus }}>
+              <AccountPage />
+            </NavigationContext.Provider>
+          } >
             <Route path=':section' element={<AccountPage />} />
           </Route>
 

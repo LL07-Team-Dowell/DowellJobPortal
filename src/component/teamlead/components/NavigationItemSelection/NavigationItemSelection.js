@@ -1,11 +1,11 @@
 import React, { useEffect, useRef } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./style.css";
 
-const NavigationItemSelection = ({ items }) => {
+const NavigationItemSelection = ({ items, searchParams }) => {
     const linksRef = useRef([]);
-    const [searchParams, setSearchParams] = useSearchParams();
-
+    
+    
     useEffect(() => {
         
         const currentTab = searchParams.get("tab");

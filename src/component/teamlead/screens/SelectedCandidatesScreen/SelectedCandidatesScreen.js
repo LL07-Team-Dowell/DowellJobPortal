@@ -1,15 +1,14 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { BsStopCircle } from 'react-icons/bs';
-import { FiStopCircle } from 'react-icons/fi';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ApplicantIntro from '../../components/ApplicantIntro/ApplicantIntro';
 import ApplicantDetails from '../../components/ApplicationDetails/ApplicationDetails';
 import AssignedProjectDetails from '../../components/AssignedProjectDetails/AssignedProjectDetails';
 import CustomHr from '../../components/CustomHr/CustomHr';
-
-import "./style.css";
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import PaymentDetails from '../../../account/components/PaymentDetails/PaymentDetails';
+
+import "./style.css";
 
 
 const SelectedCandidatesScreen = ({ rehireTabActive, accountPage, hireTabActive, showOnboarding }) => {

@@ -7,7 +7,7 @@ const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClic
     return <>
         <div className="job-tile-container" onClick={() => disableClick ? {} :  showTask ? setShowCandidateTask(true) : setShowCandidate(true)}>
             <div className="applicant-details">
-                <h2>Faizan</h2>
+                <h2><b>Faizan</b></h2>
                 <p>10th April</p>
             </div>
             <p>Job: Python</p>

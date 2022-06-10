@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { NavigationContext } from "../../contexts/NavigationContext";
 import SideNavigationBar from "../account/components/SideNavigationBar/SideNavigationBar";
 import useClickOutside from "../account/hooks/useClickOutside";
 import BottomNavigationBar from "./components/BottomNavigationBar/BottomNavigationBar";
@@ -14,14 +14,12 @@ import "./style.css";
 
 
 const Teamlead = () => {
+    const { section, searchParams, isNotificationEnabled, setNotificationStatus } = useContext(NavigationContext);
     const testData = ["a", "a", "a", "a", "a", "a", "a", "a", "a"]
     const [showCandidate, setShowCandidate] = useState(false);
     const [showCandidateTask, setShowCandidateTask] = useState(false);
-    const { section } = useParams();
-    const [searchParams, setSearchParams] = useSearchParams();
     const [rehireTabActive, setRehireTabActive] = useState(false);
     const [isSideNavbarActive, setSideNavbarActive] = useState(false);
-    const [isNotificationEnabled, setNotificationStatus] = useState(false);
     const sideNavbarRef = useRef(null);
 
     useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
@@ -58,7 +56,7 @@ const Teamlead = () => {
         {
             section === "home" || section == undefined ? 
             showCandidate ? <SelectedCandidatesScreen rehireTabActive={rehireTabActive} /> : <>
-                <NavigationItemSelection items={["Interview", "Selected", "Rehire"]} />
+                <NavigationItemSelection items={["Interview", "Selected", "Rehire"]} searchParams={searchParams} />
                 <SelectedCandidates  />
 
                 <div className="jobs-container">

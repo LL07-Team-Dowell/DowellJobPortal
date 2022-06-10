@@ -3,10 +3,10 @@ import ApplicantDetails from "../../components/ApplicationDetails/ApplicationDet
 import AssignedProjectDetails from "../../components/AssignedProjectDetails/AssignedProjectDetails";
 import CustomHr from "../../components/CustomHr/CustomHr";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-
-import "./style.css";
 import CandidateTaskItem from "../../components/CandidateTaskItem/CandidateTaskItem";
 import React from "react";
+
+import "./style.css";
 
 
 const TaskScreen = () => {

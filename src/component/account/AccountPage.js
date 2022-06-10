@@ -1,5 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import axios from "axios";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import axiosInstance from "../../axios";
+import { NavigationContext } from "../../contexts/NavigationContext";
 import BottomNavigationBar from "../teamlead/components/BottomNavigationBar/BottomNavigationBar";
 import JobTile from "../teamlead/components/JobTile/JobTile";
 import NavigationBar from "../teamlead/components/NavigationBar/NavigationBar";
@@ -11,19 +13,22 @@ import SideNavigationBar from "./components/SideNavigationBar/SideNavigationBar"
 import useClickOutside from "./hooks/useClickOutside";
 
 const AccountPage = () => {
+    const { section, searchParams, isNotificationEnabled, setNotificationStatus } = useContext(NavigationContext);
     const accountData = ["a", "a", "a", "a", "a", "a", "a", "a"];
     const [showCandidate, setShowCandidate] = useState(false);
-    const { section } = useParams();
-    const [searchParams, setSearchParams] = useSearchParams();
     const [rehireTabActive, setRehireTabActive] = useState(false);
     const [hireTabActive, setHireTabActive] = useState(false);
     const [showOnboarding, setShowOnboarding] = useState(false);
     const [isSideNavbarActive, setSideNavbarActive] = useState(false);
-    const [isNotificationEnabled, setNotificationStatus] = useState(false);
     const sideNavbarRef = useRef(null);
 
     useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
+    // useEffect(() => {
+    //     // axios.defaults.baseURL = "https://100055.pythonanywhere.com/api/";
+
+    //     axiosInstance.get("/accounts/get_users/")
+    // }, [])
 
     useEffect(() => {
         const currentTab = searchParams.get("tab");
@@ -35,16 +40,16 @@ const AccountPage = () => {
             return
         }
 
-        if (currentTab === "hire") { 
-            setHireTabActive(true);
+        if (currentTab === "onboarding") { 
+            setShowOnboarding(true);
+            setHireTabActive(false);
             setRehireTabActive(false);
-            setShowOnboarding(false);
             return
         }
 
-        setShowOnboarding(true);
+        setHireTabActive(true);
+        setShowOnboarding(false);
         setRehireTabActive(false);
-        setHireTabActive(false);
 
     }, [searchParams])
 
@@ -68,7 +73,7 @@ const AccountPage = () => {
         {   
             section === "home" || section == undefined ?
             showCandidate ? <SelectedCandidatesScreen accountPage={true} rehireTabActive={rehireTabActive} hireTabActive={hireTabActive} showOnboarding={showOnboarding} /> : <>
-                <NavigationItemSelection items={["Onboarding", "Hire", "Rehire"]} />
+                <NavigationItemSelection items={["Hire", "Onboarding", "Rehire"]} searchParams={searchParams} />
                 <SelectedCandidates />
 
                 <div className="jobs-container">
