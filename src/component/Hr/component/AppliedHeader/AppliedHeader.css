@@ -29,4 +29,12 @@
 .appliedheader__container p{
     cursor: pointer;
 }
+@media screen and (max-width: 900px) {
+    .appliedheader__container{
+        width: 92%;
+        margin-right: auto;
+        margin-left: auto;
+    }
 
+
+}

@@ -10,6 +10,7 @@ import UserScreen from './component/candidate/screens/UserScreen';
 import TaskScreen from './component/candidate/screens/TaskScreen';
 import AppliedScreen from'./component/candidate/screens/AppliedScreen';
 import Hr_JobScreen from './component/Hr/hr_screens/Hr_JobScreen';
+import Hr_AppliedScreen from './component/Hr/hr_screens/Hr_AppliedScreen';
 
 function App() {
   
@@ -28,6 +29,8 @@ function App() {
           <Route path="/task" element={<TaskScreen/>}/>
           <Route path="/applied" element={<AppliedScreen/>}/>
           <Route path="/hr_screen" element={<Hr_JobScreen/>}/>
+          <Route path="/hr_applied" element={<Hr_AppliedScreen/>}/>
+
 
         </Routes>
     );

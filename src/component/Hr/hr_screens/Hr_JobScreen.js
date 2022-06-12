@@ -1,17 +1,19 @@
 import React from 'react';
-import Navbar from '../Hr_Navbar';
-import Footer from '../Hr_Footer';
+import Navbar from '../component/Hr_Navbar';
+import Footer from '../component/Hr_Footer';
 import './css/Hr_JobScreen.css';
 import * as FaIcons from 'react-icons/fa';
 import * as FiIcons from 'react-icons/fi';
 import * as ImIcons from 'react-icons/im';
 import { IconContext } from 'react-icons';
+import * as BsIcons from 'react-icons/bs';
+
 
 
 function Hr_JobScreen() {
   return (
     <div className='hr__wrapper'>
-        <Navbar title='Jobs'/>
+        <Navbar title='Jobs' icon={<BsIcons.BsBell/>}/>
         <div className='job__wrapper'>
             <div className='row'>
                 <div className='column'>

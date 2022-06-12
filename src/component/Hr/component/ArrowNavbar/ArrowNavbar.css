@@ -1,0 +1,17 @@
+.secondNavbar__body{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color:#ACABAB ;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    box-shadow:  0 7px 15px rgba(13, 17, 15, 28%);
+
+}
+
+.secondNavbar__icon{
+    margin-left: 2rem;
+    font-size: 2rem;
+    background: none;
+}

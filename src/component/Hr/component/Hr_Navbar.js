@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
-import * as BsIcons from 'react-icons/bs';
 import { Link } from 'react-router-dom';
 import { SidebarData } from './Hr_SidebarData';
-import './css/Hr_Navbar.css';
+import '../css/Hr_Navbar.css';
 import { IconContext } from 'react-icons';
 // import Button from '@mui/material/Button';
 import { makeStyles } from '@material-ui/core/styles';
@@ -35,7 +34,7 @@ const theme = createTheme({
   
 
 
-function Navbar( {title}) {
+function Navbar( {title, icon}) {
   const [sidebar, setSidebar] = useState(false);
   const [show, handleShow]=useState(false);
   const navigate=useNavigate();
@@ -69,7 +68,7 @@ function Navbar( {title}) {
 
           </Link>
           <h3 className='page__title'>{title}</h3>
-          <div className='bell'>    <BsIcons.BsBell/></div>
+          <div className='bell'>    {icon}</div>
         </div>
         
         <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
