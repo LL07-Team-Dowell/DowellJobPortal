@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import logo from '../../logo.png'
-import axiosInstance from '../../axios';
+import { axiosInstance } from '../../axios';
 import requests from '../../request';
 
 

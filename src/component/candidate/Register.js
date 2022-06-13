@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import axioInstance from '../../axios';
+import { axiosInstance } from '../../axios';
 import{useNavigate} from 'react-router-dom';
 // use the useNavigate to redirect the user after they've register
 
