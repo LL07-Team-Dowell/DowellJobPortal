@@ -1,13 +1,13 @@
 import "./style.css";
 
 
-const ApplicantIntro = () => {
+const ApplicantIntro = ({ applicant, showTask, taskDetails }) => {
     return <>
 
-        <h1 className="applicant-title-text">Ramu</h1>
+        <h1 className="applicant-title-text">{showTask ? taskDetails.assigneeName : applicant.name}</h1>
         <div className="selected-applicant-intro">
-            <p>Python Programmer</p>
-            <span>10th April</span>
+            <p>{showTask ? taskDetails.jobApplied : applicant.jobApplied}</p>
+            <span>{showTask ? taskDetails.dateOfTaskAssignment : applicant.dateOfApplication}</span>
         </div>
 
     </>

@@ -103,11 +103,22 @@
 }
 
 .status-options-container .textt{
-    margin-top: 15%;
+    font-size: 0.875rem;
+    line-height: 16.94px;
 }
 
 .status-options-container .status-option{
     cursor: pointer;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--grey-color);
+    font-family: 'Inter', sans-serif;
+    max-width: 100%;
+}
+
+.status-options-container .status-option .status-icon{
+    font-size: 1.25rem;
 }
 
 .status-options-container .status-option.active.green-color{
