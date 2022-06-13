@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import logo from '../../logo.png'
-import axiosInstance from '../../axios';
+import { axiosInstance } from '../../axios';
 import requests from '../../request';
 
 
@@ -76,7 +76,7 @@ export default function SignIn() {
 				password:formData.password,
 			})
 			.then ((res)=>{
-				localStorage.setItem('acces_token', res.data.access);
+				localStorage.setItem('access_token', res.data.access);
 				localStorage.setItem('refresh_token', res.data.refresh);
 				axiosInstance.defaults.headers['Authorization']=
 					'JWT' + localStorage.getItem('access_token');

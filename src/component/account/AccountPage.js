@@ -1,5 +1,9 @@
+import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import axiosInstance from "../../axios";
+import { useCandidateContext, initialCandidatesDataStateNames } from "../../contexts/CandidatesContext";
+import { useNavigationContext } from "../../contexts/NavigationContext";
+import { candidateDataReducerActions } from "../../reducers/CandidateReducerActions";
 import BottomNavigationBar from "../teamlead/components/BottomNavigationBar/BottomNavigationBar";
 import JobTile from "../teamlead/components/JobTile/JobTile";
 import NavigationBar from "../teamlead/components/NavigationBar/NavigationBar";
@@ -11,19 +15,31 @@ import SideNavigationBar from "./components/SideNavigationBar/SideNavigationBar"
 import useClickOutside from "./hooks/useClickOutside";
 
 const AccountPage = () => {
-    const accountData = ["a", "a", "a", "a", "a", "a", "a", "a"];
-    const [showCandidate, setShowCandidate] = useState(false);
-    const { section } = useParams();
-    const [searchParams, setSearchParams] = useSearchParams();
-    const [rehireTabActive, setRehireTabActive] = useState(false);
-    const [hireTabActive, setHireTabActive] = useState(false);
-    const [showOnboarding, setShowOnboarding] = useState(false);
-    const [isSideNavbarActive, setSideNavbarActive] = useState(false);
-    const [isNotificationEnabled, setNotificationStatus] = useState(false);
+    const { section, searchParams, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
+    const { candidatesData, dispatchToCandidatesData } = useCandidateContext();
+    const [currentCandidate, setCurrentCandidate] = useState({});
+    const [ showCandidate, setShowCandidate ] = useState(false);
+    const [ rehireTabActive, setRehireTabActive ] = useState(false);
+    const [ hireTabActive, setHireTabActive ] = useState(false);
+    const [ showOnboarding, setShowOnboarding ] = useState(false);
+    const [ isSideNavbarActive, setSideNavbarActive ] = useState(false);
     const sideNavbarRef = useRef(null);
 
     useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
+    useEffect(() => {
+        // axios.defaults.baseURL = "https://100055.pythonanywhere.com/api/";
+
+        // axiosInstance.get("/jobs/get_applications/")
+
+        // dispatchToCandidatesData({ type: candidateDataReducerActions.UPDATE_INTERVIEWING_CANDIDATES, payload: {
+        //     stateToChange: initialCandidatesDataStateNames.candidatesToInterview,
+        //     value: [
+        //         
+        //     ]} 
+        // })
+        
+    }, [])
 
     useEffect(() => {
         const currentTab = searchParams.get("tab");
@@ -35,16 +51,16 @@ const AccountPage = () => {
             return
         }
 
-        if (currentTab === "hire") { 
-            setHireTabActive(true);
+        if (currentTab === "onboarding") { 
+            setShowOnboarding(true);
+            setHireTabActive(false);
             setRehireTabActive(false);
-            setShowOnboarding(false);
             return
         }
 
-        setShowOnboarding(true);
+        setHireTabActive(true);
+        setShowOnboarding(false);
         setRehireTabActive(false);
-        setHireTabActive(false);
 
     }, [searchParams])
 
@@ -67,26 +83,65 @@ const AccountPage = () => {
 
         {   
             section === "home" || section == undefined ?
-            showCandidate ? <SelectedCandidatesScreen accountPage={true} rehireTabActive={rehireTabActive} hireTabActive={hireTabActive} showOnboarding={showOnboarding} /> : <>
-                <NavigationItemSelection items={["Onboarding", "Hire", "Rehire"]} />
-                <SelectedCandidates />
+            showCandidate ? 
+            
+            <SelectedCandidatesScreen 
+                selectedCandidateData={currentCandidate} 
+                accountPage={true} 
+                rehireTabActive={rehireTabActive} 
+                hireTabActive={hireTabActive} 
+                showOnboarding={showOnboarding} 
+                updateCandidateData={dispatchToCandidatesData}
+                allCandidatesData={
+                    hireTabActive ? candidatesData.candidatesToHire :
+                    showOnboarding ? candidatesData.onboardingCandidates :
+                    rehireTabActive ? candidatesData.candidatesToRehire :
+                    []
+                }
+            /> 
+            
+            : <>
+                <NavigationItemSelection items={["Hire", "Onboarding", "Rehire"]} searchParams={searchParams} />
+                <SelectedCandidates 
+                    candidatesCount={
+                        hireTabActive ? candidatesData.candidatesToHire.length :
+                        showOnboarding ? candidatesData.onboardingCandidates.length :
+                        rehireTabActive ? candidatesData.candidatesToRehire.length :
+                        0
+                    } 
+                />
 
                 <div className="jobs-container">
                     {
-                        React.Children.toArray(accountData.map(dataitem => {
-                            return  <JobTile setShowCandidate={setShowCandidate} />
-                        }))
+                        hireTabActive ?
+                        React.Children.toArray(candidatesData.candidatesToHire.map(dataitem => {
+                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} />
+                        })) : 
+                        
+                        showOnboarding ? 
+
+                        React.Children.toArray(candidatesData.onboardingCandidates.map(dataitem => {
+                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} />
+                        })) :
+                        
+                        rehireTabActive ? 
+                        
+                        React.Children.toArray(candidatesData.candidatesToRehire.map(dataitem => {
+                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} />
+                        })) : 
+
+                        <></>
                     }
                 </div>
             </> :
 
             section === "rejected" ? <>
-                <RejectedCandidates />
+                <RejectedCandidates candidatesCount={candidatesData.rejectedCandidates.length} />
 
                 <div className="jobs-container">
                     {
-                        React.Children.toArray(accountData.map(dataitem => {
-                            return  <JobTile disableClick={true} />
+                        React.Children.toArray(candidatesData.rejectedCandidates.map(dataitem => {
+                            return  <JobTile disableClick={true} candidateData={dataitem} />
                         }))
                     }
                 </div>

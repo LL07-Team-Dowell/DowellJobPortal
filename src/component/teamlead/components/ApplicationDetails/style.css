@@ -16,6 +16,7 @@
 .selected-applicant-details span{
     font-size: 0.875rem;
     line-height: 16.94px;
+    cursor: pointer;
 }
 
 

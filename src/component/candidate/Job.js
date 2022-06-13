@@ -3,7 +3,7 @@ import './css/Job.css';
 import * as FaIcons from 'react-icons/fa';
 import * as FiIcons from 'react-icons/fi';
 import { IconContext } from 'react-icons';
-import axiosInstance from '../../axios';
+import { axiosInstance } from '../../axios';
 import requests from '../../request';
 
 

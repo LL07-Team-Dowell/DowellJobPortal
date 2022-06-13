@@ -1,4 +1,4 @@
-import React, { StrictMode } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import SignIn from './component/candidate/Login';
@@ -12,10 +12,11 @@ import AppliedScreen from'./component/candidate/screens/AppliedScreen';
 import Hr_JobScreen from './component/Hr/hr_screens/Hr_JobScreen';
 import Teamlead from './component/teamlead/Teamlead';
 import AccountPage from './component/account/AccountPage';
+import { NavigationContextProvider } from './contexts/NavigationContext';
+import { CandidateContextProvider } from './contexts/CandidatesContext';
 
 function App() {
-  
- 
+
     return (
         <Routes>
 
@@ -30,10 +31,24 @@ function App() {
           <Route path="/task" element={<TaskScreen/>}/>
           <Route path="/applied" element={<AppliedScreen/>}/>
           <Route path="/hr_screen" element={<Hr_JobScreen/>}/>
-          <Route path="/teamlead" element={<Teamlead />} >
+
+          <Route path="/teamlead" element={
+            <NavigationContextProvider>
+              <CandidateContextProvider>
+                <Teamlead />
+              </CandidateContextProvider>
+            </NavigationContextProvider>
+          } >
             <Route path=':section' element={<Teamlead />} />
           </Route>
-          <Route path="/account" element={<AccountPage />} >
+
+          <Route path="/account" element={
+            <NavigationContextProvider>
+              <CandidateContextProvider>
+                <AccountPage />
+              </CandidateContextProvider>
+            </NavigationContextProvider>
+          } >
             <Route path=':section' element={<AccountPage />} />
           </Route>
 
