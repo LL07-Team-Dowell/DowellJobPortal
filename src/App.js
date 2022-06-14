@@ -14,6 +14,8 @@ import Teamlead from './component/teamlead/Teamlead';
 import AccountPage from './component/account/AccountPage';
 import { NavigationContextProvider } from './contexts/NavigationContext';
 import { CandidateContextProvider } from './contexts/CandidatesContext';
+import JobApplicationScreen from './component/candidate/screens/JobApplicationScreen/JobApplicationScreen';
+import ErrorPage from './component/error/ErrorPage';
 
 function App() {
 
@@ -31,6 +33,7 @@ function App() {
           <Route path="/task" element={<TaskScreen/>}/>
           <Route path="/applied" element={<AppliedScreen/>}/>
           <Route path="/hr_screen" element={<Hr_JobScreen/>}/>
+          <Route path="/apply/job" element={<JobApplicationScreen />} />
 
           <Route path="/teamlead" element={
             <NavigationContextProvider>
@@ -51,6 +54,8 @@ function App() {
           } >
             <Route path=':section' element={<AccountPage />} />
           </Route>
+
+          <Route path='*' element={<ErrorPage />} />
 
         </Routes>
     );

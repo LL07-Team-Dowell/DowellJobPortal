@@ -12,6 +12,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { BiArrowBack } from 'react-icons/bi';
+import { BsBookmark, BsShare } from 'react-icons/bs';
 
 
 
@@ -34,7 +36,7 @@ const theme = createTheme({
   
 
 
-function Navbar( {title}) {
+function Navbar( {title, changeToBackButton, backButtonLink}) {
   const [sidebar, setSidebar] = useState(false);
   const [show, handleShow]=useState(false);
   const navigate=useNavigate();
@@ -63,9 +65,31 @@ function Navbar( {title}) {
    
       <IconContext.Provider value={{ color: '#000000', size:'22px' }}>
         <div className={`navbar ${show && "nav__grey"}`}>
-          <Link to='#' className='menu-bars'>
-            <FaIcons.FaBars className='icons' onClick={showSidebar}  />
-          </Link>
+          {
+            changeToBackButton ? <>
+              <Link to={backButtonLink} className='menu-bars'>
+                <BiArrowBack />
+              </Link>
+
+              <div className='mini__Nav__Links__Container'>
+                <Link to={'#'} >
+                  <BsBookmark />
+                </Link>
+
+                <Link to={'#'}>
+                  <BsShare />
+                </Link>
+              </div>
+              
+            </> : 
+            
+            <>
+              <Link to='#' className='menu-bars'>
+                <FaIcons.FaBars className='icons' onClick={showSidebar}  />
+              </Link>
+            </>
+          }
+          
           <h3 className='page__title'>{title}</h3>
         </div>
         
