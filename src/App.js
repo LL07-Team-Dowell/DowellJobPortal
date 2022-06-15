@@ -39,15 +39,13 @@ function App() {
           <Route path="/applied" element={<AppliedScreen/>}/>
           <Route path="/hr_screen" element={<Hr_JobScreen/>}/>
           
-            <Route path="/id" element={<JobApplied/>}/>
+          <Route path="/id" element={<JobApplied/>}/>
 
           <Route path="/hr_applied" element={<Hr_AppliedScreen/>}/>
           <Route path="/shortlisted" element={<ShortlistedScreen/>}/>
 
           <Route path="/hr_applied/selected" element={<SelectedScreen/>}/>
           
-
-
           <Route path="/apply/job" element={<JobApplicationScreen />} />
 
           <Route path="/teamlead" element={
