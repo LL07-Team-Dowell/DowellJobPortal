@@ -12,31 +12,7 @@ import SelectedCandidatesScreen from "./screens/SelectedCandidatesScreen/Selecte
 import TaskScreen from "./screens/TaskScreen/TaskScreen";
 
 import "./style.css";
-
-const tasksData = [
-    {
-        assigneeId: "1",
-        assigneeName: "Faizan",
-        jobApplied: "Python",
-        taskAssigned: "I will eat rice.",
-        dateOfTaskAssignment: "10th April",
-        taskDetails: [
-            {
-                taskGiven: "I will eat rice",
-                dateGiven: "25-04-22",
-                status: "Completed",
-                completionDate: "09-05-22"
-            },
-            {
-                taskGiven: "I will eat rice",
-                dateGiven: "26-04-22",
-                status: "Incomplete",
-            },
-
-        ]
-    }
-
-]
+import { tasksData } from "./tasks";
 
 const Teamlead = () => {
     const { section, searchParams, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
@@ -104,10 +80,9 @@ const Teamlead = () => {
             
             <SelectedCandidatesScreen 
                 selectedCandidateData={currentCandidate}
+                updateShowCandidate={setShowCandidate}
                 rehireTabActive={rehireTabActive} 
-                interviewTabActive={interviewTabActive}
                 allCandidatesData={
-                    interviewTabActive ? candidatesData.candidatesToInterview :
                     selectedTabActive ? candidatesData.selectedCandidates :
                     rehireTabActive ? candidatesData.candidatesToRehire :
                     []
@@ -116,10 +91,9 @@ const Teamlead = () => {
             /> 
             
             : <>
-                <NavigationItemSelection items={["Interview", "Selected", "Rehire"]} searchParams={searchParams} />
+                <NavigationItemSelection items={["Selected", "Rehire"]} searchParams={searchParams} />
                 <SelectedCandidates
                     candidatesCount={
-                        interviewTabActive ? candidatesData.candidatesToInterview.length :
                         selectedTabActive ? candidatesData.selectedCandidates.length :
                         rehireTabActive ? candidatesData.candidatesToRehire.length :
                         0
@@ -128,10 +102,6 @@ const Teamlead = () => {
 
                 <div className="jobs-container">
                     {
-                        interviewTabActive ?
-                        React.Children.toArray(candidatesData.candidatesToInterview.map(dataitem => {
-                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} />
-                        })) :
 
                         selectedTabActive ? 
                         React.Children.toArray(candidatesData.selectedCandidates.map(dataitem => {

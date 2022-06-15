@@ -101,48 +101,6 @@ p{
     cursor: pointer;
 }
 
-.candidate__Job__Application__Container .select__Dropdown__Container{
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-
-}
-
-.candidate__Job__Application__Container .select__Dropdown__Container div{
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 30%;
-    cursor: pointer;
-    padding: 4% 0;
-}
-
-.candidate__Job__Application__Container .select__Dropdown__Container div > input {
-    cursor: text;
-}
-
-.candidate__Job__Application__Container .select__Dropdown__Container select, .candidate__Job__Application__Container .select__Dropdown__Container input{
-    outline: none;
-    border: none;
-    font-family: 'Inter', sans-serif;
-    transition: 0.35s ease-in-out;
-}
-
-.candidate__Job__Application__Container .select__Dropdown__Container select{
-    appearance: none;
-    background: var(--white);
-    width: 50%;
-    cursor: pointer;
-}
-
-.candidate__Job__Application__Container .select__Dropdown__Container input:focus{
-    border-bottom: 1px solid var(--grey-color);
-}
-
-.candidate__Job__Application__Container .select__Dropdown__Container select::-ms-expand{
-    display: none;
-}
-
 .candidate__Job__Application__Container .apply-btn:disabled, .candidate__Job__Application__Container .apply-btn[disabled]{
     cursor: not-allowed;
 }
@@ -157,10 +115,5 @@ p{
         padding: 2.5% 8%;
         position: relative;
         margin: 10% auto;
-    }
-
-    .candidate__Job__Application__Container .select__Dropdown__Container{
-        width: 60%;
-        margin: 5% 0;
     }
 }

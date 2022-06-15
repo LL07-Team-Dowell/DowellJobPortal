@@ -13,10 +13,9 @@ import "./style.css";
 import { accountPageActions } from '../../../account/actions/AccountActions';
 import { candidateDataReducerActions } from '../../../../reducers/CandidateReducerActions';
 import { initialCandidatesDataStateNames } from '../../../../contexts/CandidatesContext';
-import { teamLeadActions } from '../../actions/TeamLeadActions';
 
 
-const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, allCandidatesData, rehireTabActive, accountPage, hireTabActive, showOnboarding, interviewTabActive }) => {
+const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, allCandidatesData, rehireTabActive, accountPage, hireTabActive, showOnboarding, updateShowCandidate }) => {
     const ref1 = useRef(null);
     const ref2 = useRef(null);
     const ref3 = useRef(null);
@@ -48,6 +47,8 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                         value: allCandidatesData.filter(candidate => candidate.id !== selectedCandidateData.id)
                     }})
 
+                    setTimeout(() => updateShowCandidate(false), 1500);
+
                     return
                 }
 
@@ -55,6 +56,8 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                     stateToChange: initialCandidatesDataStateNames.candidatesToHire,
                     value: allCandidatesData.filter(candidate => candidate.id !== selectedCandidateData.id )
                 } })
+
+                setTimeout(() => updateShowCandidate(false), 1500);
 
                 break;
 
@@ -69,6 +72,8 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                     updateExisting: true,
                     value: selectedCandidateData
                 }})
+
+                setTimeout(() => updateShowCandidate(false), 1500);
 
                 break;
 
@@ -110,29 +115,10 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                     value: selectedCandidateData
                 }})
 
-                break;
-
-            case teamLeadActions.MOVE_TO_SELECTED:
-                
-                updateCandidateData({ type: candidateDataReducerActions.UPDATE_INTERVIEWING_CANDIDATES, payload: {
-                    stateToChange: initialCandidatesDataStateNames.candidatesToInterview,
-                    value: allCandidatesData.filter(candidate => candidate.id !== selectedCandidateData.id)
-                }})
-
-                updateCandidateData({ type: candidateDataReducerActions.UPDATE_CANDIDATES_TO_HIRE, payload: {
-                    updateExisting: true,
-                    stateToChange: initialCandidatesDataStateNames.candidatesToHire,
-                    value: selectedCandidateData
-                }})
-
-                updateCandidateData({ type: candidateDataReducerActions.UPDATE_SELECTED_CANDIDATES, payload: {
-                    updateExisting: true,
-                    stateToChange: initialCandidatesDataStateNames.selectedCandidates,
-                    value: selectedCandidateData
-                }})
+                setTimeout(() => updateShowCandidate(false), 1500);
 
                 break;
-        
+
             default:
                 console.log("no action")
                 break;
@@ -192,7 +178,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                         <></>
                     }
                     
-                    <button className="status-option green-color" ref={ref1} onClick={() => handleClick(ref1, hireTabActive ? accountPageActions.MOVE_TO_ONBOARDING : showOnboarding ? accountPageActions.MOVE_TO_REHIRE : interviewTabActive ? teamLeadActions.MOVE_TO_SELECTED : "")} disabled={disabled}>
+                    <button className="status-option green-color" ref={ref1} onClick={() => handleClick(ref1, hireTabActive ? accountPageActions.MOVE_TO_ONBOARDING : showOnboarding ? accountPageActions.MOVE_TO_REHIRE : "")} disabled={disabled}>
                         <BsStopCircle className='status-icon' />
                         {/* <FiStopCircle className='status-icon' /> */}
                         <br /><br/>
