@@ -9,7 +9,7 @@ import { IconContext } from 'react-icons';
 function TaskScreen() {
   return (
     <div className='taskScreen'>
-        <SecondNavbar/>
+        <SecondNavbar page='/home'/>
         <div className='taskScreen__body'>
           <div className='taskScreen__row'>
             <h3 className='taskScreen__title'><span className='title'>Tasks details</span><span className='project'>Project: <span className='project__title'>Hr Hiring</span></span></h3>

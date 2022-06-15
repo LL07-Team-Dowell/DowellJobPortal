@@ -1,0 +1,15 @@
+.CardTile__row{
+    display: flex;
+    justify-content: space-between;
+    flex-wrap:wrap;
+}
+
+@media screen and (max-width: 900px) {
+    .CardTile__row{
+        width: 92%;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+}
+
