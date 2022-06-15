@@ -1,13 +1,12 @@
 import React from 'react';
 import * as BsIcons from 'react-icons/bs';
 import { Link } from 'react-router-dom';
-import './css/SecondNavbar.css';
+import './ArrowNavbar.css';
 import { useNavigate } from 'react-router-dom';
 
 
 
-function SecondNavbar({page}) {
-  const navigate= useNavigate();
+function ArrowNavbar({page, icon}) {
 
   return (
         <div className='secondNavbar__body'>
@@ -15,11 +14,12 @@ function SecondNavbar({page}) {
             <Link to={page} className='arrow__icon'>
             <BsIcons.BsArrowLeft className='icons'  />
           </Link>
-
             </div>
+            <div className='icon'>    {icon}</div>
+
 
         </div>
   )
 }
 
-export default SecondNavbar
+export default ArrowNavbar

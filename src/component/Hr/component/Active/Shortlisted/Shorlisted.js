@@ -6,7 +6,7 @@ import '../Active.css';
 function Shorlisted() {
   return (
     <>
-        <AppliedHeader title="Python Programmer" sub_title="20 candidates are shortlisted for the role"/>
+        <AppliedHeader title="Shorlisted Candidates" sub_title="10 candidates are shortlisted for the role"/>
         <div className="CardTile__row">
         <CardTile applicant_name='Faizan' experience='2' applied_date='10th April' skills='Python'/>
         <CardTile applicant_name='Faizan' experience='2' applied_date='10th April' skills='Python'/>

@@ -10,14 +10,14 @@ import Shorlisted from '../component/Active/Shortlisted/Shorlisted';
 import Selected from '../component/Active/Selected/Selected';
 import Interview from '../component/Active/Interview/Interview';
 
-function Hr_AppliedScreen() {
+function ShortlistedScreen() {
  
 
   return (
     <div className='Applied__wrapper'>
         <Navbar icon={<BsIcons.BsThreeDotsVertical/>}/>
         <div className='Applied__container'>
-            <Active/>
+            <Shorlisted/>
         </div>
         
 
@@ -31,4 +31,4 @@ function Hr_AppliedScreen() {
   )
 }
 
-export default Hr_AppliedScreen
+export default ShortlistedScreen

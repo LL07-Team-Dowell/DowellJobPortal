@@ -1,0 +1,55 @@
+.form__container{
+    --light-gray-color:#E0E0E0;
+    --grays-color:#C4C4C4;
+    --gray-color:#838383;
+    font-family: 'Inter' sans-serif;
+}
+
+.form__container form .textarea{
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    line-height: normal; 
+    outline: none;
+}
+.form__container form .textarea__discord{
+    background-color: var(--light-gray-color);
+    height: 50px;
+
+
+}
+
+.form__container form .textarea__remarks{
+    background-color: var(--grays-color);
+    height: 100px;
+
+
+}
+
+.form__container .form__header{
+    padding-top: 2%;
+    padding-bottom: 2%;
+}
+.form__container .form__header h3 ,span{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+
+}
+.form__container .form__header h3 span{
+    color: var(--gray-color) ;
+    margin-left: 1%;
+
+}
+
+.form__container form textarea::placeholder{
+    padding-top: 3% ;
+    padding-left: 2%;
+    padding-bottom: auto;
+    line-height: normal; 
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    
+}
