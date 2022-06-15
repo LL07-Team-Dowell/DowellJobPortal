@@ -87,6 +87,7 @@ const AccountPage = () => {
             
             <SelectedCandidatesScreen 
                 selectedCandidateData={currentCandidate} 
+                updateShowCandidate={setShowCandidate}
                 accountPage={true} 
                 rehireTabActive={rehireTabActive} 
                 hireTabActive={hireTabActive} 

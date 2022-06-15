@@ -7,7 +7,6 @@ export const initialCandidatesData = {
     candidatesToHire: [],
     onboardingCandidates: [],
     candidatesToRehire: [],
-    candidatesToInterview: [],
     selectedCandidates: [],
     rejectedCandidates: [],
 }
@@ -16,7 +15,6 @@ export const initialCandidatesDataStateNames = {
     candidatesToHire: "candidatesToHire",
     onboardingCandidates: "onboardingCandidates",
     candidatesToRehire: "candidatesToRehire",
-    candidatesToInterview: "candidatesToInterview",
     selectedCandidates: "selectedCandidates",
     rejectedCandidates: "rejectedCandidates",
 }
@@ -68,23 +66,23 @@ export const CandidateContextProvider = ({ children }) => {
             ]
         }})
 
-        dispatchToCandidatesData({ type: candidateDataReducerActions.UPDATE_INTERVIEWING_CANDIDATES, payload: {
-            stateToChange: initialCandidatesDataStateNames.candidatesToInterview,
-            value: [
-                {
-                    id: "3",
-                    name: "John",
-                    jobApplied: "Python",
-                    dateOfApplication: "10th April",
-                },
-                {
-                    id: "4",
-                    name: "Titan",
-                    jobApplied: "React",
-                    dateOfApplication: "9th April",
-                }
-            ]
-        }})
+        // dispatchToCandidatesData({ type: candidateDataReducerActions.UPDATE_INTERVIEWING_CANDIDATES, payload: {
+        //     stateToChange: initialCandidatesDataStateNames.candidatesToInterview,
+        //     value: [
+        //         {
+        //             id: "3",
+        //             name: "John",
+        //             jobApplied: "Python",
+        //             dateOfApplication: "10th April",
+        //         },
+        //         {
+        //             id: "4",
+        //             name: "Titan",
+        //             jobApplied: "React",
+        //             dateOfApplication: "9th April",
+        //         }
+        //     ]
+        // }})
 
         dispatchToCandidatesData({ type: candidateDataReducerActions.UPDATE_REHIRED_CANDIDATES, payload: {
             stateToChange: initialCandidatesDataStateNames.candidatesToRehire,
