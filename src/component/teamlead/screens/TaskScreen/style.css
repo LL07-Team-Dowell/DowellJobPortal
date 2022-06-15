@@ -1,0 +1,35 @@
+.candidate-task-screen-container{
+    --grey-color: #838383;
+    --light-grey-color: #E0E0E0;
+    --black: #000;
+    --green-color: #53CA5F;
+    --red-color: #FC3939;
+    font-family: 'Inter', sans-serif;
+}
+
+.candidate-task-screen-container{
+    padding: 3% 7%;
+}
+
+.candidate-task-screen-container > * {
+    color: var(--grey-color);
+}
+
+.candidate-task-screen-container .add-task-btn{
+    margin: 25% auto 50%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+.candidate-task-screen-container .add-task-btn span{
+    margin-right: 1%;
+}
+
+@media (min-width: 1200px){
+    .candidate-task-screen-container .add-task-btn{
+        width: 82%;
+        margin: 10% auto;
+    }
+}

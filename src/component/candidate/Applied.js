@@ -4,6 +4,8 @@ import * as BsIcons from 'react-icons/bs';
 import * as ImIcons from 'react-icons/im';
 import * as AiIcons from 'react-icons/ai';
 import { IconContext } from 'react-icons';
+import { myAxiosInstance } from '../../axios';
+import { loginUser } from './temporary/loginUser';
 
 
 
@@ -14,6 +16,23 @@ function Applied() {
   const [Applied, sethandleAppliedShow]=useState(true);
   const [Interview, sethandleInterviewShow]=useState(false);
   
+  const getAppliedData = async () => {
+    const response = await myAxiosInstance.get("/jobs/get_applications/")
+    console.log(response.data)
+  }
+
+  useEffect(() => {
+
+    loginUser();
+    // getAppliedData();
+
+  }, [])
+
+  useEffect(() => {
+    getAppliedData();
+  }, [])
+
+  
 
   const show =() => sethandleAppliedShow(!Applied) || sethandleInterviewShow(!Interview);
 
@@ -21,12 +40,12 @@ function Applied() {
   return (
     <div className='wrapper'>
       <div className='containers'>
-      <div class="slide-controls">
-               <input type="radio" name="slide" id="applied" checked/>
+      <div className="slide-controls">
+               <input type="radio" name="slide" id="applied" defaultChecked={true} />
                <input type="radio" name="slide" id="interview"/>
-               <label  for="applied" class="slide applied" onClick={show}>Applied (2)</label>
-               <label  for="interview" class="slide interview" onClick={show}>Interview (1)</label>
-               <div class="slider-tab"></div>
+               <label  htmlFor="applied" className="slide applied" onClick={show}>Applied (2)</label>
+               <label  htmlFor="interview" className="slide interview" onClick={show}>Interview (1)</label>
+               <div className="slider-tab"></div>
             </div>
       <div className='container__inner'>
         <div className={ Applied ? 'cards__switch applied__card': 'cards__switch'}>

@@ -71,5 +71,10 @@ const baseURL ='https://100055.pythonanywhere.com/api/';
      }
  )
 
+const myAxiosInstance = axios.create({
+    withCredentials: true,
+    baseURL: baseURL,
+})
 
- export default axiosInstance;
+
+export { axiosInstance, myAxiosInstance };

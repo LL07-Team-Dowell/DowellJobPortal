@@ -1,4 +1,4 @@
-import React, { StrictMode } from 'react';
+import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import SignIn from './component/candidate/Login';
@@ -15,13 +15,15 @@ import SelectedScreen from './component/Hr/hr_screens/selected/SelectedScreen';
 import Shorlisted from './component/Hr/component/Active/Shortlisted/Shorlisted';
 import ShortlistedScreen from './component/Hr/hr_screens/ShortlistedScreen';
 import JobApplied from './component/Hr/hr_screens/JobApplied/JobApplied';
-
-
-
+import Teamlead from './component/teamlead/Teamlead';
+import AccountPage from './component/account/AccountPage';
+import { NavigationContextProvider } from './contexts/NavigationContext';
+import { CandidateContextProvider } from './contexts/CandidatesContext';
+import JobApplicationScreen from './component/candidate/screens/JobApplicationScreen/JobApplicationScreen';
+import ErrorPage from './component/error/ErrorPage';
 
 function App() {
-  
- 
+
     return (
         <Routes>
 
@@ -46,6 +48,29 @@ function App() {
           
 
 
+          <Route path="/apply/job" element={<JobApplicationScreen />} />
+
+          <Route path="/teamlead" element={
+            <NavigationContextProvider>
+              <CandidateContextProvider>
+                <Teamlead />
+              </CandidateContextProvider>
+            </NavigationContextProvider>
+          } >
+            <Route path=':section' element={<Teamlead />} />
+          </Route>
+
+          <Route path="/account" element={
+            <NavigationContextProvider>
+              <CandidateContextProvider>
+                <AccountPage />
+              </CandidateContextProvider>
+            </NavigationContextProvider>
+          } >
+            <Route path=':section' element={<AccountPage />} />
+          </Route>
+
+          <Route path='*' element={<ErrorPage />} />
 
         </Routes>
     );

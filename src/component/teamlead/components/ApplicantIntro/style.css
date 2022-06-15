@@ -1,0 +1,31 @@
+h1.applicant-title-text{
+    font-size: 1.125rem;
+    line-height: 21.78px;
+    font-weight: 500;
+    color: #000;
+}
+
+.selected-applicant-intro p{
+    font-size: 1.125rem;
+    line-height: 21.78px;
+}
+
+.selected-applicant-intro{
+    display: flex;
+    align-items: center;   
+    justify-content: space-between;
+    margin: 4.5% 0 6%;
+}
+
+.selected-applicant-intro span{
+    font-size: 0.875rem;
+    line-height: 16.94px;
+}
+
+@media (min-width: 1200px){
+    .selected-applicant-intro, .applicant-title-text{
+        width: 82%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

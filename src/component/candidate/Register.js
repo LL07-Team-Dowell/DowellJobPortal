@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import axioInstance from '../../axios';
+import { axiosInstance } from '../../axios';
 import{useNavigate} from 'react-router-dom';
 // use the useNavigate to redirect the user after they've register
 
@@ -151,7 +151,7 @@ const useStyles = makeStyles((theme)=>({
 					</Button>
 					<Grid container justifyContent="flex-end">
 						<Grid item>
-							<Link href="/login" variant="body2">
+							<Link href="/DowellJobPortal/#/login" variant="body2">
 								Already have an account? Sign in
 							</Link>
 						</Grid>

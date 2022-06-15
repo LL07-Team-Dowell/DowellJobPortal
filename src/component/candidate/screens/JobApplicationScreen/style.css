@@ -1,0 +1,166 @@
+.candidate__Job__Application__Container{
+    --grey-color: #838383;
+    --light-grey-color: #C4C4C4;
+    --white: #fff;
+    --box-shadow-color: rgba(0, 0, 0, 0.15);
+    font-family: 'Inter', sans-serif;
+}
+
+.candidate__Job__Application__Container{
+    padding-left: 6%;
+    padding-right: 8%;
+    margin-top: 3%;
+    height: 100%;
+}
+
+.candidate__Job__Application__Container .relative-hr{
+    position: relative;
+    margin: 3% auto 6%;
+    width: 100%;
+}
+
+h1, h2 {
+    font-weight: 500;
+}
+
+h1{
+    font-size: 1.25rem;
+    line-height: 24px;
+    margin-bottom: 2%;
+}
+
+h2{
+    font-size: 1.125rem;
+    line-height: 22px;
+    margin: 3% 0 2%;
+}
+
+p{
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 19px;
+}
+
+.candidate__Job__Application__Container .job__Skills__Info span, p{
+    color: var(--grey-color);
+}
+
+.candidate__Job__Application__Container .job__Skills__Info{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+.candidate__Job__Application__Container .job__Skills__Info span{
+    margin-left: 0;
+    margin-bottom: 6%;
+    font-size: 0.875rem;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.candidate__Job__Application__Container .job__Skills__Info span .small-icon{
+    font-size: 0.875rem;
+}
+
+.candidate__Job__Application__Container .job__Skills__Info span > *:first-child{
+    margin-right: 3%;
+}
+
+.candidate__Job__Application__Container textarea, .candidate__Job__Application__Container .apply-btn{
+    outline: none;
+    border: none;
+}
+
+.candidate__Job__Application__Container textarea{
+    background: var(--white);
+    box-shadow: 0px 4px 8px var(--box-shadow-color), 0px -4px 8px var(--box-shadow-color);
+    resize: none;
+    display: block;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    line-height: 19px;
+    color: var(--grey-color);
+    padding: 3% 1.5%;
+}
+
+.candidate__Job__Application__Container .apply-btn{
+    background: var(--light-grey-color);
+    border-radius: 10px;
+    padding: 6% 35%;
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 24px;
+    position: absolute;
+    bottom: -30%;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+}
+
+.candidate__Job__Application__Container .select__Dropdown__Container{
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+
+}
+
+.candidate__Job__Application__Container .select__Dropdown__Container div{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 30%;
+    cursor: pointer;
+    padding: 4% 0;
+}
+
+.candidate__Job__Application__Container .select__Dropdown__Container div > input {
+    cursor: text;
+}
+
+.candidate__Job__Application__Container .select__Dropdown__Container select, .candidate__Job__Application__Container .select__Dropdown__Container input{
+    outline: none;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    transition: 0.35s ease-in-out;
+}
+
+.candidate__Job__Application__Container .select__Dropdown__Container select{
+    appearance: none;
+    background: var(--white);
+    width: 50%;
+    cursor: pointer;
+}
+
+.candidate__Job__Application__Container .select__Dropdown__Container input:focus{
+    border-bottom: 1px solid var(--grey-color);
+}
+
+.candidate__Job__Application__Container .select__Dropdown__Container select::-ms-expand{
+    display: none;
+}
+
+.candidate__Job__Application__Container .apply-btn:disabled, .candidate__Job__Application__Container .apply-btn[disabled]{
+    cursor: not-allowed;
+}
+
+
+@media screen and (min-width: 992px) {
+    .candidate__Job__Application__Container .job__Skills__Info span{
+        margin-bottom: 2%;
+    }
+
+    .candidate__Job__Application__Container .apply-btn{
+        padding: 2.5% 8%;
+        position: relative;
+        margin: 10% auto;
+    }
+
+    .candidate__Job__Application__Container .select__Dropdown__Container{
+        width: 60%;
+        margin: 5% 0;
+    }
+}

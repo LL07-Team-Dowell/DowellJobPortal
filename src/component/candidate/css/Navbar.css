@@ -12,6 +12,13 @@
     transition-timing-function: ease-in;
     transition: all 0.5s;
   }
+  .navbar .mini__Nav__Links__Container{
+    margin-left: auto;
+    width: 6%;
+  }
+  .navbar .mini__Nav__Links__Container > *:last-child{
+    margin-left: 20%;
+  }
   .navbar-toggle {
     background-color: #E0E0E0;
     width: 100%;
@@ -197,6 +204,14 @@
       width: 250px;    
 
 
+    }
+
+    .navbar .mini__Nav__Links__Container{
+      width: 18%;
+    }
+
+    .navbar .mini__Nav__Links__Container > *:last-child{
+      margin-left: 30%;
     }
     
     
