@@ -17,6 +17,8 @@ import ShortlistedScreen from './component/Hr/hr_screens/ShortlistedScreen';
 import JobApplied from './component/Hr/hr_screens/JobApplied/JobApplied';
 
 
+
+
 function App() {
   
  
@@ -41,6 +43,7 @@ function App() {
           <Route path="/shortlisted" element={<ShortlistedScreen/>}/>
 
           <Route path="/hr_applied/selected" element={<SelectedScreen/>}/>
+          
 
 
 
