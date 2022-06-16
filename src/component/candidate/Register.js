@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { axiosInstance } from '../../axios';
+import { axiosInstance, myAxiosInstance } from '../../axios';
 import{useNavigate} from 'react-router-dom';
 // use the useNavigate to redirect the user after they've register
 
@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme)=>({
 		password:'',
 	});
 	const [formData, updateFormData]= useState(initialFormData);
+	const [errorMessage, setErrorMessage] = useState(null);
 	const handleChange=(e)=>{
 		updateFormData({
 			...formData,
@@ -65,21 +66,32 @@ const useStyles = makeStyles((theme)=>({
 
 		});
 	};
-	const handleSubmit=(e)=>{
+	const handleSubmit= async (e)=>{
 		e.preventDefault();
 		console.log(formData);
 
-		axioInstance 
-				.post(requests.Registration, {
-					email:formData.email,
-					username:formData.username,
-					password:formData.password,
-				})
-				.then((res)=>{
-					navigate('/home');
-					console.log(res);
-					console.log(res.data);				
-				});
+		try{
+
+			await myAxiosInstance.post(requests.Registration, {
+				email:formData.email,
+				username:formData.username,
+				password:formData.password,
+			})
+
+			const response = await myAxiosInstance.post("/accounts/token/", {
+				username: formData.username,
+				password: formData.password
+			})
+
+			localStorage.setItem('access_token', response.data.access);
+			localStorage.setItem('refresh_token', response.data.refresh);
+
+			navigate("/home");
+
+		}catch (err){
+			setErrorMessage(err.response.data[Object.keys(err.response.data)[0]][0])
+		}
+
 	};
     const classes = useStyles();
 
@@ -95,6 +107,11 @@ const useStyles = makeStyles((theme)=>({
 				</Typography>
 				<form className={classes.form} noValidate>
 					<Grid container spacing={2}>
+						{
+							errorMessage && <Grid item xs={12}>
+								<p className='authentication__error__Message'>{errorMessage.charAt(0).toLocaleUpperCase() + errorMessage.slice(1)}</p>
+							</Grid>
+						}
 						<Grid item xs={12}>
 							<TextField
 								variant="outlined"
