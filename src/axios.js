@@ -58,7 +58,7 @@ const baseURL ='https://100055.pythonanywhere.com/api/';
                             return axiosInstance(originalRequest);
 
                         })
-                        .cata((err)=>{
+                        .catch((err)=>{
                             console.log(err);
                         });
                  }else{

@@ -47,7 +47,7 @@ function JobScreen() {
                                 <div className='row-text'>
                                     <h4><b>{job.title}</b></h4>
                                     <p className='detail dowell'>Dowell Ux living lab</p>
-                                    <p className='detail skill'>Skills: {job.skills}</p>
+                                    <p className='detail skill'>Skills: {job.skills.split(",").length > 1 ? job.skills.split(",")[0] + ", ..." : job.skills}</p>
                                     <button className='apply-button' onClick={() => handleApplyButtonClick(job)}>Apply</button>
                                 
                                 </div>
