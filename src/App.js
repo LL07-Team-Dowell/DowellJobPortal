@@ -21,7 +21,7 @@ import { NavigationContextProvider } from './contexts/NavigationContext';
 import { CandidateContextProvider } from './contexts/CandidatesContext';
 import JobApplicationScreen from './component/candidate/screens/JobApplicationScreen/JobApplicationScreen';
 import ErrorPage from './component/error/ErrorPage';
-import { AuthContextProvider } from './contexts/AuthContext';
+// import { AuthContextProvider } from './contexts/AuthContext';
 import JobApplicationForm from './component/candidate/screens/JobApplicationScreen/JobApplicationForm';
 import { NewApplicationContextProvider } from './contexts/NewApplicationContext';
 
@@ -75,9 +75,9 @@ function App() {
           <Route path="/account" element={
             <NavigationContextProvider>
               <CandidateContextProvider>
-                <AuthContextProvider>
+                {/* <AuthContextProvider> */}
                   <AccountPage />
-                </AuthContextProvider>
+                {/* </AuthContextProvider> */}
               </CandidateContextProvider>
             </NavigationContextProvider>
           } >
