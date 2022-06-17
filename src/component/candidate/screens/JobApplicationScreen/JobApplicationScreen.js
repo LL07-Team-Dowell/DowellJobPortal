@@ -10,7 +10,7 @@ import { countriesData } from "./countriesData";
 import { AiOutlineDown } from "react-icons/ai";
 import { freelancingPlatforms } from "./freelancingPlatforms";
 import { validateUrl } from "../../../../helpers/helpers";
-import { generalTerms, paymentTerms, qualificationsData, technicalTerms, workFlowTerms } from "./jobFormData";
+import { qualificationsData } from "./jobFormData";
 import { mutableNewApplicationStateNames, useNewApplicationContext } from "../../../../contexts/NewApplicationContext";
 import { newJobApplicationDataReducerActions } from "../../../../reducers/NewJobApplicationDataReducer";
 
@@ -26,6 +26,7 @@ const JobApplicationScreen = () => {
     const { section } = useParams();
     const selectCountryOptionRef = useRef(null);
     const qualificationSelectionRef = useRef(null);
+    const freelancePlatformRef = useRef(null);
     const [disableNextBtn, setDisableNextBtn] = useState(true);
     const generalTermsSelectionsRef = useRef([]);
     const [labelClicked, setLabelClicked] = useState(false);
@@ -35,10 +36,10 @@ const JobApplicationScreen = () => {
     
     const [formPage, setFormPage] = useState(1);
     
-    const getCurrentApplicant = async () => {
-        const response = await myAxiosInstance.get("/accounts/user_view/");
-        return response;
-    }
+    // const getCurrentApplicant = async () => {
+    //     const response = await myAxiosInstance.get("/accounts/user_view/");
+    //     return response;
+    // }
 
     const addToRefsArray = (elem, arrayToAddTo) => {
         if (elem && !arrayToAddTo.current.includes(elem)) arrayToAddTo.current.push(elem)
@@ -60,6 +61,10 @@ const JobApplicationScreen = () => {
     }, [newApplicationData.others.jobDescription])
 
     useEffect(() => {   
+
+        Object.keys(currentJob.others || {}).forEach(item => {
+            dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_OTHERS, payload: { stateToChange: item, value: item }})
+        })
 
         if (formPage === 1) {
 
@@ -101,7 +106,9 @@ const JobApplicationScreen = () => {
         }
         if (formPage === 6) {
 
-            if ((newApplicationData.freelancePlatform.length < 1) || (newApplicationData.freelancePlatformUrl.length < 1) ) return setDisableNextBtn(true);
+            if ((freelancePlatformRef.current.value === "default_") || (newApplicationData.freelancePlatformUrl.length < 1) ) return setDisableNextBtn(true);
+            
+            dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM, payload:{ stateToChange: mutableNewApplicationStateNames.freelancePlatform, value: freelancePlatformRef.current.value }})
             
             if ( !validateUrl(newApplicationData.freelancePlatformUrl, true)) return setDisableNextBtn(true);
             
@@ -119,19 +126,23 @@ const JobApplicationScreen = () => {
         }
         if (formPage === 8) {
 
-            if ( newApplicationData.others[mutableNewApplicationStateNames.others_property_discord_id].length < 1 ) return setDisableNextBtn(true);
-
-            if ( ( newApplicationData.others[mutableNewApplicationStateNames.others_property_github_id].length > 0 ) && (!validateUrl(newApplicationData.others[mutableNewApplicationStateNames.others_property_github_id], true))) return setDisableNextBtn(true);
-
             if ( !newApplicationData.others[mutableNewApplicationStateNames.others_property_agreeToAll] ) return setDisableNextBtn(true);
 
             return setDisableNextBtn(false);
 
         }
 
-        setDisableNextBtn(true);
+        return setDisableNextBtn(true);
 
-    }, [formPage, labelClicked, newApplicationData.country, newApplicationData.freelancePlatform, newApplicationData.freelancePlatformUrl, newApplicationData.others[mutableNewApplicationStateNames.others_property_qualifications], newApplicationData.others[mutableNewApplicationStateNames.others_property_discord_id], newApplicationData.others[mutableNewApplicationStateNames.others_property_github_id], newApplicationData.others[mutableNewApplicationStateNames.others_property_agreeToAll]])
+    }, [
+        formPage, 
+        labelClicked, 
+        newApplicationData.country, 
+        newApplicationData.freelancePlatformUrl, 
+        newApplicationData.others[mutableNewApplicationStateNames.others_property_qualifications], 
+        newApplicationData.others[mutableNewApplicationStateNames.others_property_agreeToAll]
+        ]
+    )
 
 
     const handleSubmitApplicationBtnClick = () => {
@@ -156,12 +167,6 @@ const JobApplicationScreen = () => {
     const createCheckBoxData = (arrayRef) => {
 
         return (data) => {
-            if (typeof(data) === "object") return (
-                <label onClick={() => setLabelClicked(!labelClicked)}>
-                    <input type={'checkbox'} ref={elem => addToRefsArray(elem, arrayRef)} />
-                    <span>{data.term} {data.link ? <a href={data.link} target={"_blank"} rel={'noreferrer noopener'}>Discord Link</a>: ""}</span>
-                </label>
-            )
     
             return (
                 <label onClick={() => setLabelClicked(!labelClicked)}>
@@ -173,6 +178,18 @@ const JobApplicationScreen = () => {
 
     }
 
+    const createInputData = (data) => {
+
+        return (
+            <>
+                <h2><b>{data}</b></h2>
+                <label className="text__Container">
+                    <input type={'text'} placeholder={data}/>
+                </label>
+            </>
+        )
+    }
+
     return <>
         <Navbar changeToBackButton={true} backButtonLink={'/home'} />
             <div className="container-wrapper candidate__Job__Application__Container">
@@ -181,16 +198,16 @@ const JobApplicationScreen = () => {
                     section === "form" ? <>
                         <h1><b>Job Application Form for {currentJob.title}</b></h1>
 
-                        <form>
+                        <form onSubmit={handleSubmitNewApplication}>
                             {
                                 
                                 formPage === 1 && <>
 
                                     <h2><b>General Terms and Conditions</b></h2>
                                     <p>Tick each box to continue</p>
-                                    <p>{generalTerms.title}</p>
+                                    <p>Thank you for applying to freelancing opportunity in uxlivinglab. Read following terms and conditions and accept</p>
                                     
-                                    {React.Children.toArray(generalTerms.terms.map(createCheckBoxData(generalTermsSelectionsRef)))}
+                                    {React.Children.toArray(Object.keys(currentJob.general_terms || {}).map(createCheckBoxData(generalTermsSelectionsRef)))}
                                 
                                 </>
                             }
@@ -200,8 +217,8 @@ const JobApplicationScreen = () => {
                                 
                                     <h2><b>Technical Specifications</b></h2>
                                     <p>Tick each box to approve</p>
-                                    <p>{technicalTerms.title}</p>
-                                    {React.Children.toArray(technicalTerms.terms.map(createCheckBoxData(technicalTermsSelectionsRef)))}
+                                    <p>Thank you for accepting terms and conditions. Read following technical specifications and accept</p>
+                                    {React.Children.toArray(Object.keys(currentJob.Technical_Specifications || {}).map(createCheckBoxData(technicalTermsSelectionsRef)))}
                                     
                                 </>
                             }
@@ -211,8 +228,8 @@ const JobApplicationScreen = () => {
                                 
                                     <h2><b>Payment Terms</b></h2>
                                     <p></p>
-                                    <p>{paymentTerms.title}</p>
-                                    {React.Children.toArray(paymentTerms.terms.map(createCheckBoxData(paymentTermsSelectionsRef)))}
+                                    <p>Thank you for accepting technical specifications. Read following payment terms and accept</p>
+                                    {React.Children.toArray(Object.keys(currentJob.Payment_terms || {}).map(createCheckBoxData(paymentTermsSelectionsRef)))}
                                 
                                 </>
                             }
@@ -223,8 +240,8 @@ const JobApplicationScreen = () => {
 
                                     <h2><b>Workflow Terms</b></h2>
                                     <p></p>
-                                    <p>{workFlowTerms.title}</p>
-                                    {React.Children.toArray(workFlowTerms.terms.map(createCheckBoxData(workflowTermsSelectionsRef)))}
+                                    <p>Thank you for accepting payment terms. Read following work flow to proceed</p>
+                                    {React.Children.toArray(Object.keys(currentJob.workflow || {}).map(createCheckBoxData(workflowTermsSelectionsRef)))}
                                 
                                 </>
                             }
@@ -247,12 +264,18 @@ const JobApplicationScreen = () => {
 
                             {
                                 formPage === 6 && <>
-                                    <h2><b>Freelancing Profile Link</b></h2>
+                                    <h2><b>Freelancing Profile</b></h2>
                                     
-                                    <label className="input__Text__Container">
-                                        Freelancing Platform
-                                        <input aria-label="freelance platform name" type={'text'} placeholder={'Name of Platform'} value={newApplicationData.freelancePlatform} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM, payload: { stateToChange: mutableNewApplicationStateNames.freelancePlatform , value: e.target.value }})} />
-                                    </label>
+                                    <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
+                                        <select name="freelancePlaform" ref={freelancePlatformRef} defaultValue={'default_'}>
+                                            <option value={'default_'} disabled>Select Option</option>
+                                            {React.Children.toArray(freelancingPlatforms.map(platform => {
+                                                return <option value={platform.toLocaleLowerCase()}>{platform}</option>
+                                            }))}
+                                        </select>
+                                        <AiOutlineDown className="dropdown__Icon" />
+                                    </div>
+
                                     <label className="input__Text__Container">
                                         Link to profile on freelancing platform
                                         <input aria-label="link to profile on freelance platform" type={'text'} placeholder={'Link to profile on platform'} value={newApplicationData.freelancePlatformUrl} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM_URL, payload: { stateToChange: mutableNewApplicationStateNames.freelancePlatformUrl, value: e.target.value }})} />
@@ -280,21 +303,8 @@ const JobApplicationScreen = () => {
                             {
                                 formPage === 8 && <>
 
-                                    <h2><b>Your Discord Profile ID</b></h2>
-                                    <label className="text__Container">
-                                        <input type={'text'} placeholder={'Discord Profile ID'} value={newApplicationData.others[mutableNewApplicationStateNames.others_property_discord_id]} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_DISCORD_ID, payload: { stateToChange: mutableNewApplicationStateNames.others_property_discord_id, value: e.target.value } })} />
-                                    </label>
-                                    
-                                    <h2><b>Your Github Profile<span className="skip__Option">(skip if not applicable)</span></b></h2>
-                                    <label className="text__Container">
-                                        <input type={'text'} placeholder={'Github Profile Link'} value={newApplicationData.others[mutableNewApplicationStateNames.others_property_github_id]} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_GITHUB_ID, payload: { stateToChange: mutableNewApplicationStateNames.others_property_github_id, value: e.target.value } })} />
-                                    </label>
-
-                                    <h2><b>Your Canva Profile<span className="skip__Option">(skip if not applicable)</span></b></h2>
-                                    <label className="text__Container">
-                                        <input type={'text'} placeholder={'Canva Profile'} value={newApplicationData.others[mutableNewApplicationStateNames.others_property_canva_id]} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_CANVA_ID, payload: { stateToChange: mutableNewApplicationStateNames.others_property_canva_id, value: e.target.value } })} />
-                                    </label>
-                                    
+                                    {React.Children.toArray(Object.keys(currentJob.others || {}).map(createInputData))}
+                                
                                     <label>
                                         <input type={'checkbox'} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_AGREE_TO_ALL, payload: { stateToChange: mutableNewApplicationStateNames.others_property_agreeToAll, value: e.target.checked } }) } />
                                         <span>Agree/Disagree to all terms</span>
@@ -310,11 +320,14 @@ const JobApplicationScreen = () => {
     
                             {
                                 
-                                formPage !== 8 ? 
+                                formPage !== 8 &&
                                 <>
-                                    <button type="button" disabled={disableNextBtn} onClick={() => { setFormPage(formPage + 1) } }>Next</button>
-                                </> :
-                                <>
+                                    <button type="button" disabled={disableNextBtn} onClick={() => { setFormPage(formPage + 1); } }>Next</button>
+                                </>
+                            }
+
+                            {
+                                formPage === 8 && <>
                                     <button type="submit" disabled={disableNextBtn} onClick={handleSubmitNewApplication}>Submit</button>
                                 </>
                             }

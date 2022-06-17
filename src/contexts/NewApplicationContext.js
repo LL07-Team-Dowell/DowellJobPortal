@@ -12,15 +12,9 @@ export const newApplicationState = {
     status: "Pending",
     others: {
         jobDescription: "",
-        acceptedGeneralTerms: true,
-        acceptedTechnicalTerms: true,
-        acceptedPaymentTerms: true,
-        acceptedWorkflowTerms: true,
         agreeToAllTerms: false,
         academic_qualifications: "",
-        discord_id: "",
         comments: "",
-        github_id: "",
     },
     applicant: "",
     job: "",
@@ -33,9 +27,6 @@ export const mutableNewApplicationStateNames = {
     others_property_jobDescription: "jobDescription",
     others_property_agreeToAll: "agreeToAllTerms",
     others_property_qualifications: "academic_qualifications",
-    others_property_discord_id: "discord_id",
-    others_property_github_id: "github_id",
-    others_property_canva_id: "canva_id",
     others_comments: "comments",
 }
 
