@@ -1,6 +1,5 @@
 export const qualificationsData = [
-    "Bachelor's",
-    "Diploma",
-    "Cerificate",
+    "Undergraduate",
     "Postgraduate",
+    "Others",
 ]
