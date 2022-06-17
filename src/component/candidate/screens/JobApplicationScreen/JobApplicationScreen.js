@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../../Navbar";
 import Footer from "../../Footer";
@@ -30,16 +30,12 @@ const JobApplicationScreen = () => {
     const [disableNextBtn, setDisableNextBtn] = useState(true);
     const generalTermsSelectionsRef = useRef([]);
     const [labelClicked, setLabelClicked] = useState(false);
+    const [showQualificationInput, setShowQualificationInput] = useState(false);
     const technicalTermsSelectionsRef = useRef([]);
     const paymentTermsSelectionsRef = useRef([]);
     const workflowTermsSelectionsRef = useRef([]);
     
-    const [formPage, setFormPage] = useState(1);
-    
-    // const getCurrentApplicant = async () => {
-    //     const response = await myAxiosInstance.get("/accounts/user_view/");
-    //     return response;
-    // }
+    const [formPage, setFormPage] = useState(7);
 
     const addToRefsArray = (elem, arrayToAddTo) => {
         if (elem && !arrayToAddTo.current.includes(elem)) arrayToAddTo.current.push(elem)
@@ -119,10 +115,12 @@ const JobApplicationScreen = () => {
 
             if (qualificationSelectionRef.current.value === "default_") return setDisableNextBtn(true);
             
-            dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_QUALIFICATIONS, payload:{ stateToChange: mutableNewApplicationStateNames.others_property_qualifications, value: qualificationSelectionRef.current.value }})
+            setShowQualificationInput(true);
             
-            if (newApplicationData.others[mutableNewApplicationStateNames.others_property_qualifications] !== "") return setDisableNextBtn(false);
+            if (newApplicationData.others[mutableNewApplicationStateNames.others_property_qualifications].length > 0) return setDisableNextBtn(false);
 
+            return setDisableNextBtn(true);
+            
         }
         if (formPage === 8) {
 
@@ -164,17 +162,14 @@ const JobApplicationScreen = () => {
         navigate("/applied");
     }
 
-    const createCheckBoxData = (arrayRef) => {
-
-        return (data) => {
-    
-            return (
-                <label onClick={() => setLabelClicked(!labelClicked)}>
-                    <input type={'checkbox'} ref={elem => addToRefsArray(elem, arrayRef)} />
-                    <span>{data}</span>
-                </label>
-            )
-        }
+    const createCheckBoxData = (data, arrayRef) => {
+        
+        return (
+            <label onClick={() => setLabelClicked(!labelClicked)}>
+                <input type={'checkbox'} ref={elem => addToRefsArray(elem, arrayRef)} />
+                <span>{data}</span>
+            </label>
+        )
 
     }
 
@@ -207,7 +202,7 @@ const JobApplicationScreen = () => {
                                     <p>Tick each box to continue</p>
                                     <p>Thank you for applying to freelancing opportunity in uxlivinglab. Read following terms and conditions and accept</p>
                                     
-                                    {React.Children.toArray(Object.keys(currentJob.general_terms || {}).map(createCheckBoxData(generalTermsSelectionsRef)))}
+                                    {React.Children.toArray(Object.keys(currentJob.general_terms || {}).map((key) => createCheckBoxData(currentJob.general_terms[key], generalTermsSelectionsRef)))}
                                 
                                 </>
                             }
@@ -218,7 +213,7 @@ const JobApplicationScreen = () => {
                                     <h2><b>Technical Specifications</b></h2>
                                     <p>Tick each box to approve</p>
                                     <p>Thank you for accepting terms and conditions. Read following technical specifications and accept</p>
-                                    {React.Children.toArray(Object.keys(currentJob.Technical_Specifications || {}).map(createCheckBoxData(technicalTermsSelectionsRef)))}
+                                    {React.Children.toArray(Object.keys(currentJob.Technical_Specifications || {}).map((key) => createCheckBoxData(currentJob.Technical_Specifications[key], technicalTermsSelectionsRef)))}
                                     
                                 </>
                             }
@@ -229,7 +224,7 @@ const JobApplicationScreen = () => {
                                     <h2><b>Payment Terms</b></h2>
                                     <p></p>
                                     <p>Thank you for accepting technical specifications. Read following payment terms and accept</p>
-                                    {React.Children.toArray(Object.keys(currentJob.Payment_terms || {}).map(createCheckBoxData(paymentTermsSelectionsRef)))}
+                                    {React.Children.toArray(Object.keys(currentJob.Payment_terms || {}).map((key) => createCheckBoxData(currentJob.Payment_terms[key], paymentTermsSelectionsRef)))}
                                 
                                 </>
                             }
@@ -241,7 +236,7 @@ const JobApplicationScreen = () => {
                                     <h2><b>Workflow Terms</b></h2>
                                     <p></p>
                                     <p>Thank you for accepting payment terms. Read following work flow to proceed</p>
-                                    {React.Children.toArray(Object.keys(currentJob.workflow || {}).map(createCheckBoxData(workflowTermsSelectionsRef)))}
+                                    {React.Children.toArray(Object.keys(currentJob.workflow || {}).map((key) => createCheckBoxData(currentJob.workflow[key], workflowTermsSelectionsRef)))}
                                 
                                 </>
                             }
@@ -297,13 +292,21 @@ const JobApplicationScreen = () => {
                                         </select>
                                         <AiOutlineDown className="dropdown__Icon" />
                                     </div>
+
+                                    { 
+                                        showQualificationInput && <label className="input__Text__Container">
+                                            Qualification
+                                            <input aria-label="your academic qualification" type={'text'} placeholder={'Academic Qualification'} value={newApplicationData.others[mutableNewApplicationStateNames.others_property_qualifications]} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_QUALIFICATIONS, payload: { stateToChange: mutableNewApplicationStateNames.others_property_qualifications, value: e.target.value }})} />
+                                        </label>
+                                    }
+
                                 </>
                             }
 
                             {
                                 formPage === 8 && <>
 
-                                    {React.Children.toArray(Object.keys(currentJob.others || {}).map(createInputData))}
+                                    {React.Children.toArray(Object.keys(currentJob.others || {}).map((key) => createInputData(currentJob.others[key])))}
                                 
                                     <label>
                                         <input type={'checkbox'} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_AGREE_TO_ALL, payload: { stateToChange: mutableNewApplicationStateNames.others_property_agreeToAll, value: e.target.checked } }) } />
