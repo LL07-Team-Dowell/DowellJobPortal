@@ -35,7 +35,7 @@ const JobApplicationScreen = () => {
     const paymentTermsSelectionsRef = useRef([]);
     const workflowTermsSelectionsRef = useRef([]);
     
-    const [formPage, setFormPage] = useState(7);
+    const [formPage, setFormPage] = useState(1);
 
     const addToRefsArray = (elem, arrayToAddTo) => {
         if (elem && !arrayToAddTo.current.includes(elem)) arrayToAddTo.current.push(elem)
