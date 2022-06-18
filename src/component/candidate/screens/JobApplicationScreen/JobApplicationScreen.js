@@ -24,7 +24,7 @@ const JobApplicationScreen = () => {
     const navigate = useNavigate();
     const [currentJob, setCurrentJob] = useState({});
     const { newApplicationData, dispatchToNewApplicationData } = useNewApplicationContext();
-    const [disableApplyBtn, setDisableApplyBtn] = useState(true);
+    const [disableApplyBtn, setDisableApplyBtn] = useState(false);
     const { section } = useParams();
     const selectCountryOptionRef = useRef(null);
     const qualificationSelectionRef = useRef(null);
@@ -50,14 +50,7 @@ const JobApplicationScreen = () => {
         
         setCurrentJob(location.state.jobToApplyTo);
 
-    }, [])
-
-    useEffect(() => {
-        if ( newApplicationData.others.jobDescription.length < 1 ) return setDisableApplyBtn(true);
-
-        setDisableApplyBtn(false);
-
-    }, [newApplicationData.others.jobDescription])
+    }, []);
 
     useEffect(() => {   
 
@@ -369,7 +362,7 @@ const JobApplicationScreen = () => {
 
                         <h2><b>Job Description</b></h2>
 
-                        <textarea placeholder="What you'll do" value={newApplicationData.jobDescription} onChange={ (e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_JOB_DESCRIPTION, payload: { stateToChange: mutableNewApplicationStateNames.others_property_jobDescription ,value: e.target.value } }) } rows={10}></textarea>
+                        <textarea readOnly={true} value={currentJob.description} rows={10}></textarea>
                         
 
                         <button className="apply-btn" onClick={handleSubmitApplicationBtnClick} disabled={disableApplyBtn}>Apply</button>
