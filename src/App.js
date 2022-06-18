@@ -23,6 +23,7 @@ import JobApplicationScreen from './component/candidate/screens/JobApplicationSc
 import ErrorPage from './component/error/ErrorPage';
 // import { AuthContextProvider } from './contexts/AuthContext';
 import { NewApplicationContextProvider } from './contexts/NewApplicationContext';
+import { AppliedJobsContextProvider } from './contexts/AppliedJobsContext';
 
 function App() {
 
@@ -33,12 +34,22 @@ function App() {
             
           <Route path="/login" element={<SignIn/>}/>
             
-          <Route path="/home" element={<CandidateHomeScreen/>}/>
+          <Route path="/home" element={
+            <AppliedJobsContextProvider>
+              <CandidateHomeScreen/>
+            </AppliedJobsContextProvider>
+          }/>
           <Route path="/logout" element={<Logout/>}/>
           <Route path="/alerts" element={<AlertScreen/>}/>
           <Route path="/user" element={<UserScreen/>}/>
           <Route path="/task" element={<TaskScreen/>}/>
-          <Route path="/applied" element={<AppliedScreen/>}/>
+
+          <Route path="/applied" element={
+            <AppliedJobsContextProvider>
+              <AppliedScreen/>
+            </AppliedJobsContextProvider>
+          }/>
+
           <Route path="/hr_screen" element={<Hr_JobScreen/>}/>
           
           <Route path="/id" element={<JobApplied/>}/>
@@ -51,12 +62,16 @@ function App() {
           
           <Route path="/apply/job" element={
             <NewApplicationContextProvider>
-              <JobApplicationScreen />
+              <AppliedJobsContextProvider>
+                <JobApplicationScreen />
+              </AppliedJobsContextProvider>
             </NewApplicationContextProvider>
             }>
               <Route path=":section" element={
                 <NewApplicationContextProvider>
-                  <JobApplicationScreen />
+                  <AppliedJobsContextProvider>
+                    <JobApplicationScreen />
+                  </AppliedJobsContextProvider>
                 </NewApplicationContextProvider>
               } />
           </Route>

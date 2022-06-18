@@ -7,11 +7,13 @@ import { axiosInstance, myAxiosInstance } from '../../axios';
 import requests from '../../request';
 import { useNavigate } from 'react-router-dom';
 import { loginUser } from './temporary/loginUser';
+import { useAppliedJobsContext } from '../../contexts/AppliedJobsContext';
 
 
 
 function JobScreen() {
     const [jobs, setJobs]=useState([]);
+    const { appliedJobsState } = useAppliedJobsContext();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -48,7 +50,11 @@ function JobScreen() {
                                     <h4><b>{job.title}</b></h4>
                                     <p className='detail dowell'>Dowell Ux living lab</p>
                                     <p className='detail skill'>Skills: {job.skills.split(",").length > 1 ? job.skills.split(",")[0] + ", ..." : job.skills}</p>
-                                    <button className='apply-button' onClick={() => handleApplyButtonClick(job)}>Apply</button>
+                                    {
+                                        appliedJobsState.appliedJobs.find(appliedJob => appliedJob.id === job.id ) == undefined ?
+                                        <button className='apply-button' onClick={() => handleApplyButtonClick(job)}>Apply</button> :
+                                        <button className='apply-button' disabled={true}>Applied</button>
+                                    }
                                 
                                 </div>
                             

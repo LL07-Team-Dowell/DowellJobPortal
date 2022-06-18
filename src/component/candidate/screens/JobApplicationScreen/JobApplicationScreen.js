@@ -15,6 +15,8 @@ import { mutableNewApplicationStateNames, useNewApplicationContext } from "../..
 import { newJobApplicationDataReducerActions } from "../../../../reducers/NewJobApplicationDataReducer";
 
 import "./style.css";
+import { initialAppliedJobsStateNames, useAppliedJobsContext } from "../../../../contexts/AppliedJobsContext";
+import { appliedJobsReducerActions } from "../../../../reducers/AppliedJobsReducer";
 
 
 const JobApplicationScreen = () => {
@@ -34,6 +36,7 @@ const JobApplicationScreen = () => {
     const technicalTermsSelectionsRef = useRef([]);
     const paymentTermsSelectionsRef = useRef([]);
     const workflowTermsSelectionsRef = useRef([]);
+    const { appliedJobsState, dispatchToAppliedJobsState } = useAppliedJobsContext();
     
     const [formPage, setFormPage] = useState(1);
 
@@ -124,8 +127,16 @@ const JobApplicationScreen = () => {
         }
         if (formPage === 8) {
 
-            if ( !newApplicationData.others[mutableNewApplicationStateNames.others_property_agreeToAll] ) return setDisableNextBtn(true);
+            if ( !newApplicationData.others[mutableNewApplicationStateNames.others_property_agreeToAll] ) {
+                
+                dispatchToAppliedJobsState({ type: appliedJobsReducerActions.UPDATE_APPLIED_JOBS, payload: { removeFromExisting: true, stateToChange: initialAppliedJobsStateNames.appliedJobs, value: currentJob }})
+            
+                return setDisableNextBtn(true);
+            }
+                
 
+            dispatchToAppliedJobsState({ type: appliedJobsReducerActions.UPDATE_APPLIED_JOBS, payload: { updateExisting: true, stateToChange: initialAppliedJobsStateNames.appliedJobs, value: currentJob }})
+            
             return setDisableNextBtn(false);
 
         }
@@ -308,7 +319,7 @@ const JobApplicationScreen = () => {
 
                                     {React.Children.toArray(Object.keys(currentJob.others || {}).map((key) => createInputData(currentJob.others[key])))}
                                 
-                                    <label>
+                                    <label onClick={() => setLabelClicked(!labelClicked)}>
                                         <input type={'checkbox'} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_AGREE_TO_ALL, payload: { stateToChange: mutableNewApplicationStateNames.others_property_agreeToAll, value: e.target.checked } }) } />
                                         <span>Agree/Disagree to all terms</span>
                                     </label>

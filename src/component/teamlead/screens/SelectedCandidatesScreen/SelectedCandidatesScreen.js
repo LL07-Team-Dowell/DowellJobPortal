@@ -11,7 +11,7 @@ import PaymentDetails from '../../../account/components/PaymentDetails/PaymentDe
 
 import "./style.css";
 import { accountPageActions } from '../../../account/actions/AccountActions';
-import { candidateDataReducerActions } from '../../../../reducers/CandidateReducerActions';
+import { candidateDataReducerActions } from '../../../../reducers/CandidateDataReducer';
 import { initialCandidatesDataStateNames } from '../../../../contexts/CandidatesContext';
 
 
