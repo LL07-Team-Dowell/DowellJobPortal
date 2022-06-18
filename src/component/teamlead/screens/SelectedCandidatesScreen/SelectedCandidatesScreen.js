@@ -11,7 +11,7 @@ import PaymentDetails from '../../../account/components/PaymentDetails/PaymentDe
 
 import "./style.css";
 import { accountPageActions } from '../../../account/actions/AccountActions';
-import { candidateDataReducerActions } from '../../../../reducers/CandidateReducerActions';
+import { candidateDataReducerActions } from '../../../../reducers/CandidateDataReducer';
 import { initialCandidatesDataStateNames } from '../../../../contexts/CandidatesContext';
 
 
@@ -23,11 +23,11 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
     const ref5 = useRef(null);
     const [ disabled, setDisabled ] = useState(false);
 
-    const handleClick = (ref, action) => {
+    const handleClick = (ref, disableOtherBtns, action) => {
         
         if (!ref.current) return;
 
-        setDisabled(true);
+        { disableOtherBtns && setDisabled(true) };
 
         ref.current.classList.toggle("active");
         
@@ -168,7 +168,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                 <div className={`status-options-container ${rehireTabActive ? 'rehire': ''}`}>
                     {
                         rehireTabActive ?
-                        <button className="status-option green-color" ref={ref3} onClick={() => handleClick(ref3)} disabled={disabled}>
+                        <button className={`status-option green-color ${accountPage ? 'active' : ''}`} ref={ref3} onClick={() => handleClick(ref3, false)} disabled={accountPage ? true :  disabled}>
                             <CheckCircleIcon className='status-icon' />
                             <br /><br/>
                             <div className='textt'>Pay</div>
@@ -178,7 +178,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                         <></>
                     }
                     
-                    <button className="status-option green-color" ref={ref1} onClick={() => handleClick(ref1, hireTabActive ? accountPageActions.MOVE_TO_ONBOARDING : showOnboarding ? accountPageActions.MOVE_TO_REHIRE : "")} disabled={disabled}>
+                    <button className={`status-option green-color ${accountPage && rehireTabActive ? 'active' : ''}`} ref={ref1} onClick={() => handleClick(ref1, true, hireTabActive ? accountPageActions.MOVE_TO_ONBOARDING : showOnboarding ? accountPageActions.MOVE_TO_REHIRE : "")} disabled={accountPage && rehireTabActive ? true : disabled}>
                         <BsStopCircle className='status-icon' />
                         {/* <FiStopCircle className='status-icon' /> */}
                         <br /><br/>
@@ -190,7 +190,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                         
                         <></> :
 
-                        <button className="status-option red-color" ref={ref2} onClick={() => handleClick(ref2, accountPageActions.MOVE_TO_REJECTED)} disabled={disabled}>
+                        <button className="status-option red-color" ref={ref2} onClick={() => handleClick(ref2, true, accountPageActions.MOVE_TO_REJECTED)} disabled={disabled}>
                             {accountPage && rehireTabActive ? <AiOutlineCloseCircle className='status-icon' /> : <BsStopCircle className='status-icon' />}
                             <br /><br/>
                             {/* <FiStopCircle className='status-icon' /> */}
@@ -207,13 +207,13 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                         <CustomHr className="rehire-hr" />
                         <h2 className='top-m'>Status</h2>
                         <div className="status-options-container">
-                            <button className="status-option green-color" ref={ref4} onClick={() => handleClick(ref4, accountPageActions.MOVE_TO_ONBOARDING)} disabled={disabled}>
+                            <button className="status-option green-color" ref={ref4} onClick={() => handleClick(ref4, true, accountPageActions.MOVE_TO_ONBOARDING)} disabled={disabled}>
                                 <BsStopCircle className='status-icon' />
                                 <br /><br/>
                                 {/* <FiStopCircle className='status-icon' /> */}
                                 <div className='textt'>Onboarding</div>
                             </button>
-                            <button className="status-option red-color" ref={ref5} onClick={() => handleClick(ref5, accountPageActions.MOVE_TO_REJECTED)} disabled={disabled}>
+                            <button className="status-option red-color" ref={ref5} onClick={() => handleClick(ref5, true, accountPageActions.MOVE_TO_REJECTED)} disabled={disabled}>
                                 <BsStopCircle className='status-icon' />
                                 <br /><br/>
                                 {/* <FiStopCircle className='status-icon' /> */}

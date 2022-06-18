@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import axiosInstance from "../../axios";
+import axiosInstance, { myAxiosInstance } from "../../axios";
 import { useCandidateContext, initialCandidatesDataStateNames } from "../../contexts/CandidatesContext";
 import { useNavigationContext } from "../../contexts/NavigationContext";
-import { candidateDataReducerActions } from "../../reducers/CandidateReducerActions";
+import { candidateDataReducerActions } from "../../reducers/CandidateDataReducer";
 import BottomNavigationBar from "../teamlead/components/BottomNavigationBar/BottomNavigationBar";
 import JobTile from "../teamlead/components/JobTile/JobTile";
 import NavigationBar from "../teamlead/components/NavigationBar/NavigationBar";
@@ -13,6 +13,7 @@ import SelectedCandidatesScreen from "../teamlead/screens/SelectedCandidatesScre
 import RejectedCandidates from "./components/RejectedCandidates/RejectedCandidates";
 import SideNavigationBar from "./components/SideNavigationBar/SideNavigationBar";
 import useClickOutside from "./hooks/useClickOutside";
+import { useCustomAxios } from "./hooks/useCustomAxios";
 
 const AccountPage = () => {
     const { section, searchParams, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
@@ -26,6 +27,7 @@ const AccountPage = () => {
     const sideNavbarRef = useRef(null);
 
     useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
+    // useCustomAxios();
 
     useEffect(() => {
         // axios.defaults.baseURL = "https://100055.pythonanywhere.com/api/";

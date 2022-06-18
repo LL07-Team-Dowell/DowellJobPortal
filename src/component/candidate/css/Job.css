@@ -70,6 +70,18 @@
 
 
   }
+
+  .apply-button:disabled, .apply-button[disabled]{
+    background: #C4C4C4;
+    color: #838383;
+    border: none;
+    cursor: not-allowed;
+  }
+
+  .apply-button:disabled:hover, .apply-button[disabled]:hover{
+    background: #C4C4C4;
+    color: #838383;
+  }
  
   .apply-button:hover{
      background: #838383;
