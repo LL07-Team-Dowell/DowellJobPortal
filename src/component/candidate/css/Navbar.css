@@ -15,6 +15,7 @@
   .navbar .mini__Nav__Links__Container{
     margin-left: auto;
     width: 6%;
+    display: flex;
   }
   .navbar .mini__Nav__Links__Container > *:last-child{
     margin-left: 20%;
