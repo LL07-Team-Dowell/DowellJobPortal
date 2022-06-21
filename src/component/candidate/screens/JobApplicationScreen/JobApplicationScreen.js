@@ -3,7 +3,6 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../../Navbar";
 import Footer from "../../Footer";
 import CustomHr from "../../../teamlead/components/CustomHr/CustomHr";
-import { BsPeople } from "react-icons/bs";
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import { myAxiosInstance } from "../../../../axios";
 import { countriesData } from "./countriesData";
@@ -89,36 +88,21 @@ const JobApplicationScreen = () => {
         }
         if (formPage === 5) {
 
-            if (selectCountryOptionRef.current.value === "default_") return setDisableNextBtn(true);
+            if ((selectCountryOptionRef.current.value === "default_") || (newApplicationData.country.length < 1)) return setDisableNextBtn(true);
             
             dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_COUNTRY, payload:{ stateToChange: mutableNewApplicationStateNames.country, value: selectCountryOptionRef.current.value }})
             
-            if (newApplicationData.country !== "") return setDisableNextBtn(false);
-
-        }
-        if (formPage === 6) {
-
             if ((freelancePlatformRef.current.value === "default_") || (newApplicationData.freelancePlatformUrl.length < 1) ) return setDisableNextBtn(true);
             
             dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM, payload:{ stateToChange: mutableNewApplicationStateNames.freelancePlatform, value: freelancePlatformRef.current.value }})
             
             if ( !validateUrl(newApplicationData.freelancePlatformUrl, true)) return setDisableNextBtn(true);
             
-            return setDisableNextBtn(false);
-
-        }
-        if (formPage === 7) {
-
             if (qualificationSelectionRef.current.value === "default_") return setDisableNextBtn(true);
             
             setShowQualificationInput(true);
             
-            if (newApplicationData.others[mutableNewApplicationStateNames.others_property_qualifications].length > 0) return setDisableNextBtn(false);
-
-            return setDisableNextBtn(true);
-            
-        }
-        if (formPage === 8) {
+            if (newApplicationData.others[mutableNewApplicationStateNames.others_property_qualifications].length < 1) return setDisableNextBtn(true);
 
             if ( !newApplicationData.others[mutableNewApplicationStateNames.others_property_agreeToAll] ) {
                 
@@ -126,7 +110,6 @@ const JobApplicationScreen = () => {
             
                 return setDisableNextBtn(true);
             }
-                
 
             dispatchToAppliedJobsState({ type: appliedJobsReducerActions.UPDATE_APPLIED_JOBS, payload: { updateExisting: true, stateToChange: initialAppliedJobsStateNames.appliedJobs, value: currentJob }})
             
@@ -258,11 +241,7 @@ const JobApplicationScreen = () => {
                                         </select>
                                         <AiOutlineDown className="dropdown__Icon" />
                                     </div>
-                                </>
-                            }
 
-                            {
-                                formPage === 6 && <>
                                     <h2><b>Freelancing Profile</b></h2>
                                     
                                     <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
@@ -279,12 +258,6 @@ const JobApplicationScreen = () => {
                                         Link to profile on freelancing platform
                                         <input aria-label="link to profile on freelance platform" type={'text'} placeholder={'Link to profile on platform'} value={newApplicationData.freelancePlatformUrl} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM_URL, payload: { stateToChange: mutableNewApplicationStateNames.freelancePlatformUrl, value: e.target.value }})} />
                                     </label>
-
-                                </>
-                            }
-
-                            {
-                                formPage === 7 && <>
 
                                     <h2><b>Academic Qualifications</b></h2>
                                     <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
@@ -304,12 +277,6 @@ const JobApplicationScreen = () => {
                                         </label>
                                     }
 
-                                </>
-                            }
-
-                            {
-                                formPage === 8 && <>
-
                                     {React.Children.toArray(Object.keys(currentJob.others || {}).map((key) => createInputData(currentJob.others[key])))}
                                 
                                     <label onClick={() => setLabelClicked(!labelClicked)}>
@@ -321,20 +288,20 @@ const JobApplicationScreen = () => {
                                         Comments/Suggestions
                                         <input type={'text'} placeholder={'Any comments'} value={newApplicationData.others[mutableNewApplicationStateNames.others_comments]} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_COMMENTS, payload: { stateToChange: mutableNewApplicationStateNames.others_comments, value: e.target.value } })} />
                                     </label>
-                                
+
                                 </>
                             }
     
                             {
                                 
-                                formPage !== 8 &&
+                                formPage !== 5 &&
                                 <>
                                     <button type="button" disabled={disableNextBtn} onClick={() => { setFormPage(formPage + 1); } }>Next</button>
                                 </>
                             }
 
                             {
-                                formPage === 8 && <>
+                                formPage === 5 && <>
                                     <button type="submit" disabled={disableNextBtn} onClick={handleSubmitNewApplication}>Submit</button>
                                 </>
                             }
@@ -352,11 +319,7 @@ const JobApplicationScreen = () => {
                             </span>
                             <span>
                                 <BusinessCenterIcon className="small-icon" />
-                                0-1 Yr
-                            </span>
-                            <span>
-                                <BsPeople />
-                                1 opening
+                                { currentJob.time_period}
                             </span>
                         </div>
 

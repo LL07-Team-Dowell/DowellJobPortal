@@ -19,7 +19,7 @@ function Applied() {
   const { appliedJobsState } = useAppliedJobsContext();
   
   const getAppliedData = async () => {
-    // const response = await myAxiosInstance.get("/jobs/get_jobs/")
+    // const response = await myAxiosInstance.get("/jobs/get_my_applications/")
     // console.log(response.data)
     console.log(appliedJobsState)
   }

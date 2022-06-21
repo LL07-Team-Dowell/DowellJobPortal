@@ -229,6 +229,10 @@ p{
         margin-bottom: 10%;
     }
 
+    .candidate__Job__Application__Container .relative-hr{
+        margin: 4% auto;
+    }
+
     .candidate__Job__Application__Container .job__Skills__Info span{
         margin-bottom: 2%;
     }
