@@ -104,7 +104,7 @@
 
       
   }
-  ul{
+  ul.job__Detail__Span_Container{
       display: flex;
       list-style-type: none;
       /* margin-right: '20px'; */
@@ -117,7 +117,7 @@
 
       
   }
-  li{
+  ul.job__Detail__Span_Container li{
       display: inline-flex;
       margin: 3px;
       font-family: 'Inter';

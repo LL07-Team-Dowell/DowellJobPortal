@@ -49,13 +49,15 @@ const JobApplicationScreen = () => {
         
         setCurrentJob(location.state.jobToApplyTo);
 
+        Object.keys(location.state.jobToApplyTo.others || {}).forEach(item => {
+            dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_OTHERS, payload: { stateToChange: item, value: "" }})
+        })
+
+        dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_OTHERS, payload: { stateToChange: mutableNewApplicationStateNames.others_property_jobDescription, value: location.state.jobToApplyTo.description }})
+
     }, []);
 
-    useEffect(() => {   
-
-        Object.keys(currentJob.others || {}).forEach(item => {
-            dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_OTHERS, payload: { stateToChange: item, value: item }})
-        })
+    useEffect(() => {
 
         if (formPage === 1) {
 
@@ -88,21 +90,25 @@ const JobApplicationScreen = () => {
         }
         if (formPage === 5) {
 
-            if ((selectCountryOptionRef.current.value === "default_") || (newApplicationData.country.length < 1)) return setDisableNextBtn(true);
+            if (!qualificationSelectionRef.current) return;
+
+            if (qualificationSelectionRef.current.value !== "default_") setShowQualificationInput(true);
             
             dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_COUNTRY, payload:{ stateToChange: mutableNewApplicationStateNames.country, value: selectCountryOptionRef.current.value }})
             
-            if ((freelancePlatformRef.current.value === "default_") || (newApplicationData.freelancePlatformUrl.length < 1) ) return setDisableNextBtn(true);
+            if ((selectCountryOptionRef.current.value === "default_") || (newApplicationData.country.length < 1)) return setDisableNextBtn(true);
             
             dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM, payload:{ stateToChange: mutableNewApplicationStateNames.freelancePlatform, value: freelancePlatformRef.current.value }})
+            
+            if ((freelancePlatformRef.current.value === "default_") || (newApplicationData.freelancePlatformUrl.length < 1) ) return setDisableNextBtn(true);
             
             if ( !validateUrl(newApplicationData.freelancePlatformUrl, true)) return setDisableNextBtn(true);
             
             if (qualificationSelectionRef.current.value === "default_") return setDisableNextBtn(true);
+
+            dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_QUALIFICATIONS, payload: { stateToChange: mutableNewApplicationStateNames.others_property_qualification, value: qualificationSelectionRef.current.value }})
             
-            setShowQualificationInput(true);
-            
-            if (newApplicationData.others[mutableNewApplicationStateNames.others_property_qualifications].length < 1) return setDisableNextBtn(true);
+            if (newApplicationData.others[mutableNewApplicationStateNames.others_property_qualification_type].length < 1) return setDisableNextBtn(true);
 
             if ( !newApplicationData.others[mutableNewApplicationStateNames.others_property_agreeToAll] ) {
                 
@@ -124,7 +130,7 @@ const JobApplicationScreen = () => {
         labelClicked, 
         newApplicationData.country, 
         newApplicationData.freelancePlatformUrl, 
-        newApplicationData.others[mutableNewApplicationStateNames.others_property_qualifications], 
+        newApplicationData.others[mutableNewApplicationStateNames.others_property_qualification_type], 
         newApplicationData.others[mutableNewApplicationStateNames.others_property_agreeToAll]
         ]
     )
@@ -143,7 +149,7 @@ const JobApplicationScreen = () => {
         e.preventDefault();
 
         setDisableNextBtn(true);
-
+        
         await myAxiosInstance.post("/jobs/add_application/", newApplicationData);
 
         navigate("/applied");
@@ -160,13 +166,12 @@ const JobApplicationScreen = () => {
 
     }
 
-    const createInputData = (data) => {
-
+    const createInputData = (key, data) => {
         return (
             <>
                 <h2><b>{data}</b></h2>
                 <label className="text__Container">
-                    <input type={'text'} placeholder={data}/>
+                    <input type={'text'} placeholder={data} value={newApplicationData.others[key] ? newApplicationData.others[key] : ""} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_OTHERS, payload: { stateToChange: key, value: e.target.value } })} />
                 </label>
             </>
         )
@@ -255,7 +260,7 @@ const JobApplicationScreen = () => {
                                     </div>
 
                                     <label className="input__Text__Container">
-                                        Link to profile on freelancing platform
+                                        <h2><b>Link to profile on freelancing platform</b></h2>
                                         <input aria-label="link to profile on freelance platform" type={'text'} placeholder={'Link to profile on platform'} value={newApplicationData.freelancePlatformUrl} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM_URL, payload: { stateToChange: mutableNewApplicationStateNames.freelancePlatformUrl, value: e.target.value }})} />
                                     </label>
 
@@ -264,7 +269,7 @@ const JobApplicationScreen = () => {
                                         <select name="qualifications" ref={qualificationSelectionRef} defaultValue={'default_'}>
                                             <option value={'default_'} disabled>Select Option</option>
                                             {React.Children.toArray(qualificationsData.map(qualification => {
-                                                return <option value={qualification.toLocaleLowerCase()}>{qualification}</option>
+                                                return <option value={qualification.toLocaleLowerCase()} onClick={() => setLabelClicked(!labelClicked)}>{qualification}</option>
                                             }))}
                                         </select>
                                         <AiOutlineDown className="dropdown__Icon" />
@@ -272,12 +277,12 @@ const JobApplicationScreen = () => {
 
                                     { 
                                         showQualificationInput && <label className="input__Text__Container">
-                                            Qualification
-                                            <input aria-label="your academic qualification" type={'text'} placeholder={'Academic Qualification'} value={newApplicationData.others[mutableNewApplicationStateNames.others_property_qualifications]} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_QUALIFICATIONS, payload: { stateToChange: mutableNewApplicationStateNames.others_property_qualifications, value: e.target.value }})} />
+                                            <h2 className="qualification__Title__Text"><b>Qualification</b></h2>
+                                            <input aria-label="your academic qualification" type={'text'} placeholder={'Academic Qualification'} value={newApplicationData.others[mutableNewApplicationStateNames.others_property_qualification_type]} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_QUALIFICATIONS, payload: { stateToChange: mutableNewApplicationStateNames.others_property_qualification_type, value: e.target.value }})} />
                                         </label>
                                     }
 
-                                    {React.Children.toArray(Object.keys(currentJob.others || {}).map((key) => createInputData(currentJob.others[key])))}
+                                    {React.Children.toArray(Object.keys(currentJob.others || {}).map((key) => createInputData(key, currentJob.others[key])))}
                                 
                                     <label onClick={() => setLabelClicked(!labelClicked)}>
                                         <input type={'checkbox'} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_AGREE_TO_ALL, payload: { stateToChange: mutableNewApplicationStateNames.others_property_agreeToAll, value: e.target.checked } }) } />

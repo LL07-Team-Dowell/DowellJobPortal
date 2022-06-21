@@ -67,7 +67,7 @@ function JobScreen() {
 
                                         <div className='row-bottom'>
                                         <IconContext.Provider value={{ color: '#838383', size:'14px' }}>
-                                            <ul>
+                                            <ul className='job__Detail__Span_Container'>
                                                 <li>
                                                     <FaIcons.FaToolbox/>
                                                     {job.time_period}

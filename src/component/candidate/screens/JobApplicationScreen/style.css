@@ -28,13 +28,13 @@ h1, h2 {
 h1{
     font-size: 1.25rem;
     line-height: 24px;
-    margin-bottom: 20%;
+    margin-bottom: 10%;
 }
 
 h2{
     font-size: 1.125rem;
     line-height: 22px;
-    margin: 15% 0 2%;
+    margin: 8% 0 6%;
 }
 
 p{
@@ -128,11 +128,15 @@ p{
 .candidate__Job__Application__Container form label.input__Text__Container{
     flex-direction: column;
     align-items: flex-start;
-    margin: 18% 0 14%;
+    margin: 10% 0 2%;
+}
+
+.candidate__Job__Application__Container form label h2.qualification__Title__Text {
+    margin: 2% 0;
 }
 
 .candidate__Job__Application__Container form label.input__Text__Container input[type=text]{
-    margin: 12% 0;
+    margin: 5% 0;
 }
 
 .candidate__Job__Application__Container form label.input__Text__Container input{
@@ -216,10 +220,9 @@ p{
     margin-right: 3%;
 }
 
-
 @media screen and (min-width: 992px) {
     h1{
-        margin-bottom: 2%;
+        margin-bottom: 5%;
     }
     h2{
         margin: 3% 0 2%;

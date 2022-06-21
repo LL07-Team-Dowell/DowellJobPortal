@@ -13,7 +13,8 @@ export const newApplicationState = {
     others: {
         jobDescription: "",
         agreeToAllTerms: false,
-        academic_qualifications: "",
+        academic_qualification_type: "",
+        academic_qualification: "",
         comments: "",
     },
     applicant: "",
@@ -26,7 +27,8 @@ export const mutableNewApplicationStateNames = {
     freelancePlatformUrl: "freelancePlatformUrl",
     others_property_jobDescription: "jobDescription",
     others_property_agreeToAll: "agreeToAllTerms",
-    others_property_qualifications: "academic_qualifications",
+    others_property_qualification_type: "academic_qualification_type",
+    others_property_qualification: "academic_qualification",
     others_comments: "comments",
 }
 
