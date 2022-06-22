@@ -13,6 +13,19 @@
     padding: 4.8% 6%;
 }
 
+.navbar-container.hr_navigation div.menu__Icon__Container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 80%;
+}
+
+.navbar-container.hr_navigation div.menu__Icon__Container h2{
+    margin-left: 10%;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 .sticky-nav{
     position: fixed;
     top: 0;
@@ -33,10 +46,19 @@
     .navbar-container{
         padding: 2.5% 6%;
     }
+    .navbar-container.hr_navigation div.menu__Icon__Container {
+        width: 40%;
+    }
 }
 
 @media (min-width: 1200px) {
     .navbar-container{
         padding: 1.5% 10%;
-    }   
+    }
+    .navbar-container.hr_navigation{
+        padding: 1.5% 9%;
+    }
+    .navbar-container.hr_navigation div.menu__Icon__Container {
+        width: 40%;
+    }
 }

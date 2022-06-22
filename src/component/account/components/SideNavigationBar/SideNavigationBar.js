@@ -7,9 +7,9 @@ import CustomHr from "../../../teamlead/components/CustomHr/CustomHr";
 import "./style.css";
 
 
-const SideNavigationBar = ({ sideNavRef, closeSideNavbar, isNotificationEnabled, setNotificationStatus }) => {
+const SideNavigationBar = ({ className, sideNavRef, closeSideNavbar, isNotificationEnabled, setNotificationStatus }) => {
     return <>
-        <div ref={sideNavRef} className="sidebar-nav-container">
+        <div ref={sideNavRef} className={`sidebar-nav-container ${className ? className : ''}`}>
             <Close className="close-icon" onClick={closeSideNavbar} />
             <ul>
                 <CustomHr />

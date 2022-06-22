@@ -7,14 +7,8 @@ import CandidateHomeScreen from './component/candidate/screens/CandidateHomeScre
 import Logout from './component/candidate/Logout';
 import AlertScreen from './component/candidate/screens/AlertScreen';
 import UserScreen from './component/candidate/screens/UserScreen';
-import TaskScreen from './component/candidate/screens/TaskScreen';
 import AppliedScreen from'./component/candidate/screens/AppliedScreen';
 import Hr_JobScreen from './component/Hr/hr_screens/Hr_JobScreen';
-import Hr_AppliedScreen from './component/Hr/hr_screens/Hr_AppliedScreen';
-import SelectedScreen from './component/Hr/hr_screens/selected/SelectedScreen';
-import Shorlisted from './component/Hr/component/Active/Shortlisted/Shorlisted';
-import ShortlistedScreen from './component/Hr/hr_screens/ShortlistedScreen';
-import JobApplied from './component/Hr/hr_screens/JobApplied/JobApplied';
 import Teamlead from './component/teamlead/Teamlead';
 import AccountPage from './component/account/AccountPage';
 import { NavigationContextProvider } from './contexts/NavigationContext';
@@ -35,14 +29,24 @@ function App() {
           <Route path="/login" element={<SignIn/>}/>
             
           <Route path="/home" element={
-            <AppliedJobsContextProvider>
-              <CandidateHomeScreen/>
-            </AppliedJobsContextProvider>
-          }/>
+            <NavigationContextProvider>
+              <AppliedJobsContextProvider>
+                <CandidateHomeScreen/>
+              </AppliedJobsContextProvider>
+            </NavigationContextProvider>
+          }>
+            <Route path=":section" element={
+              <NavigationContextProvider>
+                <AppliedJobsContextProvider>
+                  <CandidateHomeScreen />
+                </AppliedJobsContextProvider>
+              </NavigationContextProvider>
+            } />
+          </Route>
+
           <Route path="/logout" element={<Logout/>}/>
           <Route path="/alerts" element={<AlertScreen/>}/>
           <Route path="/user" element={<UserScreen/>}/>
-          <Route path="/task" element={<TaskScreen/>}/>
 
           <Route path="/applied" element={
             <AppliedJobsContextProvider>
@@ -50,14 +54,30 @@ function App() {
             </AppliedJobsContextProvider>
           }/>
 
-          <Route path="/hr_screen" element={<Hr_JobScreen/>}/>
-          
-          <Route path="/id" element={<JobApplied/>}/>
-
-          <Route path="/hr_applied" element={<Hr_AppliedScreen/>}/>
-          <Route path="/shortlisted" element={<ShortlistedScreen/>}/>
-
-          <Route path="/hr_applied/selected" element={<SelectedScreen/>}/>
+          <Route path="/hr_screen" element={
+            <NavigationContextProvider>
+              <Hr_JobScreen/>
+            </NavigationContextProvider>
+          }>
+            <Route path=":section" element={
+              <NavigationContextProvider>
+                <Hr_JobScreen />
+              </NavigationContextProvider>
+            } >
+              <Route path=":sub_section" element={
+                <NavigationContextProvider>
+                  <Hr_JobScreen />
+                </NavigationContextProvider>
+              } >
+                <Route path=":path" element={
+                  <NavigationContextProvider>
+                    <Hr_JobScreen />
+                  </NavigationContextProvider>
+                } />
+              </Route>
+            </Route>
+            
+          </Route>
           
           
           <Route path="/apply/job" element={
