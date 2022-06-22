@@ -3,11 +3,6 @@ import Navbar from '../component/Hr_Navbar';
 import Footer from '../component/Hr_footer/Hr_Footer';
 import './css/Hr_JobScreen.css';
 import JobCards from '../component/JobCards/JobCards';
-import * as FaIcons from 'react-icons/fa';
-import * as FiIcons from 'react-icons/fi';
-import * as ImIcons from 'react-icons/im';
-import { IconContext } from 'react-icons';
-import * as BsIcons from 'react-icons/bs';
 import Search from '../component/Search/Search';
 import { hrNavigationLinks } from './hrNavigationLinks';
 import BottomNavigationBar from '../component/BottomNavigation/BottomNavigation';
@@ -18,7 +13,6 @@ import { useNavigationContext } from '../../../contexts/NavigationContext';
 import NavigationBar from '../../teamlead/components/NavigationBar/NavigationBar';
 import useClickOutside from '../../account/hooks/useClickOutside';
 import SideNavigationBar from '../../account/components/SideNavigationBar/SideNavigationBar';
-import Hr_AppliedScreen from './Hr_AppliedScreen';
 import ShortlistedScreen from './ShortlistedScreen';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import SelectedCandidates from '../../teamlead/components/SelectedCandidates/SelectedCandidates';
@@ -107,10 +101,7 @@ function Hr_JobScreen() {
         />
         
         { 
-          sub_section === undefined && section === "applied" ? <>
-            <Hr_AppliedScreen />
-          </> : 
-          
+
           sub_section === undefined && section === "after_initial_meet" ? <>
             <ShortlistedScreen />
           </> :
