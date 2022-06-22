@@ -5,3 +5,18 @@
     width: 50%;
     margin: 5% auto 0;
 }
+
+a{
+    color: #A1A1A1;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+    .error__Page__Container img{
+        margin: 25% auto 0;
+        height: 80%;
+        width: 80%;
+    }
+}

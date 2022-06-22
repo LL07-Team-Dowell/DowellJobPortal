@@ -4,7 +4,12 @@
     --black: #000;
     --green-color: #53CA5F;
     --red-color: #FC3939;
+    --orange-color: #FF843F;
     font-family: 'Inter', sans-serif;
+}
+
+.selected-candidate-screen-container .relative-hr{
+    position: relative;
 }
 
 .selected-candidate-screen-container{
@@ -23,6 +28,10 @@
     margin-bottom: 15%;
 }
 
+.comments-container.hr__Comments__Container h2{
+    margin-top: 4%;
+}
+
 .comments-container h2{
     font-weight: 400;
     font-size: 1rem;
@@ -31,7 +40,7 @@
     margin-bottom: 3%;
 }
 
-.comments-container textarea{
+.comments-container textarea, .comments-container input{
     resize: none;
     width: 100%;
     font-family: 'Inter', sans-serif;
@@ -43,6 +52,14 @@
     outline: none;
     border-radius: 5px;
     padding: 4% 2%;
+}
+
+.comments-container.hr__Comments__Container textarea{
+    margin-bottom: 4%;
+}
+
+.comments-container input{
+    padding: 3%;
 }
 
 .candidate-status-container{
@@ -129,11 +146,20 @@
     color: var(--red-color);
 }
 
+.status-option.active.orange-color{
+    color: var(--orange-color);
+}
+
 .custom-hr.rehire-hr{
     position: relative;
     margin-top: 10%;
 }
 
+@media screen and (min-width: 992px) {
+    .comments-container.hr__Comments__Container, .comments-container.hr__Comments__Container ~ .candidate-status-container{
+        width: 100%;
+    }
+}
 @media (min-width: 1200px){
     .comments-container, .candidate-status-container{
         width: 82%;
@@ -141,8 +167,16 @@
         margin-right: auto;
     }
 
-    .comments-container textarea{
+    .comments-container textarea {
         padding: 3%;
+    }
+
+    .comments-container.hr__Comments__Container textarea{
+        margin-bottom: 0;
+    }
+
+    .comments-container input{
+        padding: 2%;
     }
 
     .comments-container.hire-comment{

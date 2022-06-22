@@ -42,7 +42,7 @@
   .nav-menu {
     background-color: #E0E0E0;
     width: 500px;
-    height: 93.5vh;
+    height: calc(100% - 56px);
     display: flex;
     justify-content: center;
     position: fixed;
@@ -50,7 +50,12 @@
     left: -100%;
     transition: 850ms;
     z-index: 2;
-
+    overflow: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .nav-menu::-webkit-scrollbar{
+    display: none;
   }
   .page__title{
     margin-left: 2rem;
@@ -100,7 +105,7 @@
   
   .nav-menu-items {
     width: 100%;
-
+    display: block;
   }
   
  

@@ -56,12 +56,14 @@ export const CandidateContextProvider = ({ children }) => {
                     name: "Faizan",
                     jobApplied: "Python",
                     dateOfApplication: "10th April",
+                    time_period: "0-1 Yr",
                 },
                 {
                     id: "2",
                     name: "Ramu",
                     jobApplied: "React",
                     dateOfApplication: "9th April",
+                    time_period: "0-1 Yr",
                 }
             ]
         }})

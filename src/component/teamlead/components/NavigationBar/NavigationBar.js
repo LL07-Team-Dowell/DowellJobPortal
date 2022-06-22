@@ -5,16 +5,21 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import "./style.css";
 
 
-const NavigationBar = ({ showCandidate, setShowCandidate, showCandidateTask, setShowCandidateTask, handleMenuIconClick }) => {
+const NavigationBar = ({ className, title, showCandidate, setShowCandidate, showCandidateTask, setShowCandidateTask, handleMenuIconClick, handleBackIconClick, hrPageActive }) => {
     return <>
         <nav>
-            <div className="navbar-container">
+            <div className={`navbar-container ${className ? className : ''}`}>
                 {
+                    hrPageActive ? <ArrowBackIcon className="navbar-icon" onClick={handleBackIconClick} /> :
+
                     showCandidate ? <ArrowBackIcon className="navbar-icon" onClick={() => setShowCandidate(false)} /> :
 
                     showCandidateTask ? <ArrowBackIcon className="navbar-icon" onClick={() => setShowCandidateTask(false)} /> : <>
                 
-                        <MenuIcon className="navbar-icon" onClick={handleMenuIconClick} />
+                        <div className='menu__Icon__Container'>
+                            <MenuIcon className="navbar-icon" onClick={handleMenuIconClick} />
+                            {title && <h2>{title}</h2>}
+                        </div>
                         <NotificationsNoneIcon className="navbar-icon" />
                     </>
                 }

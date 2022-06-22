@@ -11,12 +11,12 @@ export const useNavigationContext = () => {
 
 export const NavigationContextProvider = ({ children }) => {
 
-    const { section } = useParams();
+    const { section, sub_section, path } = useParams();
     const [ searchParams, setSearchParams ] = useSearchParams();
     const [ isNotificationEnabled, setNotificationStatus ] = useState(false);
     
     return (
-        <NavigationContext.Provider value={{ section, searchParams, isNotificationEnabled, setNotificationStatus }} >
+        <NavigationContext.Provider value={{ section, sub_section, path, searchParams, isNotificationEnabled, setNotificationStatus }} >
             { children }
         </NavigationContext.Provider>
     )

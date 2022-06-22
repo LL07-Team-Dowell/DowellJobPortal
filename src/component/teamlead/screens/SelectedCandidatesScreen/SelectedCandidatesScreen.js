@@ -15,12 +15,14 @@ import { candidateDataReducerActions } from '../../../../reducers/CandidateDataR
 import { initialCandidatesDataStateNames } from '../../../../contexts/CandidatesContext';
 
 
-const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, allCandidatesData, rehireTabActive, accountPage, hireTabActive, showOnboarding, updateShowCandidate }) => {
+const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, allCandidatesData, rehireTabActive, accountPage, hireTabActive, showOnboarding, updateShowCandidate, hrPageActive, initialMeet }) => {
     const ref1 = useRef(null);
     const ref2 = useRef(null);
     const ref3 = useRef(null);
     const ref4 = useRef(null);
     const ref5 = useRef(null);
+    const ref6 = useRef(null);
+    const ref7 = useRef(null);
     const [ disabled, setDisabled ] = useState(false);
 
     const handleClick = (ref, disableOtherBtns, action) => {
@@ -130,13 +132,17 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
         
         <div className="selected-candidate-screen-container">
             
-            <ApplicantIntro applicant={selectedCandidateData} />
+            <ApplicantIntro hrPageActive={hrPageActive} applicant={selectedCandidateData} />
 
-            <ApplicantDetails />
+            <ApplicantDetails hrPageActive={hrPageActive} />
 
-            <CustomHr />
+            {!hrPageActive && <CustomHr />}
 
-            <AssignedProjectDetails />
+            {!hrPageActive && <AssignedProjectDetails />}
+
+            {initialMeet && hrPageActive && <AssignedProjectDetails />}
+
+            {hrPageActive && <CustomHr className={'relative-hr'} />}
 
             {
                 hireTabActive ? <>
@@ -154,11 +160,27 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                 showOnboarding ? 
                 <></> :
 
+                hrPageActive ? <>
+                    <div className="comments-container hr__Comments__Container">
+                        <h2>{initialMeet ? <>Remarks {<span>&#x00028;by Hr&#x00029;</span>}</> : <>Add Remarks</>}</h2>
+                        <textarea placeholder={`${initialMeet ? "Remarks given": "Add remarks"}`}></textarea>
+                    </div>
+                </> :
+
                 <div className="comments-container">
                     <h2>{hireTabActive ? '' : 'Add'} Remarks {hireTabActive ? <span>&#x00028;by Team Lead&#x00029;</span> : <></>}</h2>
                     <textarea placeholder={accountPage ? "Reason to Rehire" : "Add remarks"}></textarea>
                 </div>
 
+            }
+
+            {
+                initialMeet && <>
+                    <div className="comments-container hr__Comments__Container">
+                        <h2>Discord Link</h2>
+                        <input placeholder='Add Discord Link'></input>
+                    </div>
+                </>
             }
             
             {hireTabActive ? <PaymentDetails /> : <></>}
@@ -178,17 +200,38 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                         <></>
                     }
                     
-                    <button className={`status-option green-color ${accountPage && rehireTabActive ? 'active' : ''}`} ref={ref1} onClick={() => handleClick(ref1, true, hireTabActive ? accountPageActions.MOVE_TO_ONBOARDING : showOnboarding ? accountPageActions.MOVE_TO_REHIRE : "")} disabled={accountPage && rehireTabActive ? true : disabled}>
-                        <BsStopCircle className='status-icon' />
-                        {/* <FiStopCircle className='status-icon' /> */}
-                        <br /><br/>
-                        <div className='textt'>{rehireTabActive ? 'ReHire' : hireTabActive ? 'Onboarding' : showOnboarding ? 'ReHire' : 'Hire'}</div>
-                    </button>
+                    {
+                        hrPageActive ? <>
+
+                        <button className={`status-option ${initialMeet ? 'green-color' : 'orange-color'}`} ref={ref7} onClick={() => handleClick(ref7, true)} disabled={disabled}>
+                            <BsStopCircle className='status-icon' />
+                            {/* <FiStopCircle className='status-icon' /> */}
+                            <br /><br/>
+                            <div className='textt'>{`${initialMeet ? 'Selected' : 'Shortlisted'}`}</div>
+                        </button>
+
+                        </> : <button className={`status-option green-color ${accountPage && rehireTabActive ? 'active' : ''}`} ref={ref1} onClick={() => handleClick(ref1, true, hireTabActive ? accountPageActions.MOVE_TO_ONBOARDING : showOnboarding ? accountPageActions.MOVE_TO_REHIRE : "")} disabled={accountPage && rehireTabActive ? true : disabled}>
+                            <BsStopCircle className='status-icon' />
+                            {/* <FiStopCircle className='status-icon' /> */}
+                            <br /><br/>
+                            <div className='textt'>{rehireTabActive ? 'ReHire' : hireTabActive ? 'Onboarding' : showOnboarding ? 'ReHire' : 'Hire'}</div>
+                        </button>
+                    }
 
                     {
                         showOnboarding ? 
                         
                         <></> :
+
+                        hrPageActive ? <>
+                            <button className="status-option red-color" ref={ref6} onClick={() => handleClick(ref6, true)} disabled={disabled}>
+                                <BsStopCircle className='status-icon' />
+                                <br /><br/>
+                                {/* <FiStopCircle className='status-icon' /> */}
+                            
+                                <div className='textt'>{'Rejected'}</div>
+                            </button>
+                        </> :
 
                         <button className="status-option red-color" ref={ref2} onClick={() => handleClick(ref2, true, accountPageActions.MOVE_TO_REJECTED)} disabled={disabled}>
                             {accountPage && rehireTabActive ? <AiOutlineCloseCircle className='status-icon' /> : <BsStopCircle className='status-icon' />}

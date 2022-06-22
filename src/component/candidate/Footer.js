@@ -37,7 +37,7 @@ export default function SimpleBottomNavigation() {
 
   return (
     <Box sx={{ width: 500 }}>
-    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, backgroundColor: 'primary'}} elevation={3}>
+    <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0, backgroundColor: 'primary', zIndex: 2}} elevation={3}>
       <BottomNavigation
         showLabels
         style={{background:'#C4C4C4'}}
