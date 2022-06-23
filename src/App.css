@@ -7,3 +7,7 @@
 .authentication__error__Message{
   color: red !important;
 }
+
+.MuiOutlinedInput-input.input__Error__Item + .MuiOutlinedInput-notchedOutline {
+  border-color: red !important;
+}

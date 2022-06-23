@@ -5,7 +5,6 @@ import * as ImIcons from 'react-icons/im';
 import * as AiIcons from 'react-icons/ai';
 import { IconContext } from 'react-icons';
 import { myAxiosInstance } from '../../axios';
-import { loginUser } from './temporary/loginUser';
 import { useAppliedJobsContext } from '../../contexts/AppliedJobsContext';
 
 
@@ -26,7 +25,6 @@ function Applied() {
 
   useEffect(() => {
 
-    loginUser();
     // getAppliedData();
 
   }, [])

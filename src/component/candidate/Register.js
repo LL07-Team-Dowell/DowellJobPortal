@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import { axiosInstance, myAxiosInstance } from '../../axios';
 import{useNavigate} from 'react-router-dom';
 // use the useNavigate to redirect the user after they've register
@@ -16,8 +16,9 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import requests from '../../request';
+import { requests } from '../../request';
 import logo from '../../logo.png';
+import { validateEmail } from '../../helpers/helpers';
 
 const useStyles = makeStyles((theme)=>({
     paper:{
@@ -50,7 +51,7 @@ const useStyles = makeStyles((theme)=>({
     },
 }));
 
- function SignUP(){
+ function SignUP({ setUser }){
 	let navigate = useNavigate();
 	const initialFormData = Object.freeze({
 		email:'',
@@ -59,6 +60,39 @@ const useStyles = makeStyles((theme)=>({
 	});
 	const [formData, updateFormData]= useState(initialFormData);
 	const [errorMessage, setErrorMessage] = useState(null);
+	const [emailError, setEmailError] = useState(false);
+	const [usernameError, setUsernameError] = useState(false);
+	const [disabled, setDisabled] = useState(true);
+
+	useEffect(() => {
+
+		if ( formData.email.length < 1 ) {
+			setDisabled(true);
+			setEmailError(false);
+			return;
+		}
+
+		if (!validateEmail(formData.email)) {
+			setEmailError(true);
+			setDisabled(true);
+			return;
+		}
+
+		setEmailError(false);
+		
+		if ( formData.password.length < 1 ) return setDisabled(true);
+
+		if ( formData.username.length < 1 ) {
+			setUsernameError(true);
+			setDisabled(true);
+			return
+		}
+
+		setUsernameError(false);
+		setDisabled(false);
+
+	}, [formData.email, formData.password, formData.username]);
+
 	const handleChange=(e)=>{
 		updateFormData({
 			...formData,
@@ -68,7 +102,6 @@ const useStyles = makeStyles((theme)=>({
 	};
 	const handleSubmit= async (e)=>{
 		e.preventDefault();
-		console.log(formData);
 
 		try{
 
@@ -83,6 +116,11 @@ const useStyles = makeStyles((theme)=>({
 				password: formData.password
 			})
 
+			const userResponse = await myAxiosInstance.get("/accounts/user_view/");
+
+			setUser(userResponse.data);
+	
+			localStorage.setItem('user', JSON.stringify(userResponse.data));
 			localStorage.setItem('access_token', response.data.access);
 			localStorage.setItem('refresh_token', response.data.refresh);
 
@@ -114,6 +152,7 @@ const useStyles = makeStyles((theme)=>({
 						}
 						<Grid item xs={12}>
 							<TextField
+								inputProps={ { className: emailError && "input__Error__Item"} }
 								variant="outlined"
 								required
 								fullWidth
@@ -130,6 +169,7 @@ const useStyles = makeStyles((theme)=>({
 								required
 								fullWidth
 								id="username"
+								inputProps={ { className: usernameError && "input__Error__Item"} }
 								label="Username"
 								name="username"
 								autoComplete="username"
@@ -163,6 +203,7 @@ const useStyles = makeStyles((theme)=>({
 						color="primary"
 						className={classes.submit}
 						onClick={handleSubmit}
+						disabled={disabled}
 					>
 						Sign Up
 					</Button>

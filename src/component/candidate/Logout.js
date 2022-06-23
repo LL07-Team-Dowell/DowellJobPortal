@@ -1,27 +1,39 @@
-import React, {useEffect} from 'react';
-import { axiosInstance } from '../../axios';
+import React, { useEffect } from 'react';
+import { myAxiosInstance } from '../../axios';
 import { useNavigate } from 'react-router-dom';
-import requests from '../../request';
+import { requests } from '../../request';
 
 
 function Logout() {
     const navigate=useNavigate();
-    useEffect(() => {
-      const response =axiosInstance.post(requests.Logout,{
-          refresh_token: localStorage.getItem('refresh_token'),
-      });
-      localStorage.removeItem('access_token');
-      localStorage.removeItem('refresh_token');
-      axiosInstance.defaults.headers['Authorization']=null;
-      navigate('/login');
 
-      return response;
+    const logoutUser = async () => {
+      await myAxiosInstance.post(requests.Logout,{
+        refresh_token: localStorage.getItem('refresh_token'),
+      });
+    }
+
+    useEffect(() => {
+
+      logoutUser().then(res => {
         
+        localStorage.removeItem('user');
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+  
+        
+        navigate('/login');
+
+      }).catch(err => {
+
+        navigate(-1);
+
+      });      
        
-    })
+    }, [])
     
   return (
-    <div>Logout</div>
+    <></>
   )
 }
 

@@ -1,13 +1,15 @@
 import Close from "@mui/icons-material/Close";
 import { FiBell } from "react-icons/fi";
 import { ImStack } from "react-icons/im";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import CustomHr from "../../../teamlead/components/CustomHr/CustomHr";
 
 import "./style.css";
 
 
 const SideNavigationBar = ({ className, sideNavRef, closeSideNavbar, isNotificationEnabled, setNotificationStatus }) => {
+    const navigate = useNavigate();
+
     return <>
         <div ref={sideNavRef} className={`sidebar-nav-container ${className ? className : ''}`}>
             <Close className="close-icon" onClick={closeSideNavbar} />
@@ -53,7 +55,7 @@ const SideNavigationBar = ({ className, sideNavRef, closeSideNavbar, isNotificat
                 <CustomHr />
 
             </ul>
-            <button className="sidebar-logout-btn">Logout</button>
+            <button className="sidebar-logout-btn" onClick={() => navigate("/logout")}>Logout</button>
         </div>
     </>
 }

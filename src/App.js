@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import SignIn from './component/candidate/Login';
@@ -15,113 +15,200 @@ import { NavigationContextProvider } from './contexts/NavigationContext';
 import { CandidateContextProvider } from './contexts/CandidatesContext';
 import JobApplicationScreen from './component/candidate/screens/JobApplicationScreen/JobApplicationScreen';
 import ErrorPage from './component/error/ErrorPage';
-// import { AuthContextProvider } from './contexts/AuthContext';
 import { NewApplicationContextProvider } from './contexts/NewApplicationContext';
 import { AppliedJobsContextProvider } from './contexts/AppliedJobsContext';
+import { refreshToken } from './request';
 
 function App() {
 
-    return (
-        <Routes>
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-          <Route path="/" element={<SignUP/>}/> 
-            
-          <Route path="/login" element={<SignIn/>}/>
-            
-          <Route path="/home" element={
+  
+  useEffect(() => {
+
+    const savedUser = localStorage.getItem("user");
+    const refresh_token = localStorage.getItem("refresh_token");
+
+    if (!savedUser) return setLoading(false);
+
+    if (!refresh_token || refresh_token === "undefined") return setLoading(false);
+
+    setUser(JSON.parse(savedUser));    
+    refreshToken(refresh_token);
+    setLoading(false);
+
+  }, []);
+
+  if (loading) return <></>
+
+  if (!user) {
+    return <Routes>
+      
+      <Route path="/signup" element={<SignUP setUser={setUser} />}/>   
+      <Route path="*" element={<SignIn setUser={setUser} />} />
+
+    </Routes>
+  }
+
+  if (user.is_account) {
+    return <Routes>
+      
+      <Route path="/signup" element={<SignUP setUser={setUser}/>}/>     
+      <Route path="/login" element={<SignIn setUser={setUser}/>}/>
+      
+      <Route path="/logout" element={<Logout/>}/>
+
+      <Route path="/account" element={
+        <NavigationContextProvider>
+          <CandidateContextProvider>
+              <AccountPage />
+          </CandidateContextProvider>
+        </NavigationContextProvider>
+      } >
+        <Route path=':section' element={<AccountPage />} />
+      </Route>
+
+      <Route path='*' element={<ErrorPage />} />
+
+    </Routes>
+  }
+
+  if (user.is_admin) {
+
+    return <Routes>
+
+      <Route path="/signup" element={<SignUP setUser={setUser}/>}/>     
+      <Route path="/login" element={<SignIn setUser={setUser}/>}/>
+      
+      <Route path="/logout" element={<Logout/>}/>
+
+
+      <Route path='*' element={<ErrorPage />} />
+
+    </Routes>
+
+  }
+
+  if (user.is_hr) {
+
+    return <Routes>
+
+      <Route path="/signup" element={<SignUP setUser={setUser}/>}/>     
+      <Route path="/login" element={<SignIn setUser={setUser}/>}/>
+      
+      <Route path="/logout" element={<Logout/>}/>
+      
+      <Route path="/hr_screen" element={
+        <NavigationContextProvider>
+          <Hr_JobScreen/>
+        </NavigationContextProvider>
+      }>
+        <Route path=":section" element={
+          <NavigationContextProvider>
+            <Hr_JobScreen />
+          </NavigationContextProvider>
+        } >
+          <Route path=":sub_section" element={
             <NavigationContextProvider>
-              <AppliedJobsContextProvider>
-                <CandidateHomeScreen/>
-              </AppliedJobsContextProvider>
+              <Hr_JobScreen />
             </NavigationContextProvider>
-          }>
-            <Route path=":section" element={
-              <NavigationContextProvider>
-                <AppliedJobsContextProvider>
-                  <CandidateHomeScreen />
-                </AppliedJobsContextProvider>
-              </NavigationContextProvider>
-            } />
-          </Route>
-
-          <Route path="/logout" element={<Logout/>}/>
-          <Route path="/alerts" element={<AlertScreen/>}/>
-          <Route path="/user" element={<UserScreen/>}/>
-
-          <Route path="/applied" element={
-            <AppliedJobsContextProvider>
-              <AppliedScreen/>
-            </AppliedJobsContextProvider>
-          }/>
-
-          <Route path="/hr_screen" element={
-            <NavigationContextProvider>
-              <Hr_JobScreen/>
-            </NavigationContextProvider>
-          }>
-            <Route path=":section" element={
+          } >
+            <Route path=":path" element={
               <NavigationContextProvider>
                 <Hr_JobScreen />
               </NavigationContextProvider>
-            } >
-              <Route path=":sub_section" element={
-                <NavigationContextProvider>
-                  <Hr_JobScreen />
-                </NavigationContextProvider>
-              } >
-                <Route path=":path" element={
-                  <NavigationContextProvider>
-                    <Hr_JobScreen />
-                  </NavigationContextProvider>
-                } />
-              </Route>
-            </Route>
-            
+            } />
           </Route>
+        </Route>
+        
+      </Route>
+
+      <Route path='*' element={<ErrorPage />} />
+
+    </Routes>
+  }
+
+  if (user.is_teamlead) {
+
+    return <Routes>
+
+      <Route path="/signup" element={<SignUP setUser={setUser}/>}/>     
+      <Route path="/login" element={<SignIn setUser={setUser}/>}/>
+      
+      <Route path="/logout" element={<Logout/>}/>
+
+      <Route path="/teamlead" element={
+        <NavigationContextProvider>
+          <CandidateContextProvider>
+            <Teamlead />
+          </CandidateContextProvider>
+        </NavigationContextProvider>
+      } >
+        <Route path=':section' element={<Teamlead />} />
+      </Route>
+
+      <Route path='*' element={<ErrorPage />} />
+      
+    </Routes>
+
+  }
+
+
+
+  return (
+      <Routes>
+
+        <Route path="/signup" element={<SignUP setUser={setUser}/>}/> 
           
-          
-          <Route path="/apply/job" element={
-            <NewApplicationContextProvider>
+        <Route path="/login" element={<SignIn setUser={setUser}/>}/>
+        
+        <Route path="/home" element={
+          <NavigationContextProvider>
+            <AppliedJobsContextProvider>
+              <CandidateHomeScreen/>
+            </AppliedJobsContextProvider>
+          </NavigationContextProvider>
+        }>
+          <Route path=":section" element={
+            <NavigationContextProvider>
               <AppliedJobsContextProvider>
-                <JobApplicationScreen />
+                <CandidateHomeScreen />
               </AppliedJobsContextProvider>
-            </NewApplicationContextProvider>
-            }>
-              <Route path=":section" element={
-                <NewApplicationContextProvider>
-                  <AppliedJobsContextProvider>
-                    <JobApplicationScreen />
-                  </AppliedJobsContextProvider>
-                </NewApplicationContextProvider>
-              } />
-          </Route>
-          
-          <Route path="/teamlead" element={
-            <NavigationContextProvider>
-              <CandidateContextProvider>
-                <Teamlead />
-              </CandidateContextProvider>
             </NavigationContextProvider>
-          } >
-            <Route path=':section' element={<Teamlead />} />
-          </Route>
+          } />
+        </Route>
 
-          <Route path="/account" element={
-            <NavigationContextProvider>
-              <CandidateContextProvider>
-                {/* <AuthContextProvider> */}
-                  <AccountPage />
-                {/* </AuthContextProvider> */}
-              </CandidateContextProvider>
-            </NavigationContextProvider>
-          } >
-            <Route path=':section' element={<AccountPage />} />
-          </Route>
+        <Route path="/logout" element={<Logout/>}/>
+        <Route path="/alerts" element={<AlertScreen/>}/>
+        <Route path="/user" element={<UserScreen/>}/>
 
-          <Route path='*' element={<ErrorPage />} />
+        <Route path="/applied" element={
+          <AppliedJobsContextProvider>
+            <AppliedScreen/>
+          </AppliedJobsContextProvider>
+        }/>
+        
+        <Route path="/apply/job" element={
+          <NewApplicationContextProvider>
+            <AppliedJobsContextProvider>
+              <JobApplicationScreen />
+            </AppliedJobsContextProvider>
+          </NewApplicationContextProvider>
+          }>
+            <Route path=":section" element={
+              <NewApplicationContextProvider>
+                <AppliedJobsContextProvider>
+                  <JobApplicationScreen />
+                </AppliedJobsContextProvider>
+              </NewApplicationContextProvider>
+            } />
+        </Route>
 
-        </Routes>
-    );
+        <Route path='*' element={<ErrorPage />} />
+
+      </Routes>
+  );
 
 }
 
