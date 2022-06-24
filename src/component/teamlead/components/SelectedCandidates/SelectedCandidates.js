@@ -43,7 +43,7 @@ const SelectedCandidates = ({ showTasks, candidatesCount, tasksCount, hrPageActi
             </div>
 
             {
-                hrPageActive && showSortOptions && <>
+                showSortOptions && <>
 
                     <div className="sort__Candidates__Selection__Container" ref={sortOptionsRef}>
                         <Close className="close-icon" onClick={() => setShowSortOptions(false)} />

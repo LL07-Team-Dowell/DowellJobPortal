@@ -1,15 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import './css/Job.css';
 import * as FaIcons from 'react-icons/fa';
-import * as FiIcons from 'react-icons/fi';
 import { IconContext } from 'react-icons';
-import { axiosInstance, myAxiosInstance } from '../../axios';
-import requests from '../../request';
+import { myAxiosInstance } from '../../axios';
+import { requests } from '../../request';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from './temporary/loginUser';
 import { useAppliedJobsContext } from '../../contexts/AppliedJobsContext';
 import { useNavigationContext } from '../../contexts/NavigationContext';
-import TaskScreen from '../teamlead/screens/TaskScreen/TaskScreen';
 import { tasksData } from '../teamlead/tasks';
 import JobTile from '../teamlead/components/JobTile/JobTile';
 
@@ -22,19 +19,16 @@ function JobScreen() {
     const { section } = useNavigationContext();
     
     useEffect(() => {
-        loginUser();
-    }, [])
-    
-    useEffect(() => {
-      async function fetchData(){
-        //   const getJobs=;
-          const request = await myAxiosInstance.get(requests.Jobs);
-          setJobs(request.data);
-          console.log(request)
-          return request
-      }
-      fetchData();
-    
+
+        async function fetchData(){
+            
+            const request = await myAxiosInstance.get(requests.Jobs);
+            setJobs(request.data);
+            console.log(request)
+            return request
+        }
+        fetchData();
+
     }, []);
 
     const handleApplyButtonClick = (currentJob) => {
@@ -46,7 +40,7 @@ function JobScreen() {
     
             <div className="row">
                 {
-                    section == undefined ? <>
+                    section == undefined || section === "home" ? <>
                         {jobs.map(job=>(
                             <div className="column" key={job.id}>
                                 <div className="card">

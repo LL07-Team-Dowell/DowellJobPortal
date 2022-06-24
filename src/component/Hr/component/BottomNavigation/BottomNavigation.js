@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import "./style.css";
 
 
-const BottomNavigationBar = ({ updateNav, currentPage, links, changeSecondIcon }) => {
+const BottomNavigationBar = ({ updateNav, links }) => {
     const linksRef = useRef([]);
     const { section } = useParams();
     
@@ -44,7 +44,7 @@ const BottomNavigationBar = ({ updateNav, currentPage, links, changeSecondIcon }
                     React.Children.toArray(links.map(link => {
                         return <>
                             <div className="bottom-navigation-item" onClick={handleClick}>
-                                <Link ref={elem => addToLinksRef(elem)} to={currentPage ? `/${currentPage.toLocaleLowerCase()}/${link.address.toLocaleLowerCase().replaceAll(' ', '_')}` : ''}>
+                                <Link ref={elem => addToLinksRef(elem)} to={`/${link.address.toLocaleLowerCase().replaceAll(' ', '_')}`}>
                                     {link.icon}
                                     {link.address ? link.address[0].toLocaleUpperCase() + link.address.slice(1) : ''}
                                 </Link>

@@ -1,20 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Navbar from '../component/Hr_Navbar';
-import Footer from '../component/Hr_footer/Hr_Footer';
 import './css/Hr_JobScreen.css';
-import JobCards from '../component/JobCards/JobCards';
 import Search from '../component/Search/Search';
 import { hrNavigationLinks } from './hrNavigationLinks';
 import BottomNavigationBar from '../component/BottomNavigation/BottomNavigation';
 import JobTile from '../../teamlead/components/JobTile/JobTile';
 import { myAxiosInstance } from '../../../axios';
-import { loginUser } from '../../candidate/temporary/loginUser';
 import { useNavigationContext } from '../../../contexts/NavigationContext';
 import NavigationBar from '../../teamlead/components/NavigationBar/NavigationBar';
 import useClickOutside from '../../account/hooks/useClickOutside';
 import SideNavigationBar from '../../account/components/SideNavigationBar/SideNavigationBar';
 import ShortlistedScreen from './ShortlistedScreen';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import SelectedCandidates from '../../teamlead/components/SelectedCandidates/SelectedCandidates';
 import { appliedCandidates } from '../candidatesData';
 import SelectedCandidatesScreen from '../../teamlead/screens/SelectedCandidatesScreen/SelectedCandidatesScreen';
@@ -23,7 +19,6 @@ import SelectedCandidatesScreen from '../../teamlead/screens/SelectedCandidatesS
 
 function Hr_JobScreen() {
   
-  const [currentCandidate, setCurrentCandidate] = useState({});
   const { section, sub_section, path, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
   const [jobs, setJobs] = useState([]);
   const sideNavbarRef = useRef(null);
@@ -38,20 +33,19 @@ function Hr_JobScreen() {
     return response.data;
   }
 
-  const goToJobDetails = (jobData) => navigate("/hr_screen/home/job", { state: { job: jobData } });
+  const goToJobDetails = (jobData) => navigate("/home/job", { state: { job: jobData } });
 
-  const goToJobApplicationDetails = (candidateData) => navigate(`/hr_screen/home/job/${candidateData.name}`, { state: { candidate: candidateData } });
+  const goToJobApplicationDetails = (candidateData) => navigate(`/home/job/${candidateData.name}`, { state: { candidate: candidateData } });
 
   useEffect(() => {
 
-    if ( (sub_section !== undefined) && (!location.state) ) return navigate("/hr_screen/home");
+    if ( (sub_section !== undefined) && (!location.state) ) return navigate("/home");
 
-    if ( (path !== undefined) && (!location.state)) return navigate("/hr_screen/home");
+    if ( (path !== undefined) && (!location.state)) return navigate("/home");
 
   }, [sub_section, path])
 
   useEffect(() => {
-    loginUser();
 
     getApplications().then(res => {
       
@@ -176,7 +170,7 @@ function Hr_JobScreen() {
       />
     }
 
-    <BottomNavigationBar currentPage={'hr_screen'} links={hrNavigationLinks} />
+    <BottomNavigationBar links={hrNavigationLinks} />
 
     </>
   )

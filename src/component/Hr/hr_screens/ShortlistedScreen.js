@@ -1,7 +1,4 @@
-import React, { useState } from 'react';
-import Navbar from '../component/Hr_Navbar';
-import Footer from '../component/Hr_footer/Hr_Footer';
-import * as BsIcons from 'react-icons/bs';
+import React from 'react';
 
 import './css/Hr_AppliedScreen.css';
 import NavigationList from '../component/NavigationList/NavigationList';

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import axiosInstance from '../axios';
 import { useNavigate } from 'react-router-dom';
 //MaterialUI
@@ -14,8 +14,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import logo from '../../logo.png'
-import { axiosInstance } from '../../axios';
-import requests from '../../request';
+import { axiosInstance, myAxiosInstance } from '../../axios';
+import { requests } from '../../request';
+import { validateEmail } from '../../helpers/helpers';
 
 
 
@@ -51,13 +52,17 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-export default function SignIn() {
+export default function SignIn({ setUser }) {
 	const navigate =useNavigate();
 	const initialFormData = Object.freeze({
 		email: '',
 		password: '',
 	});
 	const [formData, updateFormData]= useState(initialFormData);
+	const [errorMessage, setErrorMessage] = useState(null);
+	const [disabled, setDisabled] = useState(true);
+	const [emailError, setEmailError] = useState(false);
+
 	const handleChange =(e) =>{
 		updateFormData({
 			...formData,
@@ -66,22 +71,62 @@ export default function SignIn() {
 		});
 	};
 
-	const handleSubmit =(e) =>{
-		e. preventDefault();
-		console.log(formData);
+	useEffect(() => {
 
-		axiosInstance
-			.post(requests.Login,{
-				email:formData.email,
-				password:formData.password,
+		if ( formData.email.length < 1 ) {
+			setDisabled(true);
+			setEmailError(false);
+			return;
+		}
+
+		if (!validateEmail(formData.email)) {
+			setEmailError(true);
+			setDisabled(true);
+			return;
+		}
+
+		setEmailError(false);
+		
+		if ( formData.password.length < 1 ) return setDisabled(true);
+
+		setDisabled(false);
+
+	}, [formData.email, formData.password])
+
+	const handleSubmit = async (e) =>{
+		e.preventDefault();
+		setDisabled(true);
+
+		try{
+
+			await myAxiosInstance.post(requests.Login, {
+				email: formData.email,
+				password: formData.password,
+			});
+
+			const userResponse = await myAxiosInstance.get("/accounts/user_view/");
+
+			const tokenResponse = await myAxiosInstance.post("/accounts/token/", {
+				username: userResponse.data.username,
+				password: formData.password,
 			})
-			.then ((res)=>{
-				localStorage.setItem('access_token', res.data.access);
-				localStorage.setItem('refresh_token', res.data.refresh);
-				axiosInstance.defaults.headers['Authorization']=
-					'JWT' + localStorage.getItem('access_token');
-					navigate('/home')
-			})
+
+			setUser(userResponse.data);
+	
+			localStorage.setItem('user', JSON.stringify(userResponse.data));
+			localStorage.setItem('access_token', tokenResponse.data.access);
+			localStorage.setItem('refresh_token', tokenResponse.data.refresh);
+
+			navigate("/");
+
+		}catch (err) {
+
+			setErrorMessage(err.response.data[Object.keys(err.response.data)[0]]);
+
+		}
+
+		
+			
 	}
 	
 
@@ -96,9 +141,15 @@ export default function SignIn() {
 					Sign in
 				</Typography>
 				<form className={classes.form} noValidate>
+					{
+						errorMessage && <Grid item xs={12}>
+							<p className='authentication__error__Message'>{errorMessage.charAt(0).toLocaleUpperCase() + errorMessage.slice(1)}</p>
+						</Grid>
+					}
 					<TextField
 						variant="outlined"
 						margin="normal"
+						inputProps={ { className: emailError && "input__Error__Item"} }
 						required
 						fullWidth
 						id="email"
@@ -131,6 +182,7 @@ export default function SignIn() {
 						variant="contained"
 						color="primary"
 						className={classes.submit}
+						disabled={disabled}
 						onClick={handleSubmit}
 					>
 						Sign In
@@ -142,7 +194,7 @@ export default function SignIn() {
 							</Link>
 						</Grid>
 						<Grid item>
-							<Link href="/DowellJobPortal/" variant="body2">
+							<Link href="/DowellJobPortal/#/signup" variant="body2">
 								{"Don't have an account? Sign Up"}
 							</Link>
 						</Grid>

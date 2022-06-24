@@ -12,7 +12,7 @@ const ErrorPage = () => {
             <img src={process.env.PUBLIC_URL + "/404-page-not-found.svg"} alt="404 page not found" />
         </div>
 
-        <Link to={'home'}>
+        <Link to={'/'}>
             Go Home
         </Link>
 

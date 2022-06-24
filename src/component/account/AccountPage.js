@@ -13,7 +13,6 @@ import SelectedCandidatesScreen from "../teamlead/screens/SelectedCandidatesScre
 import RejectedCandidates from "./components/RejectedCandidates/RejectedCandidates";
 import SideNavigationBar from "./components/SideNavigationBar/SideNavigationBar";
 import useClickOutside from "./hooks/useClickOutside";
-import { useCustomAxios } from "./hooks/useCustomAxios";
 
 const AccountPage = () => {
     const { section, searchParams, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
@@ -27,7 +26,6 @@ const AccountPage = () => {
     const sideNavbarRef = useRef(null);
 
     useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
-    // useCustomAxios();
 
     useEffect(() => {
         // axios.defaults.baseURL = "https://100055.pythonanywhere.com/api/";
