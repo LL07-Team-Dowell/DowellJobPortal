@@ -116,7 +116,7 @@ export default function SignIn({ setUser }) {
 			localStorage.setItem('access_token', tokenResponse.data.access);
 			localStorage.setItem('refresh_token', tokenResponse.data.refresh);
 
-			navigate("/home");
+			navigate("/");
 
 		}catch (err) {
 

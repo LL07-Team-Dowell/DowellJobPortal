@@ -7,7 +7,7 @@ import { Link, useParams } from "react-router-dom";
 import "./style.css";
 
 
-const BottomNavigationBar = ({ updateNav, currentPage, firstLink, secondLink, thirdLink, changeSecondIcon }) => {
+const BottomNavigationBar = ({ updateNav, firstLink, secondLink, thirdLink, changeSecondIcon }) => {
     const linksRef = useRef([]);
     const { section } = useParams();
     
@@ -44,19 +44,19 @@ const BottomNavigationBar = ({ updateNav, currentPage, firstLink, secondLink, th
         <footer>
             <div className="bottom-nav-container">
                 <div className="bottom-navigation-item" onClick={handleClick}>
-                    <Link ref={elem => addToLinksRef(elem)} to={currentPage ? `/${currentPage.toLocaleLowerCase()}/${firstLink.toLocaleLowerCase()}` : ''}>
+                    <Link ref={elem => addToLinksRef(elem)} to={`/${firstLink.toLocaleLowerCase()}`}>
                         <FiHome />
                         {firstLink ? firstLink[0].toLocaleUpperCase() + firstLink.slice(1) : ''}
                     </Link>
                 </div>
                 <div className="bottom-navigation-item" onClick={handleClick}>
-                    <Link ref={elem => addToLinksRef(elem)} to={currentPage ? `/${currentPage.toLocaleLowerCase()}/${secondLink.toLocaleLowerCase()}`: ''}>
+                    <Link ref={elem => addToLinksRef(elem)} to={`/${secondLink.toLocaleLowerCase()}`}>
                         {changeSecondIcon ? <TbFolderX /> : <ImStack />}
                         {secondLink ? secondLink[0].toLocaleUpperCase() + secondLink.slice(1) : ''}
                     </Link>
                 </div>
                 <div className="bottom-navigation-item" onClick={handleClick}>
-                    <Link ref={elem => addToLinksRef(elem)} to={currentPage ? `/${currentPage.toLocaleLowerCase()}/${thirdLink.toLocaleLowerCase()}`: ''}>
+                    <Link ref={elem => addToLinksRef(elem)} to={`/${thirdLink.toLocaleLowerCase()}`}>
                         <FiUser />
                         {thirdLink ? thirdLink[0].toLocaleUpperCase() + thirdLink.slice(1) : ''}
                     </Link>

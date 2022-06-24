@@ -20,7 +20,7 @@
     position: absolute;
     background-color: var(--background-overlay);
     width: 98.7vmax;
-    height: 100vmax;
+    height: 200vmax;
     left: 50%;
     transform: translateX(-50%);
     animation: fadeIn 0.35s ease-in-out;
@@ -115,6 +115,11 @@
     .sort__Candidates__Selection__Container{
         width: 30%;
     }
+    
+    .background__Overlay{
+        height: 100vmax;
+    }
+
 }
 
 @media (min-width: 1200px){

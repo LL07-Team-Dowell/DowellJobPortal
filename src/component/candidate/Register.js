@@ -124,7 +124,7 @@ const useStyles = makeStyles((theme)=>({
 			localStorage.setItem('access_token', response.data.access);
 			localStorage.setItem('refresh_token', response.data.refresh);
 
-			navigate("/home");
+			navigate("/");
 
 		}catch (err){
 			setErrorMessage(err.response.data[Object.keys(err.response.data)[0]][0])

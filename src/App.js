@@ -59,7 +59,7 @@ function App() {
       
       <Route path="/logout" element={<Logout/>}/>
 
-      <Route path="/account" element={
+      <Route path="/" element={
         <NavigationContextProvider>
           <CandidateContextProvider>
               <AccountPage />
@@ -99,7 +99,7 @@ function App() {
       
       <Route path="/logout" element={<Logout/>}/>
       
-      <Route path="/hr_screen" element={
+      <Route path="/" element={
         <NavigationContextProvider>
           <Hr_JobScreen/>
         </NavigationContextProvider>
@@ -129,7 +129,7 @@ function App() {
     </Routes>
   }
 
-  if (user.is_teamlead) {
+  if (user.is_team_leader) {
 
     return <Routes>
 
@@ -138,7 +138,7 @@ function App() {
       
       <Route path="/logout" element={<Logout/>}/>
 
-      <Route path="/teamlead" element={
+      <Route path="/" element={
         <NavigationContextProvider>
           <CandidateContextProvider>
             <Teamlead />
@@ -163,7 +163,7 @@ function App() {
           
         <Route path="/login" element={<SignIn setUser={setUser}/>}/>
         
-        <Route path="/home" element={
+        <Route path="/" element={
           <NavigationContextProvider>
             <AppliedJobsContextProvider>
               <CandidateHomeScreen/>

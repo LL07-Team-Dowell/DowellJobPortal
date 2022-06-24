@@ -19,15 +19,16 @@ function JobScreen() {
     const { section } = useNavigationContext();
     
     useEffect(() => {
-      async function fetchData(){
-        //   const getJobs=;
-          const request = await myAxiosInstance.get(requests.Jobs);
-          setJobs(request.data);
-          console.log(request)
-          return request
-      }
-      fetchData();
-    
+
+        async function fetchData(){
+            
+            const request = await myAxiosInstance.get(requests.Jobs);
+            setJobs(request.data);
+            console.log(request)
+            return request
+        }
+        fetchData();
+
     }, []);
 
     const handleApplyButtonClick = (currentJob) => {
@@ -39,7 +40,7 @@ function JobScreen() {
     
             <div className="row">
                 {
-                    section == undefined ? <>
+                    section == undefined || section === "home" ? <>
                         {jobs.map(job=>(
                             <div className="column" key={job.id}>
                                 <div className="card">
