@@ -102,6 +102,7 @@ const useStyles = makeStyles((theme)=>({
 	};
 	const handleSubmit= async (e)=>{
 		e.preventDefault();
+		setDisabled(true);
 
 		try{
 

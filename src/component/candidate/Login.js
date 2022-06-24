@@ -94,7 +94,8 @@ export default function SignIn({ setUser }) {
 	}, [formData.email, formData.password])
 
 	const handleSubmit = async (e) =>{
-		e. preventDefault();
+		e.preventDefault();
+		setDisabled(true);
 
 		try{
 
