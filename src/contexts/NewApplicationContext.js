@@ -22,6 +22,8 @@ export const newApplicationState = {
 }
 
 export const mutableNewApplicationStateNames = {
+    job: "job",
+    applicant: "applicant",
     country: "country",
     freelancePlatform: "freelancePlatform",
     freelancePlatformUrl: "freelancePlatformUrl",

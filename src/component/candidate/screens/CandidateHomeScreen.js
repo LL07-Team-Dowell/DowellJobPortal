@@ -5,11 +5,11 @@ import Job from '../Job';
 
 
 
-function Home() {
+function Home({ user }) {
   return (
     <div>
       <Navbar title='Jobs'/>
-      <Job />
+      <Job currentUser={user} />
       <Footer/>
 
       

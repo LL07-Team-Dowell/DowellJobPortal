@@ -166,7 +166,7 @@ function App() {
         <Route path="/" element={
           <NavigationContextProvider>
             <AppliedJobsContextProvider>
-              <CandidateHomeScreen/>
+              <CandidateHomeScreen user={user} />
             </AppliedJobsContextProvider>
           </NavigationContextProvider>
         }>
