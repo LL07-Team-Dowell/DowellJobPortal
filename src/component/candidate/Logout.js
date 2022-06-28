@@ -15,14 +15,18 @@ function Logout() {
 
     useEffect(() => {
 
+      const refresh_token = localStorage.getItem("refresh_token");
+
+      if (!refresh_token || refresh_token === "undefined") return navigate("-1");
+
       logoutUser().then(res => {
         
         localStorage.removeItem('user');
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
   
-        
-        navigate('/login');
+        // to trigger an app re-render and update the routes
+        window.location.href = '/DowellJobPortal/#/login';
 
       }).catch(err => {
 
