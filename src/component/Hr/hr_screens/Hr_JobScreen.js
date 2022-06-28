@@ -14,6 +14,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import SelectedCandidates from '../../teamlead/components/SelectedCandidates/SelectedCandidates';
 import { appliedCandidates } from '../candidatesData';
 import SelectedCandidatesScreen from '../../teamlead/screens/SelectedCandidatesScreen/SelectedCandidatesScreen';
+import ErrorPage from '../../error/ErrorPage';
 
 
 
@@ -25,11 +26,13 @@ function Hr_JobScreen() {
   const [sideNavbarActive, setSideNavbarActive] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const [jobSearchInput, setJobSearchInput] = useState("");
   
   useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
   const getApplications = async () => {
     const response = await myAxiosInstance.get("/jobs/get_jobs/");
+    await myAxiosInstance.get("/jobs/hrview/")
     return response.data;
   }
 
@@ -70,7 +73,7 @@ function Hr_JobScreen() {
             handleMenuIconClick={() => setSideNavbarActive(true)}
           />
           <div className='search'>
-            <Search/>
+            <Search seachValue={jobSearchInput} />
           </div>
           <div className='job__wrapper'>
             {
@@ -89,20 +92,21 @@ function Hr_JobScreen() {
         <NavigationBar
           handleMenuIconClick={() => setSideNavbarActive(true)}
           className={'hr_navigation'}
-          title={section === "after_initial_meet" ? "After Initial Meeting" : ""}
+          title={section === "shortlisted" ? "Shorlisted" : ""}
           hrPageActive={sub_section !== undefined ? true : false}
           handleBackIconClick={() => navigate(-1)}
         />
         
         { 
 
-          sub_section === undefined && section === "after_initial_meet" ? <>
+          sub_section === undefined && section === "shortlisted" ? <>
             <ShortlistedScreen />
           </> :
 
           sub_section === undefined && section === "user" ? <></> :
 
-          <></>
+          sub_section === undefined &&
+          <><ErrorPage disableNav={true} /></>
         }
       
       </>
