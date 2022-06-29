@@ -1,4 +1,6 @@
 export const newJobApplicationDataReducerActions = {
+    UPDATE_JOB: "update_job",
+    UPDATE_APPLICANT: "update_applicant",
     UPDATE_COUNTRY: "update_country",
     UPDATE_FREELANCE_PLATFORM: "update_freelance_platform",
     UPDATE_FREELANCE_PLATFORM_URL: "update_freelance_platform_url",
@@ -26,7 +28,9 @@ export const newJobApplicationDataReducer = (currentState, action) => {
                     [ action.payload.stateToChange ]: action.payload.value
                 }
             }
-
+        
+        case newJobApplicationDataReducerActions.UPDATE_JOB:
+        case newJobApplicationDataReducerActions.UPDATE_APPLICANT:
         case newJobApplicationDataReducerActions.UPDATE_COUNTRY:
         case newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM:
         case newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM_URL:

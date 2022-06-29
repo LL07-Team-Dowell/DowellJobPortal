@@ -4,11 +4,11 @@ import Footer from '../Footer';
 import './css/AppliedScreen.css';
 import Applied from '../Applied';
 
-function AppliedScreen() {
+function AppliedScreen({ user }) {
   return (
     <div className='applied__screen'>
         <Navbar title="Application status"/>
-        <Applied/>
+        <Applied currentUser={user} />
         <Footer/>
     </div>
   )

@@ -37,7 +37,7 @@ const JobApplicationScreen = () => {
     const workflowTermsSelectionsRef = useRef([]);
     const { appliedJobsState, dispatchToAppliedJobsState } = useAppliedJobsContext();
     
-    const [formPage, setFormPage] = useState(1);
+    const [formPage, setFormPage] = useState(5);
 
     const addToRefsArray = (elem, arrayToAddTo) => {
         if (elem && !arrayToAddTo.current.includes(elem)) arrayToAddTo.current.push(elem)
@@ -45,7 +45,9 @@ const JobApplicationScreen = () => {
 
     useEffect(() => {
 
-        if (!location.state) return navigate("/home")
+        if (!location.state.jobToApplyTo) return navigate("/home")
+        
+        if (!location.state.currentUser) return navigate("/home")
         
         setCurrentJob(location.state.jobToApplyTo);
 
@@ -54,6 +56,8 @@ const JobApplicationScreen = () => {
         })
 
         dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_OTHERS, payload: { stateToChange: mutableNewApplicationStateNames.others_property_jobDescription, value: location.state.jobToApplyTo.description }})
+        dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_JOB, payload: { stateToChange: mutableNewApplicationStateNames.job, value: location.state.jobToApplyTo.id }})
+        dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_APPLICANT, payload: { stateToChange: mutableNewApplicationStateNames.applicant, value: location.state.currentUser.id }})
 
     }, []);
 
@@ -169,10 +173,12 @@ const JobApplicationScreen = () => {
     const createInputData = (key, data) => {
         return (
             <>
-                <h2><b>{data}</b></h2>
-                <label className="text__Container">
-                    <input type={'text'} placeholder={data} value={newApplicationData.others[key] ? newApplicationData.others[key] : ""} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_OTHERS, payload: { stateToChange: key, value: e.target.value } })} />
-                </label>
+                <div className="job__Application__Item">
+                    <h2>{data}<span className="red-color required-indicator">*</span></h2>
+                    <label className="text__Container">
+                        <input type={'text'} placeholder={data} value={newApplicationData.others[key] ? newApplicationData.others[key] : ""} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_OTHERS, payload: { stateToChange: key, value: e.target.value } })} />
+                    </label>
+                </div>
             </>
         )
     }
@@ -183,7 +189,14 @@ const JobApplicationScreen = () => {
 
                 {
                     section === "form" ? <>
-                        <h1><b>Job Application Form for {currentJob.title}</b></h1>
+                        <div className="job__Application__Title">
+                            <h1><b>Job Application Form for {currentJob.title}</b></h1>
+                            <CustomHr className={'relative-hr'} />
+                            <div>
+                                <span className="red-color">*</span>
+                                <span className="red-color">Required</span>
+                            </div>
+                        </div>
 
                         <form onSubmit={handleSubmitNewApplication}>
                             {
@@ -236,50 +249,61 @@ const JobApplicationScreen = () => {
                             {
                                 formPage === 5 && <>
 
-                                    <h2><b>Select Country</b></h2>
-                                    <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
-                                        <select name="country" ref={selectCountryOptionRef} defaultValue={'default_'}>
-                                            <option value={'default_'} disabled>Select Option</option>
-                                            {React.Children.toArray(countriesData.map(country => {
-                                                return <option value={country.toLocaleLowerCase()}>{country}</option>
-                                            }))}
-                                        </select>
-                                        <AiOutlineDown className="dropdown__Icon" />
-                                    </div>
+                                    <div className="job__Application__Item">
 
-                                    <h2><b>Freelancing Profile</b></h2>
+                                        <h2>Select Country<span className="red-color required-indicator">*</span></h2>
+                                        <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
+                                            <select name="country" ref={selectCountryOptionRef} defaultValue={'default_'}>
+                                                <option value={'default_'} disabled>Select Option</option>
+                                                {React.Children.toArray(countriesData.map(country => {
+                                                    return <option value={country.toLocaleLowerCase()}>{country}</option>
+                                                }))}
+                                            </select>
+                                            <AiOutlineDown className="dropdown__Icon" />
+                                        </div>
+                                    </div>
                                     
-                                    <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
-                                        <select name="freelancePlaform" ref={freelancePlatformRef} defaultValue={'default_'}>
-                                            <option value={'default_'} disabled>Select Option</option>
-                                            {React.Children.toArray(freelancingPlatforms.map(platform => {
-                                                return <option value={platform.toLocaleLowerCase()}>{platform}</option>
-                                            }))}
-                                        </select>
-                                        <AiOutlineDown className="dropdown__Icon" />
+                                    <div className="job__Application__Item">
+                                        <h2>Freelancing Profile<span className="red-color required-indicator">*</span></h2>
+                                        
+                                        <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
+                                            <select name="freelancePlaform" ref={freelancePlatformRef} defaultValue={'default_'}>
+                                                <option value={'default_'} disabled>Select Option</option>
+                                                {React.Children.toArray(freelancingPlatforms.map(platform => {
+                                                    return <option value={platform.toLocaleLowerCase()}>{platform}</option>
+                                                }))}
+                                            </select>
+                                            <AiOutlineDown className="dropdown__Icon" />
+                                        </div>
                                     </div>
 
-                                    <label className="input__Text__Container">
-                                        <h2><b>Link to profile on freelancing platform</b></h2>
-                                        <input aria-label="link to profile on freelance platform" type={'text'} placeholder={'Link to profile on platform'} value={newApplicationData.freelancePlatformUrl} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM_URL, payload: { stateToChange: mutableNewApplicationStateNames.freelancePlatformUrl, value: e.target.value }})} />
-                                    </label>
+                                    <div className="job__Application__Item">
+                                        <label className="input__Text__Container">
+                                            <h2>Link to profile on freelancing platform<span className="red-color required-indicator">*</span></h2>
+                                            <input aria-label="link to profile on freelance platform" type={'text'} placeholder={'Link to profile on platform'} value={newApplicationData.freelancePlatformUrl} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM_URL, payload: { stateToChange: mutableNewApplicationStateNames.freelancePlatformUrl, value: e.target.value }})} />
+                                        </label>
+                                    </div>
 
-                                    <h2><b>Academic Qualifications</b></h2>
-                                    <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
-                                        <select name="qualifications" ref={qualificationSelectionRef} defaultValue={'default_'}>
-                                            <option value={'default_'} disabled>Select Option</option>
-                                            {React.Children.toArray(qualificationsData.map(qualification => {
-                                                return <option value={qualification.toLocaleLowerCase()} onClick={() => setLabelClicked(!labelClicked)}>{qualification}</option>
-                                            }))}
-                                        </select>
-                                        <AiOutlineDown className="dropdown__Icon" />
+                                    <div className="job__Application__Item">
+                                        <h2>Academic Qualifications<span className="red-color required-indicator">*</span></h2>
+                                        <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
+                                            <select name="qualifications" ref={qualificationSelectionRef} defaultValue={'default_'}>
+                                                <option value={'default_'} disabled>Select Option</option>
+                                                {React.Children.toArray(qualificationsData.map(qualification => {
+                                                    return <option value={qualification.toLocaleLowerCase()} onClick={() => setLabelClicked(!labelClicked)}>{qualification}</option>
+                                                }))}
+                                            </select>
+                                            <AiOutlineDown className="dropdown__Icon" />
+                                        </div>
                                     </div>
 
                                     { 
-                                        showQualificationInput && <label className="input__Text__Container">
-                                            <h2 className="qualification__Title__Text"><b>Qualification</b></h2>
-                                            <input aria-label="your academic qualification" type={'text'} placeholder={'Academic Qualification'} value={newApplicationData.others[mutableNewApplicationStateNames.others_property_qualification_type]} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_QUALIFICATIONS, payload: { stateToChange: mutableNewApplicationStateNames.others_property_qualification_type, value: e.target.value }})} />
-                                        </label>
+                                        showQualificationInput && <div className="job__Application__Item">
+                                            <label className="input__Text__Container">
+                                                <h2 className="qualification__Title__Text">Qualification<span className="red-color required-indicator">*</span></h2>
+                                                <input aria-label="your academic qualification" type={'text'} placeholder={'Academic Qualification'} value={newApplicationData.others[mutableNewApplicationStateNames.others_property_qualification_type]} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_QUALIFICATIONS, payload: { stateToChange: mutableNewApplicationStateNames.others_property_qualification_type, value: e.target.value }})} />
+                                            </label>
+                                        </div>
                                     }
 
                                     {React.Children.toArray(Object.keys(currentJob.others || {}).map((key) => createInputData(key, currentJob.others[key])))}
@@ -289,10 +313,12 @@ const JobApplicationScreen = () => {
                                         <span>Agree/Disagree to all terms</span>
                                     </label>
                                     
-                                    <label className="input__Text__Container">
-                                        Comments/Suggestions
-                                        <input type={'text'} placeholder={'Any comments'} value={newApplicationData.others[mutableNewApplicationStateNames.others_comments]} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_COMMENTS, payload: { stateToChange: mutableNewApplicationStateNames.others_comments, value: e.target.value } })} />
-                                    </label>
+                                    <div className="job__Application__Item">
+                                        <label className="input__Text__Container">
+                                            Comments/Suggestions
+                                            <input type={'text'} placeholder={'Any comments'} value={newApplicationData.others[mutableNewApplicationStateNames.others_comments]} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_COMMENTS, payload: { stateToChange: mutableNewApplicationStateNames.others_comments, value: e.target.value } })} />
+                                        </label>
+                                    </div>
 
                                 </>
                             }

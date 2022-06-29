@@ -8,7 +8,7 @@ export const hrNavigationLinks = [
         icon: <FiHome />,
     },
     {
-        address: "after initial meet",
+        address: "shortlisted",
         icon: <CgFileDocument />
     },
     {

@@ -9,10 +9,11 @@ import { useAppliedJobsContext } from '../../contexts/AppliedJobsContext';
 import { useNavigationContext } from '../../contexts/NavigationContext';
 import { tasksData } from '../teamlead/tasks';
 import JobTile from '../teamlead/components/JobTile/JobTile';
+import ErrorPage from '../error/ErrorPage';
 
 
 
-function JobScreen() {
+function JobScreen({ currentUser }) {
     const [jobs, setJobs]=useState([]);
     const { appliedJobsState } = useAppliedJobsContext();
     const navigate = useNavigate();
@@ -24,15 +25,15 @@ function JobScreen() {
             
             const request = await myAxiosInstance.get(requests.Jobs);
             setJobs(request.data);
-            console.log(request)
-            return request
+            return request;
+            
         }
         fetchData();
 
     }, []);
 
     const handleApplyButtonClick = (currentJob) => {
-        navigate("/apply/job", { state: { jobToApplyTo: currentJob } })
+        navigate("/apply/job", { state: { jobToApplyTo: currentJob, currentUser: currentUser } })
     }
     
     return (
@@ -87,7 +88,9 @@ function JobScreen() {
                                 }))
                             }
                         </div>
-                    </> : <></>
+                    </> : <>
+                        <ErrorPage disableNav={true} />
+                    </>
 
                 }
 
