@@ -9,7 +9,7 @@
 .card {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
-    width:335px;
+    width: 20.9375rem;
     height: 11.5rem;
     border-radius: 10px;
     /* top: 122px; */
@@ -177,9 +177,8 @@
 
   @media screen and (max-width: 1150px) {
     .column {
-      padding-left: 33px;
-
-      
+      /* padding-left: 33px; */
+      width: max-content;
     }
     .row{
       padding-left: 25px;
@@ -189,7 +188,7 @@
 
   @media screen and (max-width: 1000px) {
     .column {
-      padding-left: 27px;
+      /* padding-left: 27px; */
     }
 
   }
@@ -236,9 +235,8 @@
 
   @media screen and (max-width: 770px) {
     .column {
-      padding-left: 1px;
       margin-left: 0;
-      
+      width: 100%;
 
     }
     .row{
@@ -247,20 +245,29 @@
  
    
   }
-  @media screen and (max-width: 676px) {
+  @media screen and (max-width: 772px) {
     .column{
-      padding-left: 72px;
+      width: 100%;
+    }
+    .card{
+      margin-left: auto;
+      margin-right: auto;
     }
   }
   @media screen and (max-width: 590px) {
     .column {
- 
+      float: none;
       padding-left: 30px;
       margin-bottom: -21px;
 
     }
     .row{
       /* margin-left: 78px; */
+    }
+
+    .card{
+      margin-left: auto;
+      margin-right: auto;
     }
    
   }
@@ -318,7 +325,6 @@
   @media screen and (max-width: 365px) {
     .column {
       width: 100%;
-      padding-left: 26px;
       
 
     }
@@ -332,17 +338,24 @@
   }
 
   @media screen and (max-width: 320px) {
-    .card{
-      width: 257px;
-
-    }
     .apply-button{
-      width: 66px;
-      margin-left: 169px;
+      /* margin-left: 169px; */
     }
-
+    .card{
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .column{
+      padding-left: 1%;
+      padding-right: 1%;
+    }
   }
 
+  @media (min-width: 700px) and (max-width: 992px){
+    .card{
+      width: 19rem;
+    }
+  }
   
     
   
