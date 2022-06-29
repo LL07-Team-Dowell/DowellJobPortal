@@ -37,7 +37,7 @@ const JobApplicationScreen = () => {
     const workflowTermsSelectionsRef = useRef([]);
     const { appliedJobsState, dispatchToAppliedJobsState } = useAppliedJobsContext();
     
-    const [formPage, setFormPage] = useState(5);
+    const [formPage, setFormPage] = useState(1);
 
     const addToRefsArray = (elem, arrayToAddTo) => {
         if (elem && !arrayToAddTo.current.includes(elem)) arrayToAddTo.current.push(elem)
