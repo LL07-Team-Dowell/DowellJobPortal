@@ -3,6 +3,7 @@ import { useCandidateContext } from "../../contexts/CandidatesContext";
 import { useNavigationContext } from "../../contexts/NavigationContext";
 import SideNavigationBar from "../account/components/SideNavigationBar/SideNavigationBar";
 import useClickOutside from "../account/hooks/useClickOutside";
+import ErrorPage from "../error/ErrorPage";
 import BottomNavigationBar from "./components/BottomNavigationBar/BottomNavigationBar";
 import JobTile from "./components/JobTile/JobTile";
 import NavigationBar from "./components/NavigationBar/NavigationBar";
@@ -136,7 +137,9 @@ const Teamlead = () => {
                 </div>
             </> : 
             
-            section === "user" ? <></> : <></>
+            section === "user" ? <></> : <>
+                <ErrorPage disableNav={true} />
+            </>
         }
         
         <BottomNavigationBar 

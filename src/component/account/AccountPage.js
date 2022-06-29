@@ -4,6 +4,7 @@ import axiosInstance, { myAxiosInstance } from "../../axios";
 import { useCandidateContext, initialCandidatesDataStateNames } from "../../contexts/CandidatesContext";
 import { useNavigationContext } from "../../contexts/NavigationContext";
 import { candidateDataReducerActions } from "../../reducers/CandidateDataReducer";
+import ErrorPage from "../error/ErrorPage";
 import BottomNavigationBar from "../teamlead/components/BottomNavigationBar/BottomNavigationBar";
 import JobTile from "../teamlead/components/JobTile/JobTile";
 import NavigationBar from "../teamlead/components/NavigationBar/NavigationBar";
@@ -148,7 +149,9 @@ const AccountPage = () => {
                 </div>
             </> : 
             
-            section === "user" ? <></> : <></>
+            section === "user" ? <></> : <>
+                <ErrorPage disableNav={true} />
+            </>
 
         }
 
