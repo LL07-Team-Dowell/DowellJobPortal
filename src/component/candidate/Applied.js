@@ -8,24 +8,21 @@ import { myAxiosInstance } from '../../axios';
 import { useAppliedJobsContext } from '../../contexts/AppliedJobsContext';
 
 
-
-
-
-
-function Applied() {
+function Applied({ currentUser }) {
   const [Applied, sethandleAppliedShow]=useState(true);
   const [Interview, sethandleInterviewShow]=useState(false);
   const { appliedJobsState } = useAppliedJobsContext();
   
   const getAppliedData = async () => {
-    // const response = await myAxiosInstance.get("/jobs/get_my_applications/")
+    console.log(currentUser)
+    const response = await myAxiosInstance.get("/jobs/get_my_applications/", { id: currentUser.id })
     // console.log(response.data)
     console.log(appliedJobsState)
   }
 
   useEffect(() => {
 
-    // getAppliedData();
+    getAppliedData();
 
   }, [])
 

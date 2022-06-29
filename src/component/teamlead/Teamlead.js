@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { myAxiosInstance } from "../../axios";
 import { useCandidateContext } from "../../contexts/CandidatesContext";
 import { useNavigationContext } from "../../contexts/NavigationContext";
 import SideNavigationBar from "../account/components/SideNavigationBar/SideNavigationBar";
@@ -31,6 +32,14 @@ const Teamlead = () => {
 
     useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
+    async function getTeamlead () {
+        const response = await myAxiosInstance.get("/jobs/team_lead_view/");
+        return response;
+    }
+    
+    useEffect(() => {
+        getTeamlead()
+    }, [])
     
     useEffect(() => {
         const currentTab = searchParams.get("tab");
