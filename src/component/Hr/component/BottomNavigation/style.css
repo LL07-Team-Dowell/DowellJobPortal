@@ -1,12 +1,14 @@
 .hr__Bottom__Nav__Container{
     --grey-color: #838383;
     --light-grey: #C4C4C4;
+    --white: #fff;
     --black: #000;
+    --green-color: #045632;
     font-family: 'Inter', sans-serif;
 }
 
 .hr__Bottom__Nav__Container{
-    background: var(--light-grey);
+    background: var(--white);
     width: 100%;
     display: flex;
     align-items: center;
@@ -34,11 +36,11 @@
     font-size: 0.625rem;
     /* margin-top: 10%; */
     text-decoration: none;
-    color: var(--grey-color);
+    color: var(--light-grey);
 }
 
 .hr__Bottom__Nav__Container .bottom-navigation-item a.active{
-    color: var(--black);
+    color: var(--green-color);
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) { 

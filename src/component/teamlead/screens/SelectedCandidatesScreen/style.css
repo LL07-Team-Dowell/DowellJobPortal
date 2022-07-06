@@ -1,7 +1,8 @@
 .selected-candidate-screen-container{
     --grey-color: #838383;
-    --light-grey-color: #E0E0E0;
+    --light-grey-color: #F8FAFB;
     --black: #000;
+    --white-color: #fff;
     --green-color: #53CA5F;
     --red-color: #FC3939;
     --orange-color: #FF843F;
@@ -153,6 +154,10 @@
 .custom-hr.rehire-hr{
     position: relative;
     margin-top: 10%;
+}
+
+.white__Bg__Color{
+    background: var(--white-color) !important;
 }
 
 @media screen and (min-width: 992px) {

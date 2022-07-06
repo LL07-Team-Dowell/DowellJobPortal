@@ -2,11 +2,13 @@
     --grey-color: #838383;
     --light-grey: #C4C4C4;
     --black: #000;
+    --green-color: #045632;
+    --white: #fff;
     font-family: 'Inter', sans-serif;
 }
 
 .bottom-nav-container{
-    background: var(--light-grey);
+    background: var(--white);
     width: 100%;
     display: flex;
     align-items: center;
@@ -33,11 +35,11 @@
     font-size: 0.625rem;
     margin-top: 10%;
     text-decoration: none;
-    color: var(--grey-color);
+    color: var(--light-grey);
 }
 
 .bottom-nav-container .bottom-navigation-item a.active{
-    color: var(--black);
+    color: var(--green-color);
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) { 

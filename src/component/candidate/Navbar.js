@@ -64,20 +64,20 @@ function Navbar( {title, changeToBackButton, backButtonLink}) {
   return (
    
       <IconContext.Provider value={{ color: '#000000', size:'22px' }}>
-        <div className={`navbar ${show && "nav__grey"}`}>
+        <div className={`navbar nav__green`}>
           {
             changeToBackButton ? <>
               <Link to={backButtonLink} className='menu-bars'>
-                <BiArrowBack />
+                <BiArrowBack className='white-color' />
               </Link>
 
               <div className='mini__Nav__Links__Container'>
                 <Link to={'#'} >
-                  <BsBookmark />
+                  <BsBookmark className='white-color' />
                 </Link>
 
                 <Link to={'#'}>
-                  <BsShare />
+                  <BsShare className='white-color' />
                 </Link>
               </div>
               
@@ -85,7 +85,7 @@ function Navbar( {title, changeToBackButton, backButtonLink}) {
             
             <>
               <Link to='#' className='menu-bars'>
-                <FaIcons.FaBars className='icons' onClick={showSidebar}  />
+                <FaIcons.FaBars className='icons white-color' onClick={showSidebar}  />
               </Link>
             </>
           }

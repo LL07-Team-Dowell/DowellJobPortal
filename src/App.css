@@ -11,3 +11,8 @@
 .MuiOutlinedInput-input.input__Error__Item + .MuiOutlinedInput-notchedOutline {
   border-color: red !important;
 }
+
+#root, html{
+  background-color: #E5E5E5;
+  height: 100%;
+}

@@ -5,19 +5,22 @@ import * as ImIcons from 'react-icons/im';
 import * as AiIcons from 'react-icons/ai';
 import { IconContext } from 'react-icons';
 import { myAxiosInstance } from '../../axios';
-import { useAppliedJobsContext } from '../../contexts/AppliedJobsContext';
 
 
 function Applied({ currentUser }) {
   const [Applied, sethandleAppliedShow]=useState(true);
   const [Interview, sethandleInterviewShow]=useState(false);
-  const { appliedJobsState } = useAppliedJobsContext();
+  const [appliedJobs, setAppliedJobs] = useState([]);
   
   const getAppliedData = async () => {
-    console.log(currentUser)
-    const response = await myAxiosInstance.get("/jobs/get_my_applications/", { id: currentUser.id })
-    // console.log(response.data)
-    console.log(appliedJobsState)
+    // const response = await myAxiosInstance.get("/jobs/get_my_applications/", { id: currentUser.id })
+    const response = await myAxiosInstance.get("/jobs/get_applications/");
+    const jobsResponse = await myAxiosInstance.get("/jobs/get_jobs/");
+
+    const currentUserApplications = response.data.filter(application => application.applicant === currentUser.id);
+    const currentUserAppliedJobs = jobsResponse.data.filter((currentJob) => currentUserApplications.find(({ job }) => currentJob.id === job));
+    setAppliedJobs(currentUserAppliedJobs);
+    return;
   }
 
   useEffect(() => {
@@ -25,12 +28,6 @@ function Applied({ currentUser }) {
     getAppliedData();
 
   }, [])
-
-  useEffect(() => {
-    getAppliedData();
-  }, [])
-
-  
 
   const show =() => sethandleAppliedShow(!Applied) || sethandleInterviewShow(!Interview);
 
@@ -41,8 +38,8 @@ function Applied({ currentUser }) {
       <div className="slide-controls">
                <input type="radio" name="slide" id="applied" defaultChecked={true} />
                <input type="radio" name="slide" id="interview"/>
-               <label  htmlFor="applied" className="slide applied" onClick={show}>Applied ({appliedJobsState.appliedJobs.length})</label>
-               <label  htmlFor="interview" className="slide interview" onClick={show}>Interview ({appliedJobsState.jobsToInterviewFor.length})</label>
+               <label  htmlFor="applied" className="slide applied" onClick={show}>Applied ({appliedJobs.length})</label>
+               <label  htmlFor="interview" className="slide interview" onClick={show}>Interview ({[].length})</label>
                <div className="slider-tab"></div>
             </div>
       <div className='container__inner'>
@@ -50,7 +47,7 @@ function Applied({ currentUser }) {
           <div className='applied__row'>
             <div className='applied__column'>
               {
-                React.Children.toArray(appliedJobsState.jobsToInterviewFor.map(job => {
+                React.Children.toArray([].map(job => {
                   return <>
                     <div className='card__cover'>
                       <div className='cards '>
@@ -81,7 +78,7 @@ function Applied({ currentUser }) {
           <div className='applied__rows'>
             <div className='applied__columns'>
               {
-                React.Children.toArray(appliedJobsState.appliedJobs.map(appliedJob => {
+                React.Children.toArray(appliedJobs.map(appliedJob => {
                   return <>
                     <div className='cards__body'>
                       <div className='cards__content'>
