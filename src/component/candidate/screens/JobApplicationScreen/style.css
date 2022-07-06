@@ -3,11 +3,11 @@
     --light-grey-color: #C4C4C4;
     --white: #fff;
     --box-shadow-color: rgba(0, 0, 0, 0.15);
-    --green-bg-color: linear-gradient(128.41deg, #B1E3BB 29.37%, #5CA19C 108.83%);
+    --green-bg-color: linear-gradient(163.78deg, #045632 -13.94%, #57A639 110.54%);
     --dark-green-color: #5CA19C;
-    --red-color: #FF0000;
-    --pale-orange: #F7E7DE;
-    --purple-color: #967FEF;
+    --yellow-color: #F1FA0D;
+    --green-color: #57A639;
+    --deep-yellow-color: #C09F2C;
     font-family: 'Inter', sans-serif;
 }
 
@@ -16,11 +16,10 @@
     padding-right: 8%;
     margin-top: 3%;
     height: 100%;
-    margin-bottom: 60%;
 }
 
-.red-color{
-    color: var(--red-color) !important;
+.yellow-color{
+    color: var(--yellow-color) !important;
 }
 
 .candidate__Job__Application__Container .job__Application__Title{
@@ -29,7 +28,9 @@
     color: var(--white);
 }
 
-.candidate__Job__Application__Container .job__Application__Title, .candidate__Job__Application__Container .job__Application__Item{
+.candidate__Job__Application__Container .job__Application__Title, 
+.candidate__Job__Application__Container .job__Application__Item, 
+.candidate__Job__Application__Container .job__Application__Items{
     border-radius: 10px;
     box-shadow: 0px 4px 10px var(--box-shadow-color);
 }
@@ -43,8 +44,18 @@
     text-align: center;
 }
 
+.candidate__Job__Application__Container .job__Application__Items,
 .candidate__Job__Application__Container .job__Application__Item{
-    background: var(--pale-orange);
+    background: var(--white);
+    border-left: 1px solid var(--deep-yellow-color);
+}
+
+.candidate__Job__Application__Container .job__Application__Items{
+    margin: 4% auto;
+    padding: 2% 4%;
+}
+
+.candidate__Job__Application__Container .job__Application__Item{
     font-size: 0.875rem;
     padding: 4%;
     margin: 8% auto;
@@ -157,15 +168,13 @@ p{
     padding: 3% 1.5%;
 }
 
-.candidate__Job__Application__Container .apply-btn{
-    position: absolute;
-    bottom: -30%;
-    left: 50%;
-    transform: translateX(-50%);
+.candidate__Job__Application__Container .apply_Btn_Container{
+    display: flex;
+    margin: 0 auto;
 }
 
-.candidate__Job__Application__Container .apply-btn, .candidate__Job__Application__Container form button{
-    background: var(--purple-color);
+.candidate__Job__Application__Container .apply_Btn_Container .apply-btn, .candidate__Job__Application__Container form button{
+    background: var(--green-color);
     border-radius: 10px;
     padding: 6% 35%;
     font-size: 1.25rem;
@@ -277,12 +286,13 @@ p{
     display: none;
 }
 
-.candidate__Job__Application__Container .apply-btn:disabled, 
-.candidate__Job__Application__Container .apply-btn[disabled],
+.candidate__Job__Application__Container .apply_Btn_Container .apply-btn:disabled, 
+.candidate__Job__Application__Container .apply_Btn_Container .apply-btn[disabled],
 .candidate__Job__Application__Container form button:disabled,
 .candidate__Job__Application__Container form[disabled]
 {
     cursor: not-allowed;
+    opacity: 0.7;
 }
 
 .candidate__Job__Application__Container form button.previous-btn{
@@ -297,10 +307,6 @@ p{
         margin: 3% 0 2%;
     }
 
-    .candidate__Job__Application__Container{
-        margin-bottom: 10%;
-    }
-
     .candidate__Job__Application__Container .relative-hr{
         margin: 4% auto;
     }
@@ -309,7 +315,7 @@ p{
         margin-bottom: 2%;
     }
 
-    .candidate__Job__Application__Container .apply-btn{
+    .candidate__Job__Application__Container .apply_Btn_Container .apply-btn{
         position: relative;
         margin: 10% auto;
     }
@@ -323,12 +329,12 @@ p{
     }
 
 
-    .candidate__Job__Application__Container .apply-btn, .candidate__Job__Application__Container form button{
+    .candidate__Job__Application__Container .apply_Btn_Container .apply-btn, .candidate__Job__Application__Container form button{
         padding: 2.5% 8%;
     }
 
     .candidate__Job__Application__Container form button{
-        margin: 3% 0;
+        margin: 3% 0 8%;
     }
 
     .candidate__Job__Application__Container .select__Dropdown__Container{
@@ -381,5 +387,11 @@ p{
 
     .candidate__Job__Application__Container .job__Application__Item .select__Dropdown__Container{
         margin: 0;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .candidate__Job__Application__Container .apply_Btn_Container .apply-btn, .candidate__Job__Application__Container form button{
+        padding: 4% 15%;
     }
 }
