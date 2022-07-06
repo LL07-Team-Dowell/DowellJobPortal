@@ -1,9 +1,11 @@
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { FiEdit } from 'react-icons/fi';
 
 import "./style.css";
+import DropdownButton from '../DropdownButton/Dropdown';
 
-const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClick, candidateData, jobData, handleJobTileClick, taskData, hrPageActive, routeToJob }) => {
+const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClick, candidateData, jobData, handleJobTileClick, taskData, hrPageActive, routeToJob, adminPageActive, handleEditIconClick }) => {
 
     const handleJobItemClick = ( currentData ) => {
         if (disableClick) return
@@ -16,11 +18,17 @@ const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClic
     }
 
     return <>
-        <div className="job-tile-container job__Container" onClick={() => routeToJob ? handleJobTileClick(jobData) : handleJobItemClick(showTask ? taskData : candidateData)}>
+        <div className={`job-tile-container job__Container ${adminPageActive ? 'rel__Pos' : ''}`} onClick={() => routeToJob ? handleJobTileClick(jobData) : handleJobItemClick(showTask ? taskData : candidateData)}>
             {
                 jobData ? <>
-                    <div className="job__Details">
+                    <div className={`job__Details ${adminPageActive ? 'flex__Display' : ''}`}>
                         <h2><b>{jobData.title}</b></h2>
+                        {
+                            adminPageActive && <div className="edit__Job__Container" onClick={() => handleEditIconClick(jobData)}>
+                                <FiEdit />
+                                <span>Edit</span>  
+                            </div>
+                        }
                     </div>
                     <p>Skills: {jobData.skills}</p>
                     <div className={`job__Details__Container`}>
@@ -38,6 +46,17 @@ const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClic
                         </div>
 
                     </div>
+                    
+                    {
+                        adminPageActive && 
+                        
+                        <DropdownButton
+                            adminPageActive={true}
+                            currentSelection={jobData.is_active ? 'Active' : 'Inactive'}
+                            selections={['Active', 'Inactive']}
+                        />
+                    }
+                    
                 </> : 
                 
                 <>

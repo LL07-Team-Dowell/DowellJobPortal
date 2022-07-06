@@ -1,12 +1,14 @@
 .navbar-container{
     --grey-color: #ACABAB;
+    --green-color: linear-gradient(163.78deg, #045632 -13.94%, #57A639 110.54%);
     --black: #000000;
+    --white: #fff;
     font-family: 'Inter', sans-serif;
 }
 
 .navbar-container{
-    background: var(--grey-color);
-    color: var(--black);
+    background: var(--green-color);
+    color: var(--white);
     display: flex;
     justify-content: space-between;
     align-items: center;
