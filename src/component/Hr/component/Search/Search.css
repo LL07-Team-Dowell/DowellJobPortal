@@ -2,6 +2,8 @@
     --light-gray:#ABABAB;
     --gray-color:#C4C4C4;
     --dark-gray-color:#838383;
+    --yellow-color: #C09F2C;
+    --white: #fff;
 }
 
 .search__wrapper{
@@ -12,7 +14,8 @@
 .search__wrapper .search__container{
     width: 89%;
     margin: 0 auto;
-    border: 1px solid var(--dark-gray-color);
+    border: 1px solid var(--yellow-color);
+    background-color: var(--white);
     padding: 2.7% 5%;
 }
 
@@ -40,6 +43,11 @@
     font-weight: 400;
     font-size: 0.875rem;
     line-height: 17px;
+    background: transparent;
+    caret-color: var(--yellow-color);
+}
+
+.search__wrapper .search__container form input[type="search"]::placeholder{
     color: var(--light-gray);
 }
 

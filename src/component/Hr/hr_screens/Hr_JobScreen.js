@@ -31,9 +31,11 @@ function Hr_JobScreen() {
   useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
   const getApplications = async () => {
-    const response = await myAxiosInstance.get("/jobs/get_jobs/");
+    // const response = await myAxiosInstance.get("/jobs/get_jobs/");
     await myAxiosInstance.get("/jobs/hrview/")
-    return response.data;
+    const response = await myAxiosInstance.get("/jobs/get_jobs/");
+    
+    // return response.data;
   }
 
   const goToJobDetails = (jobData) => navigate("/home/job", { state: { job: jobData } });
@@ -52,7 +54,7 @@ function Hr_JobScreen() {
 
     getApplications().then(res => {
       
-      setJobs(res)
+      // setJobs(res)
     
     }).catch(err => {
 
@@ -92,8 +94,8 @@ function Hr_JobScreen() {
         <NavigationBar
           handleMenuIconClick={() => setSideNavbarActive(true)}
           className={'hr_navigation'}
-          title={section === "shortlisted" ? "Shorlisted" : ""}
-          hrPageActive={sub_section !== undefined ? true : false}
+          title={section === "shortlisted" ? "Shortlisted" : ""}
+          changeToBackIcon={sub_section !== undefined ? true : false}
           handleBackIconClick={() => navigate(-1)}
         />
         

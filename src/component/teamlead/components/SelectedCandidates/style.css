@@ -1,7 +1,7 @@
 .selected-candidates-container {
     --black-color: #000000;
     --grey-color: #A1A1A1;
-    --pale-grey-color: #F4F3F3;
+    --pale-grey-color: #F8FAFB;
     --light-grey-color: #C4C4C4;
     --background-overlay: rgba(0, 0, 0, 0.25);
     font-family: 'Inter', sans-serif;

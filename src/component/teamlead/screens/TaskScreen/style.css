@@ -4,6 +4,7 @@
     --black: #000;
     --green-color: #53CA5F;
     --red-color: #FC3939;
+    --yellow-color: #C09F2C;
     font-family: 'Inter', sans-serif;
 }
 
@@ -21,6 +22,7 @@
     align-items: center;
     justify-content: flex-end;
     cursor: pointer;
+    color: var(--yellow-color);
 }
 
 .candidate-task-screen-container .add-task-btn span{

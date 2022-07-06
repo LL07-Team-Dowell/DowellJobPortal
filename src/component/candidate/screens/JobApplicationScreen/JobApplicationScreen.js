@@ -14,9 +14,6 @@ import { mutableNewApplicationStateNames, useNewApplicationContext } from "../..
 import { newJobApplicationDataReducerActions } from "../../../../reducers/NewJobApplicationDataReducer";
 
 import "./style.css";
-import { initialAppliedJobsStateNames, useAppliedJobsContext } from "../../../../contexts/AppliedJobsContext";
-import { appliedJobsReducerActions } from "../../../../reducers/AppliedJobsReducer";
-
 
 const JobApplicationScreen = () => {
     const location = useLocation();
@@ -35,7 +32,6 @@ const JobApplicationScreen = () => {
     const technicalTermsSelectionsRef = useRef([]);
     const paymentTermsSelectionsRef = useRef([]);
     const workflowTermsSelectionsRef = useRef([]);
-    const { appliedJobsState, dispatchToAppliedJobsState } = useAppliedJobsContext();
     
     const [formPage, setFormPage] = useState(1);
 
@@ -116,13 +112,9 @@ const JobApplicationScreen = () => {
 
             if ( !newApplicationData.others[mutableNewApplicationStateNames.others_property_agreeToAll] ) {
                 
-                dispatchToAppliedJobsState({ type: appliedJobsReducerActions.UPDATE_APPLIED_JOBS, payload: { removeFromExisting: true, stateToChange: initialAppliedJobsStateNames.appliedJobs, value: currentJob }})
-            
                 return setDisableNextBtn(true);
             }
 
-            dispatchToAppliedJobsState({ type: appliedJobsReducerActions.UPDATE_APPLIED_JOBS, payload: { updateExisting: true, stateToChange: initialAppliedJobsStateNames.appliedJobs, value: currentJob }})
-            
             return setDisableNextBtn(false);
 
         }
@@ -174,7 +166,7 @@ const JobApplicationScreen = () => {
         return (
             <>
                 <div className="job__Application__Item">
-                    <h2>{data}<span className="red-color required-indicator">*</span></h2>
+                    <h2>{data}<span className="yellow-color required-indicator">*</span></h2>
                     <label className="text__Container">
                         <input type={'text'} placeholder={data} value={newApplicationData.others[key] ? newApplicationData.others[key] : ""} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_OTHERS, payload: { stateToChange: key, value: e.target.value } })} />
                     </label>
@@ -193,8 +185,8 @@ const JobApplicationScreen = () => {
                             <h1><b>Job Application Form for {currentJob.title}</b></h1>
                             <CustomHr className={'relative-hr'} />
                             <div>
-                                <span className="red-color">*</span>
-                                <span className="red-color">Required</span>
+                                <span className="yellow-color">*</span>
+                                <span className="yellow-color">Required</span>
                             </div>
                         </div>
 
@@ -203,34 +195,37 @@ const JobApplicationScreen = () => {
                                 
                                 formPage === 1 && <>
 
+                                <div className="job__Application__Items">
                                     <h2><b>General Terms and Conditions</b></h2>
                                     <p>Tick each box to continue</p>
                                     <p>Thank you for applying to freelancing opportunity in uxlivinglab. Read following terms and conditions and accept</p>
                                     
                                     {React.Children.toArray(Object.keys(currentJob.general_terms || {}).map((key) => createCheckBoxData(currentJob.general_terms[key], generalTermsSelectionsRef)))}
-                                
+                                </div>
                                 </>
                             }
 
                             {
                                 formPage === 2 && <>
                                 
+                                <div className="job__Application__Items">
                                     <h2><b>Technical Specifications</b></h2>
                                     <p>Tick each box to approve</p>
                                     <p>Thank you for accepting terms and conditions. Read following technical specifications and accept</p>
                                     {React.Children.toArray(Object.keys(currentJob.Technical_Specifications || {}).map((key) => createCheckBoxData(currentJob.Technical_Specifications[key], technicalTermsSelectionsRef)))}
-                                    
+                                </div>    
                                 </>
                             }
 
                             {
                                 formPage === 3 && <>
-                                
+
+                                <div className="job__Application__Items">
                                     <h2><b>Payment Terms</b></h2>
                                     <p></p>
                                     <p>Thank you for accepting technical specifications. Read following payment terms and accept</p>
                                     {React.Children.toArray(Object.keys(currentJob.Payment_terms || {}).map((key) => createCheckBoxData(currentJob.Payment_terms[key], paymentTermsSelectionsRef)))}
-                                
+                                </div>
                                 </>
                             }
 
@@ -238,11 +233,12 @@ const JobApplicationScreen = () => {
 
                                 formPage === 4 && <>
 
+                                <div className="job__Application__Items">
                                     <h2><b>Workflow Terms</b></h2>
                                     <p></p>
                                     <p>Thank you for accepting payment terms. Read following work flow to proceed</p>
                                     {React.Children.toArray(Object.keys(currentJob.workflow || {}).map((key) => createCheckBoxData(currentJob.workflow[key], workflowTermsSelectionsRef)))}
-                                
+                                </div>
                                 </>
                             }
 
@@ -251,7 +247,7 @@ const JobApplicationScreen = () => {
 
                                     <div className="job__Application__Item">
 
-                                        <h2>Select Country<span className="red-color required-indicator">*</span></h2>
+                                        <h2>Select Country<span className="yellow-color required-indicator">*</span></h2>
                                         <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
                                             <select name="country" ref={selectCountryOptionRef} defaultValue={'default_'}>
                                                 <option value={'default_'} disabled>Select Option</option>
@@ -264,7 +260,7 @@ const JobApplicationScreen = () => {
                                     </div>
                                     
                                     <div className="job__Application__Item">
-                                        <h2>Freelancing Profile<span className="red-color required-indicator">*</span></h2>
+                                        <h2>Freelancing Profile<span className="yellow-color required-indicator">*</span></h2>
                                         
                                         <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
                                             <select name="freelancePlaform" ref={freelancePlatformRef} defaultValue={'default_'}>
@@ -279,13 +275,13 @@ const JobApplicationScreen = () => {
 
                                     <div className="job__Application__Item">
                                         <label className="input__Text__Container">
-                                            <h2>Link to profile on freelancing platform<span className="red-color required-indicator">*</span></h2>
+                                            <h2>Link to profile on freelancing platform<span className="yellow-color required-indicator">*</span></h2>
                                             <input aria-label="link to profile on freelance platform" type={'text'} placeholder={'Link to profile on platform'} value={newApplicationData.freelancePlatformUrl} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM_URL, payload: { stateToChange: mutableNewApplicationStateNames.freelancePlatformUrl, value: e.target.value }})} />
                                         </label>
                                     </div>
 
                                     <div className="job__Application__Item">
-                                        <h2>Academic Qualifications<span className="red-color required-indicator">*</span></h2>
+                                        <h2>Academic Qualifications<span className="yellow-color required-indicator">*</span></h2>
                                         <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
                                             <select name="qualifications" ref={qualificationSelectionRef} defaultValue={'default_'}>
                                                 <option value={'default_'} disabled>Select Option</option>
@@ -300,7 +296,7 @@ const JobApplicationScreen = () => {
                                     { 
                                         showQualificationInput && <div className="job__Application__Item">
                                             <label className="input__Text__Container">
-                                                <h2 className="qualification__Title__Text">Qualification<span className="red-color required-indicator">*</span></h2>
+                                                <h2 className="qualification__Title__Text">Qualification<span className="yellow-color required-indicator">*</span></h2>
                                                 <input aria-label="your academic qualification" type={'text'} placeholder={'Academic Qualification'} value={newApplicationData.others[mutableNewApplicationStateNames.others_property_qualification_type]} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_QUALIFICATIONS, payload: { stateToChange: mutableNewApplicationStateNames.others_property_qualification_type, value: e.target.value }})} />
                                             </label>
                                         </div>
@@ -358,8 +354,9 @@ const JobApplicationScreen = () => {
 
                         <textarea readOnly={true} value={currentJob.description} rows={10}></textarea>
                         
-
-                        <button className="apply-btn" onClick={handleSubmitApplicationBtnClick} disabled={disableApplyBtn}>Apply</button>
+                        <div className='apply_Btn_Container'>
+                            <button className="apply-btn" onClick={handleSubmitApplicationBtnClick} disabled={disableApplyBtn}>Apply</button>
+                        </div>
                     </>
                 }
                 

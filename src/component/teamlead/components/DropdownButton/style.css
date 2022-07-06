@@ -3,12 +3,28 @@
     align-items: center;
     font-size: 0.875rem;
     line-height: 16.94px;
-    background: #E0E0E0;
+    background: #FFF;
     border-radius: 5px;
     padding: 3% 5%;
     margin-left: 5%;
     cursor: pointer;
     position: relative;
+}
+
+.dropdown-btn.abs__Pos{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 0.5%;
+    background: #EFEFEF;
+}
+
+.dropdown-btn.abs__Pos.green__Color span{
+    color: #53CA5F;
+}
+
+.dropdown-btn.abs__Pos.orange__Color span{
+    color: #FF843F;
 }
 
 .dropdown-btn span{
@@ -28,7 +44,7 @@
     display: none;
 }
 
-.dropdown-selections.active{
+.dropdown-selections.active_{
     display: block;
 }
 

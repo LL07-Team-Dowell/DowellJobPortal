@@ -1,0 +1,49 @@
+.admin__Page__Container .navbar-container .menu__Icon__Container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 28%;
+}
+
+.admin__Page__Container .admin__Jobs__Container{
+    width: 89%;
+    margin: 4% auto;
+}
+
+@media (min-width: 768px) and (max-width: 991.98px){
+    .admin__Page__Container .navbar-container .menu__Icon__Container{
+        width: 11.5%;
+    }
+    .admin__Page__Container .search__wrapper{
+        margin-top: 4%;
+    }   
+    .admin__Page__Container .admin__Jobs__Container > *{
+        width: calc((100% - 2%) /2);
+        margin-right: 2%;
+    }
+    .admin__Page__Container .admin__Jobs__Container > *:nth-child(2n + 2){
+        margin-right: 0;
+    }
+}
+
+@media screen and (min-width: 992px){
+    .admin__Page__Container .navbar-container .menu__Icon__Container{
+        width: 9.5%;
+    }
+    .admin__Page__Container .search__wrapper{
+        margin-top: 1.5%;
+        margin-bottom: 1.5%;
+        width: 97%;
+    }
+    .admin__Page__Container .admin__Jobs__Container{
+        width: 79.5%;
+        margin: 0 auto;
+    }
+    .admin__Page__Container .admin__Jobs__Container > *{
+        width: calc((100% - 2%) / 3);
+        margin-right: 2%;
+    }
+    .admin__Page__Container .admin__Jobs__Container > *:nth-child(3n + 3){
+        margin-right: 0;
+    }
+}

@@ -1,6 +1,6 @@
 .wrapper{
     position: relative;
-    padding-top: 6%;
+    padding-top: 4%;
     overflow: hidden; 
 }
 
@@ -12,7 +12,7 @@
     overflow: hidden;
     margin: 30px 0 10px 0;
     justify-content: space-between;
-    border: 1px solid lightgrey;
+    border: 1px solid #C09F2C;
     border-radius: 5px;
     background: #C4C4C4;
   }
@@ -37,8 +37,10 @@
     width: 50%;
     left: 0;
     z-index: 0;
-    border-radius: 5px;
-    background: #E0E0E0;
+    background: #fff;
+    border-right: 1px solid #C09F2C;
+    border-left: 1px solid #C09F2C;
+    border-radius: 8px;
     transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);
   }
   input[type="radio"]{
@@ -53,12 +55,10 @@
     user-select: none;
   }
   #interview:checked ~ label.applied{
-    color: #838383
-    ;
+    color: #838383;
   }
   #applied:checked ~ label.interview{
-    color: #838383
-    ;
+    color: #838383;
   }
   #applied:checked ~ label.applied{
     cursor: default;
@@ -124,14 +124,9 @@
     width: 388px;
     height: auto;
     border-radius: 10px;
-    top: 122px;
-    left: 20px;
     background: #F9F9F9;
     z-index: 1;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    margin-right: 20px;
-    margin-left: 119px;
+    margin: 3% auto;
 }
 .cards__body:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
@@ -230,32 +225,21 @@
   }
 
   .containers{
-    padding-top: 5%;
     margin-left: auto;
     margin-right: auto;
     overflow: hidden;
-    max-width: 400px;
+    max-width: 40%;
 
 }
 
 .container__inner{
     display: flex;
-    width:200%;
 
     position: relative;
   
 
 }
 
-
-.applied__card{
-   
-    margin-left: -63%;
-
-
-
-
-}
  .card__switch{
     width: 100%;
     transition: all 0.6s cubic-bezier(0.68,-0.55,0.265,1.55);

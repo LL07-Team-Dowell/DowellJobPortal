@@ -1,7 +1,8 @@
 .sidebar-nav-container{
     --grey-color: #E0E0E0;
+    --pale-light-grey: #F3F5F9;
     --black-color: #000;
-    --purple-color: #6B53CA;
+    --green-color: #57A639;
     --white-color: #fff;
     --box-shadow-color: rgba(196, 196, 196, 0.25);
     --dark-grey-color: #C4C4C4;
@@ -9,7 +10,7 @@
 }
 
 .sidebar-nav-container{
-    background: var(--grey-color);
+    background: var(--pale-light-grey);
     box-shadow: 4px 4px 8px var(--box-shadow-color);
     font-weight: 500;
     line-height: 19.36px;
@@ -35,7 +36,7 @@
 
 .sidebar-nav-container ul .custom-hr{
     width: 100%;
-    border-color: var(--dark-grey-color);
+    border-color: var(--white-color);
     position: relative;
 }
 
@@ -72,7 +73,7 @@
 }
 
 .sidebar-nav-container ul a li .nav-link-container.active{
-    background: var(--purple-color);
+    background: var(--green-color);
 }
 
 .sidebar-nav-container ul a li .nav-link-container .nav-icon-container{
@@ -90,14 +91,14 @@
 }
 
 .sidebar-nav-container ul a li .nav-link-container .nav-icon-container.active{
-    color: var(--purple-color);
+    color: var(--green-color);
     margin-right: 0;
     margin-left: auto;
 }
 
 .sidebar-nav-container .sidebar-logout-btn{
     position: absolute;
-    background: var(--dark-grey-color);
+    background: var(--white-color);
     border: none;
     outline: none;
     border-radius: 10px;

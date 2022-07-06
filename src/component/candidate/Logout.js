@@ -1,19 +1,21 @@
 import React, { useEffect } from 'react';
 import { myAxiosInstance } from '../../axios';
 import { useNavigate } from 'react-router-dom';
-import { requests } from '../../request';
+import { routes } from '../../request';
 
 
 function Logout() {
     const navigate=useNavigate();
 
     const logoutUser = async () => {
-      await myAxiosInstance.post(requests.Logout,{
+      await myAxiosInstance.post(routes.Logout,{
         refresh_token: localStorage.getItem('refresh_token'),
       });
     }
 
     useEffect(() => {
+
+      return 
 
       const refresh_token = localStorage.getItem("refresh_token");
 

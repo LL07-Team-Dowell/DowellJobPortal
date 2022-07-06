@@ -14,7 +14,7 @@ import { appliedCandidates } from '../candidatesData';
 function ShortlistedScreen() {
   const navigate = useNavigate();
 
-  const handleClick = (data) => navigate(`/hr_screen/job/after_initial_meet/${data.name}`, { state: { candidate: data } });
+  const handleClick = (data) => navigate(`/job/after_initial_meet/${data.name}`, { state: { candidate: data } });
 
   return (
     <div className='Applied__wrapper'>

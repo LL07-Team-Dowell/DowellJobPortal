@@ -15,7 +15,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import logo from '../../logo.png'
 import { axiosInstance, myAxiosInstance } from '../../axios';
-import { requests } from '../../request';
+import { routes } from '../../request';
 import { validateEmail } from '../../helpers/helpers';
 
 
@@ -95,33 +95,34 @@ export default function SignIn({ setUser }) {
 
 	const handleSubmit = async (e) =>{
 		e.preventDefault();
+		setErrorMessage(null);
 		setDisabled(true);
 
 		try{
 
-			await myAxiosInstance.post(requests.Login, {
-				email: formData.email,
-				password: formData.password,
-			});
+			return
+			const response = await myAxiosInstance.post(routes.Login, {email: formData.email, password: formData.password});
 
-			const userResponse = await myAxiosInstance.get("/accounts/user_view/");
+			myAxiosInstance.defaults.headers.common = {
+				Authorization: `Bearer ${response.data.access}`,
+			}
 
-			const tokenResponse = await myAxiosInstance.post("/accounts/token/", {
-				username: userResponse.data.username,
-				password: formData.password,
-			})
+			const userResponse = await myAxiosInstance.get(routes.User);
 
 			setUser(userResponse.data);
 	
 			localStorage.setItem('user', JSON.stringify(userResponse.data));
-			localStorage.setItem('access_token', tokenResponse.data.access);
-			localStorage.setItem('refresh_token', tokenResponse.data.refresh);
+			localStorage.setItem('refresh_token', response.data.refresh);
 
 			navigate("/");
 
 		}catch (err) {
 
+			err.response.data[Object.keys(err.response.data)[0]].length === 1 ? 
+			setErrorMessage(err.response.data[Object.keys(err.response.data)[0]][0]) :
 			setErrorMessage(err.response.data[Object.keys(err.response.data)[0]]);
+
+			setDisabled(false);
 
 		}
 

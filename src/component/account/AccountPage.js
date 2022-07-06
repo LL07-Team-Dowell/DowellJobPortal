@@ -28,7 +28,13 @@ const AccountPage = () => {
 
     useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
+    async function getAccount (){
+        const response = await myAxiosInstance.get("/jobs/account_view/")
+        return response
+    }
+    
     useEffect(() => {
+        getAccount()
         // axios.defaults.baseURL = "https://100055.pythonanywhere.com/api/";
 
         // axiosInstance.get("/jobs/get_applications/")

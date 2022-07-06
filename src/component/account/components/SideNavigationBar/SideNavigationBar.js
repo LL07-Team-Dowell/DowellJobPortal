@@ -42,16 +42,7 @@ const SideNavigationBar = ({ className, sideNavRef, closeSideNavbar, isNotificat
                     </>
                 }
 
-                <Link to={''}><li>Settings</li></Link>
-                <CustomHr />
-
-                <Link to={''}><li>About us</li></Link>
-                <CustomHr />
-
                 <Link to={''}><li>Support</li></Link>
-                <CustomHr />
-
-                <Link to={''}><li>Terms & Conditions</li></Link>
                 <CustomHr />
 
             </ul>

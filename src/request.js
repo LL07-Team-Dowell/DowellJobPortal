@@ -1,22 +1,28 @@
 import { myAxiosInstance } from "./axios";
 
-const requests = {
-    Registration:`accounts/register_user/`,
-    Login:`accounts/login_user/`,
-    Logout:`accounts/logout_user/`,
-    Jobs:`https://100055.pythonanywhere.com/api/jobs/get_jobs/`,
-    Refresh: '/accounts/token/refresh/',
+const routes = {
+  Registration:`v1/auth/users/`,
+  Login:`v1/auth/jwt/create/`,
+  Logout:`accounts/logout_user/`,
+  Jobs:`/jobs/get_jobs/`,
+  Refresh: '/accounts/token/refresh/',
+  User: '/jobs/get_user/',
+  Applications: '/jobs/get_my_applications/',
+  Add_Job: '/jobs/add_job/',
+  Update_Job: 'jobs/update_job/',
 }
 
 const refreshToken = (token) => {
 
-    myAxiosInstance.post(requests.Refresh, {
+    myAxiosInstance.post(routes.Refresh, {
       
       refresh: token,
 
     }).then(res => {
 
-      localStorage.setItem("access_token", res.data.access);
+      myAxiosInstance.defaults.headers = {
+				Authorization: `Bearer ${res.data.access}`,
+			}
       
     }).catch(err => {
       console.group(err)
@@ -27,4 +33,4 @@ const refreshToken = (token) => {
 
 
 
-export { requests, refreshToken };
+export { routes, refreshToken };

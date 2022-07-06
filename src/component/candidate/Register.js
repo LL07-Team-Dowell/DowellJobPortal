@@ -16,7 +16,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { requests } from '../../request';
+import { routes } from '../../request';
 import logo from '../../logo.png';
 import { validateEmail } from '../../helpers/helpers';
 
@@ -57,11 +57,17 @@ const useStyles = makeStyles((theme)=>({
 		email:'',
 		username:'',
 		password:'',
+		re_password: '',
+		first_name: '',
+		last_name: '',
 	});
 	const [formData, updateFormData]= useState(initialFormData);
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [emailError, setEmailError] = useState(false);
 	const [usernameError, setUsernameError] = useState(false);
+	const [firstNameError, setFirstNameError] = useState(false);
+	const [lastNameError, setLastNameError] = useState(false);
+	const [repeatPassError, setRepeatPassError] = useState(false);
 	const [disabled, setDisabled] = useState(true);
 
 	useEffect(() => {
@@ -80,7 +86,19 @@ const useStyles = makeStyles((theme)=>({
 
 		setEmailError(false);
 		
-		if ( formData.password.length < 1 ) return setDisabled(true);
+		if ( formData.password.length < 1 ) {
+			setRepeatPassError(false);
+			setDisabled(true);
+			return;
+		}
+
+		if ( formData.re_password !== formData.password) {
+			setRepeatPassError(true);
+			setDisabled(true);
+			return
+		}
+
+		setRepeatPassError(false);
 
 		if ( formData.username.length < 1 ) {
 			setUsernameError(true);
@@ -88,10 +106,14 @@ const useStyles = makeStyles((theme)=>({
 			return
 		}
 
+		if (formData.first_name.length > 0) setFirstNameError(false);
+
+		if (formData.last_name.length > 0) setLastNameError(false);
+		
 		setUsernameError(false);
 		setDisabled(false);
 
-	}, [formData.email, formData.password, formData.username]);
+	}, [formData.email, formData.password, formData.username, formData.first_name, formData.last_name, formData.re_password]);
 
 	const handleChange=(e)=>{
 		updateFormData({
@@ -102,27 +124,27 @@ const useStyles = makeStyles((theme)=>({
 	};
 	const handleSubmit= async (e)=>{
 		e.preventDefault();
+
+		if (formData.first_name.length < 1) return setFirstNameError(true);
+
+		if (formData.last_name.length < 1) return setLastNameError(true);
+
 		setDisabled(true);
+		setErrorMessage(null);
 
 		try{
+			return
+			const response = await myAxiosInstance.post(routes.Registration, formData);
+			
+			myAxiosInstance.defaults.headers = {
+				Authorization: `Bearer ${response.data.access}`,
+			}
 
-			await myAxiosInstance.post(requests.Registration, {
-				email:formData.email,
-				username:formData.username,
-				password:formData.password,
-			})
-
-			const response = await myAxiosInstance.post("/accounts/token/", {
-				username: formData.username,
-				password: formData.password
-			})
-
-			const userResponse = await myAxiosInstance.get("/accounts/user_view/");
+			const userResponse = await myAxiosInstance.get(routes.User);
 
 			setUser(userResponse.data);
 	
 			localStorage.setItem('user', JSON.stringify(userResponse.data));
-			localStorage.setItem('access_token', response.data.access);
 			localStorage.setItem('refresh_token', response.data.refresh);
 
 			navigate("/");
@@ -182,11 +204,51 @@ const useStyles = makeStyles((theme)=>({
 								variant="outlined"
 								required
 								fullWidth
+								inputProps={ { className: firstNameError && "input__Error__Item"} }
+								id="first_name"
+								label="First Name"
+								name="first_name"
+								autoComplete="first_name"
+								onChange={handleChange}
+							/>
+						</Grid>
+						<Grid item xs={12}>
+							<TextField
+								variant="outlined"
+								required
+								fullWidth
+								inputProps={ { className: lastNameError && "input__Error__Item"} }
+								id="last_name"
+								label="Last Name"
+								name="last_name"
+								autoComplete="last_name"
+								onChange={handleChange}
+							/>
+						</Grid>
+						<Grid item xs={12}>
+							<TextField
+								variant="outlined"
+								required
+								fullWidth
 								name="password"
 								label="Password"
 								type="password"
 								id="password"
 								autoComplete="current-password"
+								onChange={handleChange}
+							/>
+						</Grid>
+						<Grid item xs={12}>
+							<TextField
+								variant="outlined"
+								required
+								fullWidth
+								inputProps={ { className: repeatPassError && "input__Error__Item"} }
+								name="re_password"
+								label="Repeat Password"
+								type="password"
+								id="re_password"
+								autoComplete="repeat-password"
 								onChange={handleChange}
 							/>
 						</Grid>

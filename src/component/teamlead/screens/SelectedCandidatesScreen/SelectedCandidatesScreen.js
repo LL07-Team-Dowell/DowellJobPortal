@@ -178,7 +178,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                 initialMeet && <>
                     <div className="comments-container hr__Comments__Container">
                         <h2>Discord Link</h2>
-                        <input placeholder='Add Discord Link'></input>
+                        <input className=' white__Bg__Color' placeholder='Add Discord Link'></input>
                     </div>
                 </>
             }
