@@ -53,7 +53,7 @@ const JobApplicationScreen = () => {
 
         dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_OTHERS, payload: { stateToChange: mutableNewApplicationStateNames.others_property_jobDescription, value: location.state.jobToApplyTo.description }})
         dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_JOB, payload: { stateToChange: mutableNewApplicationStateNames.job, value: location.state.jobToApplyTo.id }})
-        dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_APPLICANT, payload: { stateToChange: mutableNewApplicationStateNames.applicant, value: location.state.currentUser.id }})
+        dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_APPLICANT, payload: { stateToChange: mutableNewApplicationStateNames.applicant, value: location.state.currentUser.username }})
 
     }, []);
 
@@ -91,8 +91,12 @@ const JobApplicationScreen = () => {
         if (formPage === 5) {
 
             if (!qualificationSelectionRef.current) return;
-
-            if (qualificationSelectionRef.current.value !== "default_") setShowQualificationInput(true);
+            
+            if (qualificationSelectionRef.current.value !== "default_") {
+                dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_QUALIFICATIONS, payload: { stateToChange: mutableNewApplicationStateNames.others_property_qualification, value: qualificationSelectionRef.current.value }})
+                setShowQualificationInput(true);
+            }
+            
             
             dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_COUNTRY, payload:{ stateToChange: mutableNewApplicationStateNames.country, value: selectCountryOptionRef.current.value }})
             
@@ -105,8 +109,6 @@ const JobApplicationScreen = () => {
             if ( !validateUrl(newApplicationData.freelancePlatformUrl, true)) return setDisableNextBtn(true);
             
             if (qualificationSelectionRef.current.value === "default_") return setDisableNextBtn(true);
-
-            dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_QUALIFICATIONS, payload: { stateToChange: mutableNewApplicationStateNames.others_property_qualification, value: qualificationSelectionRef.current.value }})
             
             if (newApplicationData.others[mutableNewApplicationStateNames.others_property_qualification_type].length < 1) return setDisableNextBtn(true);
 
