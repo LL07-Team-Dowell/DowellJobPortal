@@ -16,43 +16,60 @@ import { CandidateContextProvider } from './contexts/CandidatesContext';
 import JobApplicationScreen from './component/candidate/screens/JobApplicationScreen/JobApplicationScreen';
 import ErrorPage from './component/error/ErrorPage';
 import { NewApplicationContextProvider } from './contexts/NewApplicationContext';
-import { refreshToken } from './request';
+import { refreshToken, routes } from './request';
 import AdminPage from './component/admin/AdminPage';
 import EditJobScreen from './component/admin/screens/EditJobScreen/EditJobScreen';
 import ViewJobScreen from './component/admin/screens/ViewJobScreen/ViewJobScreen';
 import AddJobScreen from './component/admin/screens/AddJobScreen/AddJobScreen';
+import { authAxiosInstance, myAxiosInstance } from './axios';
 
 function App() {
 
-  const [user, setUser] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   const savedUser = localStorage.getItem("user");
-  //   const refresh_token = localStorage.getItem("refresh_token");
+    const savedUser = localStorage.getItem("user");
+    
+    if (!savedUser) return setLoading(false);
 
-  //   if (!savedUser) return setLoading(false);
+    const savedAuthToken = localStorage.getItem("auth_token");
 
-  //   if (!refresh_token || refresh_token === "undefined") return setLoading(false);
+    authAxiosInstance.get(routes.User).then(res => {
 
-  //   setUser(JSON.parse(savedUser));    
-  //   refreshToken(refresh_token);
-  //   setLoading(false);
+      myAxiosInstance.defaults.headers.common = {
+        Authorization: `Bearer ${JSON.parse(savedAuthToken)}`
+      }
 
-  // }, []);
+      setLoading(false);
+      setUser(JSON.parse(savedUser));
+
+    }).catch(err => {
+
+      if (err.response.status === 401) {
+        localStorage.clear("user");
+        localStorage.clear("auth_token");
+        setLoading(false);
+      }
+
+      return Promise.reject(err);
+
+    })
+
+  }, []);
 
   if (loading) return <></>
 
-  // if (!user) {
-  //   return <Routes>
+  if (!user) {
+    return <Routes>
       
-  //     <Route path="/signup" element={<SignUP setUser={setUser} />}/>   
-  //     <Route path="*" element={<SignIn setUser={setUser} />} />
+      <Route path="/signup" element={<SignUP setUser={setUser} />}/>   
+      <Route path="*" element={<SignIn setUser={setUser} />} />
 
-  //   </Routes>
-  // }
+    </Routes>
+  }
 
   if (user.is_account) {
     return <Routes>

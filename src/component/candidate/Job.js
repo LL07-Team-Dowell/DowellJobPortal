@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './css/Job.css';
 import * as FaIcons from 'react-icons/fa';
 import { IconContext } from 'react-icons';
-import { myAxiosInstance } from '../../axios';
+import { authAxiosInstance, myAxiosInstance } from '../../axios';
 import { routes } from '../../request';
 import { useNavigate } from 'react-router-dom';
 import { useNavigationContext } from '../../contexts/NavigationContext';
@@ -23,11 +23,18 @@ function JobScreen({ currentUser }) {
 
         async function fetchApplications(){
             
-            const response = await myAxiosInstance.get(routes.Applications);
-            const currentUserAppliedJobs = response.data.filter(application => application.applicant === currentUser.id);
-            setAppliedJobs(currentUserAppliedJobs);
-            return response;
+            try{
             
+                const response = await myAxiosInstance.get(routes.Applications);
+                const currentUserAppliedJobs = response.data.filter(application => application.applicant === currentUser.id);
+                setAppliedJobs(currentUserAppliedJobs);
+                return;
+                
+            }catch(err) {
+                console.log(err)
+                return
+            }
+
         }
 
         fetchApplications();
@@ -38,13 +45,19 @@ function JobScreen({ currentUser }) {
 
         async function fetchData(){
             
-            const request = await myAxiosInstance.get(routes.Jobs);
-            setJobs(request.data);
-            return request;
+            try {
+                
+                const request = await myAxiosInstance.get(routes.Jobs);
+                setJobs(request.data);
+                return;
+
+            } catch (error) {
+                console.log(error);
+                return
+            }
             
         }
         fetchData();
-        console.log(appliedJobs)
 
     }, []);
 

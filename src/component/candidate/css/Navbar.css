@@ -35,7 +35,6 @@
   }
   
   .menu-bars {
-    margin-left: 2rem;
     font-size: 2rem;
   }
 
@@ -138,6 +137,12 @@
     transition: 0.5s;
   }
 
+  @media screen and (min-width: 992px) {
+    .navbar{
+      padding-left: 6.6%;
+      padding-right: 6.6%;
+    }
+  }
 
   @media screen and (max-width: 2000px) {
     .nav-menu{

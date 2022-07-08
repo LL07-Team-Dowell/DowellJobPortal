@@ -1,15 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import { axiosInstance, myAxiosInstance } from '../../axios';
-import{useNavigate} from 'react-router-dom';
-// use the useNavigate to redirect the user after they've register
-
-//MaterialUi
-
+import { authAxiosInstance, myAxiosInstance } from '../../axios';
+import {useNavigate} from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import  CssBaseline  from '@material-ui/core/CssBaseline';
-import  TextField from '@material-ui/core/TextField';
-import  FormControlLabel  from '@material-ui/core/FormControlLabel';
+import CssBaseline  from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel  from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
@@ -19,6 +15,8 @@ import Container from '@material-ui/core/Container';
 import { routes } from '../../request';
 import logo from '../../logo.png';
 import { validateEmail } from '../../helpers/helpers';
+import { Select } from '@mui/material';
+import { MenuItem } from '@material-ui/core';
 
 const useStyles = makeStyles((theme)=>({
     paper:{
@@ -51,15 +49,19 @@ const useStyles = makeStyles((theme)=>({
     },
 }));
 
- function SignUP({ setUser }){
+function SignUP({ setUser }){
 	let navigate = useNavigate();
 	const initialFormData = Object.freeze({
 		email:'',
 		username:'',
 		password:'',
-		re_password: '',
+		phone: '',
 		first_name: '',
 		last_name: '',
+		role: 'TeamMember',
+		teamcode: '100055',
+		phonecode: '',
+		profile_image: '',
 	});
 	const [formData, updateFormData]= useState(initialFormData);
 	const [errorMessage, setErrorMessage] = useState(null);
@@ -67,7 +69,7 @@ const useStyles = makeStyles((theme)=>({
 	const [usernameError, setUsernameError] = useState(false);
 	const [firstNameError, setFirstNameError] = useState(false);
 	const [lastNameError, setLastNameError] = useState(false);
-	const [repeatPassError, setRepeatPassError] = useState(false);
+	const [phoneNumError, setPhoneNumError] = useState(false);
 	const [disabled, setDisabled] = useState(true);
 
 	useEffect(() => {
@@ -86,19 +88,7 @@ const useStyles = makeStyles((theme)=>({
 
 		setEmailError(false);
 		
-		if ( formData.password.length < 1 ) {
-			setRepeatPassError(false);
-			setDisabled(true);
-			return;
-		}
-
-		if ( formData.re_password !== formData.password) {
-			setRepeatPassError(true);
-			setDisabled(true);
-			return
-		}
-
-		setRepeatPassError(false);
+		if ( formData.password.length < 1 ) return setDisabled(true);
 
 		if ( formData.username.length < 1 ) {
 			setUsernameError(true);
@@ -113,9 +103,17 @@ const useStyles = makeStyles((theme)=>({
 		setUsernameError(false);
 		setDisabled(false);
 
-	}, [formData.email, formData.password, formData.username, formData.first_name, formData.last_name, formData.re_password]);
+	}, [formData]);
 
 	const handleChange=(e)=>{
+		if (e.target.name === "profile_image"){
+			updateFormData({
+				...formData, 
+				[e.target.name]: e.target.files[0],
+			});
+			return
+		}
+
 		updateFormData({
 			...formData,
 			[e.target.name]:e.target.value.trim(),
@@ -133,17 +131,17 @@ const useStyles = makeStyles((theme)=>({
 		setErrorMessage(null);
 
 		try{
+			console.log(formData)
+			// const response = await authAxiosInstance.post(routes.User, formData);
 			return
-			const response = await myAxiosInstance.post(routes.Registration, formData);
-			
-			myAxiosInstance.defaults.headers = {
+			authAxiosInstance.defaults.headers = {
 				Authorization: `Bearer ${response.data.access}`,
 			}
 
-			const userResponse = await myAxiosInstance.get(routes.User);
+			const userResponse = await authAxiosInstance.get(routes.User);
 
 			setUser(userResponse.data);
-	
+
 			localStorage.setItem('user', JSON.stringify(userResponse.data));
 			localStorage.setItem('refresh_token', response.data.refresh);
 
@@ -151,14 +149,15 @@ const useStyles = makeStyles((theme)=>({
 
 		}catch (err){
 			setErrorMessage(err.response.data[Object.keys(err.response.data)[0]][0])
+			setDisabled(false)
 		}
 
 	};
-    const classes = useStyles();
+	const classes = useStyles();
 
 
 
-    return (
+	return (
 		<Container component="main" maxWidth="xs">
 			<CssBaseline />
 			<div className={classes.paper}>
@@ -166,13 +165,26 @@ const useStyles = makeStyles((theme)=>({
 				<Typography component="h1" variant="h5">
 					Sign up
 				</Typography>
-				<form className={classes.form} noValidate>
+				<form className={classes.form} noValidate encType='multipart/form-data'>
 					<Grid container spacing={2}>
 						{
 							errorMessage && <Grid item xs={12}>
 								<p className='authentication__error__Message'>{errorMessage.charAt(0).toLocaleUpperCase() + errorMessage.slice(1)}</p>
 							</Grid>
 						}
+						<Grid item xs={12}>
+							<TextField
+								inputProps={ { className: false && "input__Error__Item"} }
+								variant="outlined"
+								required
+								fullWidth
+								id="profile_image"
+								label="Profile Image"
+								name="profile_image"
+								type="file"
+								onChange={handleChange}
+							/>
+						</Grid>
 						<Grid item xs={12}>
 							<TextField
 								inputProps={ { className: emailError && "input__Error__Item"} }
@@ -243,15 +255,35 @@ const useStyles = makeStyles((theme)=>({
 								variant="outlined"
 								required
 								fullWidth
-								inputProps={ { className: repeatPassError && "input__Error__Item"} }
-								name="re_password"
-								label="Repeat Password"
-								type="password"
-								id="re_password"
-								autoComplete="repeat-password"
+								inputProps={ { className: phoneNumError && "input__Error__Item"} }
+								name="phone"
+								label="Phone Number"
+								type="number"
+								id="phone_num"
+								autoComplete="tel"
 								onChange={handleChange}
 							/>
 						</Grid>
+						<Grid item xs={12}>
+							<Select
+								variant="outlined"
+								required
+								fullWidth
+								name="phonecode"
+								labelId="phonecode"
+								label="Phone Code"
+								id="phone_code"
+								value={formData.phonecode}
+								autoComplete="phonecode"
+								onChange={handleChange}
+							>
+								<MenuItem value={''}>Choose One</MenuItem>
+								<MenuItem value={'234'} >234</MenuItem>
+								<MenuItem value={'234'} >234</MenuItem>
+								<MenuItem value={'234'} >234</MenuItem>
+							</Select>
+						</Grid>
+						
 						<Grid item xs={12}>
 							<FormControlLabel
 								control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -283,5 +315,5 @@ const useStyles = makeStyles((theme)=>({
 	);
 
 
-    }
-	export default SignUP;
+}
+export default SignUP;

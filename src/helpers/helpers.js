@@ -25,3 +25,25 @@ export const validateEmail = (email) => {
     return re.test(email);
     
 }
+
+export const getDeviceName = () => {
+    let userAgent = navigator.userAgent;
+
+    if (userAgent.match(/Windows/i)) return "Windows";
+
+    if (userAgent.match(/Android/i)) return "Android";
+
+    if (userAgent.match(/iPhone/i)) return "iPhone";
+
+    if (userAgent.match(/iPad/i)) return "iPad";
+
+    return "";
+}
+
+export const getDeviceLocation = () => {
+
+}
+
+export const getDeviceBrowser = () => {
+    let userAgent = navigator.userAgent;
+}

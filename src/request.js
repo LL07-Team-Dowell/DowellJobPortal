@@ -1,34 +1,34 @@
 import { myAxiosInstance } from "./axios";
 
 const routes = {
-  Registration:`v1/auth/users/`,
-  Login:`v1/auth/jwt/create/`,
+  Registration:`register/`,
+  Login:`login/`,
   Logout:`accounts/logout_user/`,
   Jobs:`/jobs/get_jobs/`,
   Refresh: '/accounts/token/refresh/',
-  User: '/jobs/get_user/',
-  Applications: '/jobs/get_my_applications/',
+  User: 'user/',
+  Applications: '/jobs/get_applications/',
   Add_Job: '/jobs/add_job/',
   Update_Job: 'jobs/update_job/',
 }
 
 const refreshToken = (token) => {
 
-    myAxiosInstance.post(routes.Refresh, {
+    // myAxiosInstance.post(routes.Refresh, {
       
-      refresh: token,
+    //   refresh: token,
 
-    }).then(res => {
+    // }).then(res => {
 
-      myAxiosInstance.defaults.headers = {
-				Authorization: `Bearer ${res.data.access}`,
-			}
+    //   myAxiosInstance.defaults.headers = {
+		// 		Authorization: `Bearer ${res.data.access}`,
+		// 	}
       
-    }).catch(err => {
-      console.group(err)
-    })
+    // }).catch(err => {
+    //   console.group(err)
+    // })
 
-    setTimeout(() => refreshToken(token), 1200000)
+    // setTimeout(() => refreshToken(token), 1200000)
 }
 
 

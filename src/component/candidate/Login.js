@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import axiosInstance from '../axios';
 import { useNavigate } from 'react-router-dom';
 //MaterialUI
 import Avatar from '@material-ui/core/Avatar';
@@ -14,9 +13,9 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import logo from '../../logo.png'
-import { axiosInstance, myAxiosInstance } from '../../axios';
+import { authAxiosInstance, myAxiosInstance } from '../../axios';
 import { routes } from '../../request';
-import { validateEmail } from '../../helpers/helpers';
+import { getDeviceName, validateEmail } from '../../helpers/helpers';
 
 
 
@@ -55,13 +54,14 @@ const useStyles = makeStyles((theme) => ({
 export default function SignIn({ setUser }) {
 	const navigate =useNavigate();
 	const initialFormData = Object.freeze({
-		email: '',
+		username: '',
 		password: '',
+		device: getDeviceName(),
 	});
 	const [formData, updateFormData]= useState(initialFormData);
 	const [errorMessage, setErrorMessage] = useState(null);
 	const [disabled, setDisabled] = useState(true);
-	const [emailError, setEmailError] = useState(false);
+	const [usernameError, setUsernameError] = useState(false);
 
 	const handleChange =(e) =>{
 		updateFormData({
@@ -73,25 +73,17 @@ export default function SignIn({ setUser }) {
 
 	useEffect(() => {
 
-		if ( formData.email.length < 1 ) {
+		if ( formData.username.length < 1 ) {
 			setDisabled(true);
-			setEmailError(false);
+			setUsernameError(false);
 			return;
 		}
-
-		if (!validateEmail(formData.email)) {
-			setEmailError(true);
-			setDisabled(true);
-			return;
-		}
-
-		setEmailError(false);
 		
 		if ( formData.password.length < 1 ) return setDisabled(true);
 
 		setDisabled(false);
 
-	}, [formData.email, formData.password])
+	}, [formData])
 
 	const handleSubmit = async (e) =>{
 		e.preventDefault();
@@ -100,23 +92,27 @@ export default function SignIn({ setUser }) {
 
 		try{
 
-			return
-			const response = await myAxiosInstance.post(routes.Login, {email: formData.email, password: formData.password});
-
-			myAxiosInstance.defaults.headers.common = {
-				Authorization: `Bearer ${response.data.access}`,
+			authAxiosInstance.defaults.headers.common = {
+				Cookie: ''
 			}
 
-			const userResponse = await myAxiosInstance.get(routes.User);
+			const response = await authAxiosInstance.post(routes.Login, formData);
+
+			myAxiosInstance.defaults.headers.common = {
+				Authorization: `Bearer ${response.data.jwt}`,
+			}
+
+			const userResponse = await authAxiosInstance.get(routes.User);
 
 			setUser(userResponse.data);
 	
 			localStorage.setItem('user', JSON.stringify(userResponse.data));
-			localStorage.setItem('refresh_token', response.data.refresh);
+			localStorage.setItem('auth_token', JSON.stringify(response.data.jwt));
 
 			navigate("/");
 
 		}catch (err) {
+			console.log(err)
 
 			err.response.data[Object.keys(err.response.data)[0]].length === 1 ? 
 			setErrorMessage(err.response.data[Object.keys(err.response.data)[0]][0]) :
@@ -150,13 +146,13 @@ export default function SignIn({ setUser }) {
 					<TextField
 						variant="outlined"
 						margin="normal"
-						inputProps={ { className: emailError && "input__Error__Item"} }
+						inputProps={ { className: usernameError && "input__Error__Item"} }
 						required
 						fullWidth
-						id="email"
-						label="Email Address"
-						name="email"
-						autoComplete="email"
+						id="username"
+						label="Username"
+						name="username"
+						autoComplete="username"
 						autoFocus
 						onChange={handleChange}
 					/>
