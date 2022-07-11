@@ -62,7 +62,7 @@
 
 @media screen and (min-width: 992px) {
     .search__wrapper{
-        margin: 0 auto 3%;
+        margin: 0 auto 1.5%;
     }
     .search__wrapper .search__container{
         padding: 1% 2%;

@@ -39,9 +39,9 @@ function App() {
 
     authAxiosInstance.get(routes.User).then(res => {
 
-      myAxiosInstance.defaults.headers.common = {
-        Authorization: `Bearer ${JSON.parse(savedAuthToken)}`
-      }
+      // myAxiosInstance.defaults.headers.common = {
+      //   Authorization: `Bearer ${JSON.parse(savedAuthToken)}`
+      // }
 
       setLoading(false);
       setUser(JSON.parse(savedUser));
@@ -82,7 +82,7 @@ function App() {
       <Route path="/" element={
         <NavigationContextProvider>
           <CandidateContextProvider>
-              <AccountPage />
+            <AccountPage />
           </CandidateContextProvider>
         </NavigationContextProvider>
       } >

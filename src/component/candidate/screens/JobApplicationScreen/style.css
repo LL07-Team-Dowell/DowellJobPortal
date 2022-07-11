@@ -51,7 +51,7 @@
 }
 
 .candidate__Job__Application__Container .job__Application__Items{
-    margin: 4% auto;
+    margin: 8% auto;
     padding: 2% 4%;
 }
 
@@ -170,7 +170,8 @@ p{
 
 .candidate__Job__Application__Container .apply_Btn_Container{
     display: flex;
-    margin: 0 auto;
+    margin: 20% auto 10%;
+    justify-content: center;
 }
 
 .candidate__Job__Application__Container .apply_Btn_Container .apply-btn, .candidate__Job__Application__Container form button{
@@ -182,6 +183,11 @@ p{
     line-height: 24px;
     cursor: pointer;
     color: var(--white);
+    width: 100%;
+}
+
+.candidate__Job__Application__Container form button[type=submit]{
+    margin-bottom: 20%;
 }
 
 .candidate__Job__Application__Container form p{

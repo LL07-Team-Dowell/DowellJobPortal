@@ -1,45 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import * as FaIcons from 'react-icons/fa';
-import * as AiIcons from 'react-icons/ai';
+import { FaBars } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
-import { SidebarData } from './SidebarData';
 import './css/Navbar.css';
 import { IconContext } from 'react-icons';
-// import Button from '@mui/material/Button';
-import { makeStyles } from '@material-ui/core/styles';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import Box from '@mui/material/Box';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import { NavLink } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
 import { BiArrowBack } from 'react-icons/bi';
 import { BsBookmark, BsShare } from 'react-icons/bs';
+import SideNavigationBar from '../account/components/SideNavigationBar/SideNavigationBar';
+import { useRef } from 'react';
+import { useNavigationContext } from '../../contexts/NavigationContext';
 
 
-
-
-const theme = createTheme({
-    palette: {
-   
-      secondary: {
-        // This is green.A700 as hex.
-        main: '#C4C4C4',
-      },
-    },
-
-  });
-  const useStyles = makeStyles((theme)=>({
-      button:{
-          
-      }
-  }))
-  
-
-
-function Navbar( {title, changeToBackButton, backButtonLink}) {
+function Navbar({ title, changeToBackButton, backButtonLink }) {
   const [sidebar, setSidebar] = useState(false);
   const [show, handleShow]=useState(false);
-  const navigate=useNavigate();
+  const { isNotificationEnabled, setNotificationStatus } = useNavigationContext();
+  
+  const sideNavbarRef = useRef(null);
   
 
   const showSidebar = () => setSidebar(!sidebar);
@@ -57,9 +33,6 @@ function Navbar( {title, changeToBackButton, backButtonLink}) {
       window.removeEventListener("scroll", transistionNavBar)
     }
   }, [])
-  
-  const classes=useStyles();
-  
 
   return (
    
@@ -85,7 +58,7 @@ function Navbar( {title, changeToBackButton, backButtonLink}) {
             
             <>
               <Link to='#' className='menu-bars'>
-                <FaIcons.FaBars className='icons white-color' onClick={showSidebar}  />
+                <FaBars className='icons white-color' onClick={showSidebar}  />
               </Link>
             </>
           }
@@ -93,33 +66,16 @@ function Navbar( {title, changeToBackButton, backButtonLink}) {
           <h3 className='page__title'>{title}</h3>
         </div>
         
-        <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>
-        
-          <ul className='nav-menu-items' onClick={showSidebar}>
-            <li className='navbar-toggle'>
-              <Link to='#' className='menu-bars'>
-                <AiIcons.AiOutlineClose />
-              </Link>
-            </li>
-            
-            {SidebarData.map((item, index) => {
-              return (
-                <li key={index} className={item.cName}>
-                  <Link to={item.path}>
-                    {item.icon}
-                    <span>{item.title}</span>
-                  </Link>
-              
-                </li>
-                
-              );
-            })}
-           
-           <button onClick={()=>navigate('/logout')}
-							className='logout-button'>Logout</button>
-          </ul>
-          
-        </nav>
+        {
+          sidebar && 
+          <SideNavigationBar
+            className={'candidate__SideNav'}
+            isNotificationEnabled={isNotificationEnabled}
+            setNotificationStatus={() => setNotificationStatus(prevValue => { return !prevValue })}
+            sideNavRef={sideNavbarRef}
+            closeSideNavbar={() => showSidebar(false)}
+          />
+        }
         
       </IconContext.Provider>
   
