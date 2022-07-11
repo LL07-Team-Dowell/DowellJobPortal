@@ -1,0 +1,173 @@
+import React, { useEffect, useRef, useState } from "react";
+import axiosInstance, { myAxiosInstance } from "../../axios";
+import { useCandidateContext, initialCandidatesDataStateNames } from "../../contexts/CandidatesContext";
+import { useNavigationContext } from "../../contexts/NavigationContext";
+import { candidateDataReducerActions } from "../../reducers/CandidateDataReducer";
+import ErrorPage from "../error/ErrorPage";
+import BottomNavigationBar from "../teamlead/components/BottomNavigationBar/BottomNavigationBar";
+import JobTile from "../teamlead/components/JobTile/JobTile";
+import NavigationBar from "../teamlead/components/NavigationBar/NavigationBar";
+import NavigationItemSelection from "../teamlead/components/NavigationItemSelection/NavigationItemSelection";
+import SelectedCandidates from "../teamlead/components/SelectedCandidates/SelectedCandidates";
+import SelectedCandidatesScreen from "../teamlead/screens/SelectedCandidatesScreen/SelectedCandidatesScreen";
+import RejectedCandidates from "./components/RejectedCandidates/RejectedCandidates";
+import SideNavigationBar from "./components/SideNavigationBar/SideNavigationBar";
+import useClickOutside from "../../hooks/useClickOutside";
+
+const AccountPage = () => {
+    const { section, searchParams, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
+    const { candidatesData, dispatchToCandidatesData } = useCandidateContext();
+    const [currentCandidate, setCurrentCandidate] = useState({});
+    const [ showCandidate, setShowCandidate ] = useState(false);
+    const [ rehireTabActive, setRehireTabActive ] = useState(false);
+    const [ hireTabActive, setHireTabActive ] = useState(false);
+    const [ showOnboarding, setShowOnboarding ] = useState(false);
+    const [ isSideNavbarActive, setSideNavbarActive ] = useState(false);
+    const sideNavbarRef = useRef(null);
+
+    useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
+
+    async function getAccount (){
+        const response = await myAxiosInstance.get("/jobs/account_view/")
+        return response
+    }
+    
+    useEffect(() => {
+        getAccount()
+
+        // axiosInstance.get("/jobs/get_applications/")
+
+        // dispatchToCandidatesData({ type: candidateDataReducerActions.UPDATE_INTERVIEWING_CANDIDATES, payload: {
+        //     stateToChange: initialCandidatesDataStateNames.candidatesToInterview,
+        //     value: [
+        //         
+        //     ]} 
+        // })
+        
+    }, [])
+
+    useEffect(() => {
+        const currentTab = searchParams.get("tab");
+        
+        if (currentTab === "rehire") {
+            setRehireTabActive(true);
+            setHireTabActive(false);
+            setShowOnboarding(false);
+            return
+        }
+
+        if (currentTab === "onboarding") { 
+            setShowOnboarding(true);
+            setHireTabActive(false);
+            setRehireTabActive(false);
+            return
+        }
+
+        setHireTabActive(true);
+        setShowOnboarding(false);
+        setRehireTabActive(false);
+
+    }, [searchParams])
+
+    return <>
+        <NavigationBar 
+            showCandidate={showCandidate} 
+            setShowCandidate={setShowCandidate} 
+            handleMenuIconClick={() => setSideNavbarActive(true)} 
+        />
+
+        {
+            isSideNavbarActive && 
+            <SideNavigationBar 
+                sideNavRef={sideNavbarRef}
+                closeSideNavbar={() => setSideNavbarActive(false)} 
+                isNotificationEnabled={isNotificationEnabled}
+                setNotificationStatus={() => setNotificationStatus(prevValue => { return !prevValue } )}
+            />
+        }
+
+        {   
+            section === "home" || section == undefined ?
+            showCandidate ? 
+            
+            <SelectedCandidatesScreen 
+                selectedCandidateData={currentCandidate} 
+                updateShowCandidate={setShowCandidate}
+                accountPage={true} 
+                rehireTabActive={rehireTabActive} 
+                hireTabActive={hireTabActive} 
+                showOnboarding={showOnboarding} 
+                updateCandidateData={dispatchToCandidatesData}
+                allCandidatesData={
+                    hireTabActive ? candidatesData.candidatesToHire :
+                    showOnboarding ? candidatesData.onboardingCandidates :
+                    rehireTabActive ? candidatesData.candidatesToRehire :
+                    []
+                }
+            /> 
+            
+            : <>
+                <NavigationItemSelection items={["Hire", "Onboarding", "Rehire"]} searchParams={searchParams} />
+                <SelectedCandidates 
+                    candidatesCount={
+                        hireTabActive ? candidatesData.candidatesToHire.length :
+                        showOnboarding ? candidatesData.onboardingCandidates.length :
+                        rehireTabActive ? candidatesData.candidatesToRehire.length :
+                        0
+                    } 
+                />
+
+                <div className="jobs-container">
+                    {
+                        hireTabActive ?
+                        React.Children.toArray(candidatesData.candidatesToHire.map(dataitem => {
+                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} />
+                        })) : 
+                        
+                        showOnboarding ? 
+
+                        React.Children.toArray(candidatesData.onboardingCandidates.map(dataitem => {
+                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} />
+                        })) :
+                        
+                        rehireTabActive ? 
+                        
+                        React.Children.toArray(candidatesData.candidatesToRehire.map(dataitem => {
+                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} />
+                        })) : 
+
+                        <></>
+                    }
+                </div>
+            </> :
+
+            section === "rejected" ? <>
+                <RejectedCandidates candidatesCount={candidatesData.rejectedCandidates.length} />
+
+                <div className="jobs-container">
+                    {
+                        React.Children.toArray(candidatesData.rejectedCandidates.map(dataitem => {
+                            return  <JobTile disableClick={true} candidateData={dataitem} />
+                        }))
+                    }
+                </div>
+            </> : 
+            
+            section === "user" ? <></> : <>
+                <ErrorPage disableNav={true} />
+            </>
+
+        }
+
+        <BottomNavigationBar
+            updateNav={showCandidate ? setShowCandidate : () => {} }
+            currentPage={'account'}
+            firstLink={'home'}
+            secondLink={'rejected'}
+            thirdLink={'user'}
+            changeSecondIcon={true}
+         />
+    </>
+}
+
+export default AccountPage;
