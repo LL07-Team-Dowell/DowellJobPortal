@@ -6,7 +6,7 @@ import "./style.css";
 import { BsTelephone } from "react-icons/bs";
 import { AiOutlineMail } from "react-icons/ai";
 import { useRef, useState } from "react";
-import useClickOutside from "../../../account/hooks/useClickOutside";
+import useClickOutside from "../../../../hooks/useClickOutside";
 
 
 const SelectedCandidates = ({ showTasks, candidatesCount, tasksCount, hrPageActive, title }) => {

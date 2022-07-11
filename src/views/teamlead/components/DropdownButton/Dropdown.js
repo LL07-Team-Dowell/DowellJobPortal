@@ -1,6 +1,6 @@
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import React, { useRef, useState } from 'react';
-import useClickOutside from '../../../account/hooks/useClickOutside';
+import useClickOutside from '../../../../hooks/useClickOutside';
 
 import "./style.css";
 

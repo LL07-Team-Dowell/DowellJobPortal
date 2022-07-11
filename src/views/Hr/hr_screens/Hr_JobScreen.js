@@ -7,7 +7,7 @@ import JobTile from '../../teamlead/components/JobTile/JobTile';
 import { myAxiosInstance } from '../../../axios';
 import { useNavigationContext } from '../../../contexts/NavigationContext';
 import NavigationBar from '../../teamlead/components/NavigationBar/NavigationBar';
-import useClickOutside from '../../account/hooks/useClickOutside';
+import useClickOutside from '../../../hooks/useClickOutside';
 import SideNavigationBar from '../../account/components/SideNavigationBar/SideNavigationBar';
 import ShortlistedScreen from './ShortlistedScreen';
 import { useLocation, useNavigate } from 'react-router-dom';

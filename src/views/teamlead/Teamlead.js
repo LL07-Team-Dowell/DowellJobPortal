@@ -3,7 +3,7 @@ import { myAxiosInstance } from "../../axios";
 import { useCandidateContext } from "../../contexts/CandidatesContext";
 import { useNavigationContext } from "../../contexts/NavigationContext";
 import SideNavigationBar from "../account/components/SideNavigationBar/SideNavigationBar";
-import useClickOutside from "../account/hooks/useClickOutside";
+import useClickOutside from "../../hooks/useClickOutside";
 import ErrorPage from "../error/ErrorPage";
 import BottomNavigationBar from "./components/BottomNavigationBar/BottomNavigationBar";
 import JobTile from "./components/JobTile/JobTile";

@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import axiosInstance, { myAxiosInstance } from "../../axios";
 import { useCandidateContext, initialCandidatesDataStateNames } from "../../contexts/CandidatesContext";
@@ -13,7 +12,7 @@ import SelectedCandidates from "../teamlead/components/SelectedCandidates/Select
 import SelectedCandidatesScreen from "../teamlead/screens/SelectedCandidatesScreen/SelectedCandidatesScreen";
 import RejectedCandidates from "./components/RejectedCandidates/RejectedCandidates";
 import SideNavigationBar from "./components/SideNavigationBar/SideNavigationBar";
-import useClickOutside from "./hooks/useClickOutside";
+import useClickOutside from "../../hooks/useClickOutside";
 
 const AccountPage = () => {
     const { section, searchParams, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
@@ -35,7 +34,6 @@ const AccountPage = () => {
     
     useEffect(() => {
         getAccount()
-        // axios.defaults.baseURL = "https://100055.pythonanywhere.com/api/";
 
         // axiosInstance.get("/jobs/get_applications/")
 
