@@ -1,11 +1,5 @@
 import React from 'react';
-
 import './css/Hr_AppliedScreen.css';
-import NavigationList from '../component/NavigationList/NavigationList';
-import Active from '../component/Active/Active';
-import Shorlisted from '../component/Active/Shortlisted/Shorlisted';
-import Selected from '../component/Active/Selected/Selected';
-import Interview from '../component/Active/Interview/Interview';
 import SelectedCandidates from '../../teamlead/components/SelectedCandidates/SelectedCandidates';
 import JobTile from '../../teamlead/components/JobTile/JobTile';
 import { useNavigate } from 'react-router-dom';
