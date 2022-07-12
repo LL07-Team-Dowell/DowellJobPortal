@@ -98,9 +98,9 @@ export default function SignIn({ setUser }) {
 
 			const response = await authAxiosInstance.post(routes.Login, formData);
 
-			// myAxiosInstance.defaults.headers.common = {
-			// 	Authorization: `Bearer ${response.data.jwt}`,
-			// }
+			myAxiosInstance.defaults.headers.common = {
+				Authorization: `Bearer ${response.data.jwt}`,
+			}
 
 			const userResponse = await authAxiosInstance.get(routes.User);
 
