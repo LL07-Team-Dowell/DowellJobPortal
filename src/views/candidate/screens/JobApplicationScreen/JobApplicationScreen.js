@@ -4,7 +4,7 @@ import Navbar from "../../Navbar";
 import Footer from "../../Footer";
 import CustomHr from "../../../teamlead/components/CustomHr/CustomHr";
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
-import { myAxiosInstance } from "../../../../axios";
+import { myAxiosInstance } from "../../../../lib/axios";
 import { countriesData } from "./countriesData";
 import { AiOutlineDown } from "react-icons/ai";
 import { freelancingPlatforms } from "./freelancingPlatforms";

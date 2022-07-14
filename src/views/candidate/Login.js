@@ -13,8 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import logo from '../../logo.png'
-import { authAxiosInstance, myAxiosInstance } from '../../axios';
-import { routes } from '../../request';
+import { authAxiosInstance } from '../../lib/axios';
+import { routes } from '../../lib/request';
 import { getDeviceName, validateEmail } from '../../helpers/helpers';
 
 
@@ -96,18 +96,13 @@ export default function SignIn({ setUser }) {
 				Cookie: ''
 			}
 
-			const response = await authAxiosInstance.post(routes.Login, formData);
-
-			myAxiosInstance.defaults.headers.common = {
-				Authorization: `Bearer ${response.data.jwt}`,
-			}
+			await authAxiosInstance.post(routes.Login, formData);
 
 			const userResponse = await authAxiosInstance.get(routes.User);
 
 			setUser(userResponse.data);
 	
 			localStorage.setItem('user', JSON.stringify(userResponse.data));
-			localStorage.setItem('auth_token', JSON.stringify(response.data.jwt));
 
 			navigate("/");
 

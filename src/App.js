@@ -16,12 +16,12 @@ import { CandidateContextProvider } from './contexts/CandidatesContext';
 import JobApplicationScreen from './views/candidate/screens/JobApplicationScreen/JobApplicationScreen';
 import ErrorPage from './views/error/ErrorPage';
 import { NewApplicationContextProvider } from './contexts/NewApplicationContext';
-import { refreshToken, routes } from './request';
+import { routes } from './lib/request';
 import AdminPage from './views/admin/AdminPage';
 import EditJobScreen from './views/admin/screens/EditJobScreen/EditJobScreen';
 import ViewJobScreen from './views/admin/screens/ViewJobScreen/ViewJobScreen';
 import AddJobScreen from './views/admin/screens/AddJobScreen/AddJobScreen';
-import { authAxiosInstance, myAxiosInstance } from './axios';
+import { authAxiosInstance } from './lib/axios';
 
 function App() {
 
@@ -35,13 +35,7 @@ function App() {
     
     if (!savedUser) return setLoading(false);
 
-    const savedAuthToken = localStorage.getItem("auth_token");
-
     authAxiosInstance.get(routes.User).then(res => {
-
-      myAxiosInstance.defaults.headers.common = {
-        Authorization: `Bearer ${JSON.parse(savedAuthToken)}`
-      }
 
       setLoading(false);
       setUser(JSON.parse(savedUser));
@@ -50,7 +44,6 @@ function App() {
 
       if (err.response.status === 401) {
         localStorage.clear("user");
-        localStorage.clear("auth_token");
         setLoading(false);
       }
 
@@ -71,7 +64,7 @@ function App() {
     </Routes>
   }
 
-  if (user.is_account) {
+  if (user.role === process.env.REACT_APP_ACCOUNT_ROLE) {
     return <Routes>
       
       <Route path="/signup" element={<SignUP setUser={setUser}/>}/>     
@@ -94,7 +87,7 @@ function App() {
     </Routes>
   }
 
-  if (user.is_admin) {
+  if (user.role === process.env.REACT_APP_ADMIN_ROLE) {
 
     return <Routes>
 
@@ -129,7 +122,7 @@ function App() {
 
   }
 
-  if (user.is_hr) {
+  if (user.role === process.env.REACT_APP_HR_ROLE) {
 
     return <Routes>
 
@@ -168,7 +161,7 @@ function App() {
     </Routes>
   }
 
-  if (user.is_team_leader) {
+  if (user.role === process.env.REACT_APP_TEAMLEAD_ROLE) {
 
     return <Routes>
 

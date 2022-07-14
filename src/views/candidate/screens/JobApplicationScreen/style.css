@@ -321,6 +321,12 @@ p{
         margin-bottom: 2%;
     }
 
+    .candidate__Job__Application__Container .apply_Btn_Container{
+        margin: 0;
+        margin-bottom: 5%;
+        width: 30%;
+    }
+
     .candidate__Job__Application__Container .apply_Btn_Container .apply-btn{
         position: relative;
         margin: 10% auto;
@@ -335,8 +341,13 @@ p{
     }
 
 
-    .candidate__Job__Application__Container .apply_Btn_Container .apply-btn, .candidate__Job__Application__Container form button{
+    .candidate__Job__Application__Container .apply_Btn_Container .apply-btn {
+        padding: 8%;
+    }
+
+    .candidate__Job__Application__Container form button{
         padding: 2.5% 8%;
+        width: 30%;
     }
 
     .candidate__Job__Application__Container form button{

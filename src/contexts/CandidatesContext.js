@@ -1,6 +1,5 @@
-import axios from "axios";
 import { createContext, useContext, useEffect, useReducer } from "react";
-import axiosInstance, { myAxiosInstance } from "../axios";
+import { myAxiosInstance } from "../lib/axios";
 import { candidateDataReducer, candidateDataReducerActions } from "../reducers/CandidateDataReducer";
 
 export const initialCandidatesData = {

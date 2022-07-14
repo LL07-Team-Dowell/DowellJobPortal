@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import axiosInstance, { myAxiosInstance } from "../../axios";
+import { myAxiosInstance } from "../../lib/axios";
 import { useCandidateContext, initialCandidatesDataStateNames } from "../../contexts/CandidatesContext";
 import { useNavigationContext } from "../../contexts/NavigationContext";
 import { candidateDataReducerActions } from "../../reducers/CandidateDataReducer";

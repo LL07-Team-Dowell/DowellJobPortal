@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { authAxiosInstance, myAxiosInstance } from '../../axios';
+import { authAxiosInstance, myAxiosInstance } from '../../lib/axios';
 import {useNavigate} from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -12,7 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography'
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { routes } from '../../request';
+import { routes } from '../../lib/request';
 import logo from '../../logo.png';
 import { validateEmail } from '../../helpers/helpers';
 import { Select } from '@mui/material';
