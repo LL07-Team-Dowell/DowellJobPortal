@@ -4,7 +4,7 @@ import Search from '../component/Search/Search';
 import { hrNavigationLinks } from './hrNavigationLinks';
 import BottomNavigationBar from '../component/BottomNavigation/BottomNavigation';
 import JobTile from '../../teamlead/components/JobTile/JobTile';
-import { myAxiosInstance } from '../../../axios';
+import { myAxiosInstance } from '../../../lib/axios';
 import { useNavigationContext } from '../../../contexts/NavigationContext';
 import NavigationBar from '../../teamlead/components/NavigationBar/NavigationBar';
 import useClickOutside from '../../../hooks/useClickOutside';

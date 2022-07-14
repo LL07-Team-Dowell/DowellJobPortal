@@ -4,7 +4,7 @@ import * as BsIcons from 'react-icons/bs';
 import * as ImIcons from 'react-icons/im';
 import * as AiIcons from 'react-icons/ai';
 import { IconContext } from 'react-icons';
-import { myAxiosInstance } from '../../axios';
+import { myAxiosInstance } from '../../lib/axios';
 
 
 function Applied({ currentUser }) {
@@ -13,11 +13,10 @@ function Applied({ currentUser }) {
   const [appliedJobs, setAppliedJobs] = useState([]);
   
   const getAppliedData = async () => {
-    // const response = await myAxiosInstance.get("/jobs/get_my_applications/", { id: currentUser.id })
     const response = await myAxiosInstance.get("/jobs/get_applications/");
     const jobsResponse = await myAxiosInstance.get("/jobs/get_jobs/");
 
-    const currentUserApplications = response.data.filter(application => application.applicant === currentUser.id);
+    const currentUserApplications = response.data.filter(application => application.applicant === currentUser.username);
     const currentUserAppliedJobs = jobsResponse.data.filter((currentJob) => currentUserApplications.find(({ job }) => currentJob.id === job));
     setAppliedJobs(currentUserAppliedJobs);
     return;
