@@ -17,10 +17,25 @@ export const newApplicationState = {
         academic_qualification: "",
         comments: "",
         date_applied: "",
+        team_lead_remarks: ""
     },
     applicant: "",
     job: "",
 }
+
+export const excludedApplicantInfo = [
+    "feedBack",
+    "hr_remarks",
+    "status",
+    "job",
+    "id",
+    "team_lead_remarks",
+    "date_applied",
+    "jobDescription",
+    "agreeToAllTerms",
+    "created",
+    "updated",
+]
 
 export const mutableNewApplicationStateNames = {
     job: "job",
@@ -34,6 +49,8 @@ export const mutableNewApplicationStateNames = {
     others_property_qualification: "academic_qualification",
     others_comments: "comments",
     others_date_applied: "date_applied",
+    others_team_lead_remarks: "team_lead_remarks",
+    hr_remarks: "hr_remarks",
 }
 
 export const useNewApplicationContext = () => useContext(NewApplicationContext);

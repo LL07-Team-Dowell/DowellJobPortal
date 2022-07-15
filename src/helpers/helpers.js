@@ -60,3 +60,24 @@ export const getDaysDifferenceFromPresentDate = (date) => {
     return Math.round(differenceInDays);
 
 }
+
+export const formatDateAndTime = (date) => {
+    if ( new Date(date) == "Invalid Date" ) return "1st January";
+
+    const daysEndingWithSt = [1, 21, 31];
+    const daysEndingWithNd = [2, 22];
+    const daysEndingWithRd = [3, 23];
+
+    const day = new Date(date).toLocaleDateString("en-us", {day: "numeric"})
+    const dayAsNumber = Number(day);
+    const month = new Date(date).toLocaleDateString("en-us", {month: "long"})
+
+    if ( daysEndingWithSt.includes(dayAsNumber) ) return `${day}st ${month}`;
+    
+    if ( daysEndingWithNd.includes(dayAsNumber) ) return `${day}nd ${month}`;
+
+    if ( daysEndingWithRd.includes(dayAsNumber) ) return `${day}rd ${month}`;
+
+    return `${day}th ${month}`;
+
+}

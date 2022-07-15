@@ -1,9 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import './css/Applied.css';
-import * as BsIcons from 'react-icons/bs';
-import * as ImIcons from 'react-icons/im';
-import * as AiIcons from 'react-icons/ai';
-import { IconContext } from 'react-icons';
 import { myAxiosInstance } from '../../lib/axios';
 import AppliedCard from './components/AppliedCard/AppliedCard';
 

@@ -5,8 +5,9 @@ import { FiEdit } from 'react-icons/fi';
 import "./style.css";
 import DropdownButton from '../DropdownButton/Dropdown';
 import { mutableNewApplicationStateNames } from '../../../../contexts/NewApplicationContext';
+import { formatDateAndTime } from '../../../../helpers/helpers';
 
-const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClick, candidateData, jobData, handleJobTileClick, taskData, hrPageActive, routeToJob, adminPageActive, handleEditIconClick, candidateForJobCount, jobsSkills }) => {
+const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClick, candidateData, jobData, handleJobTileClick, taskData, hrPageActive, routeToJob, adminPageActive, handleEditIconClick, candidateForJobCount, jobsSkills, jobTitle }) => {
 
     const handleJobItemClick = ( currentData ) => {
         if (disableClick) return
@@ -62,10 +63,10 @@ const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClic
                 
                 <>
                     <div className="applicant-details">
-                        <h2><b>{showTask ? taskData.assigneeName : hrPageActive ? candidateData[mutableNewApplicationStateNames.applicant] && candidateData[mutableNewApplicationStateNames.applicant] : candidateData.name}</b></h2>
-                        <p>{showTask ? taskData.dateOfTaskAssignment : candidateData.dateOfApplication}</p>
+                        <h2><b>{showTask ? taskData.assigneeName : hrPageActive ? candidateData[mutableNewApplicationStateNames.applicant] && candidateData[mutableNewApplicationStateNames.applicant] : candidateData.applicant}</b></h2>
+                        <p>{showTask ? taskData.dateOfTaskAssignment : formatDateAndTime(candidateData.others[mutableNewApplicationStateNames.others_date_applied])}</p>
                     </div>
-                    <p>{hrPageActive ? `Skills: ${jobsSkills ? jobsSkills : candidateData.skills}` : `Job: ${showTask ? taskData.jobApplied : candidateData.jobApplied}` }</p>
+                    <p>{hrPageActive ? `Skills: ${jobsSkills ? jobsSkills : candidateData.skills}` : `Job: ${showTask ? taskData.jobApplied : jobTitle}` }</p>
                     <div className={`applicant-qualifications-container ${showTask ? 'task-active' : ''}`}>
                         {
                             showTask ? <></> :
