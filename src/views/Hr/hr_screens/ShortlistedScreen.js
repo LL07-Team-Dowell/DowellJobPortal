@@ -3,9 +3,8 @@ import './css/Hr_AppliedScreen.css';
 import SelectedCandidates from '../../teamlead/components/SelectedCandidates/SelectedCandidates';
 import JobTile from '../../teamlead/components/JobTile/JobTile';
 import { useNavigate } from 'react-router-dom';
-import { appliedCandidates } from '../candidatesData';
 
-function ShortlistedScreen() {
+function ShortlistedScreen({ shortlistedCandidates, jobData }) {
   const navigate = useNavigate();
 
   const handleClick = (data) => navigate(`/job/after_initial_meet/${data.name}`, { state: { candidate: data } });
@@ -13,10 +12,10 @@ function ShortlistedScreen() {
   return (
     <div className='Applied__wrapper'>
       <div className='Applied__container'>
-        <SelectedCandidates title={'Shortlisted Candidates'} candidatesCount={appliedCandidates.length} hrPageActive={true} />
+        <SelectedCandidates title={'Shortlisted Candidates'} candidatesCount={shortlistedCandidates ? shortlistedCandidates.length : 0} hrPageActive={true} />
         {
-          React.Children.toArray(appliedCandidates.map(candidate => {
-            return <JobTile hrPageActive={true} candidateData={candidate} setShowCandidate={() => {}} handleJobTileClick={handleClick} />
+          shortlistedCandidates && React.Children.toArray(shortlistedCandidates.map(candidate => {
+            return <JobTile hrPageActive={true} candidateData={candidate} setShowCandidate={() => {}} handleJobTileClick={handleClick} jobsSkills={jobData.filter(job => job.id === candidate.id).length >=1 ? jobData.filter(job => job.id === candidate.id)[0].skills : ""} />
           }))
         }
       </div>

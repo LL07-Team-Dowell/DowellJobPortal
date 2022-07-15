@@ -13,6 +13,11 @@ import "./style.css";
 import { accountPageActions } from '../../../account/actions/AccountActions';
 import { candidateDataReducerActions } from '../../../../reducers/CandidateDataReducer';
 import { initialCandidatesDataStateNames } from '../../../../contexts/CandidatesContext';
+import { hrPageActions } from '../../../Hr/actions/HrActions';
+import { myAxiosInstance } from '../../../../lib/axios';
+import { routes } from '../../../../lib/request';
+import { candidateStatuses } from '../../../candidate/utils/candidateStatuses';
+import { useNavigate } from 'react-router-dom';
 
 
 const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, allCandidatesData, rehireTabActive, accountPage, hireTabActive, showOnboarding, updateShowCandidate, hrPageActive, initialMeet }) => {
@@ -24,8 +29,9 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
     const ref6 = useRef(null);
     const ref7 = useRef(null);
     const [ disabled, setDisabled ] = useState(false);
+    const navigate = useNavigate();
 
-    const handleClick = (ref, disableOtherBtns, action) => {
+    const handleClick = async (ref, disableOtherBtns, action) => {
         
         if (!ref.current) return;
 
@@ -120,6 +126,33 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                 setTimeout(() => updateShowCandidate(false), 1500);
 
                 break;
+            
+            case hrPageActions.MOVE_TO_SHORTLISTED:
+                if (!selectedCandidateData) return;
+
+                selectedCandidateData.status = candidateStatuses.SHORTLISTED;
+                await myAxiosInstance.post(routes.Update_Application + selectedCandidateData.id + "/", selectedCandidateData);
+                updateCandidateData(prevCandidates => { return [ ...prevCandidates, selectedCandidateData ] } )
+
+                return navigate("/shortlisted")
+
+            case hrPageActions.MOVE_TO_SELECTED:
+                if (!selectedCandidateData) return;
+
+                selectedCandidateData.status = candidateStatuses.SELECTED;
+                await myAxiosInstance.post(routes.Update_Application + selectedCandidateData.id + "/", selectedCandidateData);
+                updateCandidateData(prevCandidates => { return prevCandidates.filter(candidate => candidate.id !== selectedCandidateData.id) })
+                
+                return navigate("/shortlisted");
+
+            case hrPageActions.MOVE_TO_REJECTED:
+                if (!selectedCandidateData) return;
+
+                selectedCandidateData.status = candidateStatuses.REJECTED;
+                await myAxiosInstance.post(routes.Update_Application + selectedCandidateData.id + "/", selectedCandidateData);
+                updateCandidateData(prevCandidates => { return prevCandidates.filter(candidate => candidate.id !== selectedCandidateData.id) })
+                
+                return navigate("/shortlisted");
 
             default:
                 console.log("no action")
@@ -203,7 +236,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                     {
                         hrPageActive ? <>
 
-                        <button className={`status-option ${initialMeet ? 'green-color' : 'orange-color'}`} ref={ref7} onClick={() => handleClick(ref7, true)} disabled={disabled}>
+                        <button className={`status-option ${initialMeet ? 'green-color' : 'orange-color'} ${initialMeet ? '' : selectedCandidateData.status === candidateStatuses.SHORTLISTED ? 'active' : ''}`} ref={ref7} onClick={() => handleClick(ref7, true, initialMeet ? hrPageActions.MOVE_TO_SELECTED : hrPageActions.MOVE_TO_SHORTLISTED)} disabled={initialMeet ? disabled : selectedCandidateData.status === candidateStatuses.SHORTLISTED ? true : disabled}>
                             <BsStopCircle className='status-icon' />
                             {/* <FiStopCircle className='status-icon' /> */}
                             <br /><br/>
@@ -224,7 +257,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                         <></> :
 
                         hrPageActive ? <>
-                            <button className="status-option red-color" ref={ref6} onClick={() => handleClick(ref6, true)} disabled={disabled}>
+                            <button className="status-option red-color" ref={ref6} onClick={() => handleClick(ref6, true, hrPageActions.MOVE_TO_REJECTED)} disabled={disabled}>
                                 <BsStopCircle className='status-icon' />
                                 <br /><br/>
                                 {/* <FiStopCircle className='status-icon' /> */}
