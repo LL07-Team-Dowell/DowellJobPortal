@@ -46,15 +46,15 @@ export default function SimpleBottomNavigation() {
     if ((!ref1.current) || (!ref2.current) ||(!ref3.current) ||(!ref4.current)) return;
 
     if ((window.location.href.split("#").length === 1) || (window.location.href.split("#")[1] === "/")){
-      ref1.current.classList.add("active");
-      ref1.current.firstChild.classList.add("active");
+      ref1.current.classList.add("footer__Link__Active");
+      ref1.current.firstChild.classList.add("footer__Link__Active");
       return
     }
 
     [ref1, ref2, ref3, ref4].forEach(link => {
       if ( link.current.href.includes(window.location.href.split("#")[1]) || window.location.href.split("#")[1].split("/").length >= 2 && window.location.href.split("#")[1].split("/")[1] === link.current.href.split("#")[1].split("/")[1] ){
-        link.current.classList.add("active");
-        link.current.firstChild.classList.add("active");
+        link.current.classList.add("footer__Link__Active");
+        link.current.firstChild.classList.add("footer__Link__Active");
         return;
       }
     })
