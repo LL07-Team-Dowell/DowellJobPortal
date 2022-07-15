@@ -5,6 +5,7 @@ import * as ImIcons from 'react-icons/im';
 import * as AiIcons from 'react-icons/ai';
 import { IconContext } from 'react-icons';
 import { myAxiosInstance } from '../../lib/axios';
+import AppliedCard from './components/AppliedCard/AppliedCard';
 
 
 function Applied({ currentUser }) {
@@ -37,76 +38,51 @@ function Applied({ currentUser }) {
       <div className="slide-controls">
                <input type="radio" name="slide" id="applied" defaultChecked={true} />
                <input type="radio" name="slide" id="interview"/>
-               <label  htmlFor="applied" className="slide applied" onClick={show}>Applied ({appliedJobs.length})</label>
-               <label  htmlFor="interview" className="slide interview" onClick={show}>Interview ({[].length})</label>
+               <label htmlFor="applied" className="slide applied" onClick={show}>Applied ({appliedJobs.length})</label>
+               <label htmlFor="interview" className="slide interview" onClick={show}>Interview ({[].length})</label>
                <div className="slider-tab"></div>
             </div>
       <div className='container__inner'>
-        <div className={ Applied ? 'cards__switch applied__card': 'cards__switch'}>
-          <div className='applied__row'>
-            <div className='applied__column'>
-              {
-                React.Children.toArray([].map(job => {
-                  return <>
-                    <div className='card__cover'>
-                      <div className='cards '>
-                        <div className='card__container'>
-                          <div className='text__row'>
-                            <h3 className='applied__title'>{job.title} <span className='applied__time'>1 day ago</span></h3>
-                          </div>
-                          <div className='applied__status'>
-                          <ul>
-                            <li><BsIcons.BsExclamationCircle/> Application sent</li>
-                            <IconContext.Provider value={{ color: '#000', size:'14px' }}>
-                            <li><span>view <ImIcons.ImArrowRight2/></span> </li>
-                            </IconContext.Provider>
-                          </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                }))
-              }
+        {
+          Interview &&
+          
+          <div className={ Applied ? 'card__switch applied__card': 'card__switch'}>
+            <div className='applied__row'>
+              <div className='applied__column'>
+                {
+                  React.Children.toArray([].map(job => {
+                    return <>
+                      
+                    </>
+                  }))
+                }
 
+              </div>
             </div>
           </div>
+        }
 
-        </div>
-        <div className={ Interview ? 'cards__switch interview__card': 'cards__switch'}>
-          <div className='applied__rows'>
-            <div className='applied__columns'>
-              {
-                React.Children.toArray(appliedJobs.map(appliedJob => {
-                  return <>
-                    <div className='cards__body'>
-                      <div className='cards__content'>
-                        <div className='text__content'>
-                          <h3> {appliedJob.title}</h3>
-                          <p className='interview__sheduled'> Interview scheduled (date & time)</p>
-                          <p className='view__detail'><span>View details</span></p>
-                        </div>
-                        <div className='bottom__side'>
-                          <div className='interview__status'>
-                            <ul>
-                              <li><AiIcons.AiOutlineCheckCircle/> Interview with Hr</li>
-                            </ul>
-                          </div>
-                          <div className='discord__link'>
-                          <button className='discord__btn'>Discord</button>
-                            <p> Join link to have interview <br/>with Hr</p>
-                          </div>
-                        </div>
-                        
-                      </div>
-                    </div>
-                  </>
-                }))
-              }
-            </div>  
+        {
+
+          Applied && 
+          <div className={ Interview ? 'card__switch interview__card': 'card__switch'}>
+            <div className='applied__row'>
+              <div className='applied__column'>
+                {
+
+                  React.Children.toArray(appliedJobs.map(appliedJob => {
+                    return <>
+
+                      <AppliedCard job={appliedJob} />
+
+                    </>
+                  }))
+                }
+              </div>  
+            </div>
+
           </div>
-
-        </div>
+        }
       </div>
       </div>
     </div>

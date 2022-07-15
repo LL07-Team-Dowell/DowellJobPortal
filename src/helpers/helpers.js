@@ -47,3 +47,16 @@ export const getDeviceLocation = () => {
 export const getDeviceBrowser = () => {
     let userAgent = navigator.userAgent;
 }
+
+export const getDaysDifferenceFromPresentDate = (date) => {
+
+    if ( new Date(date) == "Invalid Date" ) return 0;
+
+    const today = new Date();
+
+    const differenceInMilliSec = Math.abs(today - new Date(date));
+    const differenceInDays = differenceInMilliSec / (1000 * 60 * 60 * 24);
+
+    return Math.round(differenceInDays);
+
+}

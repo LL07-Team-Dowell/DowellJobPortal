@@ -7,7 +7,7 @@ import CandidateHomeScreen from './views/candidate/screens/CandidateHomeScreen';
 import Logout from './views/candidate/Logout';
 import AlertScreen from './views/candidate/screens/AlertScreen';
 import UserScreen from './views/candidate/screens/UserScreen';
-import AppliedScreen from './views/candidate/screens/AppliedScreen';
+import AppliedPage from './views/candidate/screens/AppliedPage';
 import Hr_JobScreen from './views/Hr/hr_screens/Hr_JobScreen';
 import Teamlead from './views/teamlead/Teamlead';
 import AccountPage from './views/account/AccountPage';
@@ -211,7 +211,17 @@ function App() {
       <Route path="/alerts" element={<AlertScreen/>}/>
       <Route path="/user" element={<UserScreen/>}/>
 
-      <Route path="/applied" element={ <AppliedScreen user={user} />}/>
+      <Route path="/applied" element={ 
+        <NavigationContextProvider>
+          <AppliedPage user={user} />
+        </NavigationContextProvider>
+      } >
+        <Route path=":section" element={
+          <NavigationContextProvider>
+            <AppliedPage user={user} />
+          </NavigationContextProvider>
+        } />
+      </Route>
       
       <Route path="/apply/job" element={
         <NewApplicationContextProvider>

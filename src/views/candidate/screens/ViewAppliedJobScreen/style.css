@@ -1,0 +1,21 @@
+.view__Applied__Jobs__Container {
+    font-family: 'Inter', sans-serif;
+}
+
+.view__Applied__Jobs__Container .view__Job__Details h2 {
+    font-weight: 500;
+    font-size: 1.125rem;
+    line-height: 22px;
+}
+
+@media screen and (min-width: 1200px ){
+    .view__Applied__Jobs__Container .navbar-container{
+        padding-top: 1.3%;
+        padding-bottom: 1.3%;
+    }
+
+    .view__Applied__Jobs__Container .view__Job__Details{
+        width: 79%;
+        margin: 0 auto;
+    }
+}
