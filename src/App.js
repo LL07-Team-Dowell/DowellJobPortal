@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import SignIn from './views/candidate/Login';
-import SignUP from './views/candidate/Register';
+import SignIn from './views/authentication/Login';
+import SignUP from './views/authentication/Register';
 import CandidateHomeScreen from './views/candidate/screens/CandidateHomeScreen';
-import Logout from './views/candidate/Logout';
+import Logout from './views/authentication/Logout';
 import AlertScreen from './views/candidate/screens/AlertScreen';
 import UserScreen from './views/candidate/screens/UserScreen';
-import AppliedScreen from './views/candidate/screens/AppliedScreen';
+import AppliedPage from './views/candidate/screens/AppliedPage';
 import Hr_JobScreen from './views/Hr/hr_screens/Hr_JobScreen';
 import Teamlead from './views/teamlead/Teamlead';
 import AccountPage from './views/account/AccountPage';
@@ -16,12 +16,12 @@ import { CandidateContextProvider } from './contexts/CandidatesContext';
 import JobApplicationScreen from './views/candidate/screens/JobApplicationScreen/JobApplicationScreen';
 import ErrorPage from './views/error/ErrorPage';
 import { NewApplicationContextProvider } from './contexts/NewApplicationContext';
-import { refreshToken, routes } from './request';
+import { routes } from './lib/request';
 import AdminPage from './views/admin/AdminPage';
 import EditJobScreen from './views/admin/screens/EditJobScreen/EditJobScreen';
 import ViewJobScreen from './views/admin/screens/ViewJobScreen/ViewJobScreen';
 import AddJobScreen from './views/admin/screens/AddJobScreen/AddJobScreen';
-import { authAxiosInstance, myAxiosInstance } from './axios';
+import { authAxiosInstance } from './lib/axios';
 
 function App() {
 
@@ -35,13 +35,7 @@ function App() {
     
     if (!savedUser) return setLoading(false);
 
-    const savedAuthToken = localStorage.getItem("auth_token");
-
     authAxiosInstance.get(routes.User).then(res => {
-
-      // myAxiosInstance.defaults.headers.common = {
-      //   Authorization: `Bearer ${JSON.parse(savedAuthToken)}`
-      // }
 
       setLoading(false);
       setUser(JSON.parse(savedUser));
@@ -50,7 +44,6 @@ function App() {
 
       if (err.response.status === 401) {
         localStorage.clear("user");
-        localStorage.clear("auth_token");
         setLoading(false);
       }
 
@@ -71,7 +64,7 @@ function App() {
     </Routes>
   }
 
-  if (user.is_account) {
+  if (user.role === process.env.REACT_APP_ACCOUNT_ROLE) {
     return <Routes>
       
       <Route path="/signup" element={<SignUP setUser={setUser}/>}/>     
@@ -94,7 +87,7 @@ function App() {
     </Routes>
   }
 
-  if (user.is_admin) {
+  if (user.role === process.env.REACT_APP_ADMIN_ROLE) {
 
     return <Routes>
 
@@ -129,7 +122,7 @@ function App() {
 
   }
 
-  if (user.is_hr) {
+  if (user.role === process.env.REACT_APP_HR_ROLE) {
 
     return <Routes>
 
@@ -168,7 +161,7 @@ function App() {
     </Routes>
   }
 
-  if (user.is_team_leader) {
+  if (user.role === process.env.REACT_APP_TEAMLEAD_ROLE) {
 
     return <Routes>
 
@@ -218,7 +211,17 @@ function App() {
       <Route path="/alerts" element={<AlertScreen/>}/>
       <Route path="/user" element={<UserScreen/>}/>
 
-      <Route path="/applied" element={ <AppliedScreen user={user} />}/>
+      <Route path="/applied" element={ 
+        <NavigationContextProvider>
+          <AppliedPage user={user} />
+        </NavigationContextProvider>
+      } >
+        <Route path=":section" element={
+          <NavigationContextProvider>
+            <AppliedPage user={user} />
+          </NavigationContextProvider>
+        } />
+      </Route>
       
       <Route path="/apply/job" element={
         <NewApplicationContextProvider>

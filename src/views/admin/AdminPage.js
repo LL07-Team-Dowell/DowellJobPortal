@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { myAxiosInstance } from "../../axios";
+import { myAxiosInstance } from "../../lib/axios";
 import { useNavigationContext } from "../../contexts/NavigationContext";
-import { routes } from "../../request";
+import { routes } from "../../lib/request";
 import SideNavigationBar from "../account/components/SideNavigationBar/SideNavigationBar";
 import BottomNavigationBar from "../Hr/component/BottomNavigation/BottomNavigation";
 import Search from "../Hr/component/Search/Search";

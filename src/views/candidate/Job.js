@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 import './css/Job.css';
 import * as FaIcons from 'react-icons/fa';
 import { IconContext } from 'react-icons';
-import { authAxiosInstance, myAxiosInstance } from '../../axios';
-import { routes } from '../../request';
+import { myAxiosInstance } from '../../lib/axios';
+import { routes } from '../../lib/request';
 import { useNavigate } from 'react-router-dom';
 import { useNavigationContext } from '../../contexts/NavigationContext';
 import { tasksData } from '../teamlead/tasks';
@@ -26,7 +26,7 @@ function JobScreen({ currentUser }) {
             try{
             
                 const response = await myAxiosInstance.get(routes.Applications);
-                const currentUserAppliedJobs = response.data.filter(application => application.applicant === currentUser.id);
+                const currentUserAppliedJobs = response.data.filter(application => application.applicant === currentUser.username);
                 setAppliedJobs(currentUserAppliedJobs);
                 return;
                 

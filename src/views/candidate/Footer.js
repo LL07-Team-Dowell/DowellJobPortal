@@ -52,7 +52,7 @@ export default function SimpleBottomNavigation() {
     }
 
     [ref1, ref2, ref3, ref4].forEach(link => {
-      if (link.current.href.includes(window.location.href.split("#")[1])){
+      if ( link.current.href.includes(window.location.href.split("#")[1]) || window.location.href.split("#")[1].split("/").length >= 2 && window.location.href.split("#")[1].split("/")[1] === link.current.href.split("#")[1].split("/")[1] ){
         link.current.classList.add("active");
         link.current.firstChild.classList.add("active");
         return;

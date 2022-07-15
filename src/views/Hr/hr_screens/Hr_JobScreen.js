@@ -4,7 +4,7 @@ import Search from '../component/Search/Search';
 import { hrNavigationLinks } from './hrNavigationLinks';
 import BottomNavigationBar from '../component/BottomNavigation/BottomNavigation';
 import JobTile from '../../teamlead/components/JobTile/JobTile';
-import { myAxiosInstance } from '../../../axios';
+import { myAxiosInstance } from '../../../lib/axios';
 import { useNavigationContext } from '../../../contexts/NavigationContext';
 import NavigationBar from '../../teamlead/components/NavigationBar/NavigationBar';
 import useClickOutside from '../../../hooks/useClickOutside';
@@ -15,6 +15,8 @@ import SelectedCandidates from '../../teamlead/components/SelectedCandidates/Sel
 import { appliedCandidates } from '../candidatesData';
 import SelectedCandidatesScreen from '../../teamlead/screens/SelectedCandidatesScreen/SelectedCandidatesScreen';
 import ErrorPage from '../../error/ErrorPage';
+import { routes } from '../../../lib/request';
+import { mutableNewApplicationStateNames } from '../../../contexts/NewApplicationContext';
 
 
 
@@ -22,6 +24,7 @@ function Hr_JobScreen() {
   
   const { section, sub_section, path, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
   const [jobs, setJobs] = useState([]);
+  const [ appliedJobs, setAppliedJobs ] = useState([]);
   const sideNavbarRef = useRef(null);
   const [sideNavbarActive, setSideNavbarActive] = useState(false);
   const navigate = useNavigate();
@@ -30,17 +33,23 @@ function Hr_JobScreen() {
   
   useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
-  const getApplications = async () => {
-    // const response = await myAxiosInstance.get("/jobs/get_jobs/");
-    await myAxiosInstance.get("/jobs/hrview/")
-    const response = await myAxiosInstance.get("/jobs/get_jobs/");
-    
-    // return response.data;
+  const getJobs = async () => {
+
+    const response = await myAxiosInstance.get(routes.Jobs);
+    setJobs(response.data);
+    return;
+  
   }
 
-  const goToJobDetails = (jobData) => navigate("/home/job", { state: { job: jobData } });
+  const getJobApplications = async () => {
+    const response = await myAxiosInstance.get(routes.Applications);
+    setAppliedJobs(response.data);
+    return;
+  }
 
-  const goToJobApplicationDetails = (candidateData) => navigate(`/home/job/${candidateData.name}`, { state: { candidate: candidateData } });
+  const goToJobDetails = (jobData, candidateData) => navigate("/home/job", { state: { job: jobData, appliedCandidates: candidateData } });
+
+  const goToJobApplicationDetails = (candidateData) => navigate(`/home/job/${candidateData[mutableNewApplicationStateNames.applicant]}`, { state: { candidate: candidateData } });
 
   useEffect(() => {
 
@@ -52,15 +61,8 @@ function Hr_JobScreen() {
 
   useEffect(() => {
 
-    getApplications().then(res => {
-      
-      // setJobs(res)
-    
-    }).catch(err => {
-
-      console.log(err)
-
-    });
+    getJobApplications();
+    getJobs();
 
   }, [])
 
@@ -81,7 +83,7 @@ function Hr_JobScreen() {
             {
               React.Children.toArray(jobs.map(job => {
                 return <>
-                  <JobTile jobData={job} routeToJob={true} handleJobTileClick={goToJobDetails} />
+                  <JobTile jobData={job} routeToJob={true} handleJobTileClick={() => goToJobDetails(job, appliedJobs.filter(application => application.id === job.id))} candidateForJobCount={appliedJobs.filter(application => application.id === job.id).length} />
                 </>
               }))
             }
@@ -120,13 +122,13 @@ function Hr_JobScreen() {
       <>
       
         <div className='hr__wrapper'>
-          <SelectedCandidates title={location.state.job.title} candidatesCount={appliedCandidates.length} hrPageActive={true} />
+          <SelectedCandidates title={location.state.job.title} candidatesCount={location.state.appliedCandidates.length} hrPageActive={true} />
 
           {
             <div className='hr__Job__Tile__Container'>
               {
-                React.Children.toArray(appliedCandidates.map(candidate => {
-                  return <JobTile hrPageActive={true} candidateData={candidate} setShowCandidate={() => {}} handleJobTileClick={goToJobApplicationDetails} />
+                React.Children.toArray(location.state.appliedCandidates.map(candidate => {
+                  return <JobTile hrPageActive={true} jobsSkills={location.state.job.skills} candidateData={candidate} setShowCandidate={() => {}} handleJobTileClick={goToJobApplicationDetails} />
                 }))
               }
             </div>

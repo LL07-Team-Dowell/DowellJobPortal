@@ -9,6 +9,7 @@ export const newJobApplicationDataReducerActions = {
     UPDATE_COMMENTS: "update_comments",
     UPDATE_OTHERS: "update_others",
     UPDATE_JOB_DESCRIPTION: "update_job_description",
+    UPDATE_DATE_APPLIED: "update_date_applied",
 }
 
 export const newJobApplicationDataReducer = (currentState, action) => {
@@ -18,6 +19,7 @@ export const newJobApplicationDataReducer = (currentState, action) => {
         case newJobApplicationDataReducerActions.UPDATE_QUALIFICATIONS:
         case newJobApplicationDataReducerActions.UPDATE_COMMENTS:
         case newJobApplicationDataReducerActions.UPDATE_JOB_DESCRIPTION:
+        case newJobApplicationDataReducerActions.UPDATE_DATE_APPLIED:
         case newJobApplicationDataReducerActions.UPDATE_OTHERS:
 
             if (!action.payload.stateToChange) return currentState;

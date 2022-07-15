@@ -16,6 +16,7 @@ export const newApplicationState = {
         academic_qualification_type: "",
         academic_qualification: "",
         comments: "",
+        date_applied: "",
     },
     applicant: "",
     job: "",
@@ -32,6 +33,7 @@ export const mutableNewApplicationStateNames = {
     others_property_qualification_type: "academic_qualification_type",
     others_property_qualification: "academic_qualification",
     others_comments: "comments",
+    others_date_applied: "date_applied",
 }
 
 export const useNewApplicationContext = () => useContext(NewApplicationContext);

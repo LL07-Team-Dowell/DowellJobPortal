@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { myAxiosInstance } from "../../axios";
+import { myAxiosInstance } from "../../lib/axios";
 import { useCandidateContext } from "../../contexts/CandidatesContext";
 import { useNavigationContext } from "../../contexts/NavigationContext";
 import SideNavigationBar from "../account/components/SideNavigationBar/SideNavigationBar";
