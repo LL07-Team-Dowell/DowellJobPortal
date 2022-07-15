@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import SignIn from './views/candidate/Login';
-import SignUP from './views/candidate/Register';
+import SignIn from './views/authentication/Login';
+import SignUP from './views/authentication/Register';
 import CandidateHomeScreen from './views/candidate/screens/CandidateHomeScreen';
-import Logout from './views/candidate/Logout';
+import Logout from './views/authentication/Logout';
 import AlertScreen from './views/candidate/screens/AlertScreen';
 import UserScreen from './views/candidate/screens/UserScreen';
 import AppliedPage from './views/candidate/screens/AppliedPage';
