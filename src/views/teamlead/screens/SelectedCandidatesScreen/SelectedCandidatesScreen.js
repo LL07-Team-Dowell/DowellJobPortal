@@ -132,7 +132,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
         
         <div className="selected-candidate-screen-container">
             
-            <ApplicantIntro hrPageActive={hrPageActive} applicant={selectedCandidateData} />
+            <ApplicantIntro hrPageActive={hrPageActive} applicant={selectedCandidateData ? selectedCandidateData : {}} />
 
             <ApplicantDetails hrPageActive={hrPageActive} />
 

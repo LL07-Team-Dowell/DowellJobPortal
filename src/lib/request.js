@@ -10,6 +10,7 @@ const routes = {
   Applications: '/jobs/get_applications/',
   Add_Job: '/jobs/add_job/',
   Update_Job: 'jobs/update_job/',
+  Hr_View: '/jobs/hrview/',
 }
 
 const refreshToken = (token) => {
