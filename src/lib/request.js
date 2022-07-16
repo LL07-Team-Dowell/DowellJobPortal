@@ -11,6 +11,13 @@ const routes = {
   Add_Job: '/jobs/add_job/',
   Update_Job: 'jobs/update_job/',
   Hr_View: '/jobs/hrview/',
+  Update_Application: '/jobs/update_application/',
+  Teamlead_View: '/jobs/team_lead_view/',
+  Accounts_View: '/jobs/account_view/',
+  Tasks: '/tasks/view_tasks/',
+  Meeting: '/jobs/meeting/',
+  Teams: '/jobs/teams',
+  Projects: '/jobs/project'
 }
 
 const refreshToken = (token) => {

@@ -22,6 +22,7 @@ import EditJobScreen from './views/admin/screens/EditJobScreen/EditJobScreen';
 import ViewJobScreen from './views/admin/screens/ViewJobScreen/ViewJobScreen';
 import AddJobScreen from './views/admin/screens/AddJobScreen/AddJobScreen';
 import { authAxiosInstance } from './lib/axios';
+import { NewCandidateContextProvider } from './contexts/CandidateContextNew';
 
 function App() {
 
@@ -133,7 +134,9 @@ function App() {
       
       <Route path="/" element={
         <NavigationContextProvider>
-          <Hr_JobScreen/>
+          <NewCandidateContextProvider>
+            <Hr_JobScreen/>
+          </NewCandidateContextProvider>
         </NavigationContextProvider>
       }>
         <Route path=":section" element={

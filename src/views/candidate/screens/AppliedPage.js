@@ -15,7 +15,7 @@ function AppliedPage({ user }) {
     
     {
       section === "view_job_application" && <>
-        <ViewAppliedJobScreen job={location.state ? location.state.jobToView : {}} />
+        <ViewAppliedJobScreen job={location.state ? location.state.jobToView : {}} applicationDetails={location.state ? location.state.applicationDetails : {}} />
       </>
     }
     {

@@ -13,9 +13,16 @@ import "./style.css";
 import { accountPageActions } from '../../../account/actions/AccountActions';
 import { candidateDataReducerActions } from '../../../../reducers/CandidateDataReducer';
 import { initialCandidatesDataStateNames } from '../../../../contexts/CandidatesContext';
+import { hrPageActions } from '../../../Hr/actions/HrActions';
+import { myAxiosInstance } from '../../../../lib/axios';
+import { routes } from '../../../../lib/request';
+import { candidateStatuses } from '../../../candidate/utils/candidateStatuses';
+import { useNavigate } from 'react-router-dom';
+import { teamLeadActions } from '../../actions/TeamLeadActions';
+import { mutableNewApplicationStateNames } from '../../../../contexts/NewApplicationContext';
 
 
-const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, allCandidatesData, rehireTabActive, accountPage, hireTabActive, showOnboarding, updateShowCandidate, hrPageActive, initialMeet }) => {
+const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, allCandidatesData, rehireTabActive, accountPage, hireTabActive, showOnboarding, updateShowCandidate, hrPageActive, initialMeet, jobTitle }) => {
     const ref1 = useRef(null);
     const ref2 = useRef(null);
     const ref3 = useRef(null);
@@ -24,15 +31,17 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
     const ref6 = useRef(null);
     const ref7 = useRef(null);
     const [ disabled, setDisabled ] = useState(false);
+    const navigate = useNavigate();
+    const [ remarks, setRemarks ] = useState("");
 
-    const handleClick = (ref, disableOtherBtns, action) => {
+    const handleClick = async (ref, disableOtherBtns, action) => {
         
         if (!ref.current) return;
 
         { disableOtherBtns && setDisabled(true) };
 
         ref.current.classList.toggle("active");
-        
+
         switch (action) {
             case accountPageActions.MOVE_TO_ONBOARDING:
 
@@ -81,6 +90,8 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
 
             case accountPageActions.MOVE_TO_REJECTED:
 
+                if (!selectedCandidateData) return;
+
                 updateCandidateData({ type: candidateDataReducerActions.UPDATE_REJECTED_CANDIDATES, payload: {
                     stateToChange: initialCandidatesDataStateNames.rejectedCandidates,
                     updateExisting: true,
@@ -117,9 +128,54 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                     value: selectedCandidateData
                 }})
 
-                setTimeout(() => updateShowCandidate(false), 1500);
+                selectedCandidateData.others[mutableNewApplicationStateNames.others_team_lead_remarks] = remarks;
+                selectedCandidateData.status = candidateStatuses.REJECTED;
+                await myAxiosInstance.post(routes.Update_Application + selectedCandidateData.id + "/", selectedCandidateData);
 
-                break;
+                return updateShowCandidate(false)
+
+            case teamLeadActions.MOVE_TO_HIRED:
+                if (!selectedCandidateData) return;
+
+                selectedCandidateData.others[mutableNewApplicationStateNames.others_team_lead_remarks] = remarks;
+                selectedCandidateData.status = candidateStatuses.TEAMLEAD_HIRE;
+                await myAxiosInstance.post(routes.Update_Application + selectedCandidateData.id + "/", selectedCandidateData);
+                
+                updateCandidateData ({ type: candidateDataReducerActions.UPDATE_SELECTED_CANDIDATES, payload : {
+                    removeFromExisting: true,
+                    stateToChange: initialCandidatesDataStateNames.selectedCandidates,
+                    value: selectedCandidateData
+                }})
+
+                return updateShowCandidate(false);
+            
+            case hrPageActions.MOVE_TO_SHORTLISTED:
+                if (!selectedCandidateData) return;
+
+                selectedCandidateData[mutableNewApplicationStateNames.hr_remarks] = remarks;
+                selectedCandidateData.status = candidateStatuses.SHORTLISTED;
+                await myAxiosInstance.post(routes.Update_Application + selectedCandidateData.id + "/", selectedCandidateData);
+                updateCandidateData(prevCandidates => { return [ ...prevCandidates, selectedCandidateData ] } )
+
+                return navigate("/shortlisted")
+
+            case hrPageActions.MOVE_TO_SELECTED:
+                if (!selectedCandidateData) return;
+
+                selectedCandidateData.status = candidateStatuses.SELECTED;
+                await myAxiosInstance.post(routes.Update_Application + selectedCandidateData.id + "/", selectedCandidateData);
+                updateCandidateData(prevCandidates => { return prevCandidates.filter(candidate => candidate.id !== selectedCandidateData.id) })
+                
+                return navigate("/shortlisted");
+
+            case hrPageActions.MOVE_TO_REJECTED:
+                if (!selectedCandidateData) return;
+
+                selectedCandidateData.status = candidateStatuses.REJECTED;
+                await myAxiosInstance.post(routes.Update_Application + selectedCandidateData.id + "/", selectedCandidateData);
+                updateCandidateData(prevCandidates => { return prevCandidates.filter(candidate => candidate.id !== selectedCandidateData.id) })
+                
+                return navigate("/shortlisted");
 
             default:
                 console.log("no action")
@@ -132,9 +188,9 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
         
         <div className="selected-candidate-screen-container">
             
-            <ApplicantIntro hrPageActive={hrPageActive} applicant={selectedCandidateData ? selectedCandidateData : {}} />
+            <ApplicantIntro hrPageActive={hrPageActive} applicant={selectedCandidateData ? selectedCandidateData : {}} jobTitle={jobTitle} />
 
-            <ApplicantDetails hrPageActive={hrPageActive} />
+            <ApplicantDetails hrPageActive={hrPageActive} applicantData={selectedCandidateData} />
 
             {!hrPageActive && <CustomHr />}
 
@@ -163,13 +219,13 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                 hrPageActive ? <>
                     <div className="comments-container hr__Comments__Container">
                         <h2>{initialMeet ? <>Remarks {<span>&#x00028;by Hr&#x00029;</span>}</> : <>Add Remarks</>}</h2>
-                        <textarea placeholder={`${initialMeet ? "Remarks given": "Add remarks"}`}></textarea>
+                        <textarea placeholder={`${initialMeet ? "Remarks given": "Add remarks"}`} readOnly={initialMeet ? true : false} value={initialMeet ? selectedCandidateData[mutableNewApplicationStateNames.hr_remarks] : remarks} onChange={(e) => setRemarks(e.target.value)}></textarea>
                     </div>
                 </> :
 
                 <div className="comments-container">
                     <h2>{hireTabActive ? '' : 'Add'} Remarks {hireTabActive ? <span>&#x00028;by Team Lead&#x00029;</span> : <></>}</h2>
-                    <textarea placeholder={accountPage ? "Reason to Rehire" : "Add remarks"}></textarea>
+                    <textarea placeholder={accountPage ? "Reason to Rehire" : "Add remarks"} value={remarks} onChange={(e) => setRemarks(e.target.value)}></textarea>
                 </div>
 
             }
@@ -203,14 +259,14 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                     {
                         hrPageActive ? <>
 
-                        <button className={`status-option ${initialMeet ? 'green-color' : 'orange-color'}`} ref={ref7} onClick={() => handleClick(ref7, true)} disabled={disabled}>
+                        <button className={`status-option ${initialMeet ? 'green-color' : 'orange-color'} ${initialMeet ? '' : selectedCandidateData.status === candidateStatuses.SHORTLISTED ? 'active' : ''}`} ref={ref7} onClick={() => handleClick(ref7, true, initialMeet ? hrPageActions.MOVE_TO_SELECTED : hrPageActions.MOVE_TO_SHORTLISTED)} disabled={initialMeet ? disabled : selectedCandidateData.status === candidateStatuses.SHORTLISTED ? true : disabled}>
                             <BsStopCircle className='status-icon' />
                             {/* <FiStopCircle className='status-icon' /> */}
                             <br /><br/>
                             <div className='textt'>{`${initialMeet ? 'Selected' : 'Shortlisted'}`}</div>
                         </button>
 
-                        </> : <button className={`status-option green-color ${accountPage && rehireTabActive ? 'active' : ''}`} ref={ref1} onClick={() => handleClick(ref1, true, hireTabActive ? accountPageActions.MOVE_TO_ONBOARDING : showOnboarding ? accountPageActions.MOVE_TO_REHIRE : "")} disabled={accountPage && rehireTabActive ? true : disabled}>
+                        </> : <button className={`status-option green-color ${accountPage && rehireTabActive ? 'active' : ''}`} ref={ref1} onClick={() => handleClick(ref1, true, hireTabActive ? accountPageActions.MOVE_TO_ONBOARDING : showOnboarding ? teamleadPageActive ? teamLeadActions.MOVE_TO_REHIRE : accountPageActions.MOVE_TO_REHIRE : teamLeadActions.MOVE_TO_HIRED)} disabled={accountPage && rehireTabActive ? true : disabled}>
                             <BsStopCircle className='status-icon' />
                             {/* <FiStopCircle className='status-icon' /> */}
                             <br /><br/>
@@ -224,7 +280,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                         <></> :
 
                         hrPageActive ? <>
-                            <button className="status-option red-color" ref={ref6} onClick={() => handleClick(ref6, true)} disabled={disabled}>
+                            <button className="status-option red-color" ref={ref6} onClick={() => handleClick(ref6, true, hrPageActions.MOVE_TO_REJECTED)} disabled={disabled}>
                                 <BsStopCircle className='status-icon' />
                                 <br /><br/>
                                 {/* <FiStopCircle className='status-icon' /> */}

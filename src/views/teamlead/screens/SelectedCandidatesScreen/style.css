@@ -135,6 +135,11 @@
     max-width: 100%;
 }
 
+.status-options-container .status-option:disabled,
+.status-options-container .status-option[disabled] {
+    cursor: not-allowed;
+}
+
 .status-options-container .status-option .status-icon{
     font-size: 1.25rem;
 }

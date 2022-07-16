@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { myAxiosInstance } from "../../lib/axios";
-import { useCandidateContext } from "../../contexts/CandidatesContext";
+import { initialCandidatesDataStateNames, useCandidateContext } from "../../contexts/CandidatesContext";
 import { useNavigationContext } from "../../contexts/NavigationContext";
 import SideNavigationBar from "../account/components/SideNavigationBar/SideNavigationBar";
 import useClickOutside from "../../hooks/useClickOutside";
@@ -15,6 +15,9 @@ import TaskScreen from "./screens/TaskScreen/TaskScreen";
 
 import "./style.css";
 import { tasksData } from "./tasks";
+import { routes } from "../../lib/request";
+import { candidateStatuses } from "../candidate/utils/candidateStatuses";
+import { candidateDataReducerActions } from "../../reducers/CandidateDataReducer";
 
 const Teamlead = () => {
     const { section, searchParams, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
@@ -22,23 +25,51 @@ const Teamlead = () => {
     const [ showCandidate, setShowCandidate ] = useState(false);
     const [ showCandidateTask, setShowCandidateTask ] = useState(false);
     const [ rehireTabActive, setRehireTabActive ] = useState(false);
-    const [ interviewTabActive, setInterviewTabActive ] = useState(false);
     const [ selectedTabActive, setSelectedTabActive ] = useState(false);
     const [ isSideNavbarActive, setSideNavbarActive ] = useState(false);
     const [ currentCandidate, setCurrentCandidate ] = useState({});
     const [ currentTask, setCurrentTask ] = useState({});
+    const [ jobs, setJobs ] = useState([]);
     
     const sideNavbarRef = useRef(null);
 
     useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
     async function getTeamlead () {
-        const response = await myAxiosInstance.get("/jobs/team_lead_view/");
+        const response = await myAxiosInstance.get(routes.Teamlead_View);
         return response;
+    }
+
+    async function getJobs() {
+        const response = await myAxiosInstance.get(routes.Jobs);
+        setJobs(response.data)
+        return;
+    }
+
+    async function getApplications () {
+        const response = await myAxiosInstance.get(routes.Applications);
+        const selectedCandidates = response.data.filter(application => application.status === candidateStatuses.SELECTED);
+        const candidatesToRehire = response.data.filter(application => application.status === candidateStatuses.ONBOARDING);
+        
+        dispatchToCandidatesData({ type: candidateDataReducerActions.UPDATE_SELECTED_CANDIDATES, payload: {
+            stateToChange: initialCandidatesDataStateNames.selectedCandidates,
+            value: selectedCandidates,
+        }});
+
+        dispatchToCandidatesData({ type: candidateDataReducerActions.UPDATE_ONBOARDING_CANDIDATES, payload: {
+            stateToChange: initialCandidatesDataStateNames.onboardingCandidates,
+            value: candidatesToRehire,
+        }});
+        
+        return
     }
     
     useEffect(() => {
-        getTeamlead()
+        
+        getTeamlead();
+        getJobs();
+        getApplications();
+
     }, [])
     
     useEffect(() => {
@@ -46,21 +77,12 @@ const Teamlead = () => {
         
         if (currentTab === "rehire") {
             setRehireTabActive(true);
-            setInterviewTabActive(false);
             setSelectedTabActive(false);
             return
         }
 
-        if (currentTab === "selected") {
-            setSelectedTabActive(true);
-            setRehireTabActive(false);
-            setInterviewTabActive(false);
-            return
-        }
-
-        setInterviewTabActive(true);
         setRehireTabActive(false);
-        setSelectedTabActive(false);
+        setSelectedTabActive(true);
 
     }, [searchParams])
 
@@ -98,6 +120,7 @@ const Teamlead = () => {
                     []
                 }
                 updateCandidateData={dispatchToCandidatesData}
+                jobTitle={jobs.filter(job => job.id === currentCandidate.job).length >=1 ? jobs.filter(job => job.id === currentCandidate.job)[0].title : ""}
             /> 
             
             : <>
@@ -115,12 +138,12 @@ const Teamlead = () => {
 
                         selectedTabActive ? 
                         React.Children.toArray(candidatesData.selectedCandidates.map(dataitem => {
-                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} />
+                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} jobTitle={jobs.filter(job => job.id === dataitem.job).length >=1 ? jobs.filter(job => job.id === dataitem.job)[0].title : ""} />
                         })) :
 
                         rehireTabActive ?
                         React.Children.toArray(candidatesData.candidatesToRehire.map(dataitem => {
-                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} />
+                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} jobTitle={jobs.filter(job => job.id === dataitem.job).length >=1 ? jobs.filter(job => job.id === dataitem.job)[0].title : ""} />
                         })) :
 
                         <></>                        

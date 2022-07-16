@@ -12,11 +12,12 @@ import SideNavigationBar from '../../account/components/SideNavigationBar/SideNa
 import ShortlistedScreen from './ShortlistedScreen';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SelectedCandidates from '../../teamlead/components/SelectedCandidates/SelectedCandidates';
-import { appliedCandidates } from '../candidatesData';
 import SelectedCandidatesScreen from '../../teamlead/screens/SelectedCandidatesScreen/SelectedCandidatesScreen';
 import ErrorPage from '../../error/ErrorPage';
 import { routes } from '../../../lib/request';
 import { mutableNewApplicationStateNames } from '../../../contexts/NewApplicationContext';
+import { candidateStatuses } from '../../candidate/utils/candidateStatuses';
+import { useNewCandidateContext } from '../../../contexts/CandidateContextNew';
 
 
 
@@ -30,6 +31,7 @@ function Hr_JobScreen() {
   const navigate = useNavigate();
   const location = useLocation();
   const [jobSearchInput, setJobSearchInput] = useState("");
+  const { candidateData, setCandidateData } = useNewCandidateContext();
   
   useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
@@ -44,6 +46,7 @@ function Hr_JobScreen() {
   const getJobApplications = async () => {
     const response = await myAxiosInstance.get(routes.Applications);
     setAppliedJobs(response.data);
+    setCandidateData(response.data.filter(application => application.status === candidateStatuses.SHORTLISTED));
     return;
   }
 
@@ -83,7 +86,7 @@ function Hr_JobScreen() {
             {
               React.Children.toArray(jobs.map(job => {
                 return <>
-                  <JobTile jobData={job} routeToJob={true} handleJobTileClick={() => goToJobDetails(job, appliedJobs.filter(application => application.id === job.id))} candidateForJobCount={appliedJobs.filter(application => application.id === job.id).length} />
+                  <JobTile jobData={job} routeToJob={true} handleJobTileClick={() => goToJobDetails(job, appliedJobs.filter(application => application.job === job.id))} candidateForJobCount={appliedJobs.filter(application => application.job === job.id).length} />
                 </>
               }))
             }
@@ -104,7 +107,7 @@ function Hr_JobScreen() {
         { 
 
           sub_section === undefined && section === "shortlisted" ? <>
-            <ShortlistedScreen />
+            <ShortlistedScreen shortlistedCandidates={candidateData} jobData={jobs} />
           </> :
 
           sub_section === undefined && section === "user" ? <></> :
@@ -144,6 +147,7 @@ function Hr_JobScreen() {
               <SelectedCandidatesScreen
                 hrPageActive={true}
                 selectedCandidateData={location.state.candidate}
+                updateCandidateData={setCandidateData}
               />
             </>
           </div>
@@ -158,6 +162,7 @@ function Hr_JobScreen() {
                 hrPageActive={true}
                 initialMeet={true}
                 selectedCandidateData={location.state.candidate}
+                updateCandidateData={setCandidateData}
               />
             </>
           </div>

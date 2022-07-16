@@ -13,6 +13,7 @@ import SelectedCandidatesScreen from "../teamlead/screens/SelectedCandidatesScre
 import RejectedCandidates from "./components/RejectedCandidates/RejectedCandidates";
 import SideNavigationBar from "./components/SideNavigationBar/SideNavigationBar";
 import useClickOutside from "../../hooks/useClickOutside";
+import { routes } from "../../lib/request";
 
 const AccountPage = () => {
     const { section, searchParams, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
@@ -28,12 +29,19 @@ const AccountPage = () => {
     useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
     async function getAccount (){
-        const response = await myAxiosInstance.get("/jobs/account_view/")
+        const response = await myAxiosInstance.get(routes.Accounts_View);
         return response
+    }
+
+    async function getApplications () {
+        const response = myAxiosInstance.get(routes.Applications);
+        return
     }
     
     useEffect(() => {
-        getAccount()
+        
+        getAccount();
+        getApplications();
 
         // axiosInstance.get("/jobs/get_applications/")
 
