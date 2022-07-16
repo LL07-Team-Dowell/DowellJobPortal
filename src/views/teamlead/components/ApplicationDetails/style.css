@@ -3,6 +3,10 @@
     align-items: center;
 }
 
+.selected-applicant-info.candidate__Page{
+    margin-top: 5%;
+}
+
 .selected-applicant-info > span{
     margin-left: 0;
     display: block;

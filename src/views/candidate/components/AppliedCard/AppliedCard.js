@@ -8,13 +8,13 @@ import { mutableNewApplicationStateNames } from '../../../../contexts/NewApplica
 import { useNavigate } from 'react-router-dom';
 
 
-const AppliedCard = ( { job } ) => {
+const AppliedCard = ( { job, applicationDetails } ) => {
 
     const navigate = useNavigate();
     const daysDifference = getDaysDifferenceFromPresentDate(job.others[mutableNewApplicationStateNames.others_date_applied]);
     
     const handleClickOnApplicationCard = () => {
-        navigate("/applied/view_job_application", { state: { jobToView: job } });
+        navigate("/applied/view_job_application", { state: { jobToView: job, applicationDetails: applicationDetails } });
     }
 
     return <>

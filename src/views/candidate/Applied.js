@@ -8,6 +8,7 @@ function Applied({ currentUser }) {
   const [Applied, sethandleAppliedShow]=useState(true);
   const [Interview, sethandleInterviewShow]=useState(false);
   const [appliedJobs, setAppliedJobs] = useState([]);
+  const [currentUserApplications, setCurrentUserApplications] = useState([]);
   
   const getAppliedData = async () => {
     const response = await myAxiosInstance.get("/jobs/get_applications/");
@@ -16,6 +17,7 @@ function Applied({ currentUser }) {
     const currentUserApplications = response.data.filter(application => application.applicant === currentUser.username);
     const currentUserAppliedJobs = jobsResponse.data.filter((currentJob) => currentUserApplications.find(({ job }) => currentJob.id === job));
     setAppliedJobs(currentUserAppliedJobs);
+    setCurrentUserApplications(currentUserApplications);
     return;
   }
 
@@ -69,7 +71,7 @@ function Applied({ currentUser }) {
                   React.Children.toArray(appliedJobs.map(appliedJob => {
                     return <>
 
-                      <AppliedCard job={appliedJob} />
+                      <AppliedCard job={appliedJob} applicationDetails={currentUserApplications.find(application => application.job === appliedJob.id)} />
 
                     </>
                   }))
