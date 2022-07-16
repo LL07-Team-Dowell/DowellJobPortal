@@ -22,7 +22,7 @@ import { teamLeadActions } from '../../actions/TeamLeadActions';
 import { mutableNewApplicationStateNames } from '../../../../contexts/NewApplicationContext';
 
 
-const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, allCandidatesData, rehireTabActive, accountPage, hireTabActive, showOnboarding, updateShowCandidate, hrPageActive, initialMeet, jobTitle }) => {
+const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, allCandidatesData, rehireTabActive, accountPage, hireTabActive, showOnboarding, updateShowCandidate, hrPageActive, initialMeet, jobTitle, teamleadPageActive, handleViewApplicationBtnClick }) => {
     const ref1 = useRef(null);
     const ref2 = useRef(null);
     const ref3 = useRef(null);
@@ -190,7 +190,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
             
             <ApplicantIntro hrPageActive={hrPageActive} applicant={selectedCandidateData ? selectedCandidateData : {}} jobTitle={jobTitle} />
 
-            <ApplicantDetails hrPageActive={hrPageActive} applicantData={selectedCandidateData} />
+            <ApplicantDetails hrPageActive={hrPageActive} applicantData={selectedCandidateData} teamleadPageActive={teamleadPageActive} handleViewApplicationBtnClick={() => handleViewApplicationBtnClick ? handleViewApplicationBtnClick() : () => {}} />
 
             {!hrPageActive && <CustomHr />}
 

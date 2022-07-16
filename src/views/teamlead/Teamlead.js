@@ -30,6 +30,7 @@ const Teamlead = () => {
     const [ currentCandidate, setCurrentCandidate ] = useState({});
     const [ currentTask, setCurrentTask ] = useState({});
     const [ jobs, setJobs ] = useState([]);
+    const [ showApplicationDetails, setShowApplicationDetails ] = useState(false);
     
     const sideNavbarRef = useRef(null);
 
@@ -121,6 +122,8 @@ const Teamlead = () => {
                 }
                 updateCandidateData={dispatchToCandidatesData}
                 jobTitle={jobs.filter(job => job.id === currentCandidate.job).length >=1 ? jobs.filter(job => job.id === currentCandidate.job)[0].title : ""}
+                teamleadPageActive={showApplicationDetails}
+                handleViewApplicationBtnClick={() => setShowApplicationDetails(!showApplicationDetails)}
             /> 
             
             : <>
