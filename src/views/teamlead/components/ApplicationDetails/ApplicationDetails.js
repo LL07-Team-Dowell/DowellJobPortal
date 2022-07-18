@@ -5,17 +5,17 @@ import { excludedApplicantInfo, mutableNewApplicationStateNames } from '../../..
 import "./style.css";
 
 
-const ApplicantDetails = ({ hrPageActive, applicantData, candidateApplicationPageActive, teamleadPageActive, handleViewApplicationBtnClick }) => {
+const ApplicantDetails = ({ hrPageActive, applicantData, candidateApplicationPageActive, showApplicationDetails, handleViewApplicationBtnClick }) => {
     return <>
         { 
-            !candidateApplicationPageActive && <div className={`selected-applicant-details ${teamleadPageActive ? 'teamlead__Page' : ''}`} onClick={handleViewApplicationBtnClick}>
+            !candidateApplicationPageActive && <div className={`selected-applicant-details ${showApplicationDetails ? 'teamlead__Page' : ''}`} onClick={handleViewApplicationBtnClick}>
                 <p>Application details: </p>
                 { !hrPageActive &&<span>View <KeyboardArrowDownIcon className="down-icon" /></span> }
             </div>
         }
 
         {
-            (hrPageActive || candidateApplicationPageActive || teamleadPageActive) && <div className={`selected-applicant-info ${candidateApplicationPageActive ? 'candidate__Page' : teamleadPageActive ? 'teamlead__Page' : ''}`}>
+            (hrPageActive || candidateApplicationPageActive || showApplicationDetails) && <div className={`selected-applicant-info ${candidateApplicationPageActive ? 'candidate__Page' : showApplicationDetails ? 'teamlead__Page' : ''}`}>
                 {
                     !applicantData ?
                     <>

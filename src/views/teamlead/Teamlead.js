@@ -122,7 +122,8 @@ const Teamlead = () => {
                 }
                 updateCandidateData={dispatchToCandidatesData}
                 jobTitle={jobs.filter(job => job.id === currentCandidate.job).length >=1 ? jobs.filter(job => job.id === currentCandidate.job)[0].title : ""}
-                teamleadPageActive={showApplicationDetails}
+                showApplicationDetails={showApplicationDetails}
+                teamleadPageActive={true}
                 handleViewApplicationBtnClick={() => setShowApplicationDetails(!showApplicationDetails)}
             /> 
             

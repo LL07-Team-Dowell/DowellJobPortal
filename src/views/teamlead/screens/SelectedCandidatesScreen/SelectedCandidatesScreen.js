@@ -22,7 +22,7 @@ import { teamLeadActions } from '../../actions/TeamLeadActions';
 import { mutableNewApplicationStateNames } from '../../../../contexts/NewApplicationContext';
 
 
-const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, allCandidatesData, rehireTabActive, accountPage, hireTabActive, showOnboarding, updateShowCandidate, hrPageActive, initialMeet, jobTitle, teamleadPageActive, handleViewApplicationBtnClick }) => {
+const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, allCandidatesData, rehireTabActive, accountPage, hireTabActive, showOnboarding, updateShowCandidate, hrPageActive, initialMeet, jobTitle, teamleadPageActive, showApplicationDetails, handleViewApplicationBtnClick }) => {
     const ref1 = useRef(null);
     const ref2 = useRef(null);
     const ref3 = useRef(null);
@@ -190,7 +190,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
             
             <ApplicantIntro hrPageActive={hrPageActive} applicant={selectedCandidateData ? selectedCandidateData : {}} jobTitle={jobTitle} />
 
-            <ApplicantDetails hrPageActive={hrPageActive} applicantData={selectedCandidateData} teamleadPageActive={teamleadPageActive} handleViewApplicationBtnClick={() => handleViewApplicationBtnClick ? handleViewApplicationBtnClick() : () => {}} />
+            <ApplicantDetails hrPageActive={hrPageActive} applicantData={selectedCandidateData} showApplicationDetails={showApplicationDetails} handleViewApplicationBtnClick={() => handleViewApplicationBtnClick ? handleViewApplicationBtnClick() : () => {}} />
 
             {!hrPageActive && <CustomHr />}
 
@@ -223,10 +223,21 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                     </div>
                 </> :
 
+                <>
+
+                {
+                    teamleadPageActive && <div className="comments-container">
+                        <h2>Remarks by Hr</h2>
+                        <textarea placeholder="Remarks by Hr" value={selectedCandidateData[mutableNewApplicationStateNames.hr_remarks]} readOnly={true}></textarea>
+                    </div>
+                }
+
                 <div className="comments-container">
                     <h2>{hireTabActive ? '' : 'Add'} Remarks {hireTabActive ? <span>&#x00028;by Team Lead&#x00029;</span> : <></>}</h2>
                     <textarea placeholder={accountPage ? "Reason to Rehire" : "Add remarks"} value={remarks} onChange={(e) => setRemarks(e.target.value)}></textarea>
                 </div>
+
+                </>
 
             }
 
