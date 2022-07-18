@@ -4,7 +4,6 @@
   top: -43px;
   padding-top: 114px;
   background: #E5E5E5;
-  height: 55vmax;
 }
 .card {
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.12);
@@ -152,7 +151,6 @@
     margin-right: auto;
     z-index: -1;
     width: 89%;
-    margin-bottom: 10%;
   }
 
   .row:after {
@@ -172,10 +170,6 @@
 
   .card{
     margin: 1% 0;
-  }
-
-  .row{
-    margin-bottom: 6%;
   }
 
   .container-wrapper .search__wrapper .search__container{

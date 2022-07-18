@@ -37,6 +37,8 @@ function JobScreen({ currentUser }) {
 
         }
 
+        if (!currentUser) return;
+
         fetchApplications();
 
     }, [])
@@ -62,6 +64,7 @@ function JobScreen({ currentUser }) {
     }, []);
 
     const handleApplyButtonClick = (currentJob) => {
+        if (!currentUser) return navigate("/signin");
         navigate("/apply/job", { state: { jobToApplyTo: currentJob, currentUser: currentUser } })
     }
     
