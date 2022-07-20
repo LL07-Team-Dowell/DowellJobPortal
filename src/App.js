@@ -20,7 +20,7 @@ import AdminPage from './views/admin/AdminPage';
 import EditJobScreen from './views/admin/screens/EditJobScreen/EditJobScreen';
 import ViewJobScreen from './views/admin/screens/ViewJobScreen/ViewJobScreen';
 import AddJobScreen from './views/admin/screens/AddJobScreen/AddJobScreen';
-import { NewCandidateContextProvider } from './contexts/CandidateContextNew';
+import { HrCandidateContextProvider } from './contexts/HrCandidateContext';
 import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
@@ -37,6 +37,11 @@ function App() {
       
       <Route path="/signup" element={<SignUP setUser={setUser} />}/>   
       <Route path="/signin" element={<SignIn setUser={setUser} />} />
+      <Route path="/apply/job" element={
+        <NewApplicationContextProvider>
+          <JobApplicationScreen />
+        </NewApplicationContextProvider>
+      } />
       <Route path="*" element={<CandidateHomeScreen />} />
 
     </Routes>
@@ -111,9 +116,9 @@ function App() {
       
       <Route path="/" element={
         <NavigationContextProvider>
-          <NewCandidateContextProvider>
+          <HrCandidateContextProvider>
             <Hr_JobScreen/>
-          </NewCandidateContextProvider>
+          </HrCandidateContextProvider>
         </NavigationContextProvider>
       }>
         <Route path=":section" element={

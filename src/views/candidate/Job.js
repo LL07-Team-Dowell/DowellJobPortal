@@ -64,7 +64,7 @@ function JobScreen({ currentUser }) {
     }, []);
 
     const handleApplyButtonClick = (currentJob) => {
-        if (!currentUser) return navigate("/signin");
+        console.log("click")
         navigate("/apply/job", { state: { jobToApplyTo: currentJob, currentUser: currentUser } })
     }
     
