@@ -5,11 +5,9 @@ import Footer from "../../Footer";
 import CustomHr from "../../../teamlead/components/CustomHr/CustomHr";
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import { myAxiosInstance } from "../../../../lib/axios";
-import { countriesData } from "./countriesData";
 import { AiOutlineDown } from "react-icons/ai";
-import { freelancingPlatforms } from "./freelancingPlatforms";
 import { validateUrl } from "../../../../helpers/helpers";
-import { qualificationsData } from "./jobFormData";
+import { countriesData, freelancingPlatforms, qualificationsData } from "../../utils/jobFormApplicationData";
 import { mutableNewApplicationStateNames, useNewApplicationContext } from "../../../../contexts/NewApplicationContext";
 import { newJobApplicationDataReducerActions } from "../../../../reducers/NewJobApplicationDataReducer";
 
@@ -43,9 +41,9 @@ const JobApplicationScreen = () => {
 
         if (!location.state.jobToApplyTo) return navigate("/home")
         
-        if (!location.state.currentUser) return navigate("/home")
-        
         setCurrentJob(location.state.jobToApplyTo);
+
+        if (!location.state.currentUser) return;
 
         Object.keys(location.state.jobToApplyTo.others || {}).forEach(item => {
             dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_OTHERS, payload: { stateToChange: item, value: "" }})
@@ -136,6 +134,8 @@ const JobApplicationScreen = () => {
 
 
     const handleSubmitApplicationBtnClick = () => {
+
+        if (!location.state.currentUser) return navigate("/signin");
 
         setDisableApplyBtn(true);
         setDisableNextBtn(true);
@@ -364,7 +364,7 @@ const JobApplicationScreen = () => {
                 }
                 
             </div>
-        <Footer />
+        {newApplicationData.others[mutableNewApplicationStateNames.applicant] && newApplicationData.others[mutableNewApplicationStateNames.applicant] !== "" && <Footer />}
     </>
 }
 
