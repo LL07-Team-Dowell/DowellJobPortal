@@ -3,7 +3,7 @@ import { createContext, useContext, useState } from "react";
 const HrCandidateContext = createContext();
 
 export const useHrCandidateContext = () => {
-    return useContext(NewCandidateContext);
+    return useContext(HrCandidateContext);
 }
 
 export const HrCandidateContextProvider = ( { children }) => {

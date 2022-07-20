@@ -80,7 +80,7 @@ function Hr_JobScreen() {
             handleMenuIconClick={() => setSideNavbarActive(true)}
           />
           <div className='search'>
-            <Search searchValue={jobSearchInput} />
+            <Search searchValue={jobSearchInput} updateSearchValue={setJobSearchInput} />
           </div>
           <div className='job__wrapper'>
             {
