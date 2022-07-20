@@ -3,6 +3,10 @@
     align-items: center;
 }
 
+.selected-applicant-details.teamlead__Page{
+    margin-bottom: 5%;
+}
+
 .selected-applicant-info.candidate__Page{
     margin-top: 5%;
 }
@@ -42,6 +46,12 @@
     }
     .selected-applicant-info > span:last-child{
         margin-bottom: 6%;
+    }
+    
+    .selected-applicant-info.teamlead__Page{
+        width: 82%;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 

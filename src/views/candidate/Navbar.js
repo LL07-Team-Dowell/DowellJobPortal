@@ -10,7 +10,7 @@ import { useRef } from 'react';
 import { useNavigationContext } from '../../contexts/NavigationContext';
 
 
-function Navbar({ title, changeToBackButton, backButtonLink }) {
+function Navbar({ title, changeToBackButton, backButtonLink, disableSideBar }) {
   const [sidebar, setSidebar] = useState(false);
   const [show, handleShow]=useState(false);
   const { isNotificationEnabled, setNotificationStatus } = useNavigationContext();
@@ -58,7 +58,7 @@ function Navbar({ title, changeToBackButton, backButtonLink }) {
             
             <>
               <Link to='#' className='menu-bars'>
-                <FaBars className='icons white-color' onClick={showSidebar}  />
+                <FaBars className='icons white-color' onClick={disableSideBar ? () => {} : () => showSidebar()}  />
               </Link>
             </>
           }

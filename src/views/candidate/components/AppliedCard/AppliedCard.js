@@ -1,11 +1,10 @@
 import { RiErrorWarningLine } from 'react-icons/ri';
 import { AiOutlineArrowRight } from 'react-icons/ai';
-
-
-import "./style.css";
 import { getDaysDifferenceFromPresentDate } from '../../../../helpers/helpers';
 import { mutableNewApplicationStateNames } from '../../../../contexts/NewApplicationContext';
 import { useNavigate } from 'react-router-dom';
+
+import "./style.css";
 
 
 const AppliedCard = ( { job, applicationDetails } ) => {

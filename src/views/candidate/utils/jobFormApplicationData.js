@@ -1,3 +1,17 @@
+export const freelancingPlatforms = [
+    "Truelancer",
+    "Fiverr",
+    "Upwork",
+    "Peopleperhour",
+    "FacebookJobs"
+]
+
+export const qualificationsData = [
+    "Undergraduate",
+    "Postgraduate",
+    "Others",
+]
+
 export const countriesData = [
     "Afghanistan",
     "Albania",

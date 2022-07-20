@@ -55,6 +55,10 @@
     padding: 4% 2%;
 }
 
+.comments-container textarea:read-only, .comments-container textarea[readonly]{
+    filter: brightness(0.96);
+}
+
 .comments-container.hr__Comments__Container textarea{
     margin-bottom: 4%;
 }

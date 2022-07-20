@@ -8,9 +8,9 @@ function Home({ user }) {
   return (
     <div>
 
-      <Navbar title='Jobs'/>
+      <Navbar title='Jobs' disableSideBar={user ? false : true} />
       <Job currentUser={user} />
-      <Footer/>
+      {user && <Footer/>}
 
     </div>
   )
