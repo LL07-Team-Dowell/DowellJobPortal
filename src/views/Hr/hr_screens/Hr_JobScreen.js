@@ -17,7 +17,7 @@ import ErrorPage from '../../error/ErrorPage';
 import { routes } from '../../../lib/request';
 import { mutableNewApplicationStateNames } from '../../../contexts/NewApplicationContext';
 import { candidateStatuses } from '../../candidate/utils/candidateStatuses';
-import { useNewCandidateContext } from '../../../contexts/CandidateContextNew';
+import { useHrCandidateContext } from '../../../contexts/HrCandidateContext';
 
 
 
@@ -31,7 +31,7 @@ function Hr_JobScreen() {
   const navigate = useNavigate();
   const location = useLocation();
   const [jobSearchInput, setJobSearchInput] = useState("");
-  const { candidateData, setCandidateData } = useNewCandidateContext();
+  const { candidateData, setCandidateData } = useHrCandidateContext();
   
   useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
@@ -80,7 +80,7 @@ function Hr_JobScreen() {
             handleMenuIconClick={() => setSideNavbarActive(true)}
           />
           <div className='search'>
-            <Search seachValue={jobSearchInput} />
+            <Search searchValue={jobSearchInput} />
           </div>
           <div className='job__wrapper'>
             {
