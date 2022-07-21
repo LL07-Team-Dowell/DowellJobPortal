@@ -13,5 +13,6 @@ const authAxiosInstance = axios.create({
     baseURL: loginBaseURL,
 })
 
+const dowellLoginUrl = "https://100014.pythonanywhere.com/";
 
-export { authAxiosInstance, myAxiosInstance };
+export { authAxiosInstance, myAxiosInstance, dowellLoginUrl };
