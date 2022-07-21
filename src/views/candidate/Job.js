@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './css/Job.css';
-import * as FaIcons from 'react-icons/fa';
+import { FaToolbox } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
 import { myAxiosInstance } from '../../lib/axios';
 import { routes } from '../../lib/request';
@@ -14,7 +14,7 @@ import Search from '../Hr/component/Search/Search';
 
 
 function JobScreen({ currentUser }) {
-    const [jobs, setJobs]=useState([]);
+    const [jobs, setJobs] = useState([]);
     const [appliedJobs, setAppliedJobs] = useState([]);
     const navigate = useNavigate();
     const { section } = useNavigationContext();
@@ -75,7 +75,8 @@ function JobScreen({ currentUser }) {
             <div className="row">
                 {
                     section == undefined || section === "home" ? <>
-                        {jobs.map(job => {
+                        {
+                            React.Children.toArray(jobs.map(job => {
                             
                             if (!job.is_active) return <></>
 
@@ -100,7 +101,7 @@ function JobScreen({ currentUser }) {
                                         <IconContext.Provider value={{ color: '#838383', size:'14px' }}>
                                             <ul className='job__Detail__Span_Container'>
                                                 <li>
-                                                    <FaIcons.FaToolbox/>
+                                                    <FaToolbox/>
                                                     {job.time_period}
                                                 </li>
                                                 <li>
@@ -113,7 +114,8 @@ function JobScreen({ currentUser }) {
                                     </div>
                                 </div>
                             </>
-                        })}
+                            }))
+                        }
                     </>: 
 
                     section == "task" ? <>

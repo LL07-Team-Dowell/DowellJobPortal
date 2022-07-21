@@ -4,7 +4,7 @@ import Navbar from "../../Navbar";
 import Footer from "../../Footer";
 import CustomHr from "../../../teamlead/components/CustomHr/CustomHr";
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
-import { myAxiosInstance } from "../../../../lib/axios";
+import { dowellLoginUrl, myAxiosInstance } from "../../../../lib/axios";
 import { AiOutlineDown } from "react-icons/ai";
 import { validateUrl } from "../../../../helpers/helpers";
 import { countriesData, freelancingPlatforms, qualificationsData } from "../../utils/jobFormApplicationData";
@@ -135,7 +135,7 @@ const JobApplicationScreen = () => {
 
     const handleSubmitApplicationBtnClick = () => {
 
-        if (!location.state.currentUser) return navigate("/signin");
+        if (!location.state.currentUser) return window.location.href = dowellLoginUrl;
 
         setDisableApplyBtn(true);
         setDisableNextBtn(true);

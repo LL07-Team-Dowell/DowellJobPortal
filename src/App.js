@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import SignIn from './views/authentication/Login';
-import SignUP from './views/authentication/Register';
 import CandidateHomeScreen from './views/candidate/screens/CandidateHomeScreen';
 import Logout from './views/authentication/Logout';
 import AlertScreen from './views/candidate/screens/AlertScreen';
@@ -21,22 +19,20 @@ import EditJobScreen from './views/admin/screens/EditJobScreen/EditJobScreen';
 import ViewJobScreen from './views/admin/screens/ViewJobScreen/ViewJobScreen';
 import AddJobScreen from './views/admin/screens/AddJobScreen/AddJobScreen';
 import { HrCandidateContextProvider } from './contexts/HrCandidateContext';
-import useLocalStorage from './hooks/useLocalStorage';
+import useDowellLogin from './hooks/useDowellLogin';
 
 function App() {
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useLocalStorage(setUser, setLoading);
+  useDowellLogin(setUser, setLoading);
 
   if (loading) return <></>
 
   if (!user) {
     return <Routes>
       
-      <Route path="/signup" element={<SignUP setUser={setUser} />}/>   
-      <Route path="/signin" element={<SignIn setUser={setUser} />} />
       <Route path="/apply/job" element={
         <NewApplicationContextProvider>
           <JobApplicationScreen />
@@ -49,9 +45,6 @@ function App() {
 
   if (user.role === process.env.REACT_APP_ACCOUNT_ROLE) {
     return <Routes>
-      
-      <Route path="/signup" element={<SignUP setUser={setUser}/>}/>     
-      <Route path="/login" element={<SignIn setUser={setUser}/>}/>
       
       <Route path="/logout" element={<Logout/>}/>
 
@@ -74,16 +67,19 @@ function App() {
 
     return <Routes>
 
-      <Route path="/signup" element={<SignUP setUser={setUser}/>}/>     
-      <Route path="/login" element={<SignIn setUser={setUser}/>}/>
-      
       <Route path="/logout" element={<Logout/>}/>
 
       <Route path="/" element={
         <NavigationContextProvider>
           <AdminPage />
         </NavigationContextProvider>} 
-      />
+      >
+        <Route path=':section' element={
+          <NavigationContextProvider>
+            <AdminPage />
+          </NavigationContextProvider>
+        } />
+      </Route>
 
       <Route path="/edit-job" element={<EditJobScreen />} />
 
@@ -109,9 +105,6 @@ function App() {
 
     return <Routes>
 
-      <Route path="/signup" element={<SignUP setUser={setUser}/>}/>     
-      <Route path="/login" element={<SignIn setUser={setUser}/>}/>
-      
       <Route path="/logout" element={<Logout/>}/>
       
       <Route path="/" element={
@@ -150,9 +143,6 @@ function App() {
 
     return <Routes>
 
-      <Route path="/signup" element={<SignUP setUser={setUser}/>}/>     
-      <Route path="/login" element={<SignIn setUser={setUser}/>}/>
-      
       <Route path="/logout" element={<Logout/>}/>
 
       <Route path="/" element={
@@ -176,10 +166,6 @@ function App() {
   return (
     <Routes>
 
-      <Route path="/signup" element={<SignUP setUser={setUser}/>}/> 
-        
-      <Route path="/login" element={<SignIn setUser={setUser}/>}/>
-      
       <Route path="/" element={
         <NavigationContextProvider>
           <CandidateHomeScreen user={user} />

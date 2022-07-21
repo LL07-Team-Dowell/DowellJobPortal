@@ -1,5 +1,3 @@
-import { myAxiosInstance } from "./axios";
-
 const routes = {
   Registration:`register/`,
   Login:`login/`,
@@ -17,28 +15,9 @@ const routes = {
   Tasks: '/tasks/view_tasks/',
   Meeting: '/jobs/meeting/',
   Teams: '/jobs/teams',
-  Projects: '/jobs/project'
-}
-
-const refreshToken = (token) => {
-
-    // myAxiosInstance.post(routes.Refresh, {
-      
-    //   refresh: token,
-
-    // }).then(res => {
-
-    //   myAxiosInstance.defaults.headers = {
-		// 		Authorization: `Bearer ${res.data.access}`,
-		// 	}
-      
-    // }).catch(err => {
-    //   console.group(err)
-    // })
-
-    // setTimeout(() => refreshToken(token), 1200000)
+  Projects: '/jobs/project',
+  User_Profile: 'profile/',
 }
 
 
-
-export { routes, refreshToken };
+export { routes };
