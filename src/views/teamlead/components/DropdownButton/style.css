@@ -42,6 +42,7 @@
     text-align: center;
     border-radius: 2px;
     display: none;
+    z-index: 2;
 }
 
 .dropdown-selections.active_{

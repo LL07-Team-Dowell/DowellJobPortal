@@ -63,7 +63,7 @@ function App() {
     </Routes>
   }
 
-  if (user.role === process.env.REACT_APP_ADMIN_ROLE) {
+  if (user.username === process.env.REACT_APP_ADMIN_USERNAME) {
 
     return <Routes>
 

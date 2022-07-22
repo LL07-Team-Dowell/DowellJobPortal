@@ -5,7 +5,7 @@ import useClickOutside from '../../../../hooks/useClickOutside';
 import "./style.css";
 
 
-const DropdownButton = ({ currentSelection, selections, adminPageActive }) => {
+const DropdownButton = ({ currentSelection, selections, adminPageActive, handleSelectionClick }) => {
     const currentSelectionRef = useRef(null);
     const selectionsRef = useRef(null);
     const [showDropdown, setShowDropdown] = useState(false);
@@ -17,6 +17,8 @@ const DropdownButton = ({ currentSelection, selections, adminPageActive }) => {
         if (!currentSelectionRef.current) return;
 
         currentSelectionRef.current.innerText = selection;
+
+        handleSelectionClick && handleSelectionClick(selection);
 
     }
 

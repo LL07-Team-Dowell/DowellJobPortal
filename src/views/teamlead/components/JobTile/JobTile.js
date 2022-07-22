@@ -7,7 +7,7 @@ import DropdownButton from '../DropdownButton/Dropdown';
 import { mutableNewApplicationStateNames } from '../../../../contexts/NewApplicationContext';
 import { formatDateAndTime } from '../../../../helpers/helpers';
 
-const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClick, candidateData, jobData, handleJobTileClick, taskData, hrPageActive, routeToJob, adminPageActive, handleEditIconClick, candidateForJobCount, jobsSkills, jobTitle }) => {
+const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClick, candidateData, jobData, handleJobTileClick, taskData, hrPageActive, routeToJob, adminPageActive, handleEditIconClick, candidateForJobCount, jobsSkills, jobTitle, handleViewBtnClick }) => {
 
     const handleJobItemClick = ( currentData ) => {
         if (disableClick) return
@@ -41,7 +41,7 @@ const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClic
 
                         <div className="job__Tile__Bottom__Row">
                             <span>{candidateForJobCount} candidates applied for this role</span>
-                            <div className="view-application-btn" onClick={() => routeToJob ? handleJobTileClick(jobData) : handleJobItemClick(showTask ? taskData : candidateData)}>
+                            <div className="view-application-btn" onClick={() => adminPageActive ? handleViewBtnClick(jobData) : routeToJob ? handleJobTileClick(jobData) : handleJobItemClick(showTask ? taskData : candidateData)}>
                                 <span>View</span>
                                 <ArrowForwardIcon />
                             </div>
