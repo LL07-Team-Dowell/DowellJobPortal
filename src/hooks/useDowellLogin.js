@@ -15,19 +15,8 @@ export default function useDowellLogin ( updateState , updatePageWhenDone ) {
         if ((!session_id) && (!savedUser)) return updatePageWhenDone(false);
         
         if ((savedUser) && (!session_id)) {
-            authAxiosInstance.get(routes.User).then(res => {
-
-                console.log("jwt still valid.");
-                updateState(JSON.parse(savedUser));
-                return updatePageWhenDone(false);
-
-            }).catch(err => {
-                if (err.response.status === 401){
-                    localStorage.clear(savedUser);
-                    updatePageWhenDone(false);
-                    return Promise.reject(err);
-                }
-            })
+            updateState(JSON.parse(savedUser));
+            return updatePageWhenDone(false);
         }
 
         authAxiosInstance.post(routes.User_Profile, { key: session_id }).then(res => {

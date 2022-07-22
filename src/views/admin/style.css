@@ -1,8 +1,14 @@
+.admin__Page__Container{
+    --inter-font: 'Inter', sans-serif;
+}
 .admin__Page__Container .navbar-container .menu__Icon__Container{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 28%;
+}
+
+.admin__Page__Container .navbar-container .menu__Icon__Container h2{
+    white-space: nowrap;
 }
 
 .admin__Page__Container .admin__Jobs__Container{
@@ -10,25 +16,92 @@
     margin: 4% auto;
 }
 
+.admin__Page__Container .current__Job__Display span {
+    display: block;
+    margin: 0;
+}
+
+.admin__Page__Container .current__Job__Display span.title__Text{
+    font-size: 1.125rem;
+    font-family: var(--inter-font);
+    font-weight: 500;
+    line-height: 21.78px;
+}
+
+.admin__Page__Container .current__Job__Display span.display__Flex{
+    display: flex;
+    align-items: center;
+}
+
+.admin__Page__Container .current__Job__Display textarea,
+.admin__Page__Container .current__Job__Display input{
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    font-size: 0.875rem;
+    font-family: var(--inter-font);
+    line-height: 21.78px;
+}
+
+.admin__Page__Container .current__Job__Display textarea {
+    resize: none;
+    width: 100%;
+}
+
+.admin__Page__Container .current__Job__Display{
+    width: 87%;
+    margin: 3% auto 30%;
+}
+
+.admin__Page__Container .current__Job__Display span{
+    margin: 10% 0;
+}
+
+.admin__Page__Container .current__Job__Display textarea{
+    padding: 4%;
+    height: 15rem;
+}
+
+.admin__Page__Container .current__Job__Display input,
+.admin__Page__Container .current__Job__Display .dropdown-btn{
+    width: max-content;
+    margin-left: auto;
+    padding: 2% 4%;
+}
+
 @media (min-width: 768px) and (max-width: 991.98px){
-    .admin__Page__Container .navbar-container .menu__Icon__Container{
-        width: 11.5%;
-    }
     .admin__Page__Container .search__wrapper{
         margin-top: 4%;
     }   
     .admin__Page__Container .admin__Jobs__Container > *{
         width: calc((100% - 2%) /2);
         margin-right: 2%;
+        display: inline-block;
     }
     .admin__Page__Container .admin__Jobs__Container > *:nth-child(2n + 2){
         margin-right: 0;
     }
+    .admin__Page__Container .current__Job__Display{
+        width: 85%;
+        margin: 5% auto 10%;
+    }
+    .admin__Page__Container .current__Job__Display span{
+        margin: 5% 0;
+    }
+    .admin__Page__Container .current__Job__Display textarea{
+        padding: 4% 3%;
+        height: 10rem;
+    }
+    .admin__Page__Container .current__Job__Display input,
+    .admin__Page__Container .current__Job__Display .dropdown-btn{
+        padding: 1.5%;
+        margin-right: 20%;
+    }
 }
 
 @media screen and (min-width: 992px){
-    .admin__Page__Container .navbar-container .menu__Icon__Container{
-        width: 9.5%;
+    .admin__Page__Container .navbar-container .menu__Icon__Container h2{
+        margin-left: 11.2%;
     }
     .admin__Page__Container .search__wrapper{
         margin-top: 1.5%;
@@ -36,14 +109,37 @@
         width: 97%;
     }
     .admin__Page__Container .admin__Jobs__Container{
-        width: 79.5%;
+        width: 80%;
         margin: 0 auto;
     }
     .admin__Page__Container .admin__Jobs__Container > *{
-        width: calc((100% - 2%) / 3);
+        width: calc((100% - 4%) / 3);
         margin-right: 2%;
+        display: inline-block;
     }
     .admin__Page__Container .admin__Jobs__Container > *:nth-child(3n + 3){
         margin-right: 0;
+    }
+    .admin__Page__Container .current__Job__Display{
+        width: 79.5%;
+        margin: 3% auto 10%;
+    }
+    .admin__Page__Container .current__Job__Display span{
+        margin: 3% 0;
+    }
+    .admin__Page__Container .current__Job__Display span.title__Text {
+        margin-bottom: 4%;
+    }
+    .admin__Page__Container .current__Job__Display span.description__Text {
+        margin-bottom: 1.5%;
+    }
+    .admin__Page__Container .current__Job__Display textarea{
+        padding: 3%;
+        height: 10rem;
+    }
+    .admin__Page__Container .current__Job__Display input,
+    .admin__Page__Container .current__Job__Display .dropdown-btn{
+        padding: 1%;
+        margin-right: 65%;
     }
 }

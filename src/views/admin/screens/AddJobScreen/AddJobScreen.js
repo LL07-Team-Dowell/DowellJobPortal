@@ -13,7 +13,7 @@ const AddJobScreen = () => {
     return <>
         <div className="admin__Page__Container">
             <NavigationBar title={'Add Job'} handleMenuIconClick={() => setSideNavbarActive(true)} />
-            <>Add job</>
+            <div style={{ width: "79%", margin: "4% auto"}}>Add job</div>
         </div>
 
         {
