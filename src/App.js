@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
-import CandidateHomeScreen from './views/candidate/screens/CandidateHomeScreen';
+import CandidateHomeScreen from './views/candidate/screens/CandidateHomeScreen/CandidateHomeScreen';
 import Logout from './views/authentication/Logout';
-import AlertScreen from './views/candidate/screens/AlertScreen';
-import UserScreen from './views/candidate/screens/UserScreen';
-import AppliedPage from './views/candidate/screens/AppliedPage';
-import Hr_JobScreen from './views/Hr/hr_screens/Hr_JobScreen';
+import AlertScreen from './views/candidate/screens/AlertsScreen/AlertScreen';
+import UserScreen from './views/candidate/screens/UserScreen/UserScreen';
+import AppliedScreen from './views/candidate/screens/AppliedPageScreen/AppliedScreen';
+import Hr_JobScreen from './views/Hr/screens/JobScreen/Hr_JobScreen';
 import Teamlead from './views/teamlead/Teamlead';
 import AccountPage from './views/account/AccountPage';
 import { NavigationContextProvider } from './contexts/NavigationContext';
@@ -184,12 +184,12 @@ function App() {
 
       <Route path="/applied" element={ 
         <NavigationContextProvider>
-          <AppliedPage user={user} />
+          <AppliedScreen user={user} />
         </NavigationContextProvider>
       } >
         <Route path=":section" element={
           <NavigationContextProvider>
-            <AppliedPage user={user} />
+            <AppliedScreen user={user} />
           </NavigationContextProvider>
         } />
       </Route>
