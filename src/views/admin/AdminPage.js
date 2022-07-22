@@ -13,6 +13,8 @@ import Button from "./components/Button/Button";
 import { AiOutlinePlus } from "react-icons/ai";
 
 import "./style.css";
+import ErrorPage from "../error/ErrorPage";
+import { PageUnderConstruction } from "../under_construction/ConstructionPage";
 
 
 const AdminPage = () => {
@@ -84,20 +86,29 @@ const AdminPage = () => {
                     />
                 </div>
                 
-                {
-                    isSideNavbarActive &&
-                    <SideNavigationBar
-                        sideNavRef={sideNavbarRef}
-                        closeSideNavbar={() => setSideNavbarActive(false)}
-                        isNotificationEnabled={isNotificationEnabled}
-                        setNotificationStatus={() => setNotificationStatus(prevValue => { return !prevValue })}
-                    />
-                }
+            </> : 
+            
+            section === "user" ?
+            <>
+                <div className="admin__Page__Container">
+                    <NavigationBar title={'User'} handleMenuIconClick={() => setSideNavbarActive(true)} />
+                    <PageUnderConstruction />
+                </div>
+            </> : <ErrorPage disableNav={true} />
 
-                <BottomNavigationBar links={adminNavigationLinks} />
-            </> : <></>
         }
-        
+
+        {
+            isSideNavbarActive &&
+            <SideNavigationBar
+                sideNavRef={sideNavbarRef}
+                closeSideNavbar={() => setSideNavbarActive(false)}
+                isNotificationEnabled={isNotificationEnabled}
+                setNotificationStatus={() => setNotificationStatus(prevValue => { return !prevValue })}
+            />
+        }
+
+        <BottomNavigationBar links={adminNavigationLinks} />        
     </>
 }
 

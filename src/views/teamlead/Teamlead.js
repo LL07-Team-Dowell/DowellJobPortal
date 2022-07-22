@@ -18,6 +18,7 @@ import { tasksData } from "./tasks";
 import { routes } from "../../lib/request";
 import { candidateStatuses } from "../candidate/utils/candidateStatuses";
 import { candidateDataReducerActions } from "../../reducers/CandidateDataReducer";
+import { PageUnderConstruction } from "../under_construction/ConstructionPage";
 
 const Teamlead = () => {
     const { section, searchParams, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
@@ -173,7 +174,7 @@ const Teamlead = () => {
                 </div>
             </> : 
             
-            section === "user" ? <></> : <>
+            section === "user" ? <PageUnderConstruction /> : <>
                 <ErrorPage disableNav={true} />
             </>
         }

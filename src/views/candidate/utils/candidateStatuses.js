@@ -4,6 +4,6 @@ export const candidateStatuses = {
     REJECTED: "rejected",
     TO_REHIRE: "to_rehire",
     TEAMLEAD_HIRE: "teamlead_hire",
-    ACCOUNT_HIRE: "account_hire",
-    ONBOARDING: "onboarding",
+    ONBOARDING: "hired",
+    PENDING_SELECTION: "Pending",
 }

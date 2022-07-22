@@ -14,6 +14,8 @@ import RejectedCandidates from "./components/RejectedCandidates/RejectedCandidat
 import SideNavigationBar from "./components/SideNavigationBar/SideNavigationBar";
 import useClickOutside from "../../hooks/useClickOutside";
 import { routes } from "../../lib/request";
+import { candidateStatuses } from "../candidate/utils/candidateStatuses";
+import { PageUnderConstruction } from "../under_construction/ConstructionPage";
 
 const AccountPage = () => {
     const { section, searchParams, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
@@ -25,6 +27,8 @@ const AccountPage = () => {
     const [ showOnboarding, setShowOnboarding ] = useState(false);
     const [ isSideNavbarActive, setSideNavbarActive ] = useState(false);
     const sideNavbarRef = useRef(null);
+    const [jobs, setJobs] = useState([]);
+    const [showApplicationDetails, setShowApplicationDetails] = useState(false);
 
     useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
@@ -34,23 +38,40 @@ const AccountPage = () => {
     }
 
     async function getApplications () {
-        const response = myAxiosInstance.get(routes.Applications);
+        const response = await myAxiosInstance.get(routes.Applications);
+        const candidatesToHire = response.data.filter(application => application.status === candidateStatuses.TEAMLEAD_HIRE);
+        const candidatesToRehire = response.data.filter(application => application.status === candidateStatuses.TO_REHIRE);
+        const candidatesOnboarding = response.data.filter(application => application.status === candidateStatuses.ONBOARDING);
+        
+        dispatchToCandidatesData({ type: candidateDataReducerActions.UPDATE_CANDIDATES_TO_HIRE, payload: {
+            stateToChange: initialCandidatesDataStateNames.candidatesToHire,
+            value: candidatesToHire,
+        }});
+        
+        dispatchToCandidatesData({ type: candidateDataReducerActions.UPDATE_REHIRED_CANDIDATES, payload: {
+            stateToChange: initialCandidatesDataStateNames.candidatesToRehire,
+            value: candidatesToRehire,
+        }});
+        
+        dispatchToCandidatesData({ type: candidateDataReducerActions.UPDATE_ONBOARDING_CANDIDATES, payload: {
+            stateToChange: initialCandidatesDataStateNames.onboardingCandidates,
+            value: candidatesOnboarding,
+        }});
+
+        return
+    }
+
+    const getJobs = async () => {
+        const response = await myAxiosInstance.get(routes.Jobs);
+        setJobs(response.data)
         return
     }
     
     useEffect(() => {
         
         getAccount();
+        getJobs();
         getApplications();
-
-        // axiosInstance.get("/jobs/get_applications/")
-
-        // dispatchToCandidatesData({ type: candidateDataReducerActions.UPDATE_INTERVIEWING_CANDIDATES, payload: {
-        //     stateToChange: initialCandidatesDataStateNames.candidatesToInterview,
-        //     value: [
-        //         
-        //     ]} 
-        // })
         
     }, [])
 
@@ -112,6 +133,9 @@ const AccountPage = () => {
                     rehireTabActive ? candidatesData.candidatesToRehire :
                     []
                 }
+                jobTitle={jobs.filter(job => job.id === currentCandidate.job).length >=1 ? jobs.filter(job => job.id === currentCandidate.job)[0].title : ""}
+                showApplicationDetails={showApplicationDetails}
+                handleViewApplicationBtnClick={() => setShowApplicationDetails(!showApplicationDetails)}
             /> 
             
             : <>
@@ -129,19 +153,19 @@ const AccountPage = () => {
                     {
                         hireTabActive ?
                         React.Children.toArray(candidatesData.candidatesToHire.map(dataitem => {
-                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} />
+                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} jobTitle={jobs.filter(job => job.id === dataitem.job).length >=1 ? jobs.filter(job => job.id === dataitem.job)[0].title : ""} />
                         })) : 
                         
                         showOnboarding ? 
 
                         React.Children.toArray(candidatesData.onboardingCandidates.map(dataitem => {
-                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} />
+                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} jobTitle={jobs.filter(job => job.id === dataitem.job).length >=1 ? jobs.filter(job => job.id === dataitem.job)[0].title : ""} />
                         })) :
                         
                         rehireTabActive ? 
                         
                         React.Children.toArray(candidatesData.candidatesToRehire.map(dataitem => {
-                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} />
+                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} jobTitle={jobs.filter(job => job.id === dataitem.job).length >=1 ? jobs.filter(job => job.id === dataitem.job)[0].title : ""} />
                         })) : 
 
                         <></>
@@ -161,7 +185,7 @@ const AccountPage = () => {
                 </div>
             </> : 
             
-            section === "user" ? <></> : <>
+            section === "user" ? <PageUnderConstruction /> : <>
                 <ErrorPage disableNav={true} />
             </>
 

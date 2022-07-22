@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import ApplicantDetails from "../../../teamlead/components/ApplicationDetails/ApplicationDetails";
 import NavigationBar from "../../../teamlead/components/NavigationBar/NavigationBar";
-import Footer from "../../Footer";
+import Footer from "../../components/Footer/Footer";
 
 import "./style.css";
 

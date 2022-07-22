@@ -44,6 +44,28 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
 
         switch (action) {
             case accountPageActions.MOVE_TO_ONBOARDING:
+                if (!selectedCandidateData) return;
+
+                // if ( accountPage && rehireTabActive ){
+
+                //     updateCandidateData({ type: candidateDataReducerActions.UPDATE_REHIRED_CANDIDATES, payload: {
+                //         stateToChange: initialCandidatesDataStateNames.candidatesToRehire,
+                //         value: allCandidatesData.filter(candidate => candidate.id !== selectedCandidateData.id)
+                //     }})
+
+                //     setTimeout(() => updateShowCandidate(false), 1500);
+
+                //     return
+                // }
+
+                selectedCandidateData.status = candidateStatuses.ONBOARDING;
+                await myAxiosInstance.post(routes.Update_Application + selectedCandidateData.id + "/", selectedCandidateData);
+                
+                updateCandidateData ({ type: candidateDataReducerActions.UPDATE_CANDIDATES_TO_HIRE, payload : {
+                    removeFromExisting: true,
+                    stateToChange: initialCandidatesDataStateNames.candidatesToHire,
+                    value: selectedCandidateData
+                }});
 
                 updateCandidateData({ type: candidateDataReducerActions.UPDATE_ONBOARDING_CANDIDATES, payload: {
                     stateToChange: initialCandidatesDataStateNames.onboardingCandidates,
@@ -51,26 +73,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                     value: selectedCandidateData
                 }})
 
-                if ( accountPage && rehireTabActive ){
-
-                    updateCandidateData({ type: candidateDataReducerActions.UPDATE_REHIRED_CANDIDATES, payload: {
-                        stateToChange: initialCandidatesDataStateNames.candidatesToRehire,
-                        value: allCandidatesData.filter(candidate => candidate.id !== selectedCandidateData.id)
-                    }})
-
-                    setTimeout(() => updateShowCandidate(false), 1500);
-
-                    return
-                }
-
-                updateCandidateData({ type: candidateDataReducerActions.UPDATE_CANDIDATES_TO_HIRE, payload: {
-                    stateToChange: initialCandidatesDataStateNames.candidatesToHire,
-                    value: allCandidatesData.filter(candidate => candidate.id !== selectedCandidateData.id )
-                } })
-
-                setTimeout(() => updateShowCandidate(false), 1500);
-
-                break;
+                return updateShowCandidate(false);
 
             case accountPageActions.MOVE_TO_REHIRE:
                 updateCandidateData({ type: candidateDataReducerActions.UPDATE_ONBOARDING_CANDIDATES, payload: {
@@ -204,7 +207,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                 hireTabActive ? <>
                     <div className="comments-container hire-comment">
                         <h2>Remarks <span>&#x00028;by Hr&#x00029;</span></h2>
-                        <textarea placeholder={"Add remarks"}></textarea>
+                        <textarea placeholder={"Add remarks"} value={selectedCandidateData[mutableNewApplicationStateNames.hr_remarks]} readOnly={true}></textarea>
                     </div>
                 </> : 
                 
@@ -234,7 +237,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
 
                 <div className="comments-container">
                     <h2>{hireTabActive ? '' : 'Add'} Remarks {hireTabActive ? <span>&#x00028;by Team Lead&#x00029;</span> : <></>}</h2>
-                    <textarea placeholder={accountPage ? "Reason to Rehire" : "Add remarks"} value={remarks} onChange={(e) => setRemarks(e.target.value)}></textarea>
+                    <textarea placeholder={accountPage ? "Reason to Rehire" : "Add remarks"} value={hireTabActive ? selectedCandidateData.others[mutableNewApplicationStateNames.others_team_lead_remarks] : remarks} readOnly={hireTabActive ? true : false} onChange={(e) => setRemarks(e.target.value)}></textarea>
                 </div>
 
                 </>
