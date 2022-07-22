@@ -1,6 +1,11 @@
 .admin__Page__Container{
     --inter-font: 'Inter', sans-serif;
 }
+
+.admin__Page__Container {
+    font-family: var(--inter-font);
+}
+
 .admin__Page__Container .navbar-container .menu__Icon__Container{
     display: flex;
     align-items: center;
@@ -28,24 +33,79 @@
     line-height: 21.78px;
 }
 
+.admin__Page__Container .current__Job__Display span.title__Text p{
+    margin-top: 2%;
+}
+
+.admin__Page__Container .current__Job__Display span.title__Text .custom-hr,
+.admin__Page__Container .current__Job__Display .custom-hr{
+    position: relative;
+}
+
+.admin__Page__Container .current__Job__Display span.title__Text .custom-hr {
+    margin: 8%;
+}
+
 .admin__Page__Container .current__Job__Display span.display__Flex{
     display: flex;
     align-items: center;
 }
 
+.admin__Page__Container .current__Job__Display .textarea__Div__Container,
 .admin__Page__Container .current__Job__Display textarea,
 .admin__Page__Container .current__Job__Display input{
     border: none;
     outline: none;
     border-radius: 5px;
-    font-size: 0.875rem;
-    font-family: var(--inter-font);
     line-height: 21.78px;
+}
+
+.admin__Page__Container .current__Job__Display .textarea__Div__Container p,
+.admin__Page__Container .current__Job__Display textarea,
+.admin__Page__Container .current__Job__Display input{
+    color: #838383;
+}
+
+.admin__Page__Container .current__Job__Display .textarea__Div__Container{
+    background-color: #fff;
+    padding: 8% 4%;
+}
+
+.admin__Page__Container .current__Job__Display .textarea__Div__Container.edit__Page input{
+    width: 100%;
+    margin-right: auto;
+    margin-left: 0;
+    height: max-content;
+}
+
+.admin__Page__Container .current__Job__Display .textarea__Div__Container p{
+    display: flex;
+    align-items: center;
+    margin: 3% 0;
+    font-size: 0.875rem;
+}
+
+.admin__Page__Container .current__Job__Display textarea,
+.admin__Page__Container .current__Job__Display input{
+    border: none;
+    outline: none;    
+    font-family: var(--inter-font);
+    font-size: 0.875rem;
 }
 
 .admin__Page__Container .current__Job__Display textarea {
     resize: none;
     width: 100%;
+}
+
+.admin__Page__Container .current__Job__Display .textarea__Div__Container.edit__Page,
+.admin__Page__Container .current__Job__Display textarea {
+    margin-bottom: 8%;
+}
+
+.admin__Page__Container .current__Job__Display textarea[readonly],
+.admin__Page__Container .current__Job__Display textarea:read-only {
+    margin-bottom: 0;
 }
 
 .admin__Page__Container .current__Job__Display{
@@ -57,9 +117,14 @@
     margin: 10% 0;
 }
 
+.grey__Color {
+    color: #838383 !important;
+}
+
 .admin__Page__Container .current__Job__Display textarea{
     padding: 4%;
     height: 15rem;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
 }
 
 .admin__Page__Container .current__Job__Display input,
@@ -67,6 +132,36 @@
     width: max-content;
     margin-left: auto;
     padding: 2% 4%;
+}
+
+.admin__Page__Container .current__Job__Display input {
+    width: 62%;
+}
+
+.admin__Page__Container .current__Job__Display .description__Text {
+    justify-content: space-between;
+}
+
+.admin__Page__Container .current__Job__Display .description__Text .job__Type{
+    font-size: 0.75rem;
+    line-height: 15px;
+    background: #FFFFFF;
+    border-radius: 10px;
+    color: #838383;
+    padding: 1% 4%;
+}
+
+.admin__Page__Container .current__Job__Display span.edit__Page__Font__Size {
+    font-size: 0.875rem;
+    line-height: 17px;
+}
+
+.admin__Page__Container .current__Job__Display span.display__Flex.edit__Page__Font__Size b{
+    font-weight: 500;
+}
+
+.admin__Page__Container .current__Job__Display span.title__Text.display__Flex.edit__Page__Font__Size b{
+    white-space: nowrap;
 }
 
 @media (min-width: 768px) and (max-width: 991.98px){
@@ -130,7 +225,7 @@
     .admin__Page__Container .current__Job__Display span.title__Text {
         margin-bottom: 4%;
     }
-    .admin__Page__Container .current__Job__Display span.description__Text {
+    .admin__Page__Container .current__Job__Display .description__Text {
         margin-bottom: 1.5%;
     }
     .admin__Page__Container .current__Job__Display textarea{
