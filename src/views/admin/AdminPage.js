@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { myAxiosInstance } from "../../lib/axios";
 import { useNavigationContext } from "../../contexts/NavigationContext";
-import { routes } from "../../lib/request";
+import { routes } from "../../lib/routes";
 import SideNavigationBar from "../account/components/SideNavigationBar/SideNavigationBar";
 import BottomNavigationBar from "../Hr/component/BottomNavigation/BottomNavigation";
 import Search from "../Hr/component/Search/Search";
@@ -15,6 +15,7 @@ import { AiOutlinePlus } from "react-icons/ai";
 import "./style.css";
 import ErrorPage from "../error/ErrorPage";
 import { PageUnderConstruction } from "../under_construction/ConstructionPage";
+import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
 
 
 const AdminPage = () => {
@@ -24,6 +25,7 @@ const AdminPage = () => {
     const navigate = useNavigate();
     const [isSideNavbarActive, setSideNavbarActive] = useState(false);
     const sideNavbarRef = useRef(null);
+    const [ isLoading, setLoading ] = useState(true);
 
     const getApplications = async () => {
         try{
@@ -57,6 +59,7 @@ const AdminPage = () => {
 
         getApplications();
         getJobsData();
+        setLoading(false);
 
     }, [])
 
@@ -72,13 +75,18 @@ const AdminPage = () => {
                 <div className="admin__Page__Container">
                     <NavigationBar title={'Jobs'} handleMenuIconClick={() => setSideNavbarActive(true)} />
                     <Search />
-                    <div className="admin__Jobs__Container">
                     {
+                        isLoading ? <LoadingSpinner /> :
+
+                        <div className="admin__Jobs__Container">
+                        {
                             React.Children.toArray(jobs.map(job => {
                                 return <JobTile adminPageActive={true} jobData={job} routeToJob={true} handleJobTileClick={() => {}} handleViewBtnClick={goToJobDetails} handleEditIconClick={goToEditPage} candidateForJobCount={applications.filter(application => application.job === job.id).length} />
                             }))
-                    } 
-                    </div>
+                        } 
+                        </div>
+
+                    }
                     <Button 
                         handleClick={goToAddPage} 
                         icon={<AiOutlinePlus />}
