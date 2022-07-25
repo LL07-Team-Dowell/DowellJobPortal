@@ -15,7 +15,7 @@ import TaskScreen from "./screens/TaskScreen/TaskScreen";
 
 import "./style.css";
 import { tasksData } from "./tasks";
-import { routes } from "../../lib/request";
+import { routes } from "../../lib/routes";
 import { candidateStatuses } from "../candidate/utils/candidateStatuses";
 import { candidateDataReducerActions } from "../../reducers/CandidateDataReducer";
 import { PageUnderConstruction } from "../under_construction/ConstructionPage";
@@ -29,9 +29,10 @@ const Teamlead = () => {
     const [ selectedTabActive, setSelectedTabActive ] = useState(false);
     const [ isSideNavbarActive, setSideNavbarActive ] = useState(false);
     const [ currentCandidate, setCurrentCandidate ] = useState({});
-    const [ currentTask, setCurrentTask ] = useState({});
+    const [ currentTeamMember, setCurrentTeamMember ] = useState({});
     const [ jobs, setJobs ] = useState([]);
     const [ showApplicationDetails, setShowApplicationDetails ] = useState(false);
+    const [ allTasks, setAllTasks ] = useState([]);
     
     const sideNavbarRef = useRef(null);
 
@@ -46,6 +47,12 @@ const Teamlead = () => {
         const response = await myAxiosInstance.get(routes.Jobs);
         setJobs(response.data)
         return;
+    }
+
+    async function getTasks() {
+        const response = await myAxiosInstance.get(routes.Tasks);
+        setAllTasks(response.data)
+        return
     }
 
     async function getApplications () {
@@ -71,6 +78,7 @@ const Teamlead = () => {
         getTeamlead();
         getJobs();
         getApplications();
+        getTasks();
 
     }, [])
     
@@ -87,6 +95,14 @@ const Teamlead = () => {
         setSelectedTabActive(true);
 
     }, [searchParams])
+
+    const addNewTask = async () => {
+        await myAxiosInstance.post(routes.Add_New_Task, {
+            "user": "Candidate",
+            "task": "Work on API",
+            "description": "Complete the API now please",
+        })
+    }
 
     return <>
 
@@ -158,17 +174,17 @@ const Teamlead = () => {
             
             section === "task" ? 
 
-            showCandidateTask ? <TaskScreen currentTaskToShow={currentTask}  /> :
+            showCandidateTask ? <TaskScreen currentUser={currentTeamMember}  /> :
             <>
                 <SelectedCandidates 
                     showTasks={true} 
-                    tasksCount={tasksData.length}
+                    tasksCount={allTasks.length}
                 />
 
                 <div className="tasks-container">
                     {
-                        React.Children.toArray(tasksData.map(dataitem => {
-                            return <JobTile showTask={true} setShowCandidateTask={setShowCandidateTask} taskData={dataitem} handleJobTileClick={setCurrentTask} />
+                        React.Children.toArray(allTasks.map(dataitem => {
+                            return <JobTile showTask={true} setShowCandidateTask={setShowCandidateTask} taskData={dataitem} handleJobTileClick={setCurrentTeamMember} />
                         }))
                     }
                 </div>

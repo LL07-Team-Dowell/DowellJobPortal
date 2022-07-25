@@ -3,7 +3,7 @@ import { formatDateAndTime } from "../../../../helpers/helpers";
 import "./style.css";
 
 
-const ApplicantIntro = ({ applicant, showTask, taskDetails, hrPageActive, jobTitle }) => {
+const ApplicantIntro = ({ applicant, showTask, hrPageActive, jobTitle }) => {
     return <>
 
         {
@@ -13,10 +13,10 @@ const ApplicantIntro = ({ applicant, showTask, taskDetails, hrPageActive, jobTit
                     <span>{applicant.dateOfApplication}</span>
                 </div>
             </div> : <>
-                <h1 className="applicant-title-text">{showTask ? taskDetails.assigneeName : applicant.applicant}</h1>
+                <h1 className="applicant-title-text">{showTask ? applicant : applicant.applicant}</h1>
                 <div className="selected-applicant-intro">
-                    <p>{showTask ? taskDetails.jobApplied : jobTitle}</p>
-                    <span>{showTask ? taskDetails.dateOfTaskAssignment : formatDateAndTime(applicant.others[mutableNewApplicationStateNames.others_date_applied])}</span>
+                    <p>{showTask ? "" : jobTitle}</p>
+                    <span>{showTask ? formatDateAndTime(new Date()) : formatDateAndTime(applicant.others[mutableNewApplicationStateNames.others_date_applied])}</span>
                 </div>
             </>
         }

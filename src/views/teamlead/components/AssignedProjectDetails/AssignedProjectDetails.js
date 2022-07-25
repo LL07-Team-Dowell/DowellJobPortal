@@ -4,7 +4,8 @@ import DropdownButton from "../DropdownButton/Dropdown";
 import "./style.css";
 
 
-const AssignedProjectDetails = ({ showTask }) => {
+const AssignedProjectDetails = ({ showTask, availableProjects }) => {
+
     return <>
         <div className="project-details-container">
             {
@@ -12,7 +13,7 @@ const AssignedProjectDetails = ({ showTask }) => {
             }
             <div className={`project-info-container ${showTask ? 'flex-end' : ''}`}>
                 <p>Project</p>
-                <DropdownButton currentSelection={'Hr Hiring'} />
+                <DropdownButton currentSelection={'Hr Hiring'} selections={availableProjects} />
             </div>
         </div>
     </>
