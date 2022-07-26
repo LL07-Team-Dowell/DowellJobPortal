@@ -107,10 +107,6 @@
     margin-bottom: 10%;
 }
 
-.candidate__Interview__Card .bottom__Row__Details .application__Status__Container > *:first-child{
-    margin-right: 6%;
-}
-
 .candidate__Interview__Card .interview__Details__Container .discord__Btn__Container{
     width: 40.8%;
 }

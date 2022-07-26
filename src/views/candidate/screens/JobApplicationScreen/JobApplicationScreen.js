@@ -39,7 +39,9 @@ const JobApplicationScreen = () => {
 
     useEffect(() => {
 
-        if (!location.state.jobToApplyTo) return navigate("/home")
+        if (!location.state) return navigate("/home");
+
+        if (!location.state.jobToApplyTo) return navigate("/home");
         
         setCurrentJob(location.state.jobToApplyTo);
 
@@ -177,9 +179,26 @@ const JobApplicationScreen = () => {
             </>
         )
     }
+    
+    const handleShareBtnClick = async () => {
+        const jobDataToShare = {
+            title: currentJob.title,
+            text: "Apply for this job on Dowell!",
+            url: window.location,
+        }
+
+        try {
+
+            await navigator.share(jobDataToShare);
+
+        } catch (err) {
+            console.log(err);
+            alert("Your browser does not support sharing");
+        }
+    }
 
     return <>
-        <Navbar changeToBackButton={true} backButtonLink={'/home'} />
+        <Navbar changeToBackButton={true} backButtonLink={'/home'} handleShareJobBtnClick={handleShareBtnClick} />
             <div className="container-wrapper candidate__Job__Application__Container">
 
                 {
