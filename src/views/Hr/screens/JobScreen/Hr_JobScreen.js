@@ -14,11 +14,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import SelectedCandidates from '../../../teamlead/components/SelectedCandidates/SelectedCandidates';
 import SelectedCandidatesScreen from '../../../teamlead/screens/SelectedCandidatesScreen/SelectedCandidatesScreen';
 import ErrorPage from '../../../error/ErrorPage';
-import { routes } from '../../../../lib/request';
+import { routes } from '../../../../lib/routes';
 import { mutableNewApplicationStateNames } from '../../../../contexts/NewApplicationContext';
 import { candidateStatuses } from '../../../candidate/utils/candidateStatuses';
 import { useHrCandidateContext } from '../../../../contexts/HrCandidateContext';
 import { PageUnderConstruction } from '../../../under_construction/ConstructionPage';
+import LoadingSpinner from '../../../admin/components/LoadingSpinner/LoadingSpinner';
 
 
 
@@ -33,6 +34,8 @@ function Hr_JobScreen() {
   const location = useLocation();
   const [jobSearchInput, setJobSearchInput] = useState("");
   const { candidateData, setCandidateData } = useHrCandidateContext();
+  const [ isLoading, setLoading ] = useState(true);
+  const [ currentProjects, setCurrentProjects ] = useState([]);
   
   useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
@@ -51,6 +54,12 @@ function Hr_JobScreen() {
     return;
   }
 
+  const getProjects = async () => {
+    const response = await myAxiosInstance.get(routes.Projects);
+    setCurrentProjects(response.data.map(project => project.project_name));
+    return
+  }
+
   const goToJobDetails = (jobData, candidateData) => navigate("/home/job", { state: { job: jobData, appliedCandidates: candidateData } });
 
   const goToJobApplicationDetails = (candidateData) => navigate(`/home/job/${candidateData[mutableNewApplicationStateNames.applicant]}`, { state: { candidate: candidateData } });
@@ -67,6 +76,8 @@ function Hr_JobScreen() {
 
     getJobApplications();
     getJobs();
+    getProjects();
+    setLoading(false);
 
   }, [])
 
@@ -83,15 +94,21 @@ function Hr_JobScreen() {
           <div className='search'>
             <Search searchValue={jobSearchInput} updateSearchValue={setJobSearchInput} />
           </div>
-          <div className='job__wrapper'>
-            {
-              React.Children.toArray(jobs.map(job => {
-                return <>
-                  <JobTile jobData={job} routeToJob={true} handleJobTileClick={() => goToJobDetails(job, appliedJobs.filter(application => application.job === job.id))} candidateForJobCount={appliedJobs.filter(application => application.job === job.id).length} />
-                </>
-              }))
-            }
-          </div>
+
+          {
+            isLoading ? <LoadingSpinner /> :
+
+            <div className='job__wrapper'>
+              {
+                React.Children.toArray(jobs.map(job => {
+                  return <>
+                    <JobTile jobData={job} routeToJob={true} handleJobTileClick={() => goToJobDetails(job, appliedJobs.filter(application => application.job === job.id))} candidateForJobCount={appliedJobs.filter(application => application.job === job.id).length} />
+                  </>
+                }))
+              }
+            </div>
+
+          }
           
         </div>
       </> :
@@ -164,6 +181,7 @@ function Hr_JobScreen() {
                 initialMeet={true}
                 selectedCandidateData={location.state.candidate}
                 updateCandidateData={setCandidateData}
+                availableProjects={currentProjects}
               />
             </>
           </div>

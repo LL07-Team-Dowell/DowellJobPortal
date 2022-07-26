@@ -16,9 +16,10 @@ const routes = {
   Admin_Update_Job: '/jobs/update_job/',
   Admin_Delete_Job: '/jobs/delete_job/',
   Tasks: '/tasks/view_tasks/',
+  Add_New_Task: '/tasks/add_new_task/',
   Meeting: '/jobs/meeting/',
-  Teams: '/jobs/teams',
-  Projects: '/jobs/project',
+  Teams: '/jobs/teams/',
+  Projects: '/jobs/project/',
   User_Profile: 'profile/',
 }
 

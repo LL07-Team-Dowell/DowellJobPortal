@@ -4,27 +4,53 @@ import AssignedProjectDetails from "../../components/AssignedProjectDetails/Assi
 import CustomHr from "../../components/CustomHr/CustomHr";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CandidateTaskItem from "../../components/CandidateTaskItem/CandidateTaskItem";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import "./style.css";
+import { myAxiosInstance } from "../../../../lib/axios";
+import { routes } from "../../../../lib/routes";
+import { useNavigate } from "react-router-dom";
 
 
-const TaskScreen = ({ currentTaskToShow }) => {
-    const assignedTasks = ["a", "b", "c"];
+const TaskScreen = ({ currentUser }) => {
+    const [ userTasks, setUserTasks ] = useState([]);
+    const [ currentProjects, setCurrentProjects ] = useState([]);
+    const navigate = useNavigate();
+
+    const fetchUserTasks = async () => {
+        const response = await myAxiosInstance.get(routes.Tasks);
+        setUserTasks(response.data.filter(task => task.user === currentUser));
+        return
+    }
+
+    const fetchAllProjects = async () => {
+        const response = await myAxiosInstance.get(routes.Projects);
+        setCurrentProjects(response.data.map(project => project.project_name));
+        return
+    }
+
+    useEffect(() => {
+
+        if (!currentUser) return navigate(-1);
+
+        fetchUserTasks();
+        fetchAllProjects();
+
+    }, [])
 
     return <>
         <div className="candidate-task-screen-container">
             
-            <ApplicantIntro showTask={true} taskDetails={currentTaskToShow} />
+            <ApplicantIntro showTask={true} applicant={currentUser} />
 
             <ApplicantDetails />
 
             <CustomHr />
 
-            <AssignedProjectDetails showTask={true} />
+            <AssignedProjectDetails showTask={true} availableProjects={currentProjects} />
 
             {
-                React.Children.toArray(currentTaskToShow.taskDetails.map((task, index) => {
+                React.Children.toArray(userTasks.map((task, index) => {
                     return <CandidateTaskItem currentTask={task} taskNum={index + 1} />
                 }))
             }

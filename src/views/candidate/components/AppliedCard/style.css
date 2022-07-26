@@ -29,6 +29,10 @@
     color: var(--yellow) !important;
 }
 
+.candidate__Applied__Card .green__Color {
+    color: var(--dark-green) !important;
+}
+
 .candidate__Applied__Card .top__Row__Details, 
 .candidate__Applied__Card .bottom__Row__Details,
 .candidate__Applied__Card .bottom__Row__Details .application__Status__Container, 

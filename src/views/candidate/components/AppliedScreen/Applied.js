@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import './Applied.css';
 import { myAxiosInstance } from '../../../../lib/axios';
 import AppliedCard from '../AppliedCard/AppliedCard';
+import { routes } from '../../../../lib/routes';
+import InterviewCard from '../InterviewCard/InterviewCard';
 
 
 function Applied({ currentUser }) {
@@ -9,10 +11,11 @@ function Applied({ currentUser }) {
   const [Interview, sethandleInterviewShow]=useState(false);
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [currentUserApplications, setCurrentUserApplications] = useState([]);
+  const [userInterviews, setUserInterviews] = useState([]);
   
   const getAppliedData = async () => {
-    const response = await myAxiosInstance.get("/jobs/get_applications/");
-    const jobsResponse = await myAxiosInstance.get("/jobs/get_jobs/");
+    const response = await myAxiosInstance.get(routes.Applications);
+    const jobsResponse = await myAxiosInstance.get(routes.Jobs);
 
     const currentUserApplications = response.data.filter(application => application.applicant === currentUser.username);
     const currentUserAppliedJobs = jobsResponse.data.filter((currentJob) => currentUserApplications.find(({ job }) => currentJob.id === job));
@@ -21,9 +24,15 @@ function Applied({ currentUser }) {
     return;
   }
 
-  useEffect(() => {
+  const getUserInterviews = async () => {
+    const response = await myAxiosInstance.get(routes.Meeting);
+    setUserInterviews(response.data.filter(meeting => meeting.applicant === currentUser.username));
+    return
+  }
 
+  useEffect(() => {
     getAppliedData();
+    getUserInterviews();
 
   }, [])
 
@@ -37,7 +46,7 @@ function Applied({ currentUser }) {
                <input type="radio" name="slide" id="applied" defaultChecked={true} />
                <input type="radio" name="slide" id="interview"/>
                <label htmlFor="applied" className="slide applied" onClick={show}>Applied ({appliedJobs.length})</label>
-               <label htmlFor="interview" className="slide interview" onClick={show}>Interview ({[].length})</label>
+               <label htmlFor="interview" className="slide interview" onClick={show}>Interview ({userInterviews.length})</label>
                <div className="slider-tab"></div>
             </div>
       <div className='container__inner'>
@@ -48,9 +57,9 @@ function Applied({ currentUser }) {
             <div className='applied__row'>
               <div className='applied__column'>
                 {
-                  React.Children.toArray([].map(job => {
+                  React.Children.toArray(userInterviews.map(interview => {
                     return <>
-                      
+                      <InterviewCard interviewDetails={interview} job={appliedJobs.find(appliedJob => appliedJob.id === interview.job_applied)} />
                     </>
                   }))
                 }

@@ -13,7 +13,7 @@ import SelectedCandidatesScreen from "../teamlead/screens/SelectedCandidatesScre
 import RejectedCandidates from "./components/RejectedCandidates/RejectedCandidates";
 import SideNavigationBar from "./components/SideNavigationBar/SideNavigationBar";
 import useClickOutside from "../../hooks/useClickOutside";
-import { routes } from "../../lib/request";
+import { routes } from "../../lib/routes";
 import { candidateStatuses } from "../candidate/utils/candidateStatuses";
 import { PageUnderConstruction } from "../under_construction/ConstructionPage";
 

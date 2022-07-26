@@ -15,14 +15,14 @@ import { candidateDataReducerActions } from '../../../../reducers/CandidateDataR
 import { initialCandidatesDataStateNames } from '../../../../contexts/CandidatesContext';
 import { hrPageActions } from '../../../Hr/actions/HrActions';
 import { myAxiosInstance } from '../../../../lib/axios';
-import { routes } from '../../../../lib/request';
+import { routes } from '../../../../lib/routes';
 import { candidateStatuses } from '../../../candidate/utils/candidateStatuses';
 import { useNavigate } from 'react-router-dom';
 import { teamLeadActions } from '../../actions/TeamLeadActions';
 import { mutableNewApplicationStateNames } from '../../../../contexts/NewApplicationContext';
 
 
-const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, allCandidatesData, rehireTabActive, accountPage, hireTabActive, showOnboarding, updateShowCandidate, hrPageActive, initialMeet, jobTitle, teamleadPageActive, showApplicationDetails, handleViewApplicationBtnClick }) => {
+const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, allCandidatesData, rehireTabActive, accountPage, hireTabActive, showOnboarding, updateShowCandidate, hrPageActive, initialMeet, jobTitle, teamleadPageActive, showApplicationDetails, handleViewApplicationBtnClick, availableProjects }) => {
     const ref1 = useRef(null);
     const ref2 = useRef(null);
     const ref3 = useRef(null);
@@ -160,7 +160,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                 await myAxiosInstance.post(routes.Update_Application + selectedCandidateData.id + "/", selectedCandidateData);
                 updateCandidateData(prevCandidates => { return [ ...prevCandidates, selectedCandidateData ] } )
 
-                return navigate("/shortlisted")
+                return window.location.href = "/DowellJobPortal/#/shortlisted";
 
             case hrPageActions.MOVE_TO_SELECTED:
                 if (!selectedCandidateData) return;
@@ -199,7 +199,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
 
             {!hrPageActive && <AssignedProjectDetails />}
 
-            {initialMeet && hrPageActive && <AssignedProjectDetails />}
+            {initialMeet && hrPageActive && <AssignedProjectDetails availableProjects={availableProjects} />}
 
             {hrPageActive && <CustomHr className={'relative-hr'} />}
 

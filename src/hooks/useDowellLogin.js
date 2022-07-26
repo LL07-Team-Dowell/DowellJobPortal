@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { authAxiosInstance } from "../lib/axios";
-import { routes } from "../lib/request";
+import { routes } from "../lib/routes";
 import { useSearchParams } from "react-router-dom";
 
 export default function useDowellLogin ( updateState , updatePageWhenDone ) {

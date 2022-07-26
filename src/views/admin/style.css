@@ -164,6 +164,29 @@
     white-space: nowrap;
 }
 
+.admin__Page__Container .current__Job__Display span.btn__Custom{
+    cursor: pointer;
+    justify-content: flex-end;
+}
+
+.admin__Page__Container .current__Job__Display span.btn__Custom:hover,
+.admin__Page__Container .current__Job__Display span.btn__Custom:focus {
+    filter: brightness(0.5);
+}
+
+.admin__Page__Container .add__Btn.rel__Pos{
+    position: relative;
+    width: 61.4%;
+    display: block;
+    border-radius: 20px;
+    margin: 25% auto;
+    padding-top: 5.3%;
+    padding-bottom: 5.3%;
+    right: 0;
+    bottom: 0;
+}
+
+
 @media (min-width: 768px) and (max-width: 991.98px){
     .admin__Page__Container .search__wrapper{
         margin-top: 4%;
@@ -191,6 +214,12 @@
     .admin__Page__Container .current__Job__Display .dropdown-btn{
         padding: 1.5%;
         margin-right: 20%;
+    }
+    .admin__Page__Container .add__Btn.rel__Pos{
+        margin-top: 15%;
+        padding-top: 3.3%;
+        padding-bottom: 3.3%;
+        width: 40%;
     }
 }
 
@@ -222,9 +251,6 @@
     .admin__Page__Container .current__Job__Display span{
         margin: 3% 0;
     }
-    .admin__Page__Container .current__Job__Display span.title__Text {
-        margin-bottom: 4%;
-    }
     .admin__Page__Container .current__Job__Display .description__Text {
         margin-bottom: 1.5%;
     }
@@ -235,6 +261,23 @@
     .admin__Page__Container .current__Job__Display input,
     .admin__Page__Container .current__Job__Display .dropdown-btn{
         padding: 1%;
-        margin-right: 65%;
     }
+    .admin__Page__Container .current__Job__Display .description__Text .job__Type{
+        padding: 0.5% 3%;
+    }
+    .admin__Page__Container .current__Job__Display .textarea__Div__Container{
+        padding: 0.5% 3%;
+    }
+    .admin__Page__Container .add__Btn.rel__Pos{
+        margin-left: 10.5%;
+    } 
+    .admin__Page__Container .add__Btn.rel__Pos{
+        margin-top: 15%;
+        padding-top: 3%;
+        padding-bottom: 3%;
+        width: 18%;
+        margin-left: 0;
+        margin-right: auto;
+        margin-bottom: 0;
+    }   
 }

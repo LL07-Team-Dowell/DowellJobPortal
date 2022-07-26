@@ -12,9 +12,12 @@ const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClic
     const handleJobItemClick = ( currentData ) => {
         if (disableClick) return
 
-        handleJobTileClick(currentData);
+        if (showTask) {
+            handleJobTileClick(currentData.user);
+            return setShowCandidateTask(true);
+        }
 
-        if (showTask) return setShowCandidateTask(true);
+        handleJobTileClick(currentData);
 
         setShowCandidate(true);
     }
@@ -63,10 +66,10 @@ const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClic
                 
                 <>
                     <div className="applicant-details">
-                        <h2><b>{showTask ? taskData.assigneeName : hrPageActive ? candidateData[mutableNewApplicationStateNames.applicant] && candidateData[mutableNewApplicationStateNames.applicant] : candidateData.applicant}</b></h2>
-                        <p>{showTask ? taskData.dateOfTaskAssignment : formatDateAndTime(candidateData.others[mutableNewApplicationStateNames.others_date_applied])}</p>
+                        <h2><b>{showTask ? taskData.user : hrPageActive ? candidateData[mutableNewApplicationStateNames.applicant] && candidateData[mutableNewApplicationStateNames.applicant] : candidateData.applicant}</b></h2>
+                        <p>{showTask ? formatDateAndTime(taskData.created) : formatDateAndTime(candidateData.others[mutableNewApplicationStateNames.others_date_applied])}</p>
                     </div>
-                    <p>{hrPageActive ? `` : `Job: ${showTask ? taskData.jobApplied : jobTitle}` }</p>
+                    <p>{hrPageActive ? `` : `Job: ${showTask ? taskData.task : jobTitle}` }</p>
                     <div className={`applicant-qualifications-container ${showTask ? 'task-active' : ''}`}>
                         {
                             showTask ? <></> :
