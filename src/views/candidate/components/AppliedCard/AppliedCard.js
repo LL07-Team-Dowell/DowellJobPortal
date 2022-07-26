@@ -1,10 +1,11 @@
 import { RiErrorWarningLine } from 'react-icons/ri';
-import { AiOutlineArrowRight } from 'react-icons/ai';
+import { AiOutlineArrowRight, AiOutlineCheckCircle } from 'react-icons/ai';
 import { getDaysDifferenceFromPresentDate } from '../../../../helpers/helpers';
 import { mutableNewApplicationStateNames } from '../../../../contexts/NewApplicationContext';
 import { useNavigate } from 'react-router-dom';
 
 import "./style.css";
+import { candidateStatuses } from '../../utils/candidateStatuses';
 
 
 const AppliedCard = ( { job, applicationDetails } ) => {
@@ -24,8 +25,17 @@ const AppliedCard = ( { job, applicationDetails } ) => {
             </div>
             <div className='bottom__Row__Details'>
                 <div className='application__Status__Container'>
-                    <RiErrorWarningLine className='application__Icon yellow__Color' />
-                    <span>Application sent</span>
+                    {
+                        applicationDetails.status === candidateStatuses.SHORTLISTED ? 
+                        <>
+                            <AiOutlineCheckCircle className='application__Icon green__Color' />
+                            <span>Application viewed by Hr</span>
+                        </> :
+                        <>
+                            <RiErrorWarningLine className='application__Icon yellow__Color' />
+                            <span>Application sent</span>
+                        </> 
+                    }
                 </div>
                 <button className='view__Btn' onClick={handleClickOnApplicationCard}>
                     <span>View</span>
