@@ -12,6 +12,7 @@ import { mutableNewApplicationStateNames, useNewApplicationContext } from "../..
 import { newJobApplicationDataReducerActions } from "../../../../reducers/NewJobApplicationDataReducer";
 
 import "./style.css";
+import { handleShareBtnClick } from "../../utils/helperFunctions";
 
 const JobApplicationScreen = () => {
     const location = useLocation();
@@ -179,26 +180,9 @@ const JobApplicationScreen = () => {
             </>
         )
     }
-    
-    const handleShareBtnClick = async () => {
-        const jobDataToShare = {
-            title: currentJob.title,
-            text: "Apply for this job on Dowell!",
-            url: window.location,
-        }
-
-        try {
-
-            await navigator.share(jobDataToShare);
-
-        } catch (err) {
-            console.log(err);
-            alert("Your browser does not support sharing");
-        }
-    }
 
     return <>
-        <Navbar changeToBackButton={true} backButtonLink={'/home'} handleShareJobBtnClick={handleShareBtnClick} />
+        <Navbar changeToBackButton={true} backButtonLink={'/home'} handleShareJobBtnClick={() => handleShareBtnClick(currentJob.title, "Apply for this job on Dowell!", window.location)} />
             <div className="container-wrapper candidate__Job__Application__Container">
 
                 {
