@@ -35,6 +35,7 @@ export const excludedApplicantInfo = [
     "agreeToAllTerms",
     "created",
     "updated",
+    "hr_discord_link",
 ]
 
 export const mutableNewApplicationStateNames = {
@@ -51,6 +52,7 @@ export const mutableNewApplicationStateNames = {
     others_date_applied: "date_applied",
     others_team_lead_remarks: "team_lead_remarks",
     hr_remarks: "hr_remarks",
+    hr_discord_link: "hr_discord_link",
 }
 
 export const useNewApplicationContext = () => useContext(NewApplicationContext);
