@@ -1,9 +1,10 @@
+import { freelancingPlatforms } from "../../../candidate/utils/jobFormApplicationData";
 import DropdownButton from "../../../teamlead/components/DropdownButton/Dropdown";
 
 import "./style.css";
 
 
-const PaymentDetails = () => {
+const PaymentDetails = ({ candidatePlatform, handlePlatformSelectionClick }) => {
     return <>
         <div className="payment-details-container">
             <div className="payment-info-container">
@@ -12,7 +13,7 @@ const PaymentDetails = () => {
             </div>
             <div className="payment-info-container">
                 <p>Platform</p>
-                <DropdownButton currentSelection={'Upwork'} selections={['Fiverr', 'PeoplePerHour', 'Truelancer', 'Freelancer']} />
+                <DropdownButton currentSelection={candidatePlatform} selections={freelancingPlatforms} handleSelectionClick={handlePlatformSelectionClick} />
             </div>
         </div>
     </>

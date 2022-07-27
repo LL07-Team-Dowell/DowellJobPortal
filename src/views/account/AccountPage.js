@@ -42,7 +42,8 @@ const AccountPage = () => {
         const candidatesToHire = response.data.filter(application => application.status === candidateStatuses.TEAMLEAD_HIRE);
         const candidatesToRehire = response.data.filter(application => application.status === candidateStatuses.TO_REHIRE);
         const candidatesOnboarding = response.data.filter(application => application.status === candidateStatuses.ONBOARDING);
-        
+        const candidatesRejected = response.data.filter(application => application.status === candidateStatuses.REJECTED);
+
         dispatchToCandidatesData({ type: candidateDataReducerActions.UPDATE_CANDIDATES_TO_HIRE, payload: {
             stateToChange: initialCandidatesDataStateNames.candidatesToHire,
             value: candidatesToHire,
@@ -56,6 +57,11 @@ const AccountPage = () => {
         dispatchToCandidatesData({ type: candidateDataReducerActions.UPDATE_ONBOARDING_CANDIDATES, payload: {
             stateToChange: initialCandidatesDataStateNames.onboardingCandidates,
             value: candidatesOnboarding,
+        }});
+
+        dispatchToCandidatesData({ type: candidateDataReducerActions.UPDATE_REJECTED_CANDIDATES, payload: {
+            stateToChange: initialCandidatesDataStateNames.rejectedCandidates,
+            value: candidatesRejected,
         }});
 
         return
@@ -179,7 +185,7 @@ const AccountPage = () => {
                 <div className="jobs-container">
                     {
                         React.Children.toArray(candidatesData.rejectedCandidates.map(dataitem => {
-                            return  <JobTile disableClick={true} candidateData={dataitem} />
+                            return  <JobTile disableClick={true} candidateData={dataitem} jobTitle={jobs.filter(job => job.id === dataitem.job).length >=1 ? jobs.filter(job => job.id === dataitem.job)[0].title : ""} />
                         }))
                     }
                 </div>
