@@ -12,6 +12,5 @@ export const handleShareBtnClick = async (titleToShare, linkDescription, linkToS
 
     } catch (err) {
         console.log(err);
-        alert("Your browser does not support sharing");
     }
 }

@@ -81,3 +81,11 @@ export const formatDateAndTime = (date) => {
     return `${day}th ${month}`;
 
 }
+
+export const changeToTitleCase = (testStr) => {
+
+    if ( typeof (testStr) !== "string") throw "Not a string";
+
+    return testStr[0].toLocaleUpperCase() + testStr.slice(1).toLocaleLowerCase();
+
+}
