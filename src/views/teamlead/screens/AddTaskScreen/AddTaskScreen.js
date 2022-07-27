@@ -9,7 +9,7 @@ import { routes } from "../../../../lib/routes";
 import { useNavigate } from "react-router-dom";
 
 
-const AddTaskScreen = ({ teamMembers , closeTaskScreen }) => {
+const AddTaskScreen = ({ teamMembers , closeTaskScreen, updateTasks }) => {
 
     const ref = useRef(null);
     const [ showTaskForm, setShowTaskForm ] = useState(false);
@@ -55,7 +55,8 @@ const AddTaskScreen = ({ teamMembers , closeTaskScreen }) => {
         try{
 
             await myAxiosInstance.post(routes.Add_New_Task, dataToSend);
-            // update tasks [], show task screen
+            
+            updateTasks(prevTasks => { return [ ...prevTasks, dataToSend ] } );
             closeTaskScreen();
             navigate("/task");
 

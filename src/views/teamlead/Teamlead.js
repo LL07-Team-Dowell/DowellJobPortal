@@ -128,7 +128,7 @@ const Teamlead = () => {
 
         {
             showAddTaskModal && 
-            <AddTaskScreen closeTaskScreen={() => setShowAddTaskModal(false)} teamMembers={candidatesData.onboardingCandidates} />
+            <AddTaskScreen closeTaskScreen={() => setShowAddTaskModal(false)} teamMembers={candidatesData.onboardingCandidates} updateTasks={setAllTasks} />
         }
 
         {
