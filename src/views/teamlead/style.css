@@ -4,7 +4,23 @@
     background: transparent;
 }
 
-@media (min-width: 1200px){
+.tasks-container .add__Btn {
+    display: flex;
+    align-items: center;
+    width: max-content;
+    bottom: 15%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .tasks-container .add__Btn {
+        padding-top: 3%;
+        padding-bottom: 3%;
+    }
+}
+
+@media (min-width: 992px){
     .jobs-container, .tasks-container{
         width: 86%;
         margin: 0 auto 10%;
@@ -13,5 +29,9 @@
         width: calc(94% /3);
         display: inline-block;
         margin-right: 2%;
-    }   
+    }  
+    .tasks-container .add__Btn {
+        padding-top: 2%;
+        padding-bottom: 2%;
+    } 
 }
