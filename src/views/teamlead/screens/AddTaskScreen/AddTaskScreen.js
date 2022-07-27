@@ -57,7 +57,7 @@ const AddTaskScreen = ({ teamMembers , closeTaskScreen }) => {
             await myAxiosInstance.post(routes.Add_New_Task, dataToSend);
             // update tasks [], show task screen
             closeTaskScreen();
-            navigate("/tasks");
+            navigate("/task");
 
         } catch (err) {
             console.log(err);
