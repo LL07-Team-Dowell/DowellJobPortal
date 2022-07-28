@@ -14,11 +14,14 @@ import SelectedCandidatesScreen from "./screens/SelectedCandidatesScreen/Selecte
 import TaskScreen from "./screens/TaskScreen/TaskScreen";
 
 import "./style.css";
-import { tasksData } from "./tasks";
 import { routes } from "../../lib/routes";
 import { candidateStatuses } from "../candidate/utils/candidateStatuses";
 import { candidateDataReducerActions } from "../../reducers/CandidateDataReducer";
 import { PageUnderConstruction } from "../under_construction/ConstructionPage";
+import Button from "../admin/components/Button/Button";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddTaskScreen from "./screens/AddTaskScreen/AddTaskScreen";
+
 
 const Teamlead = () => {
     const { section, searchParams, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
@@ -33,6 +36,7 @@ const Teamlead = () => {
     const [ jobs, setJobs ] = useState([]);
     const [ showApplicationDetails, setShowApplicationDetails ] = useState(false);
     const [ allTasks, setAllTasks ] = useState([]);
+    const [ showAddTaskModal, setShowAddTaskModal ] = useState(false);
     
     const sideNavbarRef = useRef(null);
 
@@ -58,16 +62,22 @@ const Teamlead = () => {
     async function getApplications () {
         const response = await myAxiosInstance.get(routes.Applications);
         const selectedCandidates = response.data.filter(application => application.status === candidateStatuses.SELECTED);
-        const candidatesToRehire = response.data.filter(application => application.status === candidateStatuses.ONBOARDING);
+        const candidatesToRehire = response.data.filter(application => application.status === candidateStatuses.TO_REHIRE);
+        const onboardingCandidates = response.data.filter(application => application.status === candidateStatuses.ONBOARDING);
         
         dispatchToCandidatesData({ type: candidateDataReducerActions.UPDATE_SELECTED_CANDIDATES, payload: {
             stateToChange: initialCandidatesDataStateNames.selectedCandidates,
             value: selectedCandidates,
         }});
 
+        dispatchToCandidatesData({ type: candidateDataReducerActions.UPDATE_REHIRED_CANDIDATES, payload: {
+            stateToChange: initialCandidatesDataStateNames.candidatesToRehire,
+            value: candidatesToRehire,
+        }});
+
         dispatchToCandidatesData({ type: candidateDataReducerActions.UPDATE_ONBOARDING_CANDIDATES, payload: {
             stateToChange: initialCandidatesDataStateNames.onboardingCandidates,
-            value: candidatesToRehire,
+            value: onboardingCandidates,
         }});
         
         return
@@ -96,14 +106,6 @@ const Teamlead = () => {
 
     }, [searchParams])
 
-    const addNewTask = async () => {
-        await myAxiosInstance.post(routes.Add_New_Task, {
-            "user": "Candidate",
-            "task": "Work on API",
-            "description": "Complete the API now please",
-        })
-    }
-
     return <>
 
         <NavigationBar 
@@ -122,6 +124,11 @@ const Teamlead = () => {
                 isNotificationEnabled={isNotificationEnabled}
                 setNotificationStatus={() => setNotificationStatus(prevValue => { return !prevValue } )}
             />
+        }
+
+        {
+            showAddTaskModal && 
+            <AddTaskScreen closeTaskScreen={() => setShowAddTaskModal(false)} teamMembers={candidatesData.onboardingCandidates} updateTasks={setAllTasks} />
         }
 
         {
@@ -174,7 +181,7 @@ const Teamlead = () => {
             
             section === "task" ? 
 
-            showCandidateTask ? <TaskScreen currentUser={currentTeamMember}  /> :
+            showCandidateTask ? <TaskScreen currentUser={currentTeamMember} handleAddTaskBtnClick={() => setShowAddTaskModal(true)}  /> :
             <>
                 <SelectedCandidates 
                     showTasks={true} 
@@ -187,6 +194,8 @@ const Teamlead = () => {
                             return <JobTile showTask={true} setShowCandidateTask={setShowCandidateTask} taskData={dataitem} handleJobTileClick={setCurrentTeamMember} />
                         }))
                     }
+
+                    <Button text={"Add Task"} icon={<AddCircleOutlineIcon />} handleClick={() => setShowAddTaskModal(true)} />
                 </div>
             </> : 
             

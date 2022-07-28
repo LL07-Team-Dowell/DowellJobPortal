@@ -20,6 +20,7 @@ import ViewJobScreen from './views/admin/screens/ViewJobScreen/ViewJobScreen';
 import AddJobScreen from './views/admin/screens/AddJobScreen/AddJobScreen';
 import { HrCandidateContextProvider } from './contexts/HrCandidateContext';
 import useDowellLogin from './hooks/useDowellLogin';
+import useTitle from './hooks/useTitle';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useDowellLogin(setUser, setLoading);
+  useTitle("Dowell Job Portal");
 
   if (loading) return <></>
 

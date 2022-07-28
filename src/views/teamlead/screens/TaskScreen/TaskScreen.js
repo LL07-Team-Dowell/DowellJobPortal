@@ -12,7 +12,7 @@ import { routes } from "../../../../lib/routes";
 import { useNavigate } from "react-router-dom";
 
 
-const TaskScreen = ({ currentUser }) => {
+const TaskScreen = ({ currentUser, handleAddTaskBtnClick }) => {
     const [ userTasks, setUserTasks ] = useState([]);
     const [ currentProjects, setCurrentProjects ] = useState([]);
     const navigate = useNavigate();
@@ -55,7 +55,7 @@ const TaskScreen = ({ currentUser }) => {
                 }))
             }
 
-            <div className="add-task-btn">
+            <div className="add-task-btn" onClick={handleAddTaskBtnClick}>
                 <span>Add</span>
                 <AddCircleOutlineIcon />
             </div>

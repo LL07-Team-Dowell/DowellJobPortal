@@ -166,6 +166,7 @@ function Hr_JobScreen() {
                 hrPageActive={true}
                 selectedCandidateData={location.state.candidate}
                 updateCandidateData={setCandidateData}
+                updateAppliedData={setAppliedJobs}
               />
             </>
           </div>

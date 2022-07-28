@@ -31,6 +31,11 @@ const AppliedCard = ( { job, applicationDetails } ) => {
                             <AiOutlineCheckCircle className='application__Icon green__Color' />
                             <span>Application viewed by Hr</span>
                         </> :
+                        ( applicationDetails.status === candidateStatuses.TEAMLEAD_HIRE || applicationDetails.status === candidateStatuses.ONBOARDING || applicationDetails.status === candidateStatuses.TO_REHIRE ) ?
+                        <>
+                            <AiOutlineCheckCircle className='application__Icon green__Color' />
+                            <span>Selected for role</span>
+                        </> :
                         <>
                             <RiErrorWarningLine className='application__Icon yellow__Color' />
                             <span>Application sent</span>

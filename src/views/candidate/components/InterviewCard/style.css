@@ -125,6 +125,12 @@
     display: block;
     margin-left: auto;
     width: 100%;
+    transition: 0.3s ease-in-out;
+}
+
+.candidate__Interview__Card .interview__Details__Container .discord__Btn__Container button:hover,
+.candidate__Interview__Card .interview__Details__Container .discord__Btn__Container button:focus{
+    filter: brightness(0.9);
 }
 
 .candidate__Interview__Card .interview__Details__Container .discord__Btn__Container span{

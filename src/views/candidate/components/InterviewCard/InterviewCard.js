@@ -15,7 +15,7 @@ const InterviewCard = ({ interviewDetails, job }) => {
 
     return <>
         <div className="candidate__Interview__Card">
-            <p className="job__Title">{job.title}</p>
+            <p className="job__Title">{job ? job.title : ""}</p>
             <p className="interview__Schedule__Item">Interview scheduled ({formatDateAndTime(interviewDetails.created)})</p>
             <Link className="view__Interview__Btn" to={"/applied/view-applications"} onClick={handleClick}>
                 View details
@@ -42,8 +42,12 @@ const InterviewCard = ({ interviewDetails, job }) => {
                 </div>
                 
                 <div className="discord__Btn__Container">
-                    <button>Discord</button>
-                    <span>Join link to have meeting with HR</span>
+                    <button onClick={() => window.location.href = process.env.REACT_APP_FIRST_DISCORD_LINK}>Discord</button>
+                    {
+                        interviewDetails.status === candidateStatuses.SHORTLISTED ? 
+                        <span>Join link to have meeting with Teamlead</span> :
+                        <span>Join link to have meeting with HR</span>
+                    }
                 </div>
             </div>
         </div>

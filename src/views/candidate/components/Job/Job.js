@@ -4,12 +4,14 @@ import { FaToolbox } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
 import { myAxiosInstance } from '../../../../lib/axios';
 import { routes } from '../../../../lib/routes';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useNavigationContext } from '../../../../contexts/NavigationContext';
 import { tasksData } from '../../../teamlead/tasks';
 import JobTile from '../../../teamlead/components/JobTile/JobTile';
 import ErrorPage from '../../../error/ErrorPage';
 import Search from '../../../Hr/component/Search/Search';
+import { BsShare } from 'react-icons/bs';
+import { handleShareBtnClick } from '../../utils/helperFunctions';
 
 
 
@@ -84,6 +86,11 @@ function JobScreen({ currentUser }) {
                                 <div className="card" key={job.id}>
 
                                     <div className="container">
+
+                                        <Link to={'#'} onClick={() => handleShareBtnClick("Dowell Job Portal", "Check out jobs on Dowell!", window.location)}>
+                                            <BsShare className='share__Job__Btn' />
+                                        </Link>
+
                                         <div className='row-text'>
                                             <h4><b>{job.title}</b></h4>
                                             <p className='detail dowell'>Dowell Ux living lab</p>

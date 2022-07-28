@@ -163,6 +163,13 @@
     margin: 0 auto;
   }
 
+  .container .share__Job__Btn {
+    position: absolute;
+    right: 3.5%;
+    color: #C09F2C;
+    top: 7%;
+  }
+
 @media screen and (min-width: 992px) {
   .container-wrapper .search__wrapper .search__container, .row{
     width: 87%;
@@ -183,6 +190,9 @@
   }
   .row > *:nth-child(3n + 3){
     margin-right: 0;
+  }
+  .container .share__Job__Btn {
+    top: 15%;
   }
 }
    
@@ -206,6 +216,9 @@
   }
   .row{
     margin-bottom: 2%;
+  }
+  .container .share__Job__Btn {
+    top: 10%;
   }
 }
   

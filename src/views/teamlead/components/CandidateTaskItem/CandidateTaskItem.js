@@ -11,7 +11,7 @@ const CandidateTaskItem = ({ taskNum, currentTask }) => {
         <div className="candidate-task-container">
             <div className="candidate-task-status-container">
                 <div className="candidate-task-details">
-                    <span> {taskNum}. {currentTask.task} <BiEdit className="edit-icon" /> </span>
+                    <span> {taskNum}. {currentTask.title} <BiEdit className="edit-icon" /> </span>
                 </div>
                 <DropdownButton currentSelection={currentTask.status} selections={["Completed", "Incomplete"]} />
             </div>
