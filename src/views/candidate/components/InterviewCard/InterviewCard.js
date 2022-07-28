@@ -42,7 +42,7 @@ const InterviewCard = ({ interviewDetails, job }) => {
                 </div>
                 
                 <div className="discord__Btn__Container">
-                    <button onClick={() => window.location.href = process.env.REACT_APP_FIRST_DISCORD_LINK}>Discord</button>
+                    <button onClick={() => window.location.href = "https://discord.gg/xmmZgmYENW"}><a href={"https://discord.gg/xmmZgmYENW"} rel="noopener" aria-label="join meeting on discord">Discord</a></button>
                     {
                         interviewDetails.status === candidateStatuses.SHORTLISTED ? 
                         <span>Join link to have meeting with Teamlead</span> :
