@@ -43,8 +43,6 @@ const TaskScreen = ({ currentUser, handleAddTaskBtnClick }) => {
             
             <ApplicantIntro showTask={true} applicant={currentUser} />
 
-            <ApplicantDetails />
-
             <CustomHr />
 
             <AssignedProjectDetails showTask={true} availableProjects={currentProjects} />
