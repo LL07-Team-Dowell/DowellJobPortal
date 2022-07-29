@@ -57,7 +57,8 @@ const Teamlead = () => {
 
     async function getTasks() {
         const response = await myAxiosInstance.get(routes.Tasks);
-        setAllTasks(response.data)
+        const usersWithTasks = [...new Map(response.data.map(task => [ task.user, task ])).values()];
+        setAllTasks(usersWithTasks)
         return
     }
 
@@ -109,7 +110,6 @@ const Teamlead = () => {
     }, [searchParams])
 
     const handleEditTaskBtnClick = (currentData) => {
-        console.log(currentData)
         setEditTaskActive(true);
         setCurrentTaskToEdit(currentData);
         setShowAddTaskModal(true);

@@ -25,6 +25,11 @@
     font-size: 0.875rem;
     line-height: 16.94px;
     margin-left: 0;
+    display: block;
+}
+
+.candidate-task-status-container .candidate-task-details span.task__Description{
+    margin: 12% 0 4%;
 }
 
 .candidate-task-container{
@@ -41,9 +46,18 @@
     margin-left: 0;
 }
 
-@media (min-width: 1200px){
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .candidate-task-status-container .candidate-task-details span.task__Description{
+        margin: 14% 0 4%;   
+    }
+}
+@media (min-width: 992px){
     .candidate-task-container{
         width: 82%;
         margin: 10% auto 5%;
+    }
+    
+    .candidate-task-status-container .candidate-task-details span.task__Description{
+        margin-top: 7%;   
     }
 }

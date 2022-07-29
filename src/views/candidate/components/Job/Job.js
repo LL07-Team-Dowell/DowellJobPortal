@@ -6,7 +6,6 @@ import { myAxiosInstance } from '../../../../lib/axios';
 import { routes } from '../../../../lib/routes';
 import { Link, useNavigate } from 'react-router-dom';
 import { useNavigationContext } from '../../../../contexts/NavigationContext';
-import { tasksData } from '../../../teamlead/tasks';
 import JobTile from '../../../teamlead/components/JobTile/JobTile';
 import ErrorPage from '../../../error/ErrorPage';
 import Search from '../../../Hr/component/Search/Search';
