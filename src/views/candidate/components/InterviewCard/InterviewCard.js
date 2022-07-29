@@ -5,7 +5,7 @@ import { candidateStatuses } from "../../utils/candidateStatuses";
 import "./style.css";
 
 
-const InterviewCard = ({ interviewDetails, job }) => {
+const InterviewCard = ({ interviewDetails, job, currentApplicationStatus }) => {
     const navigate = useNavigate();
     
     const handleClick = (e) => {
@@ -24,12 +24,12 @@ const InterviewCard = ({ interviewDetails, job }) => {
                 <div className="interview__Status__Container">
 
                     <div className="interview__Status__Item">
-                        <AiOutlineCheckCircle className={`${interviewDetails.status === candidateStatuses.SHORTLISTED ? 'status__Icon' : 'status__Icon__Xl'} green__Color`} />
-                        <span className={`${interviewDetails.status === candidateStatuses.SHORTLISTED ? 'interview__Text' : 'interview__Text__No__Wrap'}`}>Interview with HR</span>
+                        <AiOutlineCheckCircle className={`${currentApplicationStatus === candidateStatuses.SHORTLISTED ? 'status__Icon' : 'status__Icon__Xl'} green__Color`} />
+                        <span className={`${currentApplicationStatus === candidateStatuses.SHORTLISTED ? 'interview__Text' : 'interview__Text__No__Wrap'}`}>Interview with HR</span>
                     </div>
 
                     {
-                        interviewDetails.status === candidateStatuses.SHORTLISTED && <>
+                        currentApplicationStatus === candidateStatuses.SHORTLISTED && <>
                             <div className="vertical__Line"></div>
 
                             <div className="interview__Status__Item">
@@ -44,7 +44,7 @@ const InterviewCard = ({ interviewDetails, job }) => {
                 <div className="discord__Btn__Container">
                     <button onClick={() => window.location.href = "https://discord.gg/xmmZgmYENW"}><a href={"https://discord.gg/xmmZgmYENW"} rel="noopener" aria-label="join meeting on discord">Discord</a></button>
                     {
-                        interviewDetails.status === candidateStatuses.SHORTLISTED ? 
+                        currentApplicationStatus === candidateStatuses.SHORTLISTED ? 
                         <span>Join link to have meeting with Teamlead</span> :
                         <span>Join link to have meeting with HR</span>
                     }

@@ -42,7 +42,7 @@ export const excludedApplicantInfo = [
 export const mutableNewApplicationStateNames = {
     job: "job",
     applicant: "applicant",
-    title: "",
+    title: "title",
     country: "country",
     freelancePlatform: "freelancePlatform",
     freelancePlatformUrl: "freelancePlatformUrl",
