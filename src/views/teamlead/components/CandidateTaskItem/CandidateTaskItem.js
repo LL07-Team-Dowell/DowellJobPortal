@@ -39,7 +39,7 @@ const CandidateTaskItem = ({ taskNum, currentTask, candidatePage, handleEditBtnC
                     <span> {taskNum}. Task: {currentTask.title} { !candidatePage && <BiEdit className="edit-icon" onClick={handleEditBtnClick} /> }</span>
                     <span className="task__Description">Task Description: {currentTask.description}</span>
                 </div>
-                <DropdownButton currentSelection={currentTask.status} selections={["Completed", "Incomplete"]} handleSelectionClick={handleTaskStatusUpdate} />
+                <DropdownButton currentSelection={currentTask.status} selections={candidatePage ? null : ["Completed", "Incomplete"]} handleSelectionClick={handleTaskStatusUpdate} />
             </div>
             <div className="candidate-task-date-container">
                 <span>Given on {formatDateAndTime(currentTask.created)}</span>
