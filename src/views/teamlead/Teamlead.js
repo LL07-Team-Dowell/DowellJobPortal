@@ -110,7 +110,6 @@ const Teamlead = () => {
     }, [searchParams])
 
     const handleEditTaskBtnClick = (currentData) => {
-        console.log(currentData)
         setEditTaskActive(true);
         setCurrentTaskToEdit(currentData);
         setShowAddTaskModal(true);

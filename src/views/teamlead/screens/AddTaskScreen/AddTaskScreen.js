@@ -101,16 +101,19 @@ const AddTaskScreen = ({ teamMembers , closeTaskScreen, updateTasks, afterSelect
 
             await myAxiosInstance.post(routes.Update_Task + taskToEdit.id + "/", dataToSend);
             
+            taskToEdit.title = dataToSend.title;
+            taskToEdit.description = dataToSend.description;
+
             updateTasks(prevTasks => prevTasks.map(task => {
                 
-                if (task.id === currentTask.id) {
-                    return { ...task, status: updateSelection }
+                if (task.id === taskToEdit.id) {
+                    return { ...task, title: dataToSend.title, description: dataToSend.description }
                 }
 
                 return task;
 
             }) );
-            
+
             closeTaskScreen();
             navigate("/task");
 
@@ -121,15 +124,13 @@ const AddTaskScreen = ({ teamMembers , closeTaskScreen, updateTasks, afterSelect
 
     }
 
-    console.log(teamMembers)
-
     return <>
         <div className="add__New__Task__Overlay">
             <div className="add__New__Task__Container" ref={ref}>
                 <h1 className="title__Item">
                     {
                         showTaskForm ? <>
-                            <IoIosArrowBack onClick={editPage ? () => { closeTaskScreen(); setEditPage(false); } : () => setShowTaskForm(false)} style={{ cursor: "pointer" }} />
+                            { !afterSelectionScreen &&<IoIosArrowBack onClick={editPage ? () => { closeTaskScreen(); setEditPage(false); } : () => setShowTaskForm(false)} style={{ cursor: "pointer" }} /> }
                             { editPage ? "Edit Task": "New Task Details" }
                         </> : <>Add new task</>
                     }
