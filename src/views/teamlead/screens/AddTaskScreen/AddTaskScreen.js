@@ -101,9 +101,16 @@ const AddTaskScreen = ({ teamMembers , closeTaskScreen, updateTasks, afterSelect
 
             await myAxiosInstance.post(routes.Update_Task + taskToEdit.id + "/", dataToSend);
             
-            updateTasks(prevTasks => { return [ ...prevTasks.filter(task => task.id !== taskToEdit.id) ] } );
-            updateTasks(prevTasks => { return [ ...prevTasks, dataToSend ] } );
+            updateTasks(prevTasks => prevTasks.map(task => {
+                
+                if (task.id === currentTask.id) {
+                    return { ...task, status: updateSelection }
+                }
 
+                return task;
+
+            }) );
+            
             closeTaskScreen();
             navigate("/task");
 
