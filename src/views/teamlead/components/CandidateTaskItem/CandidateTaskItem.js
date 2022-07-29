@@ -5,13 +5,13 @@ import DropdownButton from "../DropdownButton/Dropdown";
 import "./style.css";
 
 
-const CandidateTaskItem = ({ taskNum, currentTask }) => {
+const CandidateTaskItem = ({ taskNum, currentTask, candidatePage, handleEditBtnClick }) => {
     
     return <>
         <div className="candidate-task-container">
             <div className="candidate-task-status-container">
                 <div className="candidate-task-details">
-                    <span> {taskNum}. {currentTask.title} <BiEdit className="edit-icon" /> </span>
+                    <span> {taskNum}. {currentTask.title} { !candidatePage && <BiEdit className="edit-icon" onClick={handleEditBtnClick} /> }</span>
                 </div>
                 <DropdownButton currentSelection={currentTask.status} selections={["Completed", "Incomplete"]} />
             </div>

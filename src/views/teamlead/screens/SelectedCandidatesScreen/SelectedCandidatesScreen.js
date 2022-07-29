@@ -148,6 +148,14 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                 }})
 
                 return updateShowCandidate(false);
+
+            case teamLeadActions.MOVE_TO_REHIRE:
+
+                selectedCandidateData.status = candidateStatuses.TEAMLEAD_TOREHIRE;
+
+                await myAxiosInstance.post(routes.Update_Application + selectedCandidateData.id + "/", { applicant: selectedCandidateData.applicant, status: candidateStatuses.TEAMLEAD_TOREHIRE, job: selectedCandidateData.job });
+
+                return updateShowCandidate(false);
             
             case hrPageActions.MOVE_TO_SHORTLISTED:
                 if (!selectedCandidateData) return;
@@ -261,7 +269,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                 <div className={`status-options-container ${rehireTabActive ? 'rehire': ''}`}>
                     {
                         rehireTabActive ?
-                        <button className={`status-option green-color ${accountPage ? 'active' : ''}`} ref={ref3} onClick={() => handleClick(ref3, false)} disabled={accountPage ? true :  disabled}>
+                        <button className={`status-option green-color ${accountPage ? selectedCandidateData.status === candidateStatuses.TEAMLEAD_TOREHIRE ? 'active' : '' : ''}`} ref={ref3} onClick={() => handleClick(ref3, false)} disabled={accountPage ? true :  disabled}>
                             <CheckCircleIcon className='status-icon' />
                             <br /><br/>
                             <div className='textt'>Pay</div>
@@ -280,7 +288,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                             <div className='textt'>{`${initialMeet ? 'Selected' : 'Shortlisted'}`}</div>
                         </button>
 
-                        </> : <button className={`status-option green-color ${accountPage && rehireTabActive ? 'active' : ''}`} ref={ref1} onClick={() => handleClick(ref1, true, hireTabActive ? accountPageActions.MOVE_TO_ONBOARDING : showOnboarding ? teamleadPageActive ? teamLeadActions.MOVE_TO_REHIRE : accountPageActions.MOVE_TO_REHIRE : teamLeadActions.MOVE_TO_HIRED)} disabled={accountPage && rehireTabActive ? true : disabled}>
+                        </> : <button className={`status-option green-color ${accountPage && rehireTabActive ? selectedCandidateData.status === candidateStatuses.TEAMLEAD_TOREHIRE ? 'active' : 'none' : ''}`} ref={ref1} onClick={() => handleClick(ref1, true, hireTabActive ? accountPageActions.MOVE_TO_ONBOARDING : showOnboarding ? teamleadPageActive ? teamLeadActions.MOVE_TO_REHIRE : accountPageActions.MOVE_TO_REHIRE : rehireTabActive ? teamLeadActions.MOVE_TO_REHIRE : teamLeadActions.MOVE_TO_HIRED)} disabled={accountPage && rehireTabActive ? true : disabled}>
                             <BsStopCircle className='status-icon' />
                             <br /><br/>
                             <div className='textt'>{rehireTabActive ? 'ReHire' : hireTabActive ? 'Onboarding' : showOnboarding ? 'ReHire' : 'Hire'}</div>

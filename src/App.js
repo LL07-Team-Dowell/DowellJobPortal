@@ -21,11 +21,15 @@ import AddJobScreen from './views/admin/screens/AddJobScreen/AddJobScreen';
 import { HrCandidateContextProvider } from './contexts/HrCandidateContext';
 import useDowellLogin from './hooks/useDowellLogin';
 import useTitle from './hooks/useTitle';
+import AfterSelectionScreen from './views/candidate/screens/AfterSelectionScreen/AfterSelectionScreen';
+import TeamsScreen from './views/candidate/screens/TeamsScreen/TeamsScreen';
+import { CandidateTaskContextProvider } from './contexts/CandidateTasksContext';
 
 function App() {
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [ candidateHired, setCandidateHired ] = useState(false);
 
   useDowellLogin(setUser, setLoading);
   useTitle("Dowell Job Portal");
@@ -150,7 +154,9 @@ function App() {
       <Route path="/" element={
         <NavigationContextProvider>
           <CandidateContextProvider>
-            <Teamlead />
+            <CandidateTaskContextProvider>
+              <Teamlead />
+            </CandidateTaskContextProvider>
           </CandidateContextProvider>
         </NavigationContextProvider>
       } >
@@ -166,11 +172,29 @@ function App() {
 
 
   return (
+    candidateHired ? <Routes>
+
+      <Route path='/' element={
+        <NavigationContextProvider>
+          <CandidateTaskContextProvider>
+            <AfterSelectionScreen user={user} />
+          </CandidateTaskContextProvider>
+        </NavigationContextProvider>
+      }>
+        <Route path=':section' element={<AfterSelectionScreen />} />
+      </Route>
+      <Route path='/teams' element={<TeamsScreen />}></Route>
+      <Route path='/user' element={<UserScreen afterSelection={true} />}></Route>
+      
+      <Route path='*' element={<ErrorPage />} />
+
+    </Routes> :
+
     <Routes>
 
       <Route path="/" element={
         <NavigationContextProvider>
-          <CandidateHomeScreen user={user} />
+          <CandidateHomeScreen user={user} hired={candidateHired} setHired={setCandidateHired} />
         </NavigationContextProvider>
       }>
         <Route path=":section" element={

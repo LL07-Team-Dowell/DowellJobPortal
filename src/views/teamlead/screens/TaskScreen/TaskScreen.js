@@ -1,5 +1,4 @@
 import ApplicantIntro from "../../components/ApplicantIntro/ApplicantIntro";
-import ApplicantDetails from "../../components/ApplicationDetails/ApplicationDetails"
 import AssignedProjectDetails from "../../components/AssignedProjectDetails/AssignedProjectDetails";
 import CustomHr from "../../components/CustomHr/CustomHr";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -10,12 +9,15 @@ import "./style.css";
 import { myAxiosInstance } from "../../../../lib/axios";
 import { routes } from "../../../../lib/routes";
 import { useNavigate } from "react-router-dom";
+import { useCandidateTaskContext } from "../../../../contexts/CandidateTasksContext";
+import AddTaskScreen from "../AddTaskScreen/AddTaskScreen";
 
 
-const TaskScreen = ({ currentUser, handleAddTaskBtnClick }) => {
-    const [ userTasks, setUserTasks ] = useState([]);
+const TaskScreen = ({ currentUser, handleAddTaskBtnClick, candidateAfterSelectionScreen, handleEditBtnClick }) => {
+    const { userTasks, setUserTasks } = useCandidateTaskContext();
     const [ currentProjects, setCurrentProjects ] = useState([]);
     const navigate = useNavigate();
+    const [ showAddTaskModal, setShowAddTaskModal ] = useState(false);
 
     const fetchUserTasks = async () => {
         const response = await myAxiosInstance.get(routes.Tasks);
@@ -41,17 +43,20 @@ const TaskScreen = ({ currentUser, handleAddTaskBtnClick }) => {
     return <>
         <div className="candidate-task-screen-container">
             
-            <ApplicantIntro showTask={true} applicant={currentUser} />
+            { 
+                !candidateAfterSelectionScreen &&
+                <>
+                    <ApplicantIntro showTask={true} applicant={currentUser} />
 
-            <ApplicantDetails />
+                    <CustomHr />
+                </>
+            }
 
-            <CustomHr />
-
-            <AssignedProjectDetails showTask={true} availableProjects={currentProjects} />
+            <AssignedProjectDetails showTask={true} availableProjects={candidateAfterSelectionScreen ? null : currentProjects} />
 
             {
                 React.Children.toArray(userTasks.map((task, index) => {
-                    return <CandidateTaskItem currentTask={task} taskNum={index + 1} />
+                    return <CandidateTaskItem currentTask={task} taskNum={index + 1} candidatePage={candidateAfterSelectionScreen} handleEditBtnClick={() => handleEditBtnClick(task)} />
                 }))
             }
 
