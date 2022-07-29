@@ -40,7 +40,7 @@ const AccountPage = () => {
     async function getApplications () {
         const response = await myAxiosInstance.get(routes.Applications);
         const candidatesToHire = response.data.filter(application => application.status === candidateStatuses.TEAMLEAD_HIRE);
-        const candidatesToRehire = response.data.filter(application => application.status === candidateStatuses.TO_REHIRE);
+        const candidatesToRehire = response.data.filter(application => application.status === candidateStatuses.TO_REHIRE || application.status === candidateStatuses.TEAMLEAD_TOREHIRE);
         const candidatesOnboarding = response.data.filter(application => application.status === candidateStatuses.ONBOARDING);
         const candidatesRejected = response.data.filter(application => application.status === candidateStatuses.REJECTED);
 
