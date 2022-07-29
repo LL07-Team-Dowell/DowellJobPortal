@@ -46,9 +46,42 @@
     margin-left: 0;
 }
 
+.candidate-task-container .candidate-task-status-container .task__Status__Container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-direction: column;
+    width: 30%;
+    margin-left: 5%;
+}
+
+.candidate-task-container .candidate-task-status-container .task__Status__Container .dropdown-btn{
+    padding: 15% 10%;
+    width: 100%;
+    white-space: nowrap;
+    margin: 5% 0;
+    justify-content: center;
+    transition: 0.35s ease-in-out;
+}
+
+.candidate-task-container .candidate-task-status-container .task__Status__Container .dropdown-btn.task__Active{
+    background-color: #57A639;
+    color: #fff;
+}
+
 @media (min-width: 768px) and (max-width: 991.98px) {
     .candidate-task-status-container .candidate-task-details span.task__Description{
         margin: 14% 0 4%;   
+    }
+    .candidate-task-container .candidate-task-status-container .task__Status__Container{
+        flex-direction: row;
+        width: 35%;
+    }
+    .candidate-task-container .candidate-task-status-container .task__Status__Container .dropdown-btn{
+        padding: 8% 10%;
+    }    
+    .candidate-task-container .candidate-task-status-container .task__Status__Container .dropdown-btn:last-child{
+        margin-left: 7%;
     }
 }
 @media (min-width: 992px){
@@ -59,5 +92,19 @@
     
     .candidate-task-status-container .candidate-task-details span.task__Description{
         margin-top: 7%;   
+    }
+
+    .candidate-task-container .candidate-task-status-container .task__Status__Container{
+        flex-direction: row;
+        width: 35%;
+    }
+    
+    .candidate-task-container .candidate-task-status-container .task__Status__Container .dropdown-btn{
+        padding: 6% 8%;
+        width: max-content;
+    }
+
+    .candidate-task-container .candidate-task-status-container .task__Status__Container .dropdown-btn:last-child{
+        margin-left: 7%;
     }
 }

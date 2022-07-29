@@ -5,7 +5,7 @@ import { candidateStatuses } from "../../utils/candidateStatuses";
 import "./style.css";
 
 
-const InterviewCard = ({ interviewDetails, job, currentApplicationStatus }) => {
+const InterviewCard = ({ interviewDetails, job, currentApplicationStatus, hrDiscordLink }) => {
     const navigate = useNavigate();
     
     const handleClick = (e) => {
@@ -24,12 +24,12 @@ const InterviewCard = ({ interviewDetails, job, currentApplicationStatus }) => {
                 <div className="interview__Status__Container">
 
                     <div className="interview__Status__Item">
-                        <AiOutlineCheckCircle className={`${currentApplicationStatus === candidateStatuses.SHORTLISTED ? 'status__Icon' : 'status__Icon__Xl'} green__Color`} />
-                        <span className={`${currentApplicationStatus === candidateStatuses.SHORTLISTED ? 'interview__Text' : 'interview__Text__No__Wrap'}`}>Interview with HR</span>
+                        <AiOutlineCheckCircle className={`${currentApplicationStatus === candidateStatuses.SELECTED ? 'status__Icon' : 'status__Icon__Xl'} green__Color`} />
+                        <span className={`${currentApplicationStatus === candidateStatuses.SELECTED ? 'interview__Text' : 'interview__Text__No__Wrap'}`}>Interview with HR</span>
                     </div>
 
                     {
-                        currentApplicationStatus === candidateStatuses.SHORTLISTED && <>
+                        currentApplicationStatus === candidateStatuses.SELECTED && <>
                             <div className="vertical__Line"></div>
 
                             <div className="interview__Status__Item">
@@ -42,9 +42,9 @@ const InterviewCard = ({ interviewDetails, job, currentApplicationStatus }) => {
                 </div>
                 
                 <div className="discord__Btn__Container">
-                    <button onClick={() => window.location.href = "https://discord.gg/xmmZgmYENW"}><a href={"https://discord.gg/xmmZgmYENW"} rel="noopener" aria-label="join meeting on discord">Discord</a></button>
+                    <button onClick={() => window.location.href = currentApplicationStatus === candidateStatuses.SELECTED ? hrDiscordLink : "https://discord.gg/xmmZgmYENW"}><a href={currentApplicationStatus === candidateStatuses.SELECTED ? hrDiscordLink : "https://discord.gg/xmmZgmYENW"} rel="noopener" aria-label="join meeting on discord">Discord</a></button>
                     {
-                        currentApplicationStatus === candidateStatuses.SHORTLISTED ? 
+                        currentApplicationStatus === candidateStatuses.SELECTED ? 
                         <span>Join link to have meeting with Teamlead</span> :
                         <span>Join link to have meeting with HR</span>
                     }
