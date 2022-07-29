@@ -37,7 +37,9 @@ const Teamlead = () => {
     const [ showApplicationDetails, setShowApplicationDetails ] = useState(false);
     const [ allTasks, setAllTasks ] = useState([]);
     const [ showAddTaskModal, setShowAddTaskModal ] = useState(false);
-    
+    const [ editTaskActive, setEditTaskActive ] = useState(false);
+    const [ currentTaskToEdit, setCurrentTaskToEdit ] = useState({});
+
     const sideNavbarRef = useRef(null);
 
     useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
@@ -106,6 +108,13 @@ const Teamlead = () => {
 
     }, [searchParams])
 
+    const handleEditTaskBtnClick = (currentData) => {
+        console.log(currentData)
+        setEditTaskActive(true);
+        setCurrentTaskToEdit(currentData);
+        setShowAddTaskModal(true);
+    }
+
     return <>
 
         <NavigationBar 
@@ -128,7 +137,7 @@ const Teamlead = () => {
 
         {
             showAddTaskModal && 
-            <AddTaskScreen closeTaskScreen={() => setShowAddTaskModal(false)} teamMembers={candidatesData.onboardingCandidates} updateTasks={setAllTasks} />
+            <AddTaskScreen closeTaskScreen={() => setShowAddTaskModal(false)} teamMembers={candidatesData.onboardingCandidates} updateTasks={setAllTasks} editPage={editTaskActive} setEditPage={setEditTaskActive} taskToEdit={currentTaskToEdit} />
         }
 
         {
@@ -181,7 +190,7 @@ const Teamlead = () => {
             
             section === "task" ? 
 
-            showCandidateTask ? <TaskScreen currentUser={currentTeamMember} handleAddTaskBtnClick={() => setShowAddTaskModal(true)}  /> :
+            showCandidateTask ? <TaskScreen currentUser={currentTeamMember} handleAddTaskBtnClick={() => setShowAddTaskModal(true)} handleEditBtnClick={handleEditTaskBtnClick}  /> :
             <>
                 <SelectedCandidates 
                     showTasks={true} 

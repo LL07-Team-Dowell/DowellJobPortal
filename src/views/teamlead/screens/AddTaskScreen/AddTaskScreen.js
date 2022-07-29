@@ -9,7 +9,7 @@ import { routes } from "../../../../lib/routes";
 import { useNavigate } from "react-router-dom";
 
 
-const AddTaskScreen = ({ teamMembers , closeTaskScreen, updateTasks }) => {
+const AddTaskScreen = ({ teamMembers , closeTaskScreen, updateTasks, afterSelectionScreen, currentUser, editPage, setEditPage, taskToEdit }) => {
 
     const ref = useRef(null);
     const [ showTaskForm, setShowTaskForm ] = useState(false);
@@ -22,7 +22,7 @@ const AddTaskScreen = ({ teamMembers , closeTaskScreen, updateTasks }) => {
     const [ disabled, setDisabled ] = useState(true);
     const navigate = useNavigate();
 
-    useClickOutside(ref, () => closeTaskScreen());
+    useClickOutside(ref, () => { closeTaskScreen(); !afterSelectionScreen && setEditPage(false) });
 
     useEffect (() => {
 
@@ -33,6 +33,28 @@ const AddTaskScreen = ({ teamMembers , closeTaskScreen, updateTasks }) => {
         setDisabled(false)
 
     }, [newTaskDetails])
+
+    useEffect (() => {
+
+        if (afterSelectionScreen) {
+            setNewTaskDetails(prevValue => { return { ...prevValue, username: currentUser }});
+            setShowTaskForm(true);
+        }
+
+    }, [afterSelectionScreen])
+
+    useEffect(() => {
+        if (editPage) {
+            
+            setNewTaskDetails({
+                username: taskToEdit.user,
+                title: taskToEdit.title,
+                description: taskToEdit.description,
+            });
+            setShowTaskForm(true);
+
+        }
+    }, [editPage])
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -58,6 +80,31 @@ const AddTaskScreen = ({ teamMembers , closeTaskScreen, updateTasks }) => {
             
             updateTasks(prevTasks => { return [ ...prevTasks, dataToSend ] } );
             closeTaskScreen();
+            { afterSelectionScreen ? navigate("/tasks") : navigate("/task"); }
+
+        } catch (err) {
+            console.log(err);
+            setDisabled(false);
+        }
+
+    }
+
+    const handleUpdateTaskBtnClick = async () => {
+
+        setDisabled(true);
+
+        const dataToSend = { ...newTaskDetails };
+        dataToSend.user = newTaskDetails.username;
+        delete dataToSend["username"];
+
+        try{
+
+            await myAxiosInstance.post(routes.Update_Task + taskToEdit.id + "/", dataToSend);
+            
+            updateTasks(prevTasks => { return [ ...prevTasks.filter(task => task.id !== taskToEdit.id) ] } );
+            updateTasks(prevTasks => { return [ ...prevTasks, dataToSend ] } );
+
+            closeTaskScreen();
             navigate("/task");
 
         } catch (err) {
@@ -75,19 +122,19 @@ const AddTaskScreen = ({ teamMembers , closeTaskScreen, updateTasks }) => {
                 <h1 className="title__Item">
                     {
                         showTaskForm ? <>
-                            <IoIosArrowBack onClick={() => setShowTaskForm(false)} style={{ cursor: "pointer" }} />
-                            New Task Details
+                            <IoIosArrowBack onClick={editPage ? () => { closeTaskScreen(); setEditPage(false); } : () => setShowTaskForm(false)} style={{ cursor: "pointer" }} />
+                            { editPage ? "Edit Task": "New Task Details" }
                         </> : <>Add new task</>
                     }
 
-                    <AiOutlineClose onClick={() => closeTaskScreen()} style={{ cursor: "pointer" }} />
+                    <AiOutlineClose onClick={() => { closeTaskScreen(); !afterSelectionScreen && setEditPage(false) }} style={{ cursor: "pointer" }} />
                 </h1>
                 {
                     showTaskForm ? <>
                         <input type={"text"} placeholder={"Task Assignee"} value={newTaskDetails.username} readOnly={true} />
                         <input type={"text"} placeholder={"Task Title"} name="title" value={newTaskDetails.title} onChange={handleChange} />
                         <textarea placeholder="Task Description" name="description" value={newTaskDetails.description} onChange={handleChange}></textarea>
-                        <button type={"button"} className="add__Task__Btn" disabled={disabled} onClick={handleNewTaskBtnClick}>Add Task</button>
+                        <button type={"button"} className="add__Task__Btn" disabled={disabled} onClick={() => editPage ? handleUpdateTaskBtnClick() : handleNewTaskBtnClick()}>{editPage ? "Update Task" : "Add Task"}</button>
                     </> :
                     
                     <>
