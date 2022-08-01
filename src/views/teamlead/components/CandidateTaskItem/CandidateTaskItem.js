@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { BiEdit } from "react-icons/bi";
 import { formatDateAndTime } from "../../../../helpers/helpers";
 import { myAxiosInstance } from "../../../../lib/axios";
@@ -9,9 +10,18 @@ import "./style.css";
 
 const CandidateTaskItem = ({ taskNum, currentTask, candidatePage, handleEditBtnClick, updateTasks }) => {
 
-    const handleTaskStatusUpdate = async (updateSelection) => {
+    const [ currentTaskStatus, setCurrentTaskStatus ] = useState("");
+
+    useEffect(() => {
         
+        setCurrentTaskStatus(currentTask.status);
+
+    }, [currentTask.status])
+
+    const handleTaskStatusUpdate = async (updateSelection) => {
+
         currentTask.status = updateSelection;
+        setCurrentTaskStatus(updateSelection)
 
         try{
 
@@ -29,6 +39,7 @@ const CandidateTaskItem = ({ taskNum, currentTask, candidatePage, handleEditBtnC
 
         } catch (err) {
             console.log(err);
+            setCurrentTaskStatus("");
         }
     } 
     
@@ -39,7 +50,19 @@ const CandidateTaskItem = ({ taskNum, currentTask, candidatePage, handleEditBtnC
                     <span> {taskNum}. Task: {currentTask.title} { !candidatePage && <BiEdit className="edit-icon" onClick={handleEditBtnClick} /> }</span>
                     <span className="task__Description">Task Description: {currentTask.description}</span>
                 </div>
-                <DropdownButton currentSelection={currentTask.status} selections={["Completed", "Incomplete"]} handleSelectionClick={handleTaskStatusUpdate} />
+                
+                <div className="task__Status__Container">
+                    {
+                        candidatePage ? <>
+                            <DropdownButton currentSelection={currentTask.status} removeDropDownIcon={true} />
+                        </> : <>
+                            <DropdownButton className={currentTaskStatus === "Complete" && "task__Active"} currentSelection={"Complete"} removeDropDownIcon={true} handleClick={handleTaskStatusUpdate} />
+                            <DropdownButton className={currentTaskStatus === "Incomplete" && "task__Active"} currentSelection={"Incomplete"} removeDropDownIcon={true} handleClick={handleTaskStatusUpdate} />
+                        </>
+                    }
+                    
+                </div>
+                
             </div>
             <div className="candidate-task-date-container">
                 <span>Given on {formatDateAndTime(currentTask.created)}</span>

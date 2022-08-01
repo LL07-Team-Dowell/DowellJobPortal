@@ -11,7 +11,6 @@ export const newApplicationState = {
     hr_remarks: "Currently receiving applications",
     status: "Pending",
     others: {
-        jobDescription: "",
         agreeToAllTerms: false,
         academic_qualification_type: "",
         academic_qualification: "",
@@ -21,6 +20,8 @@ export const newApplicationState = {
     },
     applicant: "",
     job: "",
+    title: "",
+    description: "",
 }
 
 export const excludedApplicantInfo = [
@@ -41,10 +42,11 @@ export const excludedApplicantInfo = [
 export const mutableNewApplicationStateNames = {
     job: "job",
     applicant: "applicant",
+    title: "title",
     country: "country",
     freelancePlatform: "freelancePlatform",
     freelancePlatformUrl: "freelancePlatformUrl",
-    others_property_jobDescription: "jobDescription",
+    jobDescription: "description",
     others_property_agreeToAll: "agreeToAllTerms",
     others_property_qualification_type: "academic_qualification_type",
     others_property_qualification: "academic_qualification",

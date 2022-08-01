@@ -4,6 +4,7 @@ import { myAxiosInstance } from '../../../../lib/axios';
 import AppliedCard from '../AppliedCard/AppliedCard';
 import { routes } from '../../../../lib/routes';
 import InterviewCard from '../InterviewCard/InterviewCard';
+import { mutableNewApplicationStateNames } from '../../../../contexts/NewApplicationContext';
 
 
 function Applied({ currentUser }) {
@@ -59,7 +60,12 @@ function Applied({ currentUser }) {
                 {
                   React.Children.toArray(userInterviews.map(interview => {
                     return <>
-                      <InterviewCard interviewDetails={interview} job={appliedJobs.find(appliedJob => appliedJob.id === interview.job_applied)} />
+                      <InterviewCard 
+                        interviewDetails={interview} 
+                        job={appliedJobs.find(appliedJob => appliedJob.id === interview.job_applied)} 
+                        currentApplicationStatus={currentUserApplications.find(application => application.job === interview.job_applied).status} 
+                        hrDiscordLink={currentUserApplications.find(application => application.job === interview.job_applied).others[mutableNewApplicationStateNames.hr_discord_link]}
+                      />
                     </>
                   }))
                 }

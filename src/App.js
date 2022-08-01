@@ -185,7 +185,8 @@ function App() {
       </Route>
       <Route path='/teams' element={<TeamsScreen />}></Route>
       <Route path='/user' element={<UserScreen afterSelection={true} />}></Route>
-      
+      <Route path="/logout" element={<Logout/>}/>
+
       <Route path='*' element={<ErrorPage />} />
 
     </Routes> :

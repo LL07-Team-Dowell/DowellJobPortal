@@ -5,7 +5,7 @@ import useClickOutside from '../../../../hooks/useClickOutside';
 import "./style.css";
 
 
-const DropdownButton = ({ currentSelection, selections, adminPageActive, handleSelectionClick }) => {
+const DropdownButton = ({ currentSelection, selections, adminPageActive, handleSelectionClick, removeDropDownIcon, className, handleClick }) => {
     const currentSelectionRef = useRef(null);
     const selectionsRef = useRef(null);
     const [showDropdown, setShowDropdown] = useState(false);
@@ -23,9 +23,9 @@ const DropdownButton = ({ currentSelection, selections, adminPageActive, handleS
     }
 
     return <>
-        <div className={`dropdown-btn ${adminPageActive ? currentSelectionRef.current ? currentSelectionRef.current.innerText.toLocaleLowerCase() === 'active' ? 'green__Color abs__Pos' : 'orange__Color abs__Pos' : 'abs__Pos' : ''}`} onClick={() => setShowDropdown(prevValue => { return !prevValue })}>
+        <div className={`dropdown-btn ${className ? className : ''} ${adminPageActive ? currentSelectionRef.current ? currentSelectionRef.current.innerText.toLocaleLowerCase() === 'active' ? 'green__Color abs__Pos' : 'orange__Color abs__Pos' : 'abs__Pos' : ''}`} onClick={() => handleClick ? handleClick(currentSelection) : setShowDropdown(prevValue => { return !prevValue })}>
             <span ref={currentSelectionRef}>{ currentSelection }</span>
-            <KeyboardArrowDownIcon className="down-icon" />
+            { !removeDropDownIcon && <KeyboardArrowDownIcon className="down-icon" /> }
 
             {
                 selections ? 
