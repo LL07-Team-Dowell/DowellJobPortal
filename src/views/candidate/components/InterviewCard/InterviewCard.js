@@ -42,7 +42,7 @@ const InterviewCard = ({ interviewDetails, job, currentApplicationStatus, hrDisc
                 </div>
                 
                 <div className="discord__Btn__Container">
-                    <button onClick={() => window.location.href = currentApplicationStatus === candidateStatuses.SELECTED ? hrDiscordLink : "https://discord.gg/xmmZgmYENW"}><a href={currentApplicationStatus === candidateStatuses.SELECTED ? hrDiscordLink : "https://discord.gg/xmmZgmYENW"} rel="noopener" aria-label="join meeting on discord">Discord</a></button>
+                    <button onClick={() => window.location.href = currentApplicationStatus === candidateStatuses.SELECTED ? hrDiscordLink : "https://discord.gg/FkBxVUKsAq"}><a href={currentApplicationStatus === candidateStatuses.SELECTED ? hrDiscordLink : "https://discord.gg/FkBxVUKsAq"} rel="noopener" aria-label="join meeting on discord">Discord</a></button>
                     {
                         currentApplicationStatus === candidateStatuses.SELECTED ? 
                         <span>Join link to have meeting with Teamlead</span> :
