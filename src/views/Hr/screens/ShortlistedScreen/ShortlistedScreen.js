@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 function ShortlistedScreen({ shortlistedCandidates, jobData }) {
   const navigate = useNavigate();
 
-  const handleClick = (data) => navigate(`/job/after_initial_meet/${data.name}`, { state: { candidate: data } });
+  const handleClick = (data) => navigate(`/job/after_initial_meet/${data.applicant}`, { state: { candidate: data } });
 
   return (
     <div className='Applied__wrapper'>
