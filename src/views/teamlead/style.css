@@ -1,6 +1,5 @@
 .jobs-container, .tasks-container{
-    padding: 0 7%;
-    margin-bottom: 30%;
+    padding: 0 7% 24%;
     background: transparent;
 }
 
@@ -18,12 +17,16 @@
         padding-top: 3%;
         padding-bottom: 3%;
     }
+    .jobs-container, .tasks-container {
+        padding-bottom: 12%;
+    }
 }
 
 @media (min-width: 992px){
     .jobs-container, .tasks-container{
         width: 86%;
-        margin: 0 auto 10%;
+        margin: 0 auto;
+        padding-bottom: 8%;
     }
     .jobs-container > *, .tasks-container > *{
         width: calc(94% /3);
