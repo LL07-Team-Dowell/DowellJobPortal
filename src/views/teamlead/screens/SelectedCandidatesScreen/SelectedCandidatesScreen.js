@@ -35,6 +35,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
     const [ remarks, setRemarks ] = useState("");
     const [ hrDiscordLink, setHrDiscordLink ] = useState("");
     const [ candidatePlatform, setCandidatePlatform ] = useState("");
+    const [ assignedProject, setAssignedProject ] = useState("Hr Hiring")
 
     useState(() => {
 
@@ -171,7 +172,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
             case hrPageActions.MOVE_TO_SELECTED:
                 if (!selectedCandidateData) return;
 
-                await myAxiosInstance.post(routes.Update_Application + selectedCandidateData.id + "/", { applicant: selectedCandidateData.applicant, status: candidateStatuses.SELECTED, job: selectedCandidateData.job, others: { ...selectedCandidateData.others, [mutableNewApplicationStateNames.hr_discord_link] : hrDiscordLink } });
+                await myAxiosInstance.post(routes.Update_Application + selectedCandidateData.id + "/", { applicant: selectedCandidateData.applicant, status: candidateStatuses.SELECTED, job: selectedCandidateData.job, others: { ...selectedCandidateData.others, [mutableNewApplicationStateNames.hr_discord_link] : hrDiscordLink, [mutableNewApplicationStateNames.assigned_project]: assignedProject } });
                 updateCandidateData(prevCandidates => { return prevCandidates.filter(candidate => candidate.id !== selectedCandidateData.id) })
                 
                 return navigate("/shortlisted");
@@ -203,7 +204,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
 
             {!hrPageActive && <AssignedProjectDetails />}
 
-            {initialMeet && hrPageActive && <AssignedProjectDetails availableProjects={availableProjects} />}
+            {initialMeet && hrPageActive && <AssignedProjectDetails assignedProject={assignedProject} availableProjects={availableProjects} handleSelectionClick={(selection) => setAssignedProject(selection)} />}
 
             {hrPageActive && <CustomHr className={'relative-hr'} />}
 
