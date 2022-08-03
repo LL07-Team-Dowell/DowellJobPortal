@@ -14,11 +14,11 @@ import { AiOutlinePlus } from "react-icons/ai";
 
 import "./style.css";
 import ErrorPage from "../error/ErrorPage";
-import { PageUnderConstruction } from "../under_construction/ConstructionPage";
 import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
+import AdminUserScreen from "./screens/AdminUserScreen/AdminUserScreen";
 
 
-const AdminPage = () => {
+const AdminPage = ({ currentUser }) => {
     const { section, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
     const [jobs, setJobs] = useState([]);
     const [applications, setApplications] = useState([]);
@@ -96,13 +96,7 @@ const AdminPage = () => {
                 
             </> : 
             
-            section === "user" ?
-            <>
-                <div className="admin__Page__Container">
-                    <NavigationBar title={'User'} handleMenuIconClick={() => setSideNavbarActive(true)} />
-                    <PageUnderConstruction />
-                </div>
-            </> : <ErrorPage disableNav={true} />
+            section === "user" ? <AdminUserScreen currentUser={currentUser} /> : <ErrorPage disableNav={true} />
 
         }
 

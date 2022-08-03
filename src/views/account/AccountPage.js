@@ -15,9 +15,9 @@ import SideNavigationBar from "./components/SideNavigationBar/SideNavigationBar"
 import useClickOutside from "../../hooks/useClickOutside";
 import { routes } from "../../lib/routes";
 import { candidateStatuses } from "../candidate/utils/candidateStatuses";
-import { PageUnderConstruction } from "../under_construction/ConstructionPage";
+import UserScreen from "./screens/UserScreen/UserScreen";
 
-const AccountPage = () => {
+const AccountPage = ({ currentUser }) => {
     const { section, searchParams, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
     const { candidatesData, dispatchToCandidatesData } = useCandidateContext();
     const [currentCandidate, setCurrentCandidate] = useState({});
@@ -191,7 +191,7 @@ const AccountPage = () => {
                 </div>
             </> : 
             
-            section === "user" ? <PageUnderConstruction /> : <>
+            section === "user" ? <UserScreen currentUser={currentUser} /> : <>
                 <ErrorPage disableNav={true} />
             </>
 

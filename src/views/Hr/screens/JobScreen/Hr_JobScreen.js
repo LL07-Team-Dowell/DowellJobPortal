@@ -18,12 +18,12 @@ import { routes } from '../../../../lib/routes';
 import { mutableNewApplicationStateNames } from '../../../../contexts/NewApplicationContext';
 import { candidateStatuses } from '../../../candidate/utils/candidateStatuses';
 import { useHrCandidateContext } from '../../../../contexts/HrCandidateContext';
-import { PageUnderConstruction } from '../../../under_construction/ConstructionPage';
 import LoadingSpinner from '../../../admin/components/LoadingSpinner/LoadingSpinner';
+import UserScreen from '../UserScreen/UserScreen';
 
 
 
-function Hr_JobScreen() {
+function Hr_JobScreen({ currentUser }) {
   
   const { section, sub_section, path, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
   const [jobs, setJobs] = useState([]);
@@ -117,7 +117,7 @@ function Hr_JobScreen() {
         <NavigationBar
           handleMenuIconClick={() => setSideNavbarActive(true)}
           className={'hr_navigation'}
-          title={section === "shortlisted" ? "Shortlisted" : ""}
+          title={section === "shortlisted" ? "Shortlisted" : section === "user" ? "User" : ""}
           changeToBackIcon={sub_section !== undefined ? true : false}
           handleBackIconClick={() => navigate(-1)}
         />
@@ -128,7 +128,7 @@ function Hr_JobScreen() {
             <ShortlistedScreen shortlistedCandidates={candidateData} jobData={jobs} />
           </> :
 
-          sub_section === undefined && section === "user" ? <PageUnderConstruction /> :
+          sub_section === undefined && section === "user" ? <UserScreen currentUser={currentUser} /> :
 
           sub_section === undefined &&
           <><ErrorPage disableNav={true} /></>
