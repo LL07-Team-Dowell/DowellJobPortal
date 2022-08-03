@@ -48,7 +48,7 @@
 }
 
 @media screen and (min-width: 992px) {
-    .user__Page__Container {
+    .user__Page__Container.hr {
         width: 82%;
         margin-top: 2%;
     }

@@ -1,4 +1,4 @@
-.user__Page__Container {
+.user__Page__Container.teamlead {
     width: 86%;
     margin: 0 auto;
     font-family: 'Inter', sans-serif;
@@ -49,7 +49,7 @@
 }
 
 @media screen and (min-width: 992px) {
-    .user__Page__Container {
+    .user__Page__Container.teamlead {
         width: 72%;
         margin-top: 2%;
     }

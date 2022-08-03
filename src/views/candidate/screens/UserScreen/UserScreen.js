@@ -9,7 +9,7 @@ function UserScreen({ afterSelection, currentUser }) {
   return (
     <div>
       <Navbar title="User"/>
-      <div className="user__Page__Container">
+      <div className="user__Page__Container user">
 
         <div className="user__Intro__Item__Container">
               <div className="user__Intro__Item">

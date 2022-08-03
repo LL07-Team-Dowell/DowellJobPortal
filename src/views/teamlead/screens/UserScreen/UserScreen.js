@@ -3,7 +3,7 @@ import "./style.css";
 
 const UserScreen = ({ currentUser }) => {
     return <>
-        <div className="user__Page__Container">
+        <div className="user__Page__Container teamlead">
 
             <div className="user__Intro__Item__Container">
                 <div className="user__Intro__Item">
