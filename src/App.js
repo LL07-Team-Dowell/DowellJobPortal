@@ -57,7 +57,7 @@ function App() {
       <Route path="/" element={
         <NavigationContextProvider>
           <CandidateContextProvider>
-            <AccountPage />
+            <AccountPage currentUser={user} />
           </CandidateContextProvider>
         </NavigationContextProvider>
       } >
@@ -77,7 +77,7 @@ function App() {
 
       <Route path="/" element={
         <NavigationContextProvider>
-          <AdminPage />
+          <AdminPage currentUser={user} />
         </NavigationContextProvider>} 
       >
         <Route path=':section' element={
@@ -116,7 +116,7 @@ function App() {
       <Route path="/" element={
         <NavigationContextProvider>
           <HrCandidateContextProvider>
-            <Hr_JobScreen/>
+            <Hr_JobScreen currentUser={user} />
           </HrCandidateContextProvider>
         </NavigationContextProvider>
       }>
@@ -155,7 +155,7 @@ function App() {
         <NavigationContextProvider>
           <CandidateContextProvider>
             <CandidateTaskContextProvider>
-              <Teamlead />
+              <Teamlead currentUser={user} />
             </CandidateTaskContextProvider>
           </CandidateContextProvider>
         </NavigationContextProvider>
@@ -184,7 +184,7 @@ function App() {
         <Route path=':section' element={<AfterSelectionScreen />} />
       </Route>
       <Route path='/teams' element={<TeamsScreen />}></Route>
-      <Route path='/user' element={<UserScreen afterSelection={true} />}></Route>
+      <Route path='/user' element={<UserScreen afterSelection={true} currentUser={user} />}></Route>
       <Route path="/logout" element={<Logout/>}/>
 
       <Route path='*' element={<ErrorPage />} />
@@ -207,7 +207,7 @@ function App() {
 
       <Route path="/logout" element={<Logout/>}/>
       <Route path="/alerts" element={<AlertScreen/>}/>
-      <Route path="/user" element={<UserScreen/>}/>
+      <Route path="/user" element={<UserScreen currentUser={user}/>}/>
 
       <Route path="/applied" element={ 
         <NavigationContextProvider>

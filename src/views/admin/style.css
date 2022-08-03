@@ -19,6 +19,7 @@
 .admin__Page__Container .admin__Jobs__Container{
     width: 89%;
     margin: 4% auto;
+    padding-bottom: 1%;
 }
 
 .admin__Page__Container .current__Job__Display span {
@@ -110,7 +111,8 @@
 
 .admin__Page__Container .current__Job__Display{
     width: 87%;
-    margin: 3% auto 30%;
+    margin: 3% auto;
+    padding-bottom: 30%;
 }
 
 .admin__Page__Container .current__Job__Display span{
@@ -179,7 +181,7 @@
     width: 61.4%;
     display: block;
     border-radius: 20px;
-    margin: 25% auto;
+    margin: 15% auto 4%;
     padding-top: 5.3%;
     padding-bottom: 5.3%;
     right: 0;

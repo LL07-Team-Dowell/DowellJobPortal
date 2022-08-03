@@ -48,6 +48,12 @@ const JobApplicationScreen = () => {
 
         if (!location.state.currentUser) return;
 
+        setDisableApplyBtn(false);
+        generalTermsSelectionsRef.current.splice(0, generalTermsSelectionsRef.current.length);
+        technicalTermsSelectionsRef.current.splice(0, technicalTermsSelectionsRef.current.length);
+        paymentTermsSelectionsRef.current.splice(0, paymentTermsSelectionsRef.current.length);
+        workflowTermsSelectionsRef.current.splice(0, workflowTermsSelectionsRef.current.length);
+        
         Object.keys(location.state.jobToApplyTo.others || {}).forEach(item => {
             dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_OTHERS, payload: { stateToChange: item, value: "" }})
         })
@@ -59,7 +65,7 @@ const JobApplicationScreen = () => {
         dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_JOB_DESCRIPTION, payload: { stateToChange: mutableNewApplicationStateNames.jobDescription, value: location.state.jobToApplyTo.description }})
         
 
-    }, []);
+    }, [location]);
 
     useEffect(() => {
 

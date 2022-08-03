@@ -17,13 +17,13 @@ import "./style.css";
 import { routes } from "../../lib/routes";
 import { candidateStatuses } from "../candidate/utils/candidateStatuses";
 import { candidateDataReducerActions } from "../../reducers/CandidateDataReducer";
-import { PageUnderConstruction } from "../under_construction/ConstructionPage";
 import Button from "../admin/components/Button/Button";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddTaskScreen from "./screens/AddTaskScreen/AddTaskScreen";
+import UserScreen from "./screens/UserScreen/UserScreen";
 
 
-const Teamlead = () => {
+const Teamlead = ({ currentUser }) => {
     const { section, searchParams, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
     const { candidatesData, dispatchToCandidatesData } = useCandidateContext();
     const [ showCandidate, setShowCandidate ] = useState(false);
@@ -208,7 +208,7 @@ const Teamlead = () => {
                 </div>
             </> : 
             
-            section === "user" ? <PageUnderConstruction /> : <>
+            section === "user" ? <UserScreen currentUser={currentUser} /> : <>
                 <ErrorPage disableNav={true} />
             </>
         }
