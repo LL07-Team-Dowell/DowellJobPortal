@@ -11,6 +11,7 @@ export const newJobApplicationDataReducerActions = {
     UPDATE_JOB_DESCRIPTION: "update_job_description",
     UPDATE_DATE_APPLIED: "update_date_applied",
     UPDATE_JOB_TITLE: "update_job_title",
+    REWRITE_EXISTING_STATE: "rewrite_existing_new_job_state",
 }
 
 export const newJobApplicationDataReducer = (currentState, action) => {
@@ -42,6 +43,11 @@ export const newJobApplicationDataReducer = (currentState, action) => {
             if (!action.payload.stateToChange) return currentState;
 
             return { ...currentState, [ action.payload.stateToChange ]: action.payload.value }
+
+        case newJobApplicationDataReducerActions.REWRITE_EXISTING_STATE:
+            if (!action.payload.newState) return currentState;
+
+            return action.payload.newState;
     
         default:
             return currentState;

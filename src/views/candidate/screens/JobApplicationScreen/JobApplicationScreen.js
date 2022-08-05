@@ -31,6 +31,7 @@ const JobApplicationScreen = () => {
     const technicalTermsSelectionsRef = useRef([]);
     const paymentTermsSelectionsRef = useRef([]);
     const workflowTermsSelectionsRef = useRef([]);
+    const [removeFreelanceOptions, setRemoveFreelanceOptions] = useState(false);
     
     const [formPage, setFormPage] = useState(1);
 
@@ -53,6 +54,16 @@ const JobApplicationScreen = () => {
         technicalTermsSelectionsRef.current.splice(0, technicalTermsSelectionsRef.current.length);
         paymentTermsSelectionsRef.current.splice(0, paymentTermsSelectionsRef.current.length);
         workflowTermsSelectionsRef.current.splice(0, workflowTermsSelectionsRef.current.length);
+
+        const currentState = { ...newApplicationData };
+
+        if (location.state.jobToApplyTo.typeof === "Employee" || location.state.jobToApplyTo.typeof === "Internship") {
+
+            delete currentState[mutableNewApplicationStateNames.freelancePlatform];
+            delete currentState[mutableNewApplicationStateNames.freelancePlatformUrl];
+
+            dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.REWRITE_EXISTING_STATE, payload: { newState: currentState }});
+        }
         
         Object.keys(location.state.jobToApplyTo.others || {}).forEach(item => {
             dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_OTHERS, payload: { stateToChange: item, value: "" }})
@@ -63,13 +74,18 @@ const JobApplicationScreen = () => {
         dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_DATE_APPLIED, payload: { stateToChange: mutableNewApplicationStateNames.others_date_applied, value: new Date() }})
         dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_JOB_TITLE, payload: { stateToChange: mutableNewApplicationStateNames.title, value: location.state.jobToApplyTo.title }})
         dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_JOB_DESCRIPTION, payload: { stateToChange: mutableNewApplicationStateNames.jobDescription, value: location.state.jobToApplyTo.description }})
-        
+
+        if (location.state.jobToApplyTo.typeof === "Employee" || location.state.jobToApplyTo.typeof === "Internship") return setRemoveFreelanceOptions(true);
+
+        setRemoveFreelanceOptions(false);
 
     }, [location]);
 
     useEffect(() => {
 
         if (formPage === 1) {
+
+            if (generalTermsSelectionsRef.current.length === 0) return setDisableNextBtn(false);
 
             if (generalTermsSelectionsRef.current.every(selection => selection.checked === true)) return setDisableNextBtn(false);
 
@@ -79,6 +95,8 @@ const JobApplicationScreen = () => {
 
         if (formPage === 2) {
 
+            if (technicalTermsSelectionsRef.current.length === 0) return setDisableNextBtn(false);
+
             if (technicalTermsSelectionsRef.current.every(selection => selection.checked === true)) return setDisableNextBtn(false);
 
             return setDisableNextBtn(true);
@@ -86,12 +104,16 @@ const JobApplicationScreen = () => {
         }
         if (formPage === 3) {
 
+            if (paymentTermsSelectionsRef.current.length === 0) return setDisableNextBtn(false);
+
             if (paymentTermsSelectionsRef.current.every(selection => selection.checked === true)) return setDisableNextBtn(false);
 
             return setDisableNextBtn(true);
 
         }
         if (formPage === 4) {
+
+            if (workflowTermsSelectionsRef.current.length === 0) return setDisableNextBtn(false);
 
             if (workflowTermsSelectionsRef.current.every(selection => selection.checked === true)) return setDisableNextBtn(false);
 
@@ -112,11 +134,13 @@ const JobApplicationScreen = () => {
             
             if ((selectCountryOptionRef.current.value === "default_") || (newApplicationData.country.length < 1)) return setDisableNextBtn(true);
             
-            dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM, payload:{ stateToChange: mutableNewApplicationStateNames.freelancePlatform, value: freelancePlatformRef.current.value }})
+            !removeFreelanceOptions && dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM, payload:{ stateToChange: mutableNewApplicationStateNames.freelancePlatform, value: freelancePlatformRef.current.value }})
             
-            if ((freelancePlatformRef.current.value === "default_") || (newApplicationData.freelancePlatformUrl.length < 1) ) return setDisableNextBtn(true);
+            if (!removeFreelanceOptions) {
+                if ((freelancePlatformRef.current.value === "default_") || (newApplicationData.freelancePlatformUrl.length < 1) ) return setDisableNextBtn(true);
             
-            if ( !validateUrl(newApplicationData.freelancePlatformUrl, true)) return setDisableNextBtn(true);
+                if ( !validateUrl(newApplicationData.freelancePlatformUrl, true)) return setDisableNextBtn(true);    
+            }
             
             if (qualificationSelectionRef.current.value === "default_") return setDisableNextBtn(true);
             
@@ -139,7 +163,13 @@ const JobApplicationScreen = () => {
         newApplicationData.country, 
         newApplicationData.freelancePlatformUrl, 
         newApplicationData.others[mutableNewApplicationStateNames.others_property_qualification_type], 
-        newApplicationData.others[mutableNewApplicationStateNames.others_property_agreeToAll]
+        newApplicationData.others[mutableNewApplicationStateNames.others_property_agreeToAll],
+        generalTermsSelectionsRef.current,
+        technicalTermsSelectionsRef.current,
+        paymentTermsSelectionsRef.current,
+        workflowTermsSelectionsRef.current,
+        section,
+        removeFreelanceOptions,
         ]
     )
 
@@ -213,7 +243,6 @@ const JobApplicationScreen = () => {
                                     <h2><b>General Terms and Conditions</b></h2>
                                     <p>Tick each box to continue</p>
                                     <p>Thank you for applying to freelancing opportunity in uxlivinglab. Read following terms and conditions and accept</p>
-                                    
                                     {React.Children.toArray(Object.keys(currentJob.general_terms || {}).map((key) => createCheckBoxData(currentJob.general_terms[key], generalTermsSelectionsRef)))}
                                 </div>
                                 </>
@@ -273,26 +302,34 @@ const JobApplicationScreen = () => {
                                         </div>
                                     </div>
                                     
-                                    <div className="job__Application__Item">
-                                        <h2>Freelancing Profile<span className="yellow-color required-indicator">*</span></h2>
+                                    {
+                                        removeFreelanceOptions ? <></> : 
                                         
-                                        <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
-                                            <select name="freelancePlaform" ref={freelancePlatformRef} defaultValue={'default_'}>
-                                                <option value={'default_'} disabled>Select Option</option>
-                                                {React.Children.toArray(freelancingPlatforms.map(platform => {
-                                                    return <option value={platform.toLocaleLowerCase()}>{platform}</option>
-                                                }))}
-                                            </select>
-                                            <AiOutlineDown className="dropdown__Icon" />
-                                        </div>
-                                    </div>
+                                        <>
+                                            <div className="job__Application__Item">
+                                                <h2>Freelancing Profile<span className="yellow-color required-indicator">*</span></h2>
+                                                
+                                                <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
+                                                    <select name="freelancePlaform" ref={freelancePlatformRef} defaultValue={'default_'}>
+                                                        <option value={'default_'} disabled>Select Option</option>
+                                                        {React.Children.toArray(freelancingPlatforms.map(platform => {
+                                                            return <option value={platform.toLocaleLowerCase()}>{platform}</option>
+                                                        }))}
+                                                    </select>
+                                                    <AiOutlineDown className="dropdown__Icon" />
+                                                </div>
+                                            </div>
 
-                                    <div className="job__Application__Item">
-                                        <label className="input__Text__Container">
-                                            <h2>Link to profile on freelancing platform<span className="yellow-color required-indicator">*</span></h2>
-                                            <input aria-label="link to profile on freelance platform" type={'text'} placeholder={'Link to profile on platform'} value={newApplicationData.freelancePlatformUrl} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM_URL, payload: { stateToChange: mutableNewApplicationStateNames.freelancePlatformUrl, value: e.target.value }})} />
-                                        </label>
-                                    </div>
+                                            <div className="job__Application__Item">
+                                                <label className="input__Text__Container">
+                                                    <h2>Link to profile on freelancing platform<span className="yellow-color required-indicator">*</span></h2>
+                                                    <input aria-label="link to profile on freelance platform" type={'text'} placeholder={'Link to profile on platform'} value={newApplicationData.freelancePlatformUrl} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM_URL, payload: { stateToChange: mutableNewApplicationStateNames.freelancePlatformUrl, value: e.target.value }})} />
+                                                </label>
+                                            </div>
+
+                                        </>
+                                    }
+                                    
 
                                     <div className="job__Application__Item">
                                         <h2>Academic Qualifications<span className="yellow-color required-indicator">*</span></h2>
@@ -368,7 +405,7 @@ const JobApplicationScreen = () => {
 
                         <textarea readOnly={true} value={currentJob.description} rows={10}></textarea>
 
-                        <h2><b>About D'Well Research</b></h2>
+                        <h2 className="about__Dowell__Title"><b>About D'Well Research</b></h2>
                         <p className="about__Dowell">{dowellInfo}</p>
 
                         <div className='apply_Btn_Container'>
