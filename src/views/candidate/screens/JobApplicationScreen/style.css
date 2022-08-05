@@ -28,6 +28,31 @@
     color: var(--white);
 }
 
+.candidate__Job__Application__Container .about__Dowell__Title {
+    margin-top: 12%;
+}
+
+.candidate__Job__Application__Container .about__Dowell {
+    white-space: pre-wrap;
+    line-height: 24px;
+}
+
+.candidate__Job__Application__Container .social__Icons__Container{
+    display: flex;
+    margin: 8% 0;
+    justify-content: space-between;
+    width: 80%;
+}
+
+.candidate__Job__Application__Container .social__Icons__Container .social__Icon__Item {
+    transition: 0.3s ease-in-out;
+}
+
+.candidate__Job__Application__Container .social__Icons__Container .social__Icon__Item:hover,
+.candidate__Job__Application__Container .social__Icons__Container .social__Icon__Item:focus {
+    filter: brightness(0.7);
+}
+
 .candidate__Job__Application__Container .job__Application__Title, 
 .candidate__Job__Application__Container .job__Application__Item, 
 .candidate__Job__Application__Container .job__Application__Items{
@@ -95,8 +120,12 @@
 
 .candidate__Job__Application__Container .relative-hr{
     position: relative;
-    margin: 3% auto 6%;
+    margin: 5% auto 6%;
     width: 100%;
+}
+
+.candidate__Job__Application__Container .relative-hr.hr-2 {
+    margin: 1% auto 6%;
 }
 
 h1, h2 {
@@ -307,7 +336,7 @@ p{
 
 @media screen and (min-width: 992px) {
     h1{
-        margin-bottom: 5%;
+        margin-bottom: 1%;
     }
     h2{
         margin: 3% 0 2%;
@@ -315,6 +344,15 @@ p{
 
     .candidate__Job__Application__Container .relative-hr{
         margin: 4% auto;
+    }
+
+    .candidate__Job__Application__Container .relative-hr.hr-2{
+        margin: 1% auto 3%;
+    }
+
+    .candidate__Job__Application__Container .social__Icons__Container{
+        width: 30%;
+        margin: 3% 0 4%;
     }
 
     .candidate__Job__Application__Container .job__Skills__Info span{
@@ -405,10 +443,26 @@ p{
     .candidate__Job__Application__Container .job__Application__Item .select__Dropdown__Container{
         margin: 0;
     }
+
+    .candidate__Job__Application__Container .job__Application__Items {
+        margin-bottom: 4%;
+        margin-top: 4%;
+    }
+
+    .candidate__Job__Application__Container .about__Dowell__Title {
+        margin-top: 4%;
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
     .candidate__Job__Application__Container .apply_Btn_Container .apply-btn, .candidate__Job__Application__Container form button{
         padding: 4% 15%;
+        width: max-content;
+    }
+    .candidate__Job__Application__Container .about__Dowell__Title {
+        margin-top: 8%;
+    }
+    .candidate__Job__Application__Container .social__Icons__Container{
+        width: 50%;
     }
 }

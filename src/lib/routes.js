@@ -9,6 +9,7 @@ const routes = {
   Add_Job: '/jobs/add_job/',
   Update_Job: 'jobs/update_job/',
   Hr_View: '/jobs/hrview/',
+  Add_Appplication: '/jobs/add_application/',
   Update_Application: '/jobs/update_application/',
   Teamlead_View: '/jobs/team_lead_view/',
   Accounts_View: '/jobs/account_view/',
