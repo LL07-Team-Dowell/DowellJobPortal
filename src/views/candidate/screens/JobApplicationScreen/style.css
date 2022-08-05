@@ -28,6 +28,12 @@
     color: var(--white);
 }
 
+
+.candidate__Job__Application__Container .about__Dowell {
+    white-space: pre-wrap;
+    line-height: 24px;
+}
+
 .candidate__Job__Application__Container .job__Application__Title, 
 .candidate__Job__Application__Container .job__Application__Item, 
 .candidate__Job__Application__Container .job__Application__Items{
@@ -315,6 +321,10 @@ p{
 
     .candidate__Job__Application__Container .relative-hr{
         margin: 4% auto;
+    }
+
+    .candidate__Job__Application__Container .about__Dowell {
+        margin-bottom: 4%;
     }
 
     .candidate__Job__Application__Container .job__Skills__Info span{

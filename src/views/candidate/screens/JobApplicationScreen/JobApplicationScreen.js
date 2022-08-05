@@ -7,7 +7,7 @@ import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import { dowellLoginUrl, myAxiosInstance } from "../../../../lib/axios";
 import { AiOutlineDown } from "react-icons/ai";
 import { validateUrl } from "../../../../helpers/helpers";
-import { countriesData, freelancingPlatforms, qualificationsData } from "../../utils/jobFormApplicationData";
+import { countriesData, dowellInfo, freelancingPlatforms, qualificationsData } from "../../utils/jobFormApplicationData";
 import { mutableNewApplicationStateNames, useNewApplicationContext } from "../../../../contexts/NewApplicationContext";
 import { newJobApplicationDataReducerActions } from "../../../../reducers/NewJobApplicationDataReducer";
 
@@ -367,7 +367,10 @@ const JobApplicationScreen = () => {
                         <h2><b>Job Description</b></h2>
 
                         <textarea readOnly={true} value={currentJob.description} rows={10}></textarea>
-                        
+
+                        <h2><b>About D'Well Research</b></h2>
+                        <p className="about__Dowell">{dowellInfo}</p>
+
                         <div className='apply_Btn_Container'>
                             <button className="apply-btn" onClick={handleSubmitApplicationBtnClick} disabled={disableApplyBtn}>Apply</button>
                         </div>
