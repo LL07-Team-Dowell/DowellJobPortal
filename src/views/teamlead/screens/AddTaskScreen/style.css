@@ -8,23 +8,24 @@
     background: var(--background-blur);
     backdrop-filter: blur(30px);
     height: 100%;
-    width: 100vmax;
+    width: 100%;
     position: fixed;
     top: 0;
     left: 0;
     animation: fadeIn 0.2s ease-in-out;
     z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
 
 .add__New__Task__Container {
     background-color: var(--white);
     width: 80%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     border-radius: 10px;
     overflow-y: auto;
+    padding: 4% 2%;
+    max-height: 80%;
 }
 
 .add__New__Task__Container .title__Item {
@@ -37,6 +38,7 @@
     cursor: pointer;
     border-radius: 10px;
     transition: 0.3s ease-in-out;
+    margin: 4% 0 3%;
 }
 
 .add__New__Task__Container .team__Members__Container .team__Member__Item:hover,
@@ -52,6 +54,7 @@
     display: block;
     font-family: 'Inter', sans-serif;
     border-radius: 10px;
+    margin: 6% 0;
 }
 
 .add__New__Task__Container input, .add__New__Task__Container textarea {
@@ -59,6 +62,7 @@
     border: 1px solid var(--yellow-color);
     width: 100%;
     font-size: 0.875rem;
+    padding: 3%;
 }
 
 .add__New__Task__Container input:read-only {
@@ -75,6 +79,7 @@
     cursor: pointer;
     transition: 0.3s ease-in-out;
     filter: brightness(1);
+    padding: 4% 5%;
 }
 
 .add__New__Task__Container .add__Task__Btn:hover,
@@ -97,6 +102,16 @@
     }
 }
 
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .add__New__Task__Container h1.title__Item{
+        margin-bottom: 6%;
+    }
+    
+    .add__New__Task__Container .add__Task__Btn{
+        padding: 3%;   
+    }
+}
+
 @media screen and (min-width: 992px) {
     .add__New__Task__Container {
         padding: 2%;
@@ -105,7 +120,7 @@
     }
 
     .add__New__Task__Container .team__Members__Container .team__Member__Item {
-        margin: 3% 0;
+        margin: 2% 0;
         padding: 2%;
     }
 
@@ -114,7 +129,7 @@
     }
 
     .add__New__Task__Container input, .add__New__Task__Container textarea {
-        padding: 1.5%;
+        padding: 2%;
     }
 
     .add__New__Task__Container .add__Task__Btn{

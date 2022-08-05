@@ -116,7 +116,7 @@ function JobScreen({ currentUser, hired, setHired }) {
                                             <div className='row-text'>
                                                 <h4><b>{job.title}</b></h4>
                                                 <p className='detail dowell'>Dowell Ux living lab</p>
-                                                <p className='detail skill'>Skills: {job.skills}</p>
+                                                <p className='detail skill'>Skills: {job.skills.length > 20 ? job.skills.slice(0, 20) + "..." : job.skills}</p>
                                                 {
                                                     appliedJobs.find(appliedJob => appliedJob.job === job.id ) == undefined ?
                                                     <button className='apply-button' onClick={() => handleApplyButtonClick(job)}>Apply</button> :

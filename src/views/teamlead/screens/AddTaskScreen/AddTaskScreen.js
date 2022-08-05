@@ -141,7 +141,7 @@ const AddTaskScreen = ({ teamMembers , closeTaskScreen, updateTasks, afterSelect
                     showTaskForm ? <>
                         <input type={"text"} placeholder={"Task Assignee"} value={newTaskDetails.username} readOnly={true} />
                         <input type={"text"} placeholder={"Task Title"} name="title" value={newTaskDetails.title} onChange={handleChange} />
-                        <textarea placeholder="Task Description" name="description" value={newTaskDetails.description} onChange={handleChange}></textarea>
+                        <textarea placeholder="Task Description" name="description" value={newTaskDetails.description} onChange={handleChange} rows={5}></textarea>
                         <button type={"button"} className="add__Task__Btn" disabled={disabled} onClick={() => editPage ? handleUpdateTaskBtnClick() : handleNewTaskBtnClick()}>{editPage ? "Update Task" : "Add Task"}</button>
                     </> :
                     
