@@ -12,6 +12,17 @@ export const qualificationsData = [
     "Others",
 ]
 
+export const dowellInfo = "D'Well Research validates and explores each stage of open innovation using user experience research from the field to support user-centered product design of medium and large companies globally. \nOur areas of expertise include market intelligence, user experience research, and open innovation consulting. We have a full-fledged global field team for executing user experience studies in various sectors. \nWe support the client team in developing new phones, apps, websites, operating systems, medical equipment, cars, insurance, advertising concepts, industrial products, etc. DoWell is hiring for their new project, UX Living Lab, a unique living lab organized globally. \nDoWell does crowdsourcing using open innovation engagement model to interact with users, then analyze the data and present it to the client team for innovating their products, services, and processes."
+
+export const dowellLinks = [
+    { link: "https://www.youtube.com/channel/UC_Ftf9dTQtKHS2N0KD0duwg", title: "YouTube", icon: ""},
+    { link: "https://www.linkedin.com/showcase/uxlivinglab/?viewAsMember=true", title: "LinkedIn", icon: ""},
+    { link: "https://twitter.com/uxlivinglab", title: "Twitter", icon: ""},
+    { link: "https://www.facebook.com/livinglabstories", title: "Facebook", icon: ""},
+    { link: "https://www.instagram.com/livinglabstories/", title: "Instagram", icon: ""},
+    { link: "http://www.uxlivinglab.com/", title: "Website", icon: ""},
+]
+
 export const countriesData = [
     "Afghanistan",
     "Albania",
