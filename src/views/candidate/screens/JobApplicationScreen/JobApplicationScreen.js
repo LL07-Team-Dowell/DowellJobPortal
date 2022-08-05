@@ -5,9 +5,9 @@ import Footer from "../../components/Footer/Footer";
 import CustomHr from "../../../teamlead/components/CustomHr/CustomHr";
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import { dowellLoginUrl, myAxiosInstance } from "../../../../lib/axios";
-import { AiOutlineDown } from "react-icons/ai";
+import { AiOutlineDown, AiOutlinePlayCircle } from "react-icons/ai";
 import { validateUrl } from "../../../../helpers/helpers";
-import { countriesData, dowellInfo, freelancingPlatforms, qualificationsData } from "../../utils/jobFormApplicationData";
+import { countriesData, dowellInfo, dowellLinks, freelancingPlatforms, qualificationsData } from "../../utils/jobFormApplicationData";
 import { mutableNewApplicationStateNames, useNewApplicationContext } from "../../../../contexts/NewApplicationContext";
 import { newJobApplicationDataReducerActions } from "../../../../reducers/NewJobApplicationDataReducer";
 
@@ -394,20 +394,37 @@ const JobApplicationScreen = () => {
                         <CustomHr className={'relative-hr'} />
                         <div className="job__Skills__Info">
                             <span>
-                                Skills: { currentJob.skills }
+                                <AiOutlinePlayCircle />
+                                Start Date: Immediately
                             </span>
                             <span>
                                 <BusinessCenterIcon className="small-icon" />
-                                { currentJob.time_period}
+                                Duration: { currentJob.time_period}
+                            </span>
+                        </div>
+                        <CustomHr className={'relative-hr hr-2'} />
+                        <div className="job__Skills__Info">
+                            <span>
+                                Skills: { currentJob.skills }
                             </span>
                         </div>
 
                         <h2><b>Job Description</b></h2>
 
-                        <textarea readOnly={true} value={currentJob.description} rows={10}></textarea>
+                        <p className="about__Dowell">{currentJob.description}</p>
 
                         <h2 className="about__Dowell__Title"><b>About D'Well Research</b></h2>
                         <p className="about__Dowell">{dowellInfo}</p>
+
+                        <div className="social__Icons__Container">
+                            {
+                                React.Children.toArray(dowellLinks.map(dowellLink => {
+                                    return <a aria-label={dowellLink.title} href={dowellLink.link} rel="noopener" className="social__Icon__Item">
+                                        {dowellLink.icon}
+                                    </a>
+                                }))
+                            }
+                        </div>
 
                         <div className='apply_Btn_Container'>
                             <button className="apply-btn" onClick={handleSubmitApplicationBtnClick} disabled={disableApplyBtn}>Apply</button>
