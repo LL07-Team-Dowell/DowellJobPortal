@@ -13,6 +13,7 @@ import { newJobApplicationDataReducerActions } from "../../../../reducers/NewJob
 
 import "./style.css";
 import { handleShareBtnClick } from "../../utils/helperFunctions";
+import { routes } from "../../../../lib/routes";
 
 const JobApplicationScreen = () => {
     const location = useLocation();
@@ -190,7 +191,7 @@ const JobApplicationScreen = () => {
 
         setDisableNextBtn(true);
         
-        await myAxiosInstance.post("/jobs/add_application/", newApplicationData);
+        await myAxiosInstance.post(routes.Add_Appplication, newApplicationData);
 
         navigate("/applied");
     }
