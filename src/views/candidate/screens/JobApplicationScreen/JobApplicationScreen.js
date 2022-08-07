@@ -419,7 +419,7 @@ const JobApplicationScreen = () => {
                         <div className="social__Icons__Container">
                             {
                                 React.Children.toArray(dowellLinks.map(dowellLink => {
-                                    return <a aria-label={dowellLink.title} href={dowellLink.link} rel="noopener" className="social__Icon__Item">
+                                    return <a aria-label={dowellLink.title} href={dowellLink.link} rel="noopener" target="_blank" className="social__Icon__Item">
                                         {dowellLink.icon}
                                     </a>
                                 }))
