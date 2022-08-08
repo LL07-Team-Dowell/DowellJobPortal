@@ -84,7 +84,7 @@ export const formatDateAndTime = (date) => {
 
 export const changeToTitleCase = (testStr) => {
 
-    if ( typeof (testStr) !== "string") throw "Not a string";
+    if ( typeof (testStr) !== "string") return testStr;
 
     return testStr[0].toLocaleUpperCase() + testStr.slice(1).toLocaleLowerCase();
 

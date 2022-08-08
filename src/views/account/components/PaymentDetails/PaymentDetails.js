@@ -11,10 +11,13 @@ const PaymentDetails = ({ candidatePlatform, handlePlatformSelectionClick }) => 
                 <p>Payment</p>
                 <DropdownButton currentSelection={'$30'} selections={['$30', '$35']} />
             </div>
-            <div className="payment-info-container">
-                <p>Platform</p>
-                <DropdownButton currentSelection={candidatePlatform} selections={freelancingPlatforms} handleSelectionClick={handlePlatformSelectionClick} />
-            </div>
+            {
+                candidatePlatform !== null && <div className="payment-info-container">
+                    <p>Platform</p>
+                    <DropdownButton currentSelection={candidatePlatform} selections={freelancingPlatforms} handleSelectionClick={handlePlatformSelectionClick} />
+                </div>
+            }
+            
         </div>
     </>
 }
