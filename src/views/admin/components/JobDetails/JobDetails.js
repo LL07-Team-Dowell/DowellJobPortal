@@ -82,7 +82,7 @@ const JobDetails = ({ currentJob, editPage, updateJobDetails }) => {
                     <CustomHr />
 
                     <span className="display__Flex edit__Page__Font__Size">
-                        <b>Type of job: </b> <DropdownButton currentSelection={currentJob[jobKeys.jobType]} selections={["Freelance", "Employee", "Internship"]} handleSelectionClick={(selection) => updateJobDetails(prevValue => { return { ...prevValue, [jobKeys.jobType]: selection } })} />
+                        <b>Type of job: </b> <DropdownButton currentSelection={currentJob[jobKeys.jobType] ? currentJob[jobKeys.jobType] : "Freelance"} selections={["Freelance", "Employee", "Internship"]} handleSelectionClick={(selection) => updateJobDetails(prevValue => { return { ...prevValue, [jobKeys.jobType]: selection } })} />
                     </span>
 
                     <CustomHr />
@@ -94,18 +94,18 @@ const JobDetails = ({ currentJob, editPage, updateJobDetails }) => {
                     <CustomHr />
 
                     <span className="display__Flex edit__Page__Font__Size">
-                        <b>Payment: </b> <DropdownButton currentSelection={"$30"} selections={["$30", "$35"]} handleSelectionClick={() => {}} />
+                        <b>Payment: </b> <DropdownButton currentSelection={currentJob.others && currentJob.others[jobKeys.paymentForJob] ? currentJob.others[jobKeys.paymentForJob] : "$30"} selections={["$30", "$35"]} handleSelectionClick={(selection) => updateJobDetails(prevValue => { return { ...prevValue, [jobKeys.others]: { ...prevValue["others"], [jobKeys.paymentForJob]: selection } } })} />
                     </span>
 
                     <CustomHr />
 
-                    <span className="description__Text display__Flex"><b>Job {jobKeys.jobDescription}</b></span>
+                    <span className="description__Text display__Flex"><p><b>Job {jobKeys.jobDescription}</b></p></span>
                     <textarea value={currentJob[jobKeys.jobDescription]} rows={3} name={jobKeys.jobDescription} onChange={handleChange}></textarea>
 
                     <CustomHr />
 
                     <span><b>General Terms</b></span>
-                    <div className="textarea__Div__Container edit__Page">
+                    <div className={`textarea__Div__Container edit__Page ${Object.keys(currentJob[jobKeys.generalTerms] || {}).length > 0 ? '' : 'transparent__Bg'}`}>
                         {
                             React.Children.toArray(Object.keys(currentJob[jobKeys.generalTerms] || {}).map(key => {
                                 return <p>{key}. <input type={'text'} name={key} value={currentJob[jobKeys.generalTerms][key]} onChange={(e) => handleChange(e, jobKeys.generalTerms)} /> </p>
@@ -116,7 +116,7 @@ const JobDetails = ({ currentJob, editPage, updateJobDetails }) => {
                     <CustomHr />
 
                     <span><b>Technical Specifications:</b></span>
-                    <div className="textarea__Div__Container edit__Page">
+                    <div className={`textarea__Div__Container edit__Page ${Object.keys(currentJob[jobKeys.technicalSpecifications] || {}).length > 0 ? '' : 'transparent__Bg'}`}>
                         {
                             React.Children.toArray(Object.keys(currentJob[jobKeys.technicalSpecifications] || {}).map(key => {
                                 return <p>{key}. <input type={'text'} value={currentJob[jobKeys.technicalSpecifications][key]} onChange={(e) => handleChange(e, jobKeys.technicalSpecifications)} /></p>
@@ -127,7 +127,7 @@ const JobDetails = ({ currentJob, editPage, updateJobDetails }) => {
                     <CustomHr />
 
                     <span><b>Payment Terms:</b></span>
-                    <div className="textarea__Div__Container edit__Page">
+                    <div className={`textarea__Div__Container edit__Page  ${Object.keys(currentJob[jobKeys.paymentTerms] || {}).length > 0 ? '' : 'transparent__Bg'}`}>
                         {
                             React.Children.toArray(Object.keys(currentJob[jobKeys.paymentTerms] || {}).map(key => {
                                 return <p>{key}. <input type={'text'} name={key} value={currentJob[jobKeys.paymentTerms][key]} onChange={(e) => handleChange(e, jobKeys.paymentTerms)} /></p>
@@ -138,7 +138,7 @@ const JobDetails = ({ currentJob, editPage, updateJobDetails }) => {
                     <CustomHr />
 
                     <span><b>Workflow:</b></span>
-                    <div className="textarea__Div__Container edit__Page">
+                    <div className={`textarea__Div__Container edit__Page  ${Object.keys(currentJob[jobKeys.workflowOfJob] || {}).length > 0 ? '' : 'transparent__Bg'}`}>
                         {
                             React.Children.toArray(Object.keys(currentJob[jobKeys.workflowOfJob] || {}).map(key => {
                                 return <p>{key}. <input type={'text'} value={currentJob[jobKeys.workflowOfJob][key]} onChange={(e) => handleChange(e, jobKeys.workflowOfJob)} /></p>
@@ -149,7 +149,7 @@ const JobDetails = ({ currentJob, editPage, updateJobDetails }) => {
                     <CustomHr />
 
                     <span><b>Others:</b></span>
-                    <div className="textarea__Div__Container edit__Page">
+                    <div className={`textarea__Div__Container edit__Page  ${Object.keys(currentJob[jobKeys.others] || {}).length > 0 ? '' : 'transparent__Bg'}`}>
                         {
                             React.Children.toArray(Object.keys(currentJob[jobKeys.others] || {}).map(key => {
                                 return <p>{key}. <input type={'text'} value={currentJob[jobKeys.others][key]} onChange={(e) => handleChange(e, jobKeys.others)} /></p>
@@ -168,7 +168,7 @@ const JobDetails = ({ currentJob, editPage, updateJobDetails }) => {
                         <span className="display__Flex"><BusinessCenterIcon />{currentJob[jobKeys.jobTimePeriod]}</span>
                     </div>
 
-                    <span className="display__Flex grey__Color">Payment <DropdownButton currentSelection={'$30'} selections={['$30', '$35']} /></span>
+                    <span className="display__Flex grey__Color">Payment <DropdownButton currentSelection={currentJob.others && currentJob.others[jobKeys.paymentForJob] ? currentJob.others[jobKeys.paymentForJob] : "$30"} removeDropDownIcon={true} /></span>
                     
                     <span className="description__Text display__Flex">
                         <b>Job {jobKeys.jobDescription}</b>
@@ -177,7 +177,7 @@ const JobDetails = ({ currentJob, editPage, updateJobDetails }) => {
                     <textarea value={currentJob[jobKeys.jobDescription]} readOnly={true} rows={3} name={jobKeys.jobDescription}></textarea>
 
                     <span><b>General Terms</b></span>
-                    <div className="textarea__Div__Container">
+                    <div className={`textarea__Div__Container ${Object.keys(currentJob[jobKeys.generalTerms] || {}).length > 0 ? '' : 'transparent__Bg'}`}>
                         {
                             React.Children.toArray(Object.keys(currentJob[jobKeys.generalTerms] || {}).map(key => {
                                 return <p>{key}. {currentJob[jobKeys.generalTerms][key]} <br /></p>
@@ -186,7 +186,7 @@ const JobDetails = ({ currentJob, editPage, updateJobDetails }) => {
                     </div>
 
                     <span><b>Technical Specifications</b></span>
-                    <div className="textarea__Div__Container">
+                    <div className={`textarea__Div__Container ${Object.keys(currentJob[jobKeys.technicalSpecifications] || {}).length > 0 ? '' : 'transparent__Bg'}`}>
                         {
                             React.Children.toArray(Object.keys(currentJob[jobKeys.technicalSpecifications] || {}).map(key => {
                                 return <p>{key}. {currentJob[jobKeys.technicalSpecifications][key]} <br /></p>
@@ -195,7 +195,7 @@ const JobDetails = ({ currentJob, editPage, updateJobDetails }) => {
                     </div>
 
                     <span><b>Payment Terms</b></span>
-                    <div className="textarea__Div__Container">
+                    <div className={`textarea__Div__Container ${Object.keys(currentJob[jobKeys.paymentTerms] || {}).length > 0 ? '' : 'transparent__Bg'}`}>
                         {
                             React.Children.toArray(Object.keys(currentJob[jobKeys.paymentTerms] || {}).map(key => {
                                 return <p>{key}. {currentJob[jobKeys.paymentTerms][key]} <br /></p>
@@ -204,7 +204,7 @@ const JobDetails = ({ currentJob, editPage, updateJobDetails }) => {
                     </div>
 
                     <span><b>Workflow</b></span>
-                    <div className="textarea__Div__Container">
+                    <div className={`textarea__Div__Container ${Object.keys(currentJob[jobKeys.workflowOfJob] || {}).length > 0 ? '' : 'transparent__Bg'}`}>
                         {
                             React.Children.toArray(Object.keys(currentJob[jobKeys.workflowOfJob] || {}).map(key => {
                                 return <p>{key}. {currentJob[jobKeys.workflowOfJob][key]} <br /></p>
@@ -213,9 +213,10 @@ const JobDetails = ({ currentJob, editPage, updateJobDetails }) => {
                     </div>
 
                     <span><b>Others</b></span>
-                    <div className="textarea__Div__Container">
+                    <div className={`textarea__Div__Container ${Object.keys(currentJob[jobKeys.others] || {}).length > 0 ? ( Object.keys(currentJob[jobKeys.others] || {}).length === 1 && Object.keys(currentJob[jobKeys.others] || {})[0] === jobKeys.paymentForJob ) ? 'transparent__Bg' : '' : 'transparent__Bg'}`}>
                         {
                             React.Children.toArray(Object.keys(currentJob[jobKeys.others] || {}).map(key => {
+                                if (key === jobKeys.paymentForJob) return <></>
                                 return <p>{currentJob[jobKeys.others][key]} <br /></p>
                             }))
                         }
