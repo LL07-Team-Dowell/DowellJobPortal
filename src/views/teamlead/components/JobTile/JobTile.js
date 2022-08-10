@@ -27,7 +27,7 @@ const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClic
             {
                 jobData ? <>
                     <div className={`job__Details ${adminPageActive ? 'flex__Display' : ''}`}>
-                        <h2><b>{jobData.title}</b></h2>
+                        <h2><b>{jobData.title && jobData.title.length > 21 ? jobData.title.slice(0, 21) + "..." : jobData.title}</b></h2>
                         {
                             adminPageActive && <div className="edit__Job__Container" onClick={() => handleEditIconClick(jobData)}>
                                 <FiEdit />
