@@ -6,6 +6,10 @@
     font-family: var(--inter-font);
 }
 
+.admin__Page__Container .transparent__Bg {
+    background: transparent !important;
+}
+
 .admin__Page__Container .navbar-container .menu__Icon__Container{
     display: flex;
     align-items: center;
@@ -84,6 +88,31 @@
     align-items: center;
     margin: 3% 0;
     font-size: 0.875rem;
+}
+
+.admin__Page__Container .current__Job__Display .textarea__Div__Container .new__Key__Value__Container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.admin__Page__Container .current__Job__Display .textarea__Div__Container.edit__Page.transparent__Bg {
+    padding: 0;
+}
+
+.admin__Page__Container .current__Job__Display .textarea__Div__Container .new__Key__Value__Container:not(:last-child) {
+    margin-bottom: 5%;
+}
+
+.admin__Page__Container .current__Job__Display .textarea__Div__Container .new__Key__Value__Container > *:nth-child(odd) {
+    margin-right: 4%;
+    flex-basis: 28%;
+}
+
+.admin__Page__Container .current__Job__Display .textarea__Div__Container .new__Key__Value__Container .remove__Key__Value__Icon {
+    cursor: pointer;
+    color: #57A639;
+    flex-basis: 15%;
 }
 
 .admin__Page__Container .current__Job__Display textarea,
@@ -223,9 +252,33 @@
         padding-bottom: 3.3%;
         width: 40%;
     }
+    .admin__Page__Container .current__Job__Display .textarea__Div__Container.edit__Page.transparent__Bg {
+        padding-top: 2%;
+        padding-bottom: 2%;
+    }
+    .admin__Page__Container .current__Job__Display .textarea__Div__Container .new__Key__Value__Container:not(:last-child) {
+        margin-bottom: 5%;
+    }
+    .admin__Page__Container .current__Job__Display .textarea__Div__Container .new__Key__Value__Container > *:nth-child(odd) {
+        margin-right: 4%;
+        flex-basis: 30%;
+    }
+    .admin__Page__Container .current__Job__Display .textarea__Div__Container .new__Key__Value__Container .remove__Key__Value__Icon {
+        flex-basis: 12%;
+    }
+    
 }
 
 @media screen and (min-width: 992px){
+    .admin__Page__Container .transparent__Bg {
+        margin-bottom: 4% !important;
+    }
+    .admin__Page__Container .current__Job__Display{
+        padding-bottom: 2%;
+    }
+    .admin__Page__Container .current__Job__Display span.title__Text .custom-hr {
+        margin: 3% 0 6%;
+    }
     .admin__Page__Container .navbar-container .menu__Icon__Container h2{
         margin-left: 11.2%;
     }
@@ -270,14 +323,23 @@
     .admin__Page__Container .current__Job__Display .textarea__Div__Container{
         padding: 0.5% 3%;
     }
+    .admin__Page__Container .current__Job__Display .textarea__Div__Container .new__Key__Value__Container:not(:last-child) {
+        margin-bottom: 2%;
+    }
+    .admin__Page__Container .current__Job__Display .textarea__Div__Container .new__Key__Value__Container > *:nth-child(odd) {
+        margin-right: 4%;
+        flex-basis: 30%;
+    }
+    .admin__Page__Container .current__Job__Display .textarea__Div__Container .new__Key__Value__Container .remove__Key__Value__Icon {
+        flex-basis: 10%;
+    }
     .admin__Page__Container .add__Btn.rel__Pos{
         margin-left: 10.5%;
     } 
     .admin__Page__Container .add__Btn.rel__Pos{
         margin-top: 15%;
-        padding-top: 3%;
-        padding-bottom: 3%;
-        width: 18%;
+        padding: 2%;
+        width: 14%;
         margin-left: 0;
         margin-right: auto;
         margin-bottom: 0;

@@ -24,6 +24,7 @@ import useTitle from './hooks/useTitle';
 import AfterSelectionScreen from './views/candidate/screens/AfterSelectionScreen/AfterSelectionScreen';
 import TeamsScreen from './views/candidate/screens/TeamsScreen/TeamsScreen';
 import { CandidateTaskContextProvider } from './contexts/CandidateTasksContext';
+import { NewJobTermsContextProvider } from './contexts/NewJobTermsContext';
 
 function App() {
 
@@ -97,7 +98,9 @@ function App() {
 
       <Route path="/add-job" element={
         <NavigationContextProvider>
-          <AddJobScreen />
+          <NewJobTermsContextProvider>
+            <AddJobScreen />
+          </NewJobTermsContextProvider>
         </NavigationContextProvider>} 
       />
 
