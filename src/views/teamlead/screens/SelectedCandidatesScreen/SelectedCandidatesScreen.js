@@ -202,7 +202,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
 
             {!hrPageActive && <CustomHr />}
 
-            {!hrPageActive && <AssignedProjectDetails />}
+            {!hrPageActive && <AssignedProjectDetails assignedProject={selectedCandidateData.others[mutableNewApplicationStateNames.assigned_project]} removeDropDownIcon={true} />}
 
             {initialMeet && hrPageActive && <AssignedProjectDetails assignedProject={assignedProject} availableProjects={availableProjects} handleSelectionClick={(selection) => setAssignedProject(selection)} />}
 

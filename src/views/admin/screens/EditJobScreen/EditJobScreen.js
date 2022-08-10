@@ -7,7 +7,7 @@ import Button from "../../components/Button/Button";
 import JobDetails from "../../components/JobDetails/JobDetails";
 import { AiOutlineSave } from "react-icons/ai";
 import { myAxiosInstance } from "../../../../lib/axios";
-import { routes } from "../../../../lib/request";
+import { routes } from "../../../../lib/routes";
 
 
 const EditJobScreen = () => {

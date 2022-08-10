@@ -58,7 +58,7 @@ const Teamlead = ({ currentUser }) => {
     async function getTasks() {
         const response = await myAxiosInstance.get(routes.Tasks);
         const usersWithTasks = [...new Map(response.data.map(task => [ task.user, task ])).values()];
-        setAllTasks(usersWithTasks)
+        setAllTasks(usersWithTasks.reverse())
         return
     }
 

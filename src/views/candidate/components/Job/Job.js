@@ -14,10 +14,12 @@ import { handleShareBtnClick } from '../../utils/helperFunctions';
 import { candidateStatuses } from '../../utils/candidateStatuses';
 import Navbar from '../Navbar/Navbar';
 import Footer from "../Footer/Footer";
+import LoadingSpinner from '../../../admin/components/LoadingSpinner/LoadingSpinner';
 
 
 function JobScreen({ currentUser, hired, setHired }) {
     const [jobs, setJobs] = useState([]);
+    const [jobsLoading, setJobsLoading] = useState(true);
     const [appliedJobs, setAppliedJobs] = useState([]);
     const navigate = useNavigate();
     const { section } = useNavigationContext();
@@ -59,6 +61,7 @@ function JobScreen({ currentUser, hired, setHired }) {
                 
                 const request = await myAxiosInstance.get(routes.Jobs);
                 setJobs(request.data);
+                setJobsLoading(false);
                 return;
 
             } catch (error) {
@@ -100,6 +103,8 @@ function JobScreen({ currentUser, hired, setHired }) {
                     {
                         section == undefined || section === "home" ? <>
                             {
+                                jobsLoading ? <LoadingSpinner /> :
+
                                 React.Children.toArray(jobs.map(job => {
                                 
                                 if (!job.is_active) return <></>

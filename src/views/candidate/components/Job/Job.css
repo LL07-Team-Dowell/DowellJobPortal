@@ -170,6 +170,11 @@
     top: 7%;
   }
 
+.row #loading {
+  display: block;
+  margin: 1% auto;
+}
+
 @media screen and (min-width: 992px) {
   .container-wrapper .search__wrapper .search__container, .row{
     width: 87%;

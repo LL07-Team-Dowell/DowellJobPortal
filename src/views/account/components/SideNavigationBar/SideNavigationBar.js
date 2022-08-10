@@ -45,8 +45,8 @@ const SideNavigationBar = ({ className, sideNavRef, closeSideNavbar, isNotificat
                 <Link to={''}><li>Support</li></Link>
                 <CustomHr />
 
+                <button className="sidebar-logout-btn" onClick={() => navigate("/logout")}>Logout</button>
             </ul>
-            <button className="sidebar-logout-btn" onClick={() => navigate("/logout")}>Logout</button>
         </div>
     </>
 }

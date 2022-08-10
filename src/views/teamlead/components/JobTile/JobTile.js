@@ -27,7 +27,7 @@ const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClic
             {
                 jobData ? <>
                     <div className={`job__Details ${adminPageActive ? 'flex__Display' : ''}`}>
-                        <h2><b>{jobData.title}</b></h2>
+                        <h2><b>{jobData.title && jobData.title.length > 21 ? jobData.title.slice(0, 21) + "..." : jobData.title}</b></h2>
                         {
                             adminPageActive && <div className="edit__Job__Container" onClick={() => handleEditIconClick(jobData)}>
                                 <FiEdit />
@@ -35,7 +35,7 @@ const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClic
                             </div>
                         }
                     </div>
-                    <p>Skills: {jobData.skills}</p>
+                    <p>Skills: {jobData.skills && jobData.skills.length > 20 ? jobData.skills.slice(0, 21) + "..." : jobData.skills}</p>
                     <div className={`job__Details__Container`}>
                         <div className="job__Detail__Item">
                             <BusinessCenterIcon />
@@ -66,7 +66,7 @@ const JobTile = ({ setShowCandidate, showTask, setShowCandidateTask, disableClic
                 
                 <>
                     <div className="applicant-details">
-                        <h2><b>{showTask ? taskData.user : hrPageActive ? candidateData[mutableNewApplicationStateNames.applicant] && candidateData[mutableNewApplicationStateNames.applicant] : candidateData.applicant}</b></h2>
+                        <h2><b>{showTask ? taskData.user : hrPageActive ? candidateData[mutableNewApplicationStateNames.applicant] && candidateData[mutableNewApplicationStateNames.applicant] : candidateData.applicant && candidateData.applicant.length > 20 ? candidateData.applicant.slice(0, 21) + "..." : candidateData.applicant}</b></h2>
                         <p>{showTask ? formatDateAndTime(taskData.created) : formatDateAndTime(candidateData.others[mutableNewApplicationStateNames.others_date_applied])}</p>
                     </div>
                     <p>{hrPageActive ? `` : `Job: ${showTask ? taskData.title : jobTitle}` }</p>

@@ -97,7 +97,6 @@
 }
 
 .sidebar-nav-container .sidebar-logout-btn{
-    position: absolute;
     background: var(--white-color);
     border: none;
     outline: none;
@@ -105,10 +104,9 @@
     padding: 6% 16.5%;
     font-size: 1.25rem;
     line-height: 24.2px;
-    bottom: 15%;
-    left: 50%;
-    transform: translateX(-50%);
     cursor: pointer;
+    display: block;
+    margin: 5% auto 0;
 }
 
 @media (min-width: 576px) and (max-width: 767.98px){
@@ -130,7 +128,6 @@
     }
 
     .sidebar-nav-container .sidebar-logout-btn{
-        bottom: 17%;
         padding: 4.5% 13.375%;
     }
 }
@@ -159,7 +156,6 @@
     }
     
     .sidebar-nav-container .sidebar-logout-btn{
-        bottom: 16%;
         padding: 4% 8.25%;
     }
 
@@ -190,7 +186,6 @@
     }
 
     .sidebar-nav-container .sidebar-logout-btn{
-        bottom: 20%;
         padding: 3% 7.25%;
     }
 }
@@ -220,7 +215,6 @@
     }
 
     .sidebar-nav-container .sidebar-logout-btn{
-        bottom: 50%;
         padding: 4% 8.25%;
     }
     
@@ -228,7 +222,6 @@
 
 @media screen and (min-width: 1366px) {
     .sidebar-nav-container .sidebar-logout-btn{
-        bottom: 60%;
         padding: 4% 8.25%;
     }
 }

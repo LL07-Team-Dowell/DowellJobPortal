@@ -81,7 +81,7 @@ const AdminPage = ({ currentUser }) => {
                         <div className="admin__Jobs__Container">
                         {
                             React.Children.toArray(jobs.map(job => {
-                                return <JobTile adminPageActive={true} jobData={job} routeToJob={true} handleJobTileClick={() => {}} handleViewBtnClick={goToJobDetails} handleEditIconClick={goToEditPage} candidateForJobCount={applications.filter(application => application.job === job.id).length} />
+                                return <JobTile adminPageActive={true} jobData={job} routeToJob={true} handleJobTileClick={goToJobDetails} handleViewBtnClick={goToJobDetails} handleEditIconClick={goToEditPage} candidateForJobCount={applications.filter(application => application.job === job.id).length} />
                             }))
                         } 
                         </div>

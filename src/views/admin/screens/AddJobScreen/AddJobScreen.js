@@ -4,19 +4,17 @@ import SideNavigationBar from "../../../account/components/SideNavigationBar/Sid
 import BottomNavigationBar from "../../../Hr/component/BottomNavigation/BottomNavigation";
 import NavigationBar from "../../../teamlead/components/NavigationBar/NavigationBar";
 import { adminNavigationLinks } from "../../adminNavigationLinks";
-import JobDetails from "../../components/JobDetails/JobDetails";
+import NewJobDetails from "../../components/NewJobDetails/NewJobDetails";
 
 const AddJobScreen = () => {
     const [isSideNavbarActive, setSideNavbarActive] = useState(false);
     const sideNavbarRef = useRef(null);
     const { isNotificationEnabled, setNotificationStatus } = useNavigationContext();
-    const [ newJobDetails, setNewJobDetails ] = useState({});
-    const [ disableSaveJobBtn, setDisableSaveJobBtn ] = useState(true);
-
+    
     return <>
         <div className="admin__Page__Container">
             <NavigationBar title={'Add Job'} handleMenuIconClick={() => setSideNavbarActive(true)} />
-            <JobDetails currentJob={newJobDetails} updateJobDetails={setNewJobDetails} newJobPage={true} allowSaveNewJob={disableSaveJobBtn} />
+            <NewJobDetails />    
         </div>
 
         {
