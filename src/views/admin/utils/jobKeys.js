@@ -10,4 +10,5 @@ export const jobKeys = {
     paymentTerms: "Payment_terms",
     workflowOfJob: "workflow",
     others: "others",
+    paymentForJob: "paymentForJob",
 }
