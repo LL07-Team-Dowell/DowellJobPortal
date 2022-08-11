@@ -41,6 +41,8 @@ const JobDetails = ({ currentJob, editPage, updateJobDetails }) => {
 
                 delete currentState[keysToUpdate.length - 1];
 
+                if (!updateJobDetails) return
+
                 updateJobDetails(prevValue => {
                     return { ...prevValue, [currentStateKey]: currentState }
                 })
