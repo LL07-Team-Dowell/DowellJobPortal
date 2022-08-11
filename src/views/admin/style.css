@@ -301,7 +301,8 @@
     }
     .admin__Page__Container .current__Job__Display{
         width: 79.5%;
-        margin: 3% auto 10%;
+        margin: 3% auto;
+        padding-bottom: 10%;
     }
     .admin__Page__Container .current__Job__Display span{
         margin: 3% 0;
