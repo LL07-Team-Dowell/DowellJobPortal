@@ -75,7 +75,7 @@
     color: var(--grey-color);
     margin-right: 4%;
     cursor: pointer;
-    padding: 2%;
+    padding: 5% 1%;
 }
 
 .applicant-experience{

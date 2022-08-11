@@ -88,11 +88,17 @@ function App() {
         } />
       </Route>
 
-      <Route path="/edit-job" element={<EditJobScreen />} />
+      <Route path="/edit-job" element={
+        <NewJobTermsContextProvider>
+          <EditJobScreen />
+        </NewJobTermsContextProvider>} 
+      />
 
       <Route path="/view-job" element={
         <NavigationContextProvider>
-          <ViewJobScreen />
+          <NewJobTermsContextProvider>
+            <ViewJobScreen />
+          </NewJobTermsContextProvider>
         </NavigationContextProvider>} 
       />
 

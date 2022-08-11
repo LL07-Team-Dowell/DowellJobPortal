@@ -4,11 +4,10 @@ import BottomNavigationBar from "../../../Hr/component/BottomNavigation/BottomNa
 import NavigationBar from "../../../teamlead/components/NavigationBar/NavigationBar";
 import { adminNavigationLinks } from "../../adminNavigationLinks";
 import Button from "../../components/Button/Button";
-import JobDetails from "../../components/JobDetails/JobDetails";
 import { AiOutlineSave } from "react-icons/ai";
 import { myAxiosInstance } from "../../../../lib/axios";
 import { routes } from "../../../../lib/routes";
-
+import EditJobDetails from "../../components/EditJobDetails/EditJobDetails";
 
 const EditJobScreen = () => {
     const location = useLocation();
@@ -54,7 +53,7 @@ const EditJobScreen = () => {
     return <>
         <div className="admin__Page__Container">
             <NavigationBar changeToBackIcon={true} handleBackIconClick={() => navigate(-1)} />
-            <JobDetails currentJob={updatedJobDetails} editPage={true} updateJobDetails={setUpdatedJobDetails} />
+            <EditJobDetails currentJob={location.state && location.state.job && location.state.job} updateJobDetails={setUpdatedJobDetails} />
             <Button 
                 handleClick={handleSaveBtnClick}
                 icon={<AiOutlineSave />}
