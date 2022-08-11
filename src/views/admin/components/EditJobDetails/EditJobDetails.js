@@ -62,18 +62,6 @@ const EditJobDetails = ({ currentJob, updateJobDetails }) => {
             emptyObj = {};
         })
 
-        const uniqueGenTerms = [...new Map(currentJobTerms.generalTerms.map(v => [JSON.stringify(v), v])).values()];
-        const uniqueTechnTerms = [...new Map(currentJobTerms.technicalTerms.map(v => [JSON.stringify(v), v])).values()];
-        const uniqueWorkTerms = [...new Map(currentJobTerms.workflowTerms.map(v => [JSON.stringify(v), v])).values()];
-        const uniquePaymTerms = [...new Map(currentJobTerms.paymentTerms.map(v => [JSON.stringify(v), v])).values()];
-        const uniqueOthersTerms = [...new Map(currentJobTerms.otherTerms.map(v => [JSON.stringify(v), v])).values()];
-        
-        currentJobTerms.generalTerms = uniqueGenTerms;
-        currentJobTerms.technicalTerms = uniqueTechnTerms;
-        currentJobTerms.workflowTerms = uniqueWorkTerms;
-        currentJobTerms.paymentTerms = uniquePaymTerms;
-        currentJobTerms.otherTerms = uniqueOthersTerms;
-        
         dispatchToNewJobTerms({ type: newJobTermsReducerActions.UPDATE_STATE, payload: { newState: currentJobTerms }});
         setLoading(false);
 
