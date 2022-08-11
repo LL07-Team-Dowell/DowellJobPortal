@@ -14,6 +14,8 @@ import { newJobApplicationDataReducerActions } from "../../../../reducers/NewJob
 import "./style.css";
 import { handleShareBtnClick } from "../../utils/helperFunctions";
 import { routes } from "../../../../lib/routes";
+import { jobKeys } from "../../../admin/utils/jobKeys";
+import { BsCashStack } from "react-icons/bs";
 
 const JobApplicationScreen = () => {
     const location = useLocation();
@@ -96,7 +98,7 @@ const JobApplicationScreen = () => {
 
         if (formPage === 2) {
 
-            if (technicalTermsSelectionsRef.current.length === 0) return setDisableNextBtn(false);
+            if (technicalTermsSelectionsRef.current.length === 0) return setFormPage(formPage + 1);
 
             if (technicalTermsSelectionsRef.current.every(selection => selection.checked === true)) return setDisableNextBtn(false);
 
@@ -105,7 +107,7 @@ const JobApplicationScreen = () => {
         }
         if (formPage === 3) {
 
-            if (paymentTermsSelectionsRef.current.length === 0) return setDisableNextBtn(false);
+            if (paymentTermsSelectionsRef.current.length === 0) return setFormPage(formPage + 1);
 
             if (paymentTermsSelectionsRef.current.every(selection => selection.checked === true)) return setDisableNextBtn(false);
 
@@ -114,7 +116,7 @@ const JobApplicationScreen = () => {
         }
         if (formPage === 4) {
 
-            if (workflowTermsSelectionsRef.current.length === 0) return setDisableNextBtn(false);
+            if (workflowTermsSelectionsRef.current.length === 0) return setFormPage(formPage + 1);
 
             if (workflowTermsSelectionsRef.current.every(selection => selection.checked === true)) return setDisableNextBtn(false);
 
@@ -208,6 +210,9 @@ const JobApplicationScreen = () => {
     }
 
     const createInputData = (key, data) => {
+        
+        if (key === jobKeys.paymentForJob) return <></>
+
         return (
             <>
                 <div className="job__Application__Item">
@@ -401,6 +406,13 @@ const JobApplicationScreen = () => {
                                 <BusinessCenterIcon className="small-icon" />
                                 Duration: { currentJob.time_period}
                             </span>
+                            {
+                                currentJob.others && currentJob.others[jobKeys.paymentForJob] &&
+                                <span>
+                                    <BsCashStack />
+                                    Stipend: { currentJob.others[jobKeys.paymentForJob]}
+                                </span>
+                            }
                         </div>
                         <CustomHr className={'relative-hr hr-2'} />
                         <div className="job__Skills__Info">
