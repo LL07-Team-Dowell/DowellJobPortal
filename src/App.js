@@ -40,7 +40,7 @@ function App() {
   if (!user) {
     return <Routes>
       
-      <Route path="/apply/job" element={
+      <Route path="/apply/job/:id" element={
         <NewApplicationContextProvider>
           <JobApplicationScreen />
         </NewApplicationContextProvider>
@@ -224,7 +224,7 @@ function App() {
         } />
       </Route>
       
-      <Route path="/apply/job" element={
+      <Route path="/apply/job/:id" element={
         <NewApplicationContextProvider>
             <JobApplicationScreen />
         </NewApplicationContextProvider>

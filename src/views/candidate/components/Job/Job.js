@@ -84,7 +84,7 @@ function JobScreen({ currentUser, hired, setHired }) {
     }, [allRequestsDone])
 
     const handleApplyButtonClick = (currentJob) => {
-        navigate("/apply/job", { state: { jobToApplyTo: currentJob, currentUser: currentUser } })
+        navigate(`/apply/job/${currentJob.id}`, { state: { currentUser: currentUser } })
     }
     
     return <>

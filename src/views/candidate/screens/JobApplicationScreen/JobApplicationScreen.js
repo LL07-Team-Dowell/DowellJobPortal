@@ -16,6 +16,7 @@ import { handleShareBtnClick } from "../../utils/helperFunctions";
 import { routes } from "../../../../lib/routes";
 import { jobKeys } from "../../../admin/utils/jobKeys";
 import { BsCashStack } from "react-icons/bs";
+import LoadingSpinner from "../../../admin/components/LoadingSpinner/LoadingSpinner";
 
 const JobApplicationScreen = () => {
     const location = useLocation();
@@ -23,7 +24,7 @@ const JobApplicationScreen = () => {
     const [currentJob, setCurrentJob] = useState({});
     const { newApplicationData, dispatchToNewApplicationData } = useNewApplicationContext();
     const [disableApplyBtn, setDisableApplyBtn] = useState(false);
-    const { section } = useParams();
+    const { section, id } = useParams();
     const selectCountryOptionRef = useRef(null);
     const qualificationSelectionRef = useRef(null);
     const freelancePlatformRef = useRef(null);
@@ -35,6 +36,8 @@ const JobApplicationScreen = () => {
     const paymentTermsSelectionsRef = useRef([]);
     const workflowTermsSelectionsRef = useRef([]);
     const [removeFreelanceOptions, setRemoveFreelanceOptions] = useState(false);
+    const [allJobs, setAllJobs] = useState([]);
+    const [jobsLoading, setJobsLoading] = useState(true);
     
     const [formPage, setFormPage] = useState(1);
 
@@ -42,15 +45,40 @@ const JobApplicationScreen = () => {
         if (elem && !arrayToAddTo.current.includes(elem)) arrayToAddTo.current.push(elem)
     }
 
+    const fetchAllJobs = async () => {
+
+        const response = await myAxiosInstance.get(routes.Jobs);
+        setAllJobs(response.data);
+        setJobsLoading(false);
+        return;
+
+    }
+
     useEffect(() => {
 
-        if (!location.state) return navigate("/home");
+        fetchAllJobs();
+    
+    }, []);
 
-        if (!location.state.jobToApplyTo) return navigate("/home");
-        
-        setCurrentJob(location.state.jobToApplyTo);
+    useEffect(() => {
 
-        if (!location.state.currentUser) return;
+        if (!id) return navigate("/home");
+
+        if (jobsLoading) return;
+
+        const foundJob = allJobs.find(job => job.id === Number(id));
+
+        if (!foundJob) return navigate("/home");
+
+        setCurrentJob(foundJob)
+
+    }, [id, jobsLoading, allJobs]);
+
+    useEffect(() => {
+
+        if (jobsLoading) return;
+
+        if ((!location.state) && (!location.state.currentUser)) return;
 
         setDisableApplyBtn(false);
         generalTermsSelectionsRef.current.splice(0, generalTermsSelectionsRef.current.length);
@@ -60,7 +88,7 @@ const JobApplicationScreen = () => {
 
         const currentState = { ...newApplicationData };
 
-        if (location.state.jobToApplyTo.typeof === "Employee" || location.state.jobToApplyTo.typeof === "Internship") {
+        if (currentJob.typeof === "Employee" || currentJob.typeof === "Internship") {
 
             delete currentState[mutableNewApplicationStateNames.freelancePlatform];
             delete currentState[mutableNewApplicationStateNames.freelancePlatformUrl];
@@ -68,21 +96,21 @@ const JobApplicationScreen = () => {
             dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.REWRITE_EXISTING_STATE, payload: { newState: currentState }});
         }
         
-        Object.keys(location.state.jobToApplyTo.others || {}).forEach(item => {
+        Object.keys(currentJob.others || {}).forEach(item => {
             dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_OTHERS, payload: { stateToChange: item, value: "" }})
         })
 
-        dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_JOB, payload: { stateToChange: mutableNewApplicationStateNames.job, value: location.state.jobToApplyTo.id }})
+        dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_JOB, payload: { stateToChange: mutableNewApplicationStateNames.job, value: currentJob.id }})
         dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_APPLICANT, payload: { stateToChange: mutableNewApplicationStateNames.applicant, value: location.state.currentUser.username }})
         dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_DATE_APPLIED, payload: { stateToChange: mutableNewApplicationStateNames.others_date_applied, value: new Date() }})
-        dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_JOB_TITLE, payload: { stateToChange: mutableNewApplicationStateNames.title, value: location.state.jobToApplyTo.title }})
-        dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_JOB_DESCRIPTION, payload: { stateToChange: mutableNewApplicationStateNames.jobDescription, value: location.state.jobToApplyTo.description }})
+        dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_JOB_TITLE, payload: { stateToChange: mutableNewApplicationStateNames.title, value: currentJob.title }})
+        dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_JOB_DESCRIPTION, payload: { stateToChange: mutableNewApplicationStateNames.jobDescription, value: currentJob.description }})
 
-        if (location.state.jobToApplyTo.typeof === "Employee" || location.state.jobToApplyTo.typeof === "Internship") return setRemoveFreelanceOptions(true);
+        if (currentJob.typeof === "Employee" || currentJob.typeof === "Internship") return setRemoveFreelanceOptions(true);
 
         setRemoveFreelanceOptions(false);
 
-    }, [location]);
+    }, [location, currentJob]);
 
     useEffect(() => {
 
@@ -179,12 +207,12 @@ const JobApplicationScreen = () => {
 
     const handleSubmitApplicationBtnClick = () => {
 
-        if (!location.state.currentUser) return window.location.href = dowellLoginUrl;
+        if ((!location.state) || (!location.state.currentUser)) return window.location.href = dowellLoginUrl;
 
         setDisableApplyBtn(true);
         setDisableNextBtn(true);
 
-        navigate("/apply/job/form", { state: { jobToApplyTo: currentJob }});
+        navigate(`/apply/job/${id}/form/`);
 
     }
 
@@ -224,6 +252,8 @@ const JobApplicationScreen = () => {
             </>
         )
     }
+
+    if (jobsLoading) return <LoadingSpinner />
 
     return <>
         <Navbar changeToBackButton={true} backButtonLink={'/home'} handleShareJobBtnClick={() => handleShareBtnClick(currentJob.title, "Apply for this job on Dowell!", window.location)} />
