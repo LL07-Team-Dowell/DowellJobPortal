@@ -96,7 +96,7 @@ const JobDetails = ({ currentJob, editPage, updateJobDetails }) => {
                     <CustomHr />
 
                     <span className="display__Flex edit__Page__Font__Size">
-                        <b>Payment: </b> <DropdownButton currentSelection={currentJob.others && currentJob.others[jobKeys.paymentForJob] ? currentJob.others[jobKeys.paymentForJob] : "$30"} selections={["$30", "$35"]} handleSelectionClick={(selection) => updateJobDetails(prevValue => { return { ...prevValue, [jobKeys.others]: { ...prevValue["others"], [jobKeys.paymentForJob]: selection } } })} />
+                        <b>Payment: </b> <input type={"text"} name={jobKeys.paymentForJob} value={currentJob.others[jobKeys.paymentForJob]} onChange={(e) => updateJobDetails(prevValue => { return { ...prevValue, [jobKeys.others]: { ...prevValue["others"], [jobKeys.paymentForJob]: e.target.value } } })} />
                     </span>
 
                     <CustomHr />
@@ -154,6 +154,8 @@ const JobDetails = ({ currentJob, editPage, updateJobDetails }) => {
                     <div className={`textarea__Div__Container edit__Page  ${Object.keys(currentJob[jobKeys.others] || {}).length > 0 ? '' : 'transparent__Bg'}`}>
                         {
                             React.Children.toArray(Object.keys(currentJob[jobKeys.others] || {}).map(key => {
+                                if (key === jobKeys.paymentForJob) return <></>
+                                
                                 return <p>{key}. <input type={'text'} value={currentJob[jobKeys.others][key]} onChange={(e) => handleChange(e, jobKeys.others)} /></p>
                             }))
                         }
