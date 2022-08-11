@@ -84,7 +84,7 @@ function JobScreen({ currentUser, hired, setHired }) {
     }, [allRequestsDone])
 
     const handleApplyButtonClick = (currentJob) => {
-        navigate("/apply/job", { state: { jobToApplyTo: currentJob, currentUser: currentUser } })
+        navigate(`/apply/job/${currentJob.id}`, { state: { currentUser: currentUser } })
     }
     
     return <>
@@ -114,7 +114,7 @@ function JobScreen({ currentUser, hired, setHired }) {
 
                                         <div className="container">
 
-                                            <Link to={'#'} onClick={() => handleShareBtnClick("Dowell Job Portal", "Check out jobs on Dowell!", window.location)}>
+                                            <Link to={'#'} onClick={() => handleShareBtnClick(job.title, "Apply for this job on Dowell!", `https://ll07-team-dowell.github.io/DowellJobPortal/#/apply/job/${job.id}`)}>
                                                 <BsShare className='share__Job__Btn' />
                                             </Link>
 

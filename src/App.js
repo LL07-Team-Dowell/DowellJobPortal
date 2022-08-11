@@ -40,7 +40,7 @@ function App() {
   if (!user) {
     return <Routes>
       
-      <Route path="/apply/job" element={
+      <Route path="/apply/job/:id" element={
         <NewApplicationContextProvider>
           <JobApplicationScreen />
         </NewApplicationContextProvider>
@@ -88,11 +88,17 @@ function App() {
         } />
       </Route>
 
-      <Route path="/edit-job" element={<EditJobScreen />} />
+      <Route path="/edit-job" element={
+        <NewJobTermsContextProvider>
+          <EditJobScreen />
+        </NewJobTermsContextProvider>} 
+      />
 
       <Route path="/view-job" element={
         <NavigationContextProvider>
-          <ViewJobScreen />
+          <NewJobTermsContextProvider>
+            <ViewJobScreen />
+          </NewJobTermsContextProvider>
         </NavigationContextProvider>} 
       />
 
@@ -224,7 +230,7 @@ function App() {
         } />
       </Route>
       
-      <Route path="/apply/job" element={
+      <Route path="/apply/job/:id" element={
         <NewApplicationContextProvider>
             <JobApplicationScreen />
         </NewApplicationContextProvider>

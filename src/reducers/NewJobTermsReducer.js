@@ -1,4 +1,4 @@
-import { initialNewJobStateData, newJobStateDataNames } from "../contexts/NewJobTermsContext";
+import { newJobStateDataNames } from "../contexts/NewJobTermsContext";
 import { jobKeys } from "../views/admin/utils/jobKeys";
 
 export const newJobTermsReducerActions = {
@@ -7,9 +7,12 @@ export const newJobTermsReducerActions = {
     ADD_NEW_TERM: "add_new_term",
     REMOVE_TERM: "remove_added_term",
     RESET_STATE: "reset_state",
+    UPDATE_STATE: "update_current_state",
 }
 
 export const newJobTermsReducer = (currentState, action) => {
+
+    if (action.type === newJobTermsReducerActions.UPDATE_STATE) return action.payload.newState;
 
     if (action.type === newJobTermsReducerActions.ADD_NEW_TERM) {
         if (!action.payload.stateToChange) return currentState;
@@ -28,7 +31,15 @@ export const newJobTermsReducer = (currentState, action) => {
         return { ...currentState, [action.payload.stateToChange]: newTerms };
     }
 
-    if (action.type === newJobTermsReducerActions.RESET_STATE) return initialNewJobStateData;
+    if (action.type === newJobTermsReducerActions.RESET_STATE) {
+        return {
+            generalTerms: [{}],
+            workflowTerms: [{}],
+            paymentTerms: [{}],
+            technicalTerms: [{}],
+            otherTerms: [{}],
+        }
+    };
 
     if (action.type === newJobTermsReducerActions.UPDATE_KEY) {
         let keyToUpdate = action.payload.value;
