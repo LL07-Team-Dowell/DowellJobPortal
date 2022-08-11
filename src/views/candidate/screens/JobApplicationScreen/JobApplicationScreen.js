@@ -14,6 +14,7 @@ import { newJobApplicationDataReducerActions } from "../../../../reducers/NewJob
 import "./style.css";
 import { handleShareBtnClick } from "../../utils/helperFunctions";
 import { routes } from "../../../../lib/routes";
+import { jobKeys } from "../../../admin/utils/jobKeys";
 
 const JobApplicationScreen = () => {
     const location = useLocation();
@@ -208,6 +209,9 @@ const JobApplicationScreen = () => {
     }
 
     const createInputData = (key, data) => {
+        
+        if (key === jobKeys.paymentForJob) return <></>
+        
         return (
             <>
                 <div className="job__Application__Item">
