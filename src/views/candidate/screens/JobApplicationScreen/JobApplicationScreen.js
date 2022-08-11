@@ -66,6 +66,8 @@ const JobApplicationScreen = () => {
 
         if (jobsLoading) return;
 
+        if (typeof(Number(id)) !== "number") return navigate("/home");
+
         const foundJob = allJobs.find(job => job.id === Number(id));
 
         if (!foundJob) return navigate("/home");
@@ -78,7 +80,9 @@ const JobApplicationScreen = () => {
 
         if (jobsLoading) return;
 
-        if ((!location.state) && (!location.state.currentUser)) return;
+        if (!location.state) return 
+        
+        if (!location.state.currentUser) return;
 
         setDisableApplyBtn(false);
         generalTermsSelectionsRef.current.splice(0, generalTermsSelectionsRef.current.length);
