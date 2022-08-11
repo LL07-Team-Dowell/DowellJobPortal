@@ -6,15 +6,15 @@ import { myAxiosInstance } from '../../../../lib/axios';
 import { routes } from '../../../../lib/routes';
 import { Link, useNavigate } from 'react-router-dom';
 import { useNavigationContext } from '../../../../contexts/NavigationContext';
-import JobTile from '../../../teamlead/components/JobTile/JobTile';
 import ErrorPage from '../../../error/ErrorPage';
 import Search from '../../../Hr/component/Search/Search';
-import { BsShare } from 'react-icons/bs';
+import { BsCashStack, BsShare } from 'react-icons/bs';
 import { handleShareBtnClick } from '../../utils/helperFunctions';
 import { candidateStatuses } from '../../utils/candidateStatuses';
 import Navbar from '../Navbar/Navbar';
 import Footer from "../Footer/Footer";
 import LoadingSpinner from '../../../admin/components/LoadingSpinner/LoadingSpinner';
+import { jobKeys } from '../../../admin/utils/jobKeys';
 
 
 function JobScreen({ currentUser, hired, setHired }) {
@@ -138,6 +138,13 @@ function JobScreen({ currentUser, hired, setHired }) {
                                                         <FaToolbox/>
                                                         {job.time_period}
                                                     </li>
+                                                    {
+                                                        job.others[jobKeys.paymentForJob] &&
+                                                        <li>
+                                                            <BsCashStack />
+                                                            {job.others[jobKeys.paymentForJob]}
+                                                        </li>
+                                                    }
                                                     <li>
                                                         <span className='free'>{job.typeof}</span>
                                                     </li>

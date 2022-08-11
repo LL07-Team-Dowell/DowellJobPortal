@@ -15,6 +15,7 @@ import "./style.css";
 import { handleShareBtnClick } from "../../utils/helperFunctions";
 import { routes } from "../../../../lib/routes";
 import { jobKeys } from "../../../admin/utils/jobKeys";
+import { BsCashStack } from "react-icons/bs";
 
 const JobApplicationScreen = () => {
     const location = useLocation();
@@ -405,6 +406,13 @@ const JobApplicationScreen = () => {
                                 <BusinessCenterIcon className="small-icon" />
                                 Duration: { currentJob.time_period}
                             </span>
+                            {
+                                currentJob.others && currentJob.others[jobKeys.paymentForJob] &&
+                                <span>
+                                    <BsCashStack />
+                                    Stipend: { currentJob.others[jobKeys.paymentForJob]}
+                                </span>
+                            }
                         </div>
                         <CustomHr className={'relative-hr hr-2'} />
                         <div className="job__Skills__Info">
