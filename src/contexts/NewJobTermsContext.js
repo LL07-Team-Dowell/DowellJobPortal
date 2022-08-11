@@ -6,11 +6,11 @@ const NewJobTermsContext = createContext({});
 export const useNewJobTermsContext = () => useContext(NewJobTermsContext);
 
 export const initialNewJobStateData = {
-    generalTerms: [],
-    workflowTerms: [],
-    paymentTerms: [],
-    technicalTerms: [],
-    otherTerms: [],
+    generalTerms: [{}],
+    workflowTerms: [{}],
+    paymentTerms: [{}],
+    technicalTerms: [{}],
+    otherTerms: [{}],
 }
 
 export const newJobStateDataNames = {

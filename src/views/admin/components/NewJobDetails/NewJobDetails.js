@@ -39,6 +39,12 @@ const NewJobDetails = () => {
 
     useEffect(() => {
 
+        setNewJobDetails(prevValue => { return { ...prevValue, [jobKeys.others]: { ...prevValue["others"], [jobKeys.paymentForJob]: "$30" } } });
+
+    }, [])
+
+    useEffect(() => {
+
         if (newJobDetails.title.length < 1) return setDisableSaveJobBtn(true);
         if (newJobDetails.description.length < 1) return setDisableSaveJobBtn(true);
         if (newJobDetails.time_period.length < 1) return setDisableSaveJobBtn(true);
@@ -47,8 +53,7 @@ const NewJobDetails = () => {
 
     }, [newJobDetails])
 
-    const handleSaveNewJobBtnClick = async () => {
-        setDisableSaveJobBtn(true);
+    useEffect(() => {
 
         const allGenTerms = Object.assign({}, ...newJobTerms[newJobStateDataNames.generalTerms]);
         setNewJobDetails(prevDetails => { return { ...prevDetails, "general_terms": allGenTerms } });
@@ -64,6 +69,16 @@ const NewJobDetails = () => {
 
         const allOtherTerms = Object.assign({}, ...newJobTerms[newJobStateDataNames.otherTerms]);
         setNewJobDetails(prevDetails => { return { ...prevDetails, "others": { ...prevDetails["others"], ...allOtherTerms} } });
+
+        if (Object.keys(allGenTerms || {}).length === 0) setNewJobDetails(prevDetails => { return { ...prevDetails, "general_terms": null } });
+        if (Object.keys(allTechTerms || {}).length === 0) setNewJobDetails(prevDetails => { return { ...prevDetails, "Technical_Specifications": null } });
+        if (Object.keys(allPayTerms || {}).length === 0) setNewJobDetails(prevDetails => { return { ...prevDetails, "Payment_terms": null } });
+        if (Object.keys(allWorkTerms || {}).length === 0) setNewJobDetails(prevDetails => { return { ...prevDetails, "workflow": null } });
+
+    }, [newJobTerms])
+
+    const handleSaveNewJobBtnClick = async () => {
+        setDisableSaveJobBtn(true);
 
         await myAxiosInstance.post(routes.Admin_Add_Job, newJobDetails);
         dispatchToNewJobTerms({ type: newJobTermsReducerActions.RESET_STATE });
@@ -119,6 +134,8 @@ const NewJobDetails = () => {
                 
                 {
                     React.Children.toArray(newJobTerms[newJobStateDataNames.generalTerms].map((item, index) => {
+                        if (index === 0) return <></>
+                        
                         return <div className="new__Key__Value__Container">
                             <input type={'text'} placeholder={'KEY'} value={Object.keys(item || {})[0]} onChange={(e) => dispatchToNewJobTerms({ type: newJobTermsReducerActions.UPDATE_KEY, payload: { stateToChange: jobKeys.generalTerms, currentKeyIndex: index, value: e.target.value } })} />
                             <input type={'text'} placeholder={'VALUE'} value={item[Object.keys(item || {})[0]]} onChange={(e) => dispatchToNewJobTerms({ type: newJobTermsReducerActions.UPDATE_VALUE, payload: { stateToChange: jobKeys.generalTerms, currentKeyIndex: index, value: e.target.value } })} />
@@ -139,6 +156,8 @@ const NewJobDetails = () => {
             <div className="textarea__Div__Container edit__Page transparent__Bg">
                 {
                     React.Children.toArray(newJobTerms[newJobStateDataNames.technicalTerms].map((item, index) => {
+                        if (index === 0) return <></>
+                        
                         return <div className="new__Key__Value__Container">
                             <input type={'text'} placeholder={'KEY'} value={Object.keys(item || {})[0]} onChange={(e) => dispatchToNewJobTerms({ type: newJobTermsReducerActions.UPDATE_KEY, payload: { stateToChange: jobKeys.technicalSpecifications, currentKeyIndex: index, value: e.target.value } })} />
                             <input type={'text'} placeholder={'VALUE'} value={item[Object.keys(item || {})[0]]} onChange={(e) => dispatchToNewJobTerms({ type: newJobTermsReducerActions.UPDATE_VALUE, payload: { stateToChange: jobKeys.technicalSpecifications, currentKeyIndex: index, value: e.target.value } })} />
@@ -158,6 +177,8 @@ const NewJobDetails = () => {
             <div className="textarea__Div__Container edit__Page transparent__Bg">
                 {
                     React.Children.toArray(newJobTerms[newJobStateDataNames.paymentTerms].map((item, index) => {
+                        if (index === 0) return <></>
+                        
                         return <div className="new__Key__Value__Container">
                             <input type={'text'} placeholder={'KEY'} value={Object.keys(item || {})[0]} onChange={(e) => dispatchToNewJobTerms({ type: newJobTermsReducerActions.UPDATE_KEY, payload: { stateToChange: jobKeys.paymentTerms, currentKeyIndex: index, value: e.target.value } })} />
                             <input type={'text'} placeholder={'VALUE'} value={item[Object.keys(item || {})[0]]} onChange={(e) => dispatchToNewJobTerms({ type: newJobTermsReducerActions.UPDATE_VALUE, payload: { stateToChange: jobKeys.paymentTerms, currentKeyIndex: index, value: e.target.value } })} />
@@ -177,6 +198,8 @@ const NewJobDetails = () => {
             <div className="textarea__Div__Container edit__Page transparent__Bg">
                 {
                     React.Children.toArray(newJobTerms[newJobStateDataNames.workflowTerms].map((item, index) => {
+                        if (index === 0) return <></>
+                        
                         return <div className="new__Key__Value__Container">
                             <input type={'text'} placeholder={'KEY'} value={Object.keys(item || {})[0]} onChange={(e) => dispatchToNewJobTerms({ type: newJobTermsReducerActions.UPDATE_KEY, payload: { stateToChange: jobKeys.workflowOfJob, currentKeyIndex: index, value: e.target.value } })} />
                             <input type={'text'} placeholder={'VALUE'} value={item[Object.keys(item || {})[0]]} onChange={(e) => dispatchToNewJobTerms({ type: newJobTermsReducerActions.UPDATE_VALUE, payload: { stateToChange: jobKeys.workflowOfJob, currentKeyIndex: index, value: e.target.value } })} />
@@ -196,6 +219,8 @@ const NewJobDetails = () => {
             <div className="textarea__Div__Container edit__Page transparent__Bg">
                 {
                     React.Children.toArray(newJobTerms[newJobStateDataNames.otherTerms].map((item, index) => {
+                        if (index === 0) return <></>
+                        
                         return <div className="new__Key__Value__Container">
                             <input type={'text'} placeholder={'KEY'} value={Object.keys(item || {})[0]} onChange={(e) => dispatchToNewJobTerms({ type: newJobTermsReducerActions.UPDATE_KEY, payload: { stateToChange: jobKeys.others, currentKeyIndex: index, value: e.target.value } })} />
                             <input type={'text'} placeholder={'VALUE'} value={item[Object.keys(item || {})[0]]} onChange={(e) => dispatchToNewJobTerms({ type: newJobTermsReducerActions.UPDATE_VALUE, payload: { stateToChange: jobKeys.others, currentKeyIndex: index, value: e.target.value } })} />
