@@ -39,12 +39,6 @@ const NewJobDetails = () => {
 
     useEffect(() => {
 
-        setNewJobDetails(prevValue => { return { ...prevValue, [jobKeys.others]: { ...prevValue["others"], [jobKeys.paymentForJob]: "$30" } } });
-
-    }, [])
-
-    useEffect(() => {
-
         if (newJobDetails.title.length < 1) return setDisableSaveJobBtn(true);
         if (newJobDetails.description.length < 1) return setDisableSaveJobBtn(true);
         if (newJobDetails.time_period.length < 1) return setDisableSaveJobBtn(true);
@@ -119,7 +113,7 @@ const NewJobDetails = () => {
             <CustomHr />
 
             <span className="display__Flex edit__Page__Font__Size">
-                <b>Payment: </b> <DropdownButton currentSelection={"$30"} selections={["$30", "$35"]} handleSelectionClick={(selection) => setNewJobDetails(prevValue => { return { ...prevValue, [jobKeys.others]: { ...prevValue["others"], [jobKeys.paymentForJob]: selection } } })} />
+                <b>Payment: </b> <input type={"text"} name={jobKeys.paymentForJob} value={newJobDetails[jobKeys.paymentForJob]} onChange={(e) => setNewJobDetails(prevValue => { return { ...prevValue, [jobKeys.others]: { ...prevValue["others"], [jobKeys.paymentForJob]: e.target.value } } })} />
             </span>
 
             <CustomHr />
