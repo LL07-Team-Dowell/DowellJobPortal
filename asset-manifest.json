@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/DowellJobPortal/static/css/main.17be66c5.css",
-    "main.js": "/DowellJobPortal/static/js/main.d3caf18b.js",
+    "main.js": "/DowellJobPortal/static/js/main.ea7dc254.js",
     "index.html": "/DowellJobPortal/index.html",
     "main.17be66c5.css.map": "/DowellJobPortal/static/css/main.17be66c5.css.map",
-    "main.d3caf18b.js.map": "/DowellJobPortal/static/js/main.d3caf18b.js.map"
+    "main.ea7dc254.js.map": "/DowellJobPortal/static/js/main.ea7dc254.js.map"
   },
   "entrypoints": [
     "static/css/main.17be66c5.css",
-    "static/js/main.d3caf18b.js"
+    "static/js/main.ea7dc254.js"
   ]
 }
