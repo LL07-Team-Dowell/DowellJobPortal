@@ -11,7 +11,7 @@ import { useNavigationContext } from '../../../../contexts/NavigationContext';
 import { dowellLoginUrl } from '../../../../lib/axios';
 
 
-function Navbar({ title, changeToBackButton, backButtonLink, disableSideBar, handleShareJobBtnClick }) {
+function Navbar({ title, changeToBackButton, backButtonLink, disableSideBar, handleShareJobBtnClick, removeShareOptions }) {
   const [sidebar, setSidebar] = useState(false);
   const [show, handleShow]=useState(false);
   const { isNotificationEnabled, setNotificationStatus } = useNavigationContext();
@@ -44,16 +44,19 @@ function Navbar({ title, changeToBackButton, backButtonLink, disableSideBar, han
               <Link to={backButtonLink} className='menu-bars'>
                 <BiArrowBack className='white-color' />
               </Link>
+              
+              {
+                !removeShareOptions &&
+                <div className='mini__Nav__Links__Container'>
+                  <Link to={'#'} >
+                    <BsBookmark className='white-color' />
+                  </Link>
 
-              <div className='mini__Nav__Links__Container'>
-                <Link to={'#'} >
-                  <BsBookmark className='white-color' />
-                </Link>
-
-                <Link to={'#'} onClick={handleShareJobBtnClick}>
-                  <BsShare className='white-color' />
-                </Link>
-              </div>
+                  <Link to={'#'} onClick={handleShareJobBtnClick}>
+                    <BsShare className='white-color' />
+                  </Link>
+                </div>
+              }
               
             </> : 
             
