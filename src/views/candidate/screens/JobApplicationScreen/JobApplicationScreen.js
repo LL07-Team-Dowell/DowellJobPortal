@@ -262,7 +262,7 @@ const JobApplicationScreen = () => {
     if (jobsLoading) return <LoadingSpinner />
 
     return <>
-        <Navbar changeToBackButton={true} backButtonLink={'/home'} handleShareJobBtnClick={() => handleShareBtnClick(currentJob.title, `Apply for ${currentJob.title} on Dowell!`, `${process.env.PUBLIC_URL}/#/jobs/${currentJob.title.slice(-1) === " " ? currentJob.title.slice(0, -1).toLocaleLowerCase().replaceAll(" ", "-") : currentJob.title.toLocaleLowerCase().replaceAll(" ", "-")}`)} />
+        <Navbar changeToBackButton={true} backButtonLink={'/home'} handleShareJobBtnClick={() => handleShareBtnClick(currentJob.title, `Apply for ${currentJob.title} on Dowell!`, `${process.env.PUBLIC_URL}/#/jobs/${currentJob.title.slice(-1) === " " ? currentJob.title.slice(0, -1).toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-") : currentJob.title.toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-")}`)} />
             <div className="container-wrapper candidate__Job__Application__Container">
 
                 {

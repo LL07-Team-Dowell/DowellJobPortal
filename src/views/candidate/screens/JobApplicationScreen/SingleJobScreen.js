@@ -35,7 +35,7 @@ const SingleJobScreen = ({ user }) => {
 
     useEffect(() => {
 
-        const formattedAllJobs = allJobs.map(job => ({ id: job.id, title: job.title.slice(-1) === " " ? job.title.slice(0, -1).toLocaleLowerCase().replaceAll(" ", "-") : job.title.toLocaleLowerCase().replaceAll(" ", "-") }))
+        const formattedAllJobs = allJobs.map(job => ({ id: job.id, title: job.title.slice(-1) === " " ? job.title.slice(0, -1).toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-") : job.title.toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-") }))
         
         const foundJob = formattedAllJobs.find(job => job.title === jobTitle);
 
