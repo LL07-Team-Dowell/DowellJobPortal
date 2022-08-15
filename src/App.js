@@ -25,6 +25,7 @@ import AfterSelectionScreen from './views/candidate/screens/AfterSelectionScreen
 import TeamsScreen from './views/candidate/screens/TeamsScreen/TeamsScreen';
 import { CandidateTaskContextProvider } from './contexts/CandidateTasksContext';
 import { NewJobTermsContextProvider } from './contexts/NewJobTermsContext';
+import SingleJobScreen from './views/candidate/screens/JobApplicationScreen/SingleJobScreen';
 
 function App() {
 
@@ -45,6 +46,7 @@ function App() {
           <JobApplicationScreen />
         </NewApplicationContextProvider>
       } />
+      <Route path='/jobs/:jobTitle' element={<SingleJobScreen />} />
       <Route path="*" element={<CandidateHomeScreen />} />
 
     </Routes>
@@ -96,9 +98,7 @@ function App() {
 
       <Route path="/view-job" element={
         <NavigationContextProvider>
-          <NewJobTermsContextProvider>
-            <ViewJobScreen />
-          </NewJobTermsContextProvider>
+          <ViewJobScreen />
         </NavigationContextProvider>} 
       />
 
@@ -242,6 +242,7 @@ function App() {
           } />
       </Route>
 
+      <Route path='/jobs/:jobTitle' element={<SingleJobScreen user={user} />} />
       <Route path='*' element={<ErrorPage />} />
 
     </Routes>

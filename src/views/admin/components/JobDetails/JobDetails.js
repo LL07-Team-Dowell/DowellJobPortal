@@ -1,14 +1,8 @@
-import React, { useEffect, useState } from "react"
-import { formatDateAndTime } from "../../../../helpers/helpers"
+import React from "react"
 import CustomHr from "../../../teamlead/components/CustomHr/CustomHr"
 import DropdownButton from "../../../teamlead/components/DropdownButton/Dropdown"
 import { jobKeys } from "../../utils/jobKeys"
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
-import { newJobStateDataNames, useNewJobTermsContext } from "../../../../contexts/NewJobTermsContext"
-import { useLocation } from "react-router-dom"
-import { newJobTermsReducerActions } from "../../../../reducers/NewJobTermsReducer"
-import { AiFillCloseCircle, AiOutlinePlus } from "react-icons/ai"
-import LoadingSpinner from "../LoadingSpinner/LoadingSpinner"
 
 
 const JobDetails = ({ currentJob }) => {

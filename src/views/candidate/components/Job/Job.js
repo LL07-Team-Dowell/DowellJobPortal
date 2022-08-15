@@ -114,7 +114,7 @@ function JobScreen({ currentUser, hired, setHired }) {
 
                                         <div className="container">
 
-                                            <Link to={'#'} onClick={() => handleShareBtnClick(job.title, "Apply for this job on Dowell!", `https://ll07-team-dowell.github.io/DowellJobPortal/#/apply/job/${job.id}`)}>
+                                            <Link to={'#'} onClick={() => handleShareBtnClick(job.title, `Apply for ${job.title} on Dowell!`, `${process.env.PUBLIC_URL}/#/jobs/${job.title.slice(-1) === " " ? job.title.slice(0, -1).toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-") : job.title.toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-")}`)}>
                                                 <BsShare className='share__Job__Btn' />
                                             </Link>
 
