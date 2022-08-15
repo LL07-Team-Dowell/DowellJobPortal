@@ -103,7 +103,7 @@ const SingleJobScreen = ({ user }) => {
 
                     <h2 className="about__Dowell__Title">
                         <b>About D'Well Research</b>
-                        <img src={process.env.PUBLIC_URL + "/favicon/favicon-32x32.png"} alt="dowell logo" />
+                        <img src={process.env.PUBLIC_URL + "/logos/logo-1.png"} alt="dowell logo" />
                     </h2>
                     <p className="about__Dowell">{dowellInfo}</p>
 
