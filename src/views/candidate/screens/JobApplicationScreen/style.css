@@ -370,7 +370,8 @@ p{
         margin: 3% 0 2%;
     }
 
-    h1.job__Title{
+    h1.job__Title,
+    h1.job__Title ~ p {
         white-space: nowrap;
     }
 
@@ -504,6 +505,9 @@ p{
 @media (min-width: 768px) and (max-width: 991.98px) {
     h1.job__Title{
         margin-bottom: 2%;
+    }
+    h1.job__Title, 
+    h1.job__Title ~ p {
         white-space: nowrap;
     }
     .candidate__Job__Application__Container{
