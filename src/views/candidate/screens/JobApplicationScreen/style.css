@@ -32,10 +32,13 @@
     margin-top: 12%;
     display: flex;
     align-items: center;
+    margin-bottom: 0;
 }
 
 .candidate__Job__Application__Container .about__Dowell__Title img {
     margin-left: 4%;
+    max-width: 100%;
+    width: 25%;
 }
 
 .candidate__Job__Application__Container .about__Dowell {
@@ -457,10 +460,12 @@ p{
 
     .candidate__Job__Application__Container .about__Dowell__Title {
         margin-top: 4%;
+        margin-bottom: 0;
     }
 
     .candidate__Job__Application__Container .about__Dowell__Title img {
         margin-left: 2%;
+        width: 9%;
     }
 }
 
@@ -471,8 +476,12 @@ p{
     }
     .candidate__Job__Application__Container .about__Dowell__Title {
         margin-top: 8%;
+        margin-bottom: 1%;
     }
     .candidate__Job__Application__Container .social__Icons__Container{
         width: 50%;
+    }
+    .candidate__Job__Application__Container .about__Dowell__Title img {
+        width: 12%;
     }
 }
