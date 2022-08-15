@@ -30,6 +30,12 @@
 
 .candidate__Job__Application__Container .about__Dowell__Title {
     margin-top: 12%;
+    display: flex;
+    align-items: center;
+}
+
+.candidate__Job__Application__Container .about__Dowell__Title img {
+    margin-left: 4%;
 }
 
 .candidate__Job__Application__Container .about__Dowell {
@@ -451,6 +457,10 @@ p{
 
     .candidate__Job__Application__Container .about__Dowell__Title {
         margin-top: 4%;
+    }
+
+    .candidate__Job__Application__Container .about__Dowell__Title img {
+        margin-left: 2%;
     }
 }
 
