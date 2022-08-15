@@ -70,11 +70,15 @@ const SingleJobScreen = ({ user }) => {
                 </> : 
                 
                 <>
-                    <h1><b>{ currentJob.title }</b></h1>
-                    <p className="dowell__Title">
-                        Dowell Ux living lab
-                        <img src={process.env.PUBLIC_URL + "/logos/logo-1.png"} alt="dowell logo" loading="lazy" />
-                    </p>
+                    <div className="dowell__Title">
+                        <div>
+                            <h1 className="job__Title"><b>{ currentJob.title }</b></h1>
+                            <p>Dowell Ux living lab</p>    
+                        </div>
+                        <div>
+                            <img src={process.env.PUBLIC_URL + "/logos/logo-1.png"} alt="dowell logo" />
+                        </div>
+                    </div>
                     <CustomHr className={'relative-hr'} />
                     <div className="job__Skills__Info">
                         <span>
