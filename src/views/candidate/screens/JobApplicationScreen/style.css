@@ -35,10 +35,21 @@
     margin-bottom: 0;
 }
 
-.candidate__Job__Application__Container .about__Dowell__Title img {
+.candidate__Job__Application__Container .dowell__Title {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+}
+
+.candidate__Job__Application__Container .about__Dowell__Title img,
+.candidate__Job__Application__Container .dowell__Title img {
     margin-left: 4%;
     max-width: 100%;
     width: 25%;
+}
+
+.candidate__Job__Application__Container .dowell__Title img {
+    width: 17%;
 }
 
 .candidate__Job__Application__Container .about__Dowell {
@@ -146,6 +157,10 @@ h1{
     font-size: 1.25rem;
     line-height: 24px;
     margin-bottom: 10%;
+}
+
+h1.job__Title{
+    margin-bottom: 0;
 }
 
 h2{
@@ -352,7 +367,7 @@ p{
     }
 
     .candidate__Job__Application__Container .relative-hr{
-        margin: 4% auto;
+        margin: 1% auto 4%;
     }
 
     .candidate__Job__Application__Container .relative-hr.hr-2{
@@ -463,9 +478,14 @@ p{
         margin-bottom: 0;
     }
 
-    .candidate__Job__Application__Container .about__Dowell__Title img {
+    .candidate__Job__Application__Container .about__Dowell__Title img,
+    .candidate__Job__Application__Container .dowell__Title img {
         margin-left: 2%;
         width: 9%;
+    }
+
+    .candidate__Job__Application__Container .dowell__Title img {
+        width: 6%;
     }
 }
 
@@ -481,7 +501,8 @@ p{
     .candidate__Job__Application__Container .social__Icons__Container{
         width: 50%;
     }
-    .candidate__Job__Application__Container .about__Dowell__Title img {
+    .candidate__Job__Application__Container .about__Dowell__Title img,
+    .candidate__Job__Application__Container .dowell__Title img {
         width: 12%;
     }
 }
