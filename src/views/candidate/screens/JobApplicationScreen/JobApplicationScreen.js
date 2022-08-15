@@ -430,8 +430,15 @@ const JobApplicationScreen = () => {
                     </>:
 
                     <>
-                        <h1><b>{ currentJob.title }</b></h1>
-                        <p>Dowell Ux living lab</p>
+                        <div className="dowell__Title">
+                            <div>
+                                <h1 className="job__Title"><b>{ currentJob.title }</b></h1>
+                                <p>Dowell Ux living lab</p>    
+                            </div>
+                            <div>
+                                <img src={process.env.PUBLIC_URL + "/logos/logo-1.png"} alt="dowell logo" />
+                            </div>
+                        </div>
                         <CustomHr className={'relative-hr'} />
                         <div className="job__Skills__Info">
                             <span>
@@ -463,7 +470,7 @@ const JobApplicationScreen = () => {
 
                         <h2 className="about__Dowell__Title">
                             <b>About D'Well Research</b>
-                            <img src={process.env.PUBLIC_URL + "/logos/logo-1.png"} alt="dowell logo" />
+                            <img src={process.env.PUBLIC_URL + "/logos/logo-1.png"} alt="dowell logo" loading="lazy" />
                         </h2>
                         <p className="about__Dowell">{dowellInfo}</p>
 
