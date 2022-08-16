@@ -20,6 +20,14 @@
     .jobs-container, .tasks-container {
         padding-bottom: 12%;
     }
+    .jobs-container > *, .tasks-container > *{
+        width: calc(96% / 2);
+        display: inline-block;
+        margin-right: 2%;
+    }
+    .jobs-container > *:nth-child(2n + 2), .tasks-container > *:nth-child(2n + 2) {
+        margin-right: 0;
+    }
 }
 
 @media (min-width: 992px){
@@ -29,10 +37,13 @@
         padding-bottom: 8%;
     }
     .jobs-container > *, .tasks-container > *{
-        width: calc(94% /3);
+        width: calc(96% /3);
         display: inline-block;
         margin-right: 2%;
-    }  
+    }
+    .jobs-container > *:nth-child(3n + 3), .tasks-container > *:nth-child(3n + 3) {
+        margin-right: 0;
+    }
     .tasks-container .add__Btn {
         padding-top: 2%;
         padding-bottom: 2%;

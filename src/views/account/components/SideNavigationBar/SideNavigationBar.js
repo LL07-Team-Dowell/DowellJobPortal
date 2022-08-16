@@ -7,7 +7,7 @@ import CustomHr from "../../../teamlead/components/CustomHr/CustomHr";
 import "./style.css";
 
 
-const SideNavigationBar = ({ className, sideNavRef, closeSideNavbar, isNotificationEnabled, setNotificationStatus }) => {
+const SideNavigationBar = ({ className, sideNavRef, closeSideNavbar, isNotificationEnabled, setNotificationStatus, hrPageActive }) => {
     const navigate = useNavigate();
 
     return <>
@@ -30,6 +30,19 @@ const SideNavigationBar = ({ className, sideNavRef, closeSideNavbar, isNotificat
                 <CustomHr />
 
                 {
+                    hrPageActive ? <>
+                    
+                        <Link to={'/tasks'}>
+                            <li>
+                                Task
+                                <ImStack className="nav-link-icon" />
+                            </li>
+                        </Link>
+                        
+                        <CustomHr /> 
+
+                    </>:
+
                     isNotificationEnabled && <>
                         <Link to={''}>
                             <li>
