@@ -26,6 +26,9 @@ const AdminPage = ({ currentUser }) => {
     const [isSideNavbarActive, setSideNavbarActive] = useState(false);
     const sideNavbarRef = useRef(null);
     const [ isLoading, setLoading ] = useState(true);
+    const [ jobSearchInput, setSearchInput ] = useState("");
+    const [ searchActive, setSearchActive ] = useState(false);
+    const [ matchedJobs, setMatchedJobs ] = useState([]);
 
     const getApplications = async () => {
         try{
@@ -63,6 +66,15 @@ const AdminPage = ({ currentUser }) => {
 
     }, [])
 
+    useEffect(() => {
+
+        if (jobSearchInput.length < 1) return setSearchActive(false);
+
+        setSearchActive(true);
+        setMatchedJobs(jobs.filter(job => job.skills.toLocaleLowerCase().includes(jobSearchInput.toLocaleLowerCase()) || job.title.toLocaleLowerCase().includes(jobSearchInput.toLocaleLowerCase())));
+
+    }, [jobSearchInput])
+
     const goToEditPage = (jobData) => navigate("/edit-job", { state: { job: jobData }});
     const goToJobDetails = (jobData) => navigate("/view-job", { state: { job: jobData }});
     const goToAddPage = () => navigate("/add-job");
@@ -74,12 +86,18 @@ const AdminPage = ({ currentUser }) => {
             <>
                 <div className="admin__Page__Container">
                     <NavigationBar title={'Jobs'} handleMenuIconClick={() => setSideNavbarActive(true)} />
-                    <Search />
+                    <Search searchValue={jobSearchInput} updateSearchValue={setSearchInput} />
                     {
                         isLoading ? <LoadingSpinner /> :
 
                         <div className="admin__Jobs__Container">
                         {
+                            searchActive ? matchedJobs.length === 0 ? <>No jobs found matching your query</> :
+                            
+                            React.Children.toArray(matchedJobs.map(job => {
+                                return <JobTile adminPageActive={true} jobData={job} routeToJob={true} handleJobTileClick={() => {}} handleViewBtnClick={goToJobDetails} handleEditIconClick={goToEditPage} candidateForJobCount={applications.filter(application => application.job === job.id).length} />
+                            })) :
+
                             React.Children.toArray(jobs.map(job => {
                                 return <JobTile adminPageActive={true} jobData={job} routeToJob={true} handleJobTileClick={() => {}} handleViewBtnClick={goToJobDetails} handleEditIconClick={goToEditPage} candidateForJobCount={applications.filter(application => application.job === job.id).length} />
                             }))
