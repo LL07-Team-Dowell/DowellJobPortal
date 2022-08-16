@@ -107,7 +107,7 @@
 }
 
 @media screen and (min-width: 992px) {
-  .job__wrapper{
+  .job__wrapper, .selected-candidates-container.hr__Page {
     width: 82%;
   }
   .job__wrapper .job-tile-container{
@@ -147,6 +147,24 @@
   }
   .hr__Job__Tile__Container .project-details-container{
     margin: 3% auto 6%;
+  }
+  .selected-candidates-container.hr__Page {
+    padding-left: 0.1%;
+    padding-right: 0.1%;
+  }
+  .tasks-container.hr__Page {
+    width: 96%;
+  }
+  .candidate-task-screen-container.hr__Page {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .candidate-task-screen-container.hr__Page .selected-applicant-intro {
+    margin-top: 2%;
+    margin-bottom: 4%;
+  }
+  .candidate-task-screen-container.hr__Page .project-details-container {
+    margin-top: 8%;
   }
 }
 

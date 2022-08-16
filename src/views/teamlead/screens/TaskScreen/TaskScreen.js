@@ -12,9 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { useCandidateTaskContext } from "../../../../contexts/CandidateTasksContext";
 
 
-const TaskScreen = ({ currentUser, handleAddTaskBtnClick, candidateAfterSelectionScreen, handleEditBtnClick }) => {
+const TaskScreen = ({ currentUser, handleAddTaskBtnClick, candidateAfterSelectionScreen, handleEditBtnClick, className }) => {
     const { userTasks, setUserTasks } = useCandidateTaskContext();
-    const [ currentProjects, setCurrentProjects ] = useState([]);
     const navigate = useNavigate();
 
     const fetchUserTasks = async () => {
@@ -23,23 +22,16 @@ const TaskScreen = ({ currentUser, handleAddTaskBtnClick, candidateAfterSelectio
         return
     }
 
-    const fetchAllProjects = async () => {
-        const response = await myAxiosInstance.get(routes.Projects);
-        setCurrentProjects(response.data.map(project => project.project_name));
-        return
-    }
-
     useEffect(() => {
 
         if (!currentUser) return navigate(-1);
 
         fetchUserTasks();
-        fetchAllProjects();
 
     }, [])
 
     return <>
-        <div className="candidate-task-screen-container">
+        <div className={`candidate-task-screen-container ${className ? className : ''}`}>
             
             { 
                 !candidateAfterSelectionScreen &&
@@ -50,7 +42,7 @@ const TaskScreen = ({ currentUser, handleAddTaskBtnClick, candidateAfterSelectio
                 </>
             }
 
-            <AssignedProjectDetails showTask={true} availableProjects={candidateAfterSelectionScreen ? null : currentProjects} />
+            <AssignedProjectDetails showTask={true} availableProjects={null} removeDropDownIcon={true} />
 
             {
                 React.Children.toArray(userTasks.map((task, index) => {

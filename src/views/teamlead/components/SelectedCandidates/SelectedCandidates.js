@@ -9,7 +9,7 @@ import { useRef, useState } from "react";
 import useClickOutside from "../../../../hooks/useClickOutside";
 
 
-const SelectedCandidates = ({ showTasks, candidatesCount, tasksCount, hrPageActive, title }) => {
+const SelectedCandidates = ({ showTasks, candidatesCount, tasksCount, hrPageActive, title, className }) => {
     const [showSortOptions, setShowSortOptions] = useState(false);
     const sortOptionsRef = useRef(null);
 
@@ -17,7 +17,7 @@ const SelectedCandidates = ({ showTasks, candidatesCount, tasksCount, hrPageActi
 
     return <>
 
-        <section className="selected-candidates-container">
+        <section className={`selected-candidates-container ${className ? className : ''}`}>
             {
                 showSortOptions && <div className="background__Overlay">
 

@@ -20,6 +20,10 @@ import { candidateStatuses } from '../../../candidate/utils/candidateStatuses';
 import { useHrCandidateContext } from '../../../../contexts/HrCandidateContext';
 import LoadingSpinner from '../../../admin/components/LoadingSpinner/LoadingSpinner';
 import UserScreen from '../UserScreen/UserScreen';
+import Button from '../../../admin/components/Button/Button';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import AddTaskScreen from '../../../teamlead/screens/AddTaskScreen/AddTaskScreen';
+import TaskScreen from '../../../teamlead/screens/TaskScreen/TaskScreen';
 
 
 
@@ -38,6 +42,13 @@ function Hr_JobScreen({ currentUser }) {
   const { candidateData, setCandidateData } = useHrCandidateContext();
   const [ isLoading, setLoading ] = useState(true);
   const [ currentProjects, setCurrentProjects ] = useState([]);
+  const [ allTasks, setAllTasks ] = useState([]);
+  const [ showAddTaskModal, setShowAddTaskModal ] = useState(false);
+  const [ hiredCandidates, setHiredCandidates ] = useState([]);
+  const [ showCurrentCandidateTask, setShowCurrentCandidateTask ] = useState(false);
+  const [ currentTeamMember, setCurrentTeamMember ] = useState({});
+  const [ editTaskActive, setEditTaskActive ] = useState(false);
+  const [ currentTaskToEdit, setCurrentTaskToEdit ] = useState({});
   
   useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
@@ -53,6 +64,7 @@ function Hr_JobScreen({ currentUser }) {
     const response = await myAxiosInstance.get(routes.Applications);
     setAppliedJobs(response.data.filter(application => application.status === candidateStatuses.PENDING_SELECTION));
     setCandidateData(response.data.filter(application => application.status === candidateStatuses.SHORTLISTED));
+    setHiredCandidates(response.data.filter(application => application.status === candidateStatuses.ONBOARDING));
     return;
   }
 
@@ -60,6 +72,19 @@ function Hr_JobScreen({ currentUser }) {
     const response = await myAxiosInstance.get(routes.Projects);
     setCurrentProjects(response.data.map(project => project.project_name));
     return
+  }
+
+  const getTasks = async () => {
+    const response = await myAxiosInstance.get(routes.Tasks);
+    const usersWithTasks = [...new Map(response.data.map(task => [ task.user, task ])).values()];
+    setAllTasks(usersWithTasks.reverse());
+    return;
+  }
+
+  const handleEditTaskBtnClick = (currentData) => {
+    setEditTaskActive(true);
+    setCurrentTaskToEdit(currentData);
+    setShowAddTaskModal(true);
   }
 
   const goToJobDetails = (jobData, candidateData) => navigate("/home/job", { state: { job: jobData, appliedCandidates: candidateData } });
@@ -79,6 +104,7 @@ function Hr_JobScreen({ currentUser }) {
     getJobApplications();
     getJobs();
     getProjects();
+    getTasks();
     setLoading(false);
 
   }, [])
@@ -137,8 +163,8 @@ function Hr_JobScreen({ currentUser }) {
           handleMenuIconClick={() => setSideNavbarActive(true)}
           className={'hr_navigation'}
           title={section === "shortlisted" ? "Shortlisted" : section === "user" ? "User" : ""}
-          changeToBackIcon={sub_section !== undefined ? true : false}
-          handleBackIconClick={() => navigate(-1)}
+          changeToBackIcon={sub_section !== undefined ? true : section === "tasks" && showCurrentCandidateTask ? true : false}
+          handleBackIconClick={section === "tasks" && showCurrentCandidateTask ? () => setShowCurrentCandidateTask(false) : () => navigate(-1)}
         />
         
         { 
@@ -147,10 +173,48 @@ function Hr_JobScreen({ currentUser }) {
             <ShortlistedScreen shortlistedCandidates={candidateData} jobData={jobs} />
           </> :
 
+          sub_section === undefined && section === "tasks" ? 
+
+          isLoading ? <LoadingSpinner /> :
+
+          <>
+            {
+              showAddTaskModal && <>
+                <AddTaskScreen closeTaskScreen={() => setShowAddTaskModal(false)} teamMembers={hiredCandidates} updateTasks={setAllTasks} editPage={editTaskActive} setEditPage={setEditTaskActive} taskToEdit={currentTaskToEdit} />
+              </>
+            }
+
+            {
+              showCurrentCandidateTask ? <TaskScreen className="hr__Page" currentUser={currentTeamMember} handleAddTaskBtnClick={() => setShowAddTaskModal(true)} handleEditBtnClick={handleEditTaskBtnClick} /> :
+          
+              <>
+
+                <SelectedCandidates 
+                  showTasks={true} 
+                  tasksCount={allTasks.length}
+                  className={"hr__Page"}
+                />
+
+                <div className="tasks-container hr__Page">
+                  {
+                    React.Children.toArray(allTasks.map(dataitem => {
+                      return <JobTile showTask={true} setShowCandidateTask={setShowCurrentCandidateTask} taskData={dataitem} handleJobTileClick={setCurrentTeamMember} />
+                    }))
+                  }
+
+                  <Button text={"Add Task"} icon={<AddCircleOutlineIcon />} handleClick={() => setShowAddTaskModal(true)} />
+                </div>
+              </>
+            }
+          </>
+          
+          :
+
           sub_section === undefined && section === "user" ? <UserScreen currentUser={currentUser} /> :
 
           sub_section === undefined &&
           <><ErrorPage disableNav={true} /></>
+
         }
       
       </>
@@ -219,6 +283,7 @@ function Hr_JobScreen({ currentUser }) {
         closeSideNavbar={() => setSideNavbarActive(false)}
         isNotificationEnabled={isNotificationEnabled}
         setNotificationStatus={() => setNotificationStatus(prevValue => { return !prevValue })}
+        hrPageActive={true}
       />
     }
 

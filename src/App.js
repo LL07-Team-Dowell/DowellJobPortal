@@ -125,7 +125,9 @@ function App() {
       <Route path="/" element={
         <NavigationContextProvider>
           <HrCandidateContextProvider>
-            <Hr_JobScreen currentUser={user} />
+            <CandidateTaskContextProvider>
+              <Hr_JobScreen currentUser={user} />
+            </CandidateTaskContextProvider>
           </HrCandidateContextProvider>
         </NavigationContextProvider>
       }>
