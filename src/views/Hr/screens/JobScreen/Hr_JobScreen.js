@@ -33,6 +33,8 @@ function Hr_JobScreen({ currentUser }) {
   const navigate = useNavigate();
   const location = useLocation();
   const [jobSearchInput, setJobSearchInput] = useState("");
+  const [ searchActive, setSearchActive ] = useState(false);
+  const [ matchedJobs, setMatchedJobs ] = useState([]);
   const { candidateData, setCandidateData } = useHrCandidateContext();
   const [ isLoading, setLoading ] = useState(true);
   const [ currentProjects, setCurrentProjects ] = useState([]);
@@ -81,6 +83,15 @@ function Hr_JobScreen({ currentUser }) {
 
   }, [])
 
+  useEffect(() => {
+    
+    if (jobSearchInput.length < 1) return setSearchActive(false);
+    
+    setSearchActive(true);
+    setMatchedJobs(jobs.filter(job => job.skills.toLocaleLowerCase().includes(jobSearchInput.toLocaleLowerCase()) || job.title.toLocaleLowerCase().includes(jobSearchInput.toLocaleLowerCase())));
+
+  }, [jobSearchInput])
+
   return (
     <>
     {
@@ -100,6 +111,14 @@ function Hr_JobScreen({ currentUser }) {
 
             <div className='job__wrapper'>
               {
+                searchActive ? matchedJobs.length === 0 ? <>No jobs found matching your query</> :
+                
+                React.Children.toArray(matchedJobs.map(job => {
+                  return <>
+                    <JobTile jobData={job} routeToJob={true} handleJobTileClick={() => goToJobDetails(job, appliedJobs.filter(application => application.job === job.id))} candidateForJobCount={appliedJobs.filter(application => application.job === job.id).length} />
+                  </>
+                })) :
+
                 React.Children.toArray(jobs.map(job => {
                   return <>
                     <JobTile jobData={job} routeToJob={true} handleJobTileClick={() => goToJobDetails(job, appliedJobs.filter(application => application.job === job.id))} candidateForJobCount={appliedJobs.filter(application => application.job === job.id).length} />
