@@ -1,0 +1,18 @@
+.container-wrapper .home__Title__Text{
+    width: 87%;
+    margin: 4% auto 6%;
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .container-wrapper .home__Title__Text {
+        width: 85%;
+        margin-top: 3%;
+        margin-bottom: 2%;
+    }
+}
+
+@media screen and (min-width: 992px) {
+    .container-wrapper .home__Title__Text{
+        margin: 2% auto;
+    } 
+}

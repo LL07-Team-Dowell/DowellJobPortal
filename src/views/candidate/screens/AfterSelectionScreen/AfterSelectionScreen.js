@@ -11,7 +11,7 @@ import { afterSelectionLinks } from "../../utils/afterSelectionLinks";
 import "./style.css";
 
 
-const AfterSelectionScreen = ({ user }) => {
+const AfterSelectionScreen = ({ user, assignedProject }) => {
     
     const [ showAddTaskModal, setShowAddTaskModal ] = useState(false);
     const { section } = useNavigationContext();
@@ -27,7 +27,7 @@ const AfterSelectionScreen = ({ user }) => {
                 <Navbar title={"Tasks"} />
 
                 <div className="candidate__After__Selection__Screen">
-                    <TaskScreen currentUser={user.username} candidateAfterSelectionScreen={true} handleAddTaskBtnClick={() => setShowAddTaskModal(true)} />
+                    <TaskScreen currentUser={user.username} candidateAfterSelectionScreen={true} handleAddTaskBtnClick={() => setShowAddTaskModal(true)} assignedProject={assignedProject} />
                 </div>
                 
                 <BottomNavigationBar links={afterSelectionLinks} />

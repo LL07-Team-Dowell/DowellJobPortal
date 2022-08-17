@@ -49,6 +49,9 @@
       /* line-height: 81px; */
       
   }
+  .detail.skill.full-width {
+    width: 98%;
+  }
   .apply-button{
       position: absolute;
       top: 50%;
