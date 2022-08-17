@@ -26,12 +26,14 @@ import TeamsScreen from './views/candidate/screens/TeamsScreen/TeamsScreen';
 import { CandidateTaskContextProvider } from './contexts/CandidateTasksContext';
 import { NewJobTermsContextProvider } from './contexts/NewJobTermsContext';
 import SingleJobScreen from './views/candidate/screens/JobApplicationScreen/SingleJobScreen';
+import JobScreen from './views/candidate/components/Job/Job';
 
 function App() {
 
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [ candidateHired, setCandidateHired ] = useState(false);
+  const [ assignedProject, setAssignedProject ] = useState("");
 
   useDowellLogin(setUser, setLoading);
   useTitle("Dowell Job Portal");
@@ -47,6 +49,7 @@ function App() {
         </NewApplicationContextProvider>
       } />
       <Route path='/jobs/:jobTitle' element={<SingleJobScreen />} />
+      <Route path='/jobs' element={<JobScreen />} />
       <Route path="*" element={<CandidateHomeScreen />} />
 
     </Routes>
@@ -188,7 +191,7 @@ function App() {
       <Route path='/' element={
         <NavigationContextProvider>
           <CandidateTaskContextProvider>
-            <AfterSelectionScreen user={user} />
+            <AfterSelectionScreen user={user} assignedProject={assignedProject} />
           </CandidateTaskContextProvider>
         </NavigationContextProvider>
       }>
@@ -206,7 +209,7 @@ function App() {
 
       <Route path="/" element={
         <NavigationContextProvider>
-          <CandidateHomeScreen user={user} hired={candidateHired} setHired={setCandidateHired} />
+          <CandidateHomeScreen user={user} setHired={setCandidateHired} setAssignedProject={setAssignedProject} />
         </NavigationContextProvider>
       }>
         <Route path=":section" element={
@@ -216,6 +219,7 @@ function App() {
         } />
       </Route>
 
+      <Route path='/jobs' element={<JobScreen currentUser={user} />} />
       <Route path="/logout" element={<Logout/>}/>
       <Route path="/alerts" element={<AlertScreen/>}/>
       <Route path="/user" element={<UserScreen currentUser={user}/>}/>

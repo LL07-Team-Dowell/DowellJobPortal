@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useCandidateTaskContext } from "../../../../contexts/CandidateTasksContext";
 
 
-const TaskScreen = ({ currentUser, handleAddTaskBtnClick, candidateAfterSelectionScreen, handleEditBtnClick, className }) => {
+const TaskScreen = ({ currentUser, handleAddTaskBtnClick, candidateAfterSelectionScreen, handleEditBtnClick, className, assignedProject }) => {
     const { userTasks, setUserTasks } = useCandidateTaskContext();
     const navigate = useNavigate();
 
@@ -42,7 +42,7 @@ const TaskScreen = ({ currentUser, handleAddTaskBtnClick, candidateAfterSelectio
                 </>
             }
 
-            <AssignedProjectDetails showTask={true} availableProjects={null} removeDropDownIcon={true} />
+            <AssignedProjectDetails showTask={true} availableProjects={null} removeDropDownIcon={true} assignedProject={assignedProject} />
 
             {
                 React.Children.toArray(userTasks.map((task, index) => {

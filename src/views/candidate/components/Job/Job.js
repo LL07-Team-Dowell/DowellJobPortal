@@ -4,20 +4,19 @@ import { FaToolbox } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
 import { myAxiosInstance } from '../../../../lib/axios';
 import { routes } from '../../../../lib/routes';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useNavigationContext } from '../../../../contexts/NavigationContext';
 import ErrorPage from '../../../error/ErrorPage';
 import Search from '../../../Hr/component/Search/Search';
 import { BsCashStack, BsShare } from 'react-icons/bs';
 import { handleShareBtnClick } from '../../utils/helperFunctions';
-import { candidateStatuses } from '../../utils/candidateStatuses';
 import Navbar from '../Navbar/Navbar';
 import Footer from "../Footer/Footer";
 import LoadingSpinner from '../../../admin/components/LoadingSpinner/LoadingSpinner';
 import { jobKeys } from '../../../admin/utils/jobKeys';
 
 
-function JobScreen({ currentUser, hired, setHired }) {
+function JobScreen({ currentUser }) {
     const [jobs, setJobs] = useState([]);
     const [jobsLoading, setJobsLoading] = useState(true);
     const [appliedJobs, setAppliedJobs] = useState([]);
@@ -28,33 +27,18 @@ function JobScreen({ currentUser, hired, setHired }) {
     const [ jobSearchInput, setSearchInput ] = useState("");
     const [ searchActive, setSearchActive ] = useState(false);
     const [ matchedJobs, setMatchedJobs ] = useState([]);
+    const location = useLocation();
+    const [ jobsMatchingCategory, setJobsMatchingCategory ] = useState([]);
 
     useEffect(() => {
 
-        async function fetchApplications(){
-            
-            try{
-            
-                const response = await myAxiosInstance.get(routes.Applications);
-                const currentUserAppliedJobs = response.data.filter(application => application.applicant === currentUser.username);
-                if (currentUserAppliedJobs.filter(application => application.status === candidateStatuses.ONBOARDING).length  >= 1) {
-                    return setHired(true);
-                }
-                setAppliedJobs(currentUserAppliedJobs);
-                return;
-                
-            }catch(err) {
-                console.log(err)
-                return
-            }
+        if ((!location.state) || (!location.state.jobCategory)) return navigate("/home");
 
-        }
-
-        if (!currentUser) return setLoading(false);
-
-        fetchApplications();
-
-    }, [])
+        const matchedJobs = jobs.filter(job => job.typeof.toLocaleLowerCase().includes(location.state.jobCategory.toLocaleLowerCase()) || location.state.jobCategory.toLocaleLowerCase().includes(job.typeof.toLocaleLowerCase()));
+        setJobsMatchingCategory(matchedJobs);
+        setAppliedJobs(location.state.appliedJobs);
+        
+    }, [jobs, location])
     
     useEffect(() => {
 
@@ -91,7 +75,7 @@ function JobScreen({ currentUser, hired, setHired }) {
         if (jobSearchInput.length < 1) return setSearchActive(false);
 
         setSearchActive(true);
-        setMatchedJobs(jobs.filter(job => job.skills.toLocaleLowerCase().includes(jobSearchInput.toLocaleLowerCase()) || job.title.toLocaleLowerCase().includes(jobSearchInput.toLocaleLowerCase())));
+        setMatchedJobs(jobsMatchingCategory.filter(job => job.skills.toLocaleLowerCase().includes(jobSearchInput.toLocaleLowerCase()) || job.title.toLocaleLowerCase().includes(jobSearchInput.toLocaleLowerCase())));
 
     }, [jobSearchInput])
 
@@ -170,7 +154,11 @@ function JobScreen({ currentUser, hired, setHired }) {
                                     </>
                                 })) :
 
-                                React.Children.toArray(jobs.map(job => {
+                                jobsMatchingCategory.length === 0 ? <>No '{location.state.jobCategory}' jobs currently available</> :
+
+                                jobsMatchingCategory.length >= 1 && !jobsMatchingCategory.every(job => job.is_active) ? <>No '{location.state.jobCategory}' jobs currently available</> :
+
+                                React.Children.toArray(jobsMatchingCategory.map(job => {
                                 
                                 if (!job.is_active) return <></>
 
