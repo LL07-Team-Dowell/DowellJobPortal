@@ -29,10 +29,10 @@ const EditJobScreen = () => {
 
     useEffect(() => {
 
-        if (!location.state.job) return navigate("/");
+        if ((!location.state) || (!location.state.job)) return navigate("/");
         setUpdatedJobDetails(location.state.job);
 
-    }, [])
+    }, [location])
 
     const handleSaveBtnClick = async () => {
         setDisabled(true);
@@ -53,7 +53,7 @@ const EditJobScreen = () => {
     return <>
         <div className="admin__Page__Container">
             <NavigationBar changeToBackIcon={true} handleBackIconClick={() => navigate(-1)} />
-            <EditJobDetails currentJob={location.state && location.state.job && location.state.job} updateJobDetails={setUpdatedJobDetails} />
+            <EditJobDetails currentJob={updatedJobDetails} currentJobState={location.state && location.state.job} updateJobDetails={setUpdatedJobDetails} />
             <Button 
                 handleClick={handleSaveBtnClick}
                 icon={<AiOutlineSave />}
