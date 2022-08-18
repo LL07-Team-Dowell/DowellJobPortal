@@ -29,11 +29,13 @@ function JobScreen({ currentUser }) {
     const [ matchedJobs, setMatchedJobs ] = useState([]);
     const location = useLocation();
     const [ jobsMatchingCategory, setJobsMatchingCategory ] = useState([]);
+    const [ currentCategory, setCurrentCategory ] = useState("");
 
     useEffect(() => {
 
         if ((!location.state) || (!location.state.jobCategory)) return navigate("/home");
 
+        setCurrentCategory(location.state.jobCategory);
         const matchedJobs = jobs.filter(job => job.typeof.toLocaleLowerCase().includes(location.state.jobCategory.toLocaleLowerCase()) || location.state.jobCategory.toLocaleLowerCase().includes(job.typeof.toLocaleLowerCase()));
         setJobsMatchingCategory(matchedJobs);
         setAppliedJobs(location.state.appliedJobs);
@@ -154,9 +156,9 @@ function JobScreen({ currentUser }) {
                                     </>
                                 })) :
 
-                                jobsMatchingCategory.length === 0 ? <>No '{location.state.jobCategory}' jobs currently available</> :
+                                jobsMatchingCategory.length === 0 ? <>No '{currentCategory}' jobs currently available</> :
 
-                                jobsMatchingCategory.length >= 1 && !jobsMatchingCategory.every(job => job.is_active) ? <>No '{location.state.jobCategory}' jobs currently available</> :
+                                jobsMatchingCategory.length >= 1 && !jobsMatchingCategory.every(job => job.is_active) ? <>No '{currentCategory}' jobs currently available</> :
 
                                 React.Children.toArray(jobsMatchingCategory.map(job => {
                                 
