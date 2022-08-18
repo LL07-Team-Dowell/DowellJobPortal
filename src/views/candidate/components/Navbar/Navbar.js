@@ -61,7 +61,7 @@ function Navbar({ title, changeToBackButton, backButtonLink, disableSideBar, han
             </> : 
             
             <>
-              <Link to='#' className='menu-bars'>
+              <Link to='#' className='menu-bars' onClick={(e) => e.preventDefault()}>
                 <FaBars className='icons white-color' onClick={disableSideBar ? () => {} : () => showSidebar()}  />
               </Link>
             </>
