@@ -7,7 +7,7 @@ import DropdownButton from "../../../teamlead/components/DropdownButton/Dropdown
 import { jobKeys } from "../../utils/jobKeys";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
-const EditJobDetails = ({ currentJob, updateJobDetails }) => {
+const EditJobDetails = ({ currentJob, currentJobState, updateJobDetails }) => {
     
     const { newJobTerms, dispatchToNewJobTerms } = useNewJobTermsContext();
     const [ loading, setLoading ] = useState(true);
@@ -22,6 +22,8 @@ const EditJobDetails = ({ currentJob, updateJobDetails }) => {
 
     useEffect (() => {
 
+        if (!currentJobState) return
+
         const currentJobTerms = {
             generalTerms: [{}],
             workflowTerms: [{}],
@@ -32,32 +34,32 @@ const EditJobDetails = ({ currentJob, updateJobDetails }) => {
 
         let emptyObj = {};
         
-        Object.keys(currentJob[jobKeys.generalTerms] || {}).forEach(key => {
-            emptyObj[key] = currentJob[jobKeys.generalTerms][key];
+        Object.keys(currentJobState[jobKeys.generalTerms] || {}).forEach(key => {
+            emptyObj[key] = currentJobState[jobKeys.generalTerms][key];
             currentJobTerms[newJobStateDataNames.generalTerms].push(emptyObj);
             emptyObj = {};
         })
 
-        Object.keys(currentJob[jobKeys.technicalSpecifications] || {}).forEach(key => {
-            emptyObj[key] = currentJob[jobKeys.technicalSpecifications][key];
+        Object.keys(currentJobState[jobKeys.technicalSpecifications] || {}).forEach(key => {
+            emptyObj[key] = currentJobState[jobKeys.technicalSpecifications][key];
             currentJobTerms[newJobStateDataNames.technicalTerms].push(emptyObj);
             emptyObj = {};
         })
 
-        Object.keys(currentJob[jobKeys.paymentTerms] || {}).forEach(key => {
-            emptyObj[key] = currentJob[jobKeys.paymentTerms][key];
+        Object.keys(currentJobState[jobKeys.paymentTerms] || {}).forEach(key => {
+            emptyObj[key] = currentJobState[jobKeys.paymentTerms][key];
             currentJobTerms[newJobStateDataNames.paymentTerms].push(emptyObj);
             emptyObj = {};
         })
 
-        Object.keys(currentJob[jobKeys.workflowOfJob] || {}).forEach(key => {
-            emptyObj[key] = currentJob[jobKeys.workflowOfJob][key];
+        Object.keys(currentJobState[jobKeys.workflowOfJob] || {}).forEach(key => {
+            emptyObj[key] = currentJobState[jobKeys.workflowOfJob][key];
             currentJobTerms[newJobStateDataNames.workflowTerms].push(emptyObj);
             emptyObj = {};
         })
 
-        Object.keys(currentJob[jobKeys.others] || {}).forEach(key => {
-            emptyObj[key] = currentJob[jobKeys.others][key];
+        Object.keys(currentJobState[jobKeys.others] || {}).forEach(key => {
+            emptyObj[key] = currentJobState[jobKeys.others][key];
             currentJobTerms[newJobStateDataNames.otherTerms].push(emptyObj);
             emptyObj = {};
         })

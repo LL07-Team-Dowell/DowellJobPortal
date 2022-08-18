@@ -14,6 +14,7 @@ import Navbar from '../Navbar/Navbar';
 import Footer from "../Footer/Footer";
 import LoadingSpinner from '../../../admin/components/LoadingSpinner/LoadingSpinner';
 import { jobKeys } from '../../../admin/utils/jobKeys';
+import { changeToTitleCase } from '../../../../helpers/helpers';
 
 
 function JobScreen({ currentUser }) {
@@ -29,11 +30,11 @@ function JobScreen({ currentUser }) {
     const [ matchedJobs, setMatchedJobs ] = useState([]);
     const location = useLocation();
     const [ jobsMatchingCategory, setJobsMatchingCategory ] = useState([]);
-    const [ currentCategory, setCurrentCategory ] = useState("");
+    const [ currentCategory, setCurrentCategory ] = useState("all");
 
     useEffect(() => {
 
-        if ((!location.state) || (!location.state.jobCategory)) return navigate("/home");
+        if ((!location.state) || (!location.state.jobCategory)) return setJobsMatchingCategory(jobs);
 
         setCurrentCategory(location.state.jobCategory);
         const matchedJobs = jobs.filter(job => job.typeof.toLocaleLowerCase().includes(location.state.jobCategory.toLocaleLowerCase()) || location.state.jobCategory.toLocaleLowerCase().includes(job.typeof.toLocaleLowerCase()));
@@ -91,7 +92,7 @@ function JobScreen({ currentUser }) {
             isLoading ? <></> :
 
             <>
-              <Navbar title='Jobs' disableSideBar={currentUser ? false : true} />
+              <Navbar title={`${changeToTitleCase(currentCategory)} Jobs`} disableSideBar={currentUser ? false : true} />
             
               <div className='container-wrapper'>
 
@@ -113,7 +114,7 @@ function JobScreen({ currentUser }) {
 
                                             <div className="container">
 
-                                                <Link to={'#'} onClick={() => handleShareBtnClick(job.title, `Apply for ${job.title} on Dowell!`, `${process.env.PUBLIC_URL}/#/jobs/${job.title.slice(-1) === " " ? job.title.slice(0, -1).toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-") : job.title.toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-")}`)}>
+                                                <Link to={'#'} onClick={(e) => { e.preventDefault(); handleShareBtnClick(job.title, `Apply for ${job.title} on Dowell!`, `${process.env.PUBLIC_URL}/#/jobs/${job.title.slice(-1) === " " ? job.title.slice(0, -1).toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-") : job.title.toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-")}`)} }>
                                                     <BsShare className='share__Job__Btn' />
                                                 </Link>
 
@@ -158,7 +159,7 @@ function JobScreen({ currentUser }) {
 
                                 jobsMatchingCategory.length === 0 ? <>No '{currentCategory}' jobs currently available</> :
 
-                                jobsMatchingCategory.length >= 1 && !jobsMatchingCategory.every(job => job.is_active) ? <>No '{currentCategory}' jobs currently available</> :
+                                jobsMatchingCategory.length >= 1 && currentCategory !== "all" && !jobsMatchingCategory.every(job => job.is_active) ? <>No '{currentCategory}' jobs currently available</> :
 
                                 React.Children.toArray(jobsMatchingCategory.map(job => {
                                 
@@ -169,7 +170,7 @@ function JobScreen({ currentUser }) {
 
                                         <div className="container">
 
-                                            <Link to={'#'} onClick={() => handleShareBtnClick(job.title, `Apply for ${job.title} on Dowell!`, `${process.env.PUBLIC_URL}/#/jobs/${job.title.slice(-1) === " " ? job.title.slice(0, -1).toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-") : job.title.toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-")}`)}>
+                                            <Link to={'#'} onClick={(e) => { e.preventDefault(); handleShareBtnClick(job.title, `Apply for ${job.title} on Dowell!`, `${process.env.PUBLIC_URL}/#/jobs/${job.title.slice(-1) === " " ? job.title.slice(0, -1).toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-") : job.title.toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-")}`)} }>
                                                 <BsShare className='share__Job__Btn' />
                                             </Link>
 
