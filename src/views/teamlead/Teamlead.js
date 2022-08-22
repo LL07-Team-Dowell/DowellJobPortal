@@ -21,6 +21,7 @@ import Button from "../admin/components/Button/Button";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddTaskScreen from "./screens/AddTaskScreen/AddTaskScreen";
 import UserScreen from "./screens/UserScreen/UserScreen";
+import { useLocation } from "react-router-dom";
 
 
 const Teamlead = ({ currentUser }) => {
@@ -39,6 +40,7 @@ const Teamlead = ({ currentUser }) => {
     const [ showAddTaskModal, setShowAddTaskModal ] = useState(false);
     const [ editTaskActive, setEditTaskActive ] = useState(false);
     const [ currentTaskToEdit, setCurrentTaskToEdit ] = useState({});
+    const location = useLocation();
 
     const sideNavbarRef = useRef(null);
 
@@ -108,6 +110,12 @@ const Teamlead = ({ currentUser }) => {
         setSelectedTabActive(true);
 
     }, [searchParams])
+
+    useEffect(() => {
+
+        setShowCandidateTask(false);
+        
+    }, [location])
 
     const handleEditTaskBtnClick = (currentData) => {
         setEditTaskActive(true);
