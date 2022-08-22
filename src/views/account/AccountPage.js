@@ -16,6 +16,7 @@ import useClickOutside from "../../hooks/useClickOutside";
 import { routes } from "../../lib/routes";
 import { candidateStatuses } from "../candidate/utils/candidateStatuses";
 import UserScreen from "./screens/UserScreen/UserScreen";
+import { useLocation } from "react-router-dom";
 
 const AccountPage = ({ currentUser }) => {
     const { section, searchParams, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
@@ -29,6 +30,7 @@ const AccountPage = ({ currentUser }) => {
     const sideNavbarRef = useRef(null);
     const [jobs, setJobs] = useState([]);
     const [showApplicationDetails, setShowApplicationDetails] = useState(false);
+    const location = useLocation();
 
     useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
@@ -103,6 +105,12 @@ const AccountPage = ({ currentUser }) => {
         setRehireTabActive(false);
 
     }, [searchParams])
+
+    useEffect(() => {
+
+        setShowCandidate(false);
+
+    }, [location])
 
     return <>
         <NavigationBar 
