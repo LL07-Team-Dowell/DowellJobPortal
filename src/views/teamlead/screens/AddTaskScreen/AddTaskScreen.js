@@ -78,7 +78,7 @@ const AddTaskScreen = ({ teamMembers , closeTaskScreen, updateTasks, afterSelect
 
             const response = await myAxiosInstance.post(routes.Add_New_Task, dataToSend);
             
-            updateTasks(prevTasks => { return [ ...prevTasks.filter(task => task.user !== dataToSend.user) ] });
+            if (!afterSelectionScreen) updateTasks(prevTasks => { return [ ...prevTasks.filter(task => task.user !== dataToSend.user) ] });
             updateTasks(prevTasks => { return [ response.data, ...prevTasks ] } );
             closeTaskScreen();
             { afterSelectionScreen ? navigate("/tasks") : navigate("/task"); }
