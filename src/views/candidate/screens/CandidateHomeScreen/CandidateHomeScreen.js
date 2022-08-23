@@ -70,10 +70,10 @@ function Home({ user, setHired, setAssignedProject }) {
           <h1>Join DoWell team</h1>
           <div className='content__Wrappper'>
             {
-              React.Children.toArray(availableJobCategories.map((category, index) => {
+              React.Children.toArray(availableJobCategories.slice(0).reverse().map((category, index) => {
                 return <>
                   <div className='content__Item'>
-                    <img src={assets[`users_img_${index + 1}`]} alt='job category' />
+                    <img src={assets[`users_img_${availableJobCategories.length - index }`]} alt='job category' />
                     <Link className='job__Link__Item' to={`/jobs/${category.toLocaleLowerCase().replaceAll(' ', '-')}`} onClick={(e) => handleLinkClick(e, category)}>
                       <>
                       Apply for
