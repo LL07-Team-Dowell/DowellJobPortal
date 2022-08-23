@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { FaBars } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 import { IconContext } from 'react-icons';
@@ -9,6 +8,7 @@ import SideNavigationBar from '../../../account/components/SideNavigationBar/Sid
 import { useRef } from 'react';
 import { useNavigationContext } from '../../../../contexts/NavigationContext';
 import { dowellLoginUrl } from '../../../../lib/axios';
+import { FiBell } from 'react-icons/fi';
 
 
 function Navbar({ title, changeToBackButton, backButtonLink, disableSideBar, handleShareJobBtnClick, removeShareOptions }) {
@@ -62,13 +62,30 @@ function Navbar({ title, changeToBackButton, backButtonLink, disableSideBar, han
             
             <>
               <Link to='#' className='menu-bars' onClick={(e) => e.preventDefault()}>
-                <FaBars className='icons white-color' onClick={disableSideBar ? () => {} : () => showSidebar()}  />
+                <div className='new__Nav__Icon__Container' onClick={disableSideBar ? () => {} : () => showSidebar()}>
+                  <div className='top__Row'>
+                    <div className='nav__Icon__Item orange__Color'></div>
+                    <div className='nav__Icon__Item light__Orange'></div>
+                  </div>
+                  <div className='bottom__Row'>
+                    <div className='nav__Icon__Item orange__Color'></div>
+                    <div className='nav__Icon__Item orange__Color'></div>  
+                  </div>
+                </div>
               </Link>
             </>
           }
           
           <h3 className='page__title'>{title}</h3>
-          {disableSideBar && <a href={dowellLoginUrl} className="login__Btn__Link" rel='noopener' aria-label='continue to login with dowell function'>Login</a>}
+          {
+            disableSideBar ? <a href={dowellLoginUrl} className="login__Btn__Link" rel='noopener' aria-label='continue to login with dowell function'>Login</a> :
+            <>
+              <Link className='notification__Icon__Container' to={"/alerts"}>
+                <FiBell className='notification__Icon' />
+                <div className='notification__Indicator'></div>
+              </Link>
+            </>
+          }
         </div>
         
         {

@@ -15,6 +15,7 @@ import Footer from "../Footer/Footer";
 import LoadingSpinner from '../../../admin/components/LoadingSpinner/LoadingSpinner';
 import { jobKeys } from '../../../admin/utils/jobKeys';
 import { changeToTitleCase } from '../../../../helpers/helpers';
+import * as jobIcons from "../../../../assets/iconIndex";
 
 
 function JobScreen({ currentUser }) {
@@ -31,6 +32,7 @@ function JobScreen({ currentUser }) {
     const location = useLocation();
     const [ jobsMatchingCategory, setJobsMatchingCategory ] = useState([]);
     const [ currentCategory, setCurrentCategory ] = useState("all");
+    const [ icons, setIcons ] = useState([]);
 
     useEffect(() => {
 
@@ -42,6 +44,23 @@ function JobScreen({ currentUser }) {
         setAppliedJobs(location.state.appliedJobs);
         
     }, [jobs, location])
+
+    useEffect(() => {
+
+        const allJobs = jobsMatchingCategory.map(job => ({ title: job.title.toLocaleLowerCase(), id: job.id }))
+        
+        Object.keys(jobIcons).forEach(iconTitle => {
+            let newIcon = {};
+            const foundJobWithIcon = allJobs.find(job => job.title.indexOf(iconTitle) !== -1);
+
+            if (foundJobWithIcon) {
+                newIcon.id = foundJobWithIcon.id;
+                newIcon.iconPath = jobIcons[iconTitle];
+                setIcons(previtems => [...previtems, newIcon]);
+            }
+        })
+
+    }, [jobsMatchingCategory])
     
     useEffect(() => {
 
@@ -92,21 +111,85 @@ function JobScreen({ currentUser }) {
             isLoading ? <></> :
 
             <>
-              <Navbar title={`${changeToTitleCase(currentCategory)} Jobs`} disableSideBar={currentUser ? false : true} />
+                <Navbar title={`${changeToTitleCase(currentCategory)} Jobs`} disableSideBar={currentUser ? false : true} />
             
-              <div className='container-wrapper'>
+                <div className='container-wrapper'>
 
-                <Search searchValue={jobSearchInput} updateSearchValue={setSearchInput} />
+                    <Search searchValue={jobSearchInput} updateSearchValue={setSearchInput} />
 
-                <div className="row">
-                    {
-                        section == undefined || section === "home" ? <>
-                            {
-                                jobsLoading ? <LoadingSpinner /> :
+                    <div className="row">
+                        {
+                            section == undefined || section === "home" ? <>
+                                {
+                                    jobsLoading ? <LoadingSpinner /> :
 
-                                searchActive ? matchedJobs.length === 0 ? <>No jobs found matching your query</> :
-                                
-                                React.Children.toArray(matchedJobs.map(job => {
+                                    searchActive ? matchedJobs.length === 0 ? <>No jobs found matching your query</> :
+                                    
+                                    React.Children.toArray(matchedJobs.map(job => {
+                                        if (!job.is_active) return <></>
+
+                                        return <>
+                                            <div className="card" key={job.id}>
+
+                                                <div className="container">
+
+                                                    <Link to={'#'} onClick={(e) => { e.preventDefault(); handleShareBtnClick(job.title, `Apply for ${job.title} on Dowell!`, `${process.env.PUBLIC_URL}/#/jobs/${job.title.slice(-1) === " " ? job.title.slice(0, -1).toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-") : job.title.toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-")}`)} }>
+                                                        <BsShare className='share__Job__Btn' />
+                                                    </Link>
+
+                                                    <div className='row-text'>
+                                                        <h4>
+                                                            {
+                                                                icons.find(iconForJob => iconForJob.id === job.id) ? 
+                                                                <div className='job__Icon__Container'>
+                                                                    <img src={icons.find(iconForJob => iconForJob.id === job.id).iconPath} alt="job icon" /> 
+                                                                </div> : <></>
+                                                            }
+                                                            {job.title}
+                                                        </h4>
+                                                        <p className='detail dowell'>Dowell Ux living lab</p>
+                                                        <p className='detail skill'>Skills: {job.skills.length > 20 ? job.skills.slice(0, 20) + "..." : job.skills}</p>
+                                                        {
+                                                            appliedJobs.find(appliedJob => appliedJob.job === job.id ) == undefined ?
+                                                            <button className='apply-button' onClick={() => handleApplyButtonClick(job)}>Apply</button> :
+                                                            <button className='apply-button' disabled={true}>Applied</button>
+                                                        }
+                                                    
+                                                    </div>
+                                                
+
+                                                    <div className='row-bottom'>
+                                                    <IconContext.Provider value={{ color: '#838383', size:'14px' }}>
+                                                        <ul className='job__Detail__Span_Container'>
+                                                            <li>
+                                                                <FaToolbox/>
+                                                                {job.time_period}
+                                                            </li>
+                                                            <li>
+                                                                <span className='free'>{job.typeof}</span>
+                                                            </li>
+                                                            {
+                                                                job.others[jobKeys.paymentForJob] &&
+                                                                <li>
+                                                                    <BsCashStack />
+                                                                    {job.others[jobKeys.paymentForJob]}
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                        </IconContext.Provider>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </>
+                                    })) :
+
+                                    jobsMatchingCategory.length === 0 ? <>No '{currentCategory}' jobs currently available</> :
+
+                                    jobsMatchingCategory.length >= 1 && currentCategory !== "all" && !jobsMatchingCategory.every(job => job.is_active) ? <>No '{currentCategory}' jobs currently available</> :
+
+                                    React.Children.toArray(jobsMatchingCategory.map(job => {
+                                    
                                     if (!job.is_active) return <></>
 
                                     return <>
@@ -119,7 +202,15 @@ function JobScreen({ currentUser }) {
                                                 </Link>
 
                                                 <div className='row-text'>
-                                                    <h4><b>{job.title}</b></h4>
+                                                    <h4>
+                                                        {
+                                                            icons.find(iconForJob => iconForJob.id === job.id) ? 
+                                                            <div className='job__Icon__Container'>
+                                                                <img src={icons.find(iconForJob => iconForJob.id === job.id).iconPath} alt="job icon" /> 
+                                                            </div> : <></>
+                                                        }
+                                                        {job.title}
+                                                    </h4>
                                                     <p className='detail dowell'>Dowell Ux living lab</p>
                                                     <p className='detail skill'>Skills: {job.skills.length > 20 ? job.skills.slice(0, 20) + "..." : job.skills}</p>
                                                     {
@@ -138,6 +229,9 @@ function JobScreen({ currentUser }) {
                                                             <FaToolbox/>
                                                             {job.time_period}
                                                         </li>
+                                                        <li>
+                                                            <span className='free'>{job.typeof}</span>
+                                                        </li>
                                                         {
                                                             job.others[jobKeys.paymentForJob] &&
                                                             <li>
@@ -145,9 +239,6 @@ function JobScreen({ currentUser }) {
                                                                 {job.others[jobKeys.paymentForJob]}
                                                             </li>
                                                         }
-                                                        <li>
-                                                            <span className='free'>{job.typeof}</span>
-                                                        </li>
                                                     </ul>
                                                     </IconContext.Provider>
                                                 </div>
@@ -155,77 +246,18 @@ function JobScreen({ currentUser }) {
                                             </div>
                                         </div>
                                     </>
-                                })) :
+                                    }))
+                                }
+                            </>: 
 
-                                jobsMatchingCategory.length === 0 ? <>No '{currentCategory}' jobs currently available</> :
+                            <>
+                                <ErrorPage disableNav={true} />
+                            </>
 
-                                jobsMatchingCategory.length >= 1 && currentCategory !== "all" && !jobsMatchingCategory.every(job => job.is_active) ? <>No '{currentCategory}' jobs currently available</> :
-
-                                React.Children.toArray(jobsMatchingCategory.map(job => {
-                                
-                                if (!job.is_active) return <></>
-
-                                return <>
-                                    <div className="card" key={job.id}>
-
-                                        <div className="container">
-
-                                            <Link to={'#'} onClick={(e) => { e.preventDefault(); handleShareBtnClick(job.title, `Apply for ${job.title} on Dowell!`, `${process.env.PUBLIC_URL}/#/jobs/${job.title.slice(-1) === " " ? job.title.slice(0, -1).toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-") : job.title.toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-")}`)} }>
-                                                <BsShare className='share__Job__Btn' />
-                                            </Link>
-
-                                            <div className='row-text'>
-                                                <h4><b>{job.title}</b></h4>
-                                                <p className='detail dowell'>Dowell Ux living lab</p>
-                                                <p className='detail skill'>Skills: {job.skills.length > 20 ? job.skills.slice(0, 20) + "..." : job.skills}</p>
-                                                {
-                                                    appliedJobs.find(appliedJob => appliedJob.job === job.id ) == undefined ?
-                                                    <button className='apply-button' onClick={() => handleApplyButtonClick(job)}>Apply</button> :
-                                                    <button className='apply-button' disabled={true}>Applied</button>
-                                                }
-                                            
-                                            </div>
-                                        
-
-                                            <div className='row-bottom'>
-                                            <IconContext.Provider value={{ color: '#838383', size:'14px' }}>
-                                                <ul className='job__Detail__Span_Container'>
-                                                    <li>
-                                                        <FaToolbox/>
-                                                        {job.time_period}
-                                                    </li>
-                                                    {
-                                                        job.others[jobKeys.paymentForJob] &&
-                                                        <li>
-                                                            <BsCashStack />
-                                                            {job.others[jobKeys.paymentForJob]}
-                                                        </li>
-                                                    }
-                                                    <li>
-                                                        <span className='free'>{job.typeof}</span>
-                                                    </li>
-                                                </ul>
-                                                </IconContext.Provider>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </>
-                                }))
-                            }
-                        </>: 
-
-                        <>
-                            <ErrorPage disableNav={true} />
-                        </>
-
-                    }
-
-                    
+                        }
+                    </div>
+                </div>
                 {currentUser && <Footer />}
-                    
-                </div>
-                </div>
             </>
         }
  

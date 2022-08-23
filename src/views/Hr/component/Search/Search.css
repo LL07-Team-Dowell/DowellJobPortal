@@ -4,6 +4,7 @@
     --dark-gray-color:#838383;
     --yellow-color: #C09F2C;
     --white: #fff;
+    --bg-gray-color: rgba(255, 255, 255, 0.3);
 }
 
 .search__wrapper{
@@ -14,8 +15,8 @@
 .search__wrapper .search__container{
     width: 89%;
     margin: 0 auto;
-    border: 1px solid var(--yellow-color);
-    background-color: var(--white);
+    border-radius: 15px;
+    background: linear-gradient(180deg, var(--white) 0%, var(--bg-gray-color) 100%);
     padding: 2.7% 5%;
 }
 
@@ -53,7 +54,7 @@
 
 @media (min-width: 768px) and (max-width: 991px){
     .search__wrapper{
-        margin: 1% auto 4%;
+        margin: 1% auto 2%;
     }
     .search__wrapper .search__container{
         padding: 2% 4%;

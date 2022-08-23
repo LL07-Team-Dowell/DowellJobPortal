@@ -1,7 +1,10 @@
 .user__Page__Container.user {
     width: 80%;
-    margin: 16% auto 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     font-family: 'Inter', sans-serif;
+    top: 7%;
 }
 
 .user__Page__Container .user__Intro__Item__Container {
@@ -46,14 +49,15 @@
         margin: 6% 0;
     }   
     .user__Page__Container.user {
-        margin-top: 8%;
+        /* margin-top: 8%; */
+        top: 7%;
     } 
 }
 
 @media screen and (min-width: 992px) {
     .user__Page__Container.user {
         width: 84%;
-        margin-top: 7%;
+        top: 5rem;
     }
 
     .user__Page__Container .user__Intro__Item__Container .user__Intro__Item{

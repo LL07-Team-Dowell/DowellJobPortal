@@ -1,8 +1,52 @@
-.icons{
-    color:#000000;
-    
+.footer__Link__Active{
+    color: #FF7020 !important;
 }
 
-.footer__Link__Active{
-    color: #045632 !important;
+.footer__Link__Active svg {
+    font-size: 1.5rem !important;
+}
+
+.candidate__Bottom__Navigation__Container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.3) 100%);
+    backdrop-filter: blur(40px);
+    border-radius: 30px 30px 0px 0px;
+    padding: 4% 0;
+}
+
+.candidate__Bottom__Navigation__Container .candidate__Navigation__Links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 89%;
+    margin: 0 auto;
+}
+
+.candidate__Bottom__Navigation__Container .candidate__Navigation__Links a svg {
+    font-size: 1.4rem;
+}
+
+.candidate__Bottom__Navigation__Container .candidate__Navigation__Links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #C4C4C4;
+    font-size: 0.875rem;
+}
+
+@media (min-width: 767px) and (max-width: 991.98px) {
+    .candidate__Bottom__Navigation__Container {
+        padding: 1.2% 0;
+    }
+}
+@media screen and (min-width: 992px) {
+    .candidate__Bottom__Navigation__Container {
+        padding: 0.7% 0;
+    }
+    .candidate__Bottom__Navigation__Container .candidate__Navigation__Links {
+        width: 80%;
+    }
 }
