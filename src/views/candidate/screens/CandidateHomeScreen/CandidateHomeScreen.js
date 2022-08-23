@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { mutableNewApplicationStateNames } from '../../../../contexts/NewApplicationContext';
 import { myAxiosInstance } from '../../../../lib/axios';
 import { routes } from '../../../../lib/routes';
@@ -7,6 +7,7 @@ import LoadingSpinner from '../../../admin/components/LoadingSpinner/LoadingSpin
 import Navbar from '../../components/Navbar/Navbar';
 import { candidateStatuses } from '../../utils/candidateStatuses';
 import { availableJobCategories } from '../../utils/jobCategories';
+import * as assets from '../../../../assets/assetsIndex';
 import "./style.css";
 
 function Home({ user, setHired, setAssignedProject }) {
@@ -49,12 +50,56 @@ function Home({ user, setHired, setAssignedProject }) {
 
   }, [])
 
+  const handleLinkClick = (e, category) => {
+    e.preventDefault();
+    navigate("/jobs", { state: { jobCategory: category, appliedJobs: appliedJobs }});
+  }
+
   if (loading) return <LoadingSpinner />
 
   return (
     <>
-      <Navbar title={"Home"} disableSideBar={user ? false : true} />
-      <div className='container-wrapper'>
+      <nav>
+        <div className='candidate__Homepage__Nav__Container'></div>
+      </nav>
+      <main className='candidate__Homepage__Container'>
+        <section className='main__Content'>
+          <div className='logo__Img__Container'>
+            <img src={assets.logo_img} alt='dowell logo' />
+          </div>
+          <h1>Join DoWell team</h1>
+          <div className='content__Wrappper'>
+            {
+              React.Children.toArray(availableJobCategories.map((category, index) => {
+                return <>
+                  <div className='content__Item'>
+                    <img src={assets[`users_img_${index + 1}`]} alt='job category' />
+                    <Link className='job__Link__Item' to={`/jobs/${category.toLocaleLowerCase().replaceAll(' ', '-')}`} onClick={(e) => handleLinkClick(e, category)}>
+                      <>
+                      Apply for
+                      {
+                        category === "Employee" ? " Full time Employment" :
+                        ` Full time/Part time ${category} ${category === "Freelancer" ? 'jobs' : ''}`
+                      }
+                      </>
+                    </Link>
+                  </div>
+                </>
+              }))
+            }
+          </div>
+        </section>
+        <aside>
+          <div className='side__Content'>
+            <img src={assets.map_img} alt='dowell on the map' />
+            <video width={'100%'} controls>
+              <source src={assets.dowell_video}></source>
+            </video>
+            <p>DoWell is the right place to "fail", if you are innovating !!</p>
+          </div>
+        </aside>
+      </main>
+      {/* <div className='container-wrapper candidate__Home__Page'>
         <h1 className='home__Title__Text'>Welcome to dowell job portal!</h1>
         <div className='row'>
           {
@@ -66,7 +111,7 @@ function Home({ user, setHired, setAssignedProject }) {
                       <h4><b>{category} Jobs</b></h4>
                       <p className='detail dowell'>Dowell Ux living lab</p>
                       <p className='detail skill full-width'>{category} jobs on dowell</p>  
-                      <button className='apply-button' onClick={() => navigate("/jobs", { state: { jobCategory: category, appliedJobs: appliedJobs }})}>View</button>                     
+                      <button className='apply-button' >View</button>                     
                     </div>
                   </div>
                 </div>
@@ -74,7 +119,7 @@ function Home({ user, setHired, setAssignedProject }) {
             }))
           }
         </div>
-      </div>
+      </div> */}
     </>
   )
 }
