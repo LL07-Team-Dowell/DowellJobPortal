@@ -69,12 +69,12 @@ function Home({ user, setHired, setAssignedProject }) {
           </div>
           <h1>Join DoWell team</h1>
           <div className='content__Wrappper'>
-            {
-              React.Children.toArray(availableJobCategories.slice(0).reverse().map((category, index) => {
-                return <>
-                  <div className='content__Item'>
-                    <img src={assets[`users_img_${availableJobCategories.length - index }`]} alt='job category' />
-                    <Link className='job__Link__Item' to={`/jobs/${category.toLocaleLowerCase().replaceAll(' ', '-')}`} onClick={(e) => handleLinkClick(e, category)}>
+            <div className='content__Item'>
+              <img src={assets.users_img_1} alt='job category' />
+              <div className='bottom__Content'>
+                {
+                  React.Children.toArray(availableJobCategories.slice(0, 2).map(category => {
+                    return <Link className='job__Link__Item' to={`/jobs/${category.toLocaleLowerCase().replaceAll(' ', '-')}`} onClick={(e) => handleLinkClick(e, category)}>
                       <>
                       Apply for
                       {
@@ -83,10 +83,30 @@ function Home({ user, setHired, setAssignedProject }) {
                       }
                       </>
                     </Link>
-                  </div>
-                </>
-              }))
-            }
+                  }))
+                }
+                  
+              </div>
+            </div>
+            <div className='content__Item'>
+              <img src={assets.users_img_2} alt='job category' />
+              <div className='bottom__Content'>
+                {
+                  React.Children.toArray(availableJobCategories.slice(2).map(category => {
+                    return <Link className='job__Link__Item' to={`/jobs/${category.toLocaleLowerCase().replaceAll(' ', '-')}`} onClick={(e) => handleLinkClick(e, category)}>
+                      <>
+                      Apply for
+                      {
+                        category === "Employee" ? " Full time Employment" :
+                        ` Full time/Part time ${category} ${category === "Freelancer" ? 'jobs' : ''}`
+                      }
+                      </>
+                    </Link>
+                  }))
+                }
+                  
+              </div>
+            </div>
           </div>
         </section>
         <aside>
