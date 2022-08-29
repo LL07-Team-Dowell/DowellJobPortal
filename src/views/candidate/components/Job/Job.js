@@ -96,7 +96,7 @@ function JobScreen({ currentUser }) {
             
               <div className='container-wrapper'>
 
-                <Search searchValue={jobSearchInput} updateSearchValue={setSearchInput} />
+                {/* <Search searchValue={jobSearchInput} updateSearchValue={setSearchInput} /> */}
 
                 <div className="row">
                     {

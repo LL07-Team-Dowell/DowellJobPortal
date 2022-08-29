@@ -22,6 +22,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddTaskScreen from "./screens/AddTaskScreen/AddTaskScreen";
 import UserScreen from "./screens/UserScreen/UserScreen";
 import { useLocation } from "react-router-dom";
+import { mutableNewApplicationStateNames } from "../../contexts/NewApplicationContext";
 
 
 const Teamlead = ({ currentUser }) => {
@@ -34,6 +35,7 @@ const Teamlead = ({ currentUser }) => {
     const [ isSideNavbarActive, setSideNavbarActive ] = useState(false);
     const [ currentCandidate, setCurrentCandidate ] = useState({});
     const [ currentTeamMember, setCurrentTeamMember ] = useState({});
+    const [ currentUserProject, setCurrentUserProject ] = useState(null);
     const [ jobs, setJobs ] = useState([]);
     const [ showApplicationDetails, setShowApplicationDetails ] = useState(false);
     const [ allTasks, setAllTasks ] = useState([]);
@@ -96,6 +98,17 @@ const Teamlead = ({ currentUser }) => {
         getTasks();
 
     }, [])
+
+    useEffect(() => {
+        
+        const foundCandidate = candidatesData.onboardingCandidates.find(data => data.applicant === currentTeamMember);
+        
+        if (!foundCandidate) return;
+
+        const candidateProject = foundCandidate.others[mutableNewApplicationStateNames.assigned_project];
+        setCurrentUserProject(candidateProject);
+        
+    }, [currentTeamMember])
     
     useEffect(() => {
         const currentTab = searchParams.get("tab");
@@ -198,7 +211,7 @@ const Teamlead = ({ currentUser }) => {
             
             section === "task" ? 
 
-            showCandidateTask ? <TaskScreen currentUser={currentTeamMember} handleAddTaskBtnClick={() => setShowAddTaskModal(true)} handleEditBtnClick={handleEditTaskBtnClick}  /> :
+            showCandidateTask ? <TaskScreen currentUser={currentTeamMember} handleAddTaskBtnClick={() => setShowAddTaskModal(true)} handleEditBtnClick={handleEditTaskBtnClick} assignedProject={currentUserProject}  /> :
             <>
                 <SelectedCandidates 
                     showTasks={true} 

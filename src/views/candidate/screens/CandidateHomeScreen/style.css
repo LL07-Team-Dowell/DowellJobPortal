@@ -1,5 +1,5 @@
 .candidate__Homepage__Nav__Container {
-    background: linear-gradient(163.78deg, #045632 -13.94%, #57A639 110.54%);
+    background-color: #008037;
     height: 5rem;
 }
 
@@ -52,9 +52,8 @@
 }
 
 .candidate__Homepage__Container .main__Content .content__Wrappper .content__Item {
-    width: calc(70% / 4);
-    margin-top: auto;
-    float: right;
+    width: 35%;
+    display: inline-block;
 }
 
 .candidate__Homepage__Container .main__Content .content__Wrappper .content__Item img {
@@ -104,33 +103,50 @@
         margin: 2% auto;
     } 
     .candidate__Homepage__Container {
-        padding-bottom: 0;
-        height: calc(100% - 4rem);
+        padding-bottom: 2%;
+        height: calc(100% - 3rem);
+    }
+    .candidate__Homepage__Container h1 {
+        margin-right: 1%;
     }
     .candidate__Homepage__Nav__Container {
         height: 4rem;
     }
     .candidate__Homepage__Container .main__Content {
-        padding: 3.5% 10%;
+        padding: 3% 10%;
         padding-bottom: 0;
     }
     .candidate__Homepage__Container .main__Content .logo__Img__Container {
-        top: -2rem;
+        top: -2.5rem;
         left: 10%;
         width: 10%;
     }
     .candidate__Homepage__Container .main__Content .content__Wrappper {
+        width: max-content;
         height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     .candidate__Homepage__Container .main__Content .content__Wrappper .content__Item {
-        margin-left: 2%;
-        height: 100%;
+        margin-left: 1.4%;
+        /* height: 28rem; */
+        width: calc(70% / 2);
     }
     .candidate__Homepage__Container .main__Content .content__Wrappper .content__Item img {
-        height: 29rem;
+        /* height: 28rem; */
+        height: 100%;
+        display: block;
+        margin-bottom: auto;
+    }
+    .candidate__Homepage__Container .main__Content .content__Wrappper .bottom__Content{
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2%;
     }
     .candidate__Homepage__Container .main__Content .content__Wrappper .content__Item .job__Link__Item {
-        padding: 6% 1%;
+        padding: 3% 2%;
+        width: 48.5%;
     }
     .candidate__Homepage__Container aside {
         top: 5%;
