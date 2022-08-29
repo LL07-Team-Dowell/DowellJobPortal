@@ -18,7 +18,7 @@ const TaskScreen = ({ currentUser, handleAddTaskBtnClick, candidateAfterSelectio
 
     const fetchUserTasks = async () => {
         const response = await myAxiosInstance.get(routes.Tasks);
-        setUserTasks(response.data.filter(task => task.user === currentUser));
+        setUserTasks(response.data.filter(task => task.user === currentUser).reverse());
         return
     }
 
