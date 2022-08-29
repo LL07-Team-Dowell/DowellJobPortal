@@ -89,9 +89,13 @@
         width: 82%;
         margin: 10% auto 5%;
     }
+
+    .candidate-task-container .candidate-task-details {
+        max-width: 70%;
+    }
     
     .candidate-task-status-container .candidate-task-details span.task__Description{
-        margin-top: 7%;   
+        margin-top: 7%;
     }
 
     .candidate-task-container .candidate-task-status-container .task__Status__Container{

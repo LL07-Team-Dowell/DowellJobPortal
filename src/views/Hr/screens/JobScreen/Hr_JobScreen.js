@@ -49,6 +49,7 @@ function Hr_JobScreen({ currentUser }) {
   const [ currentTeamMember, setCurrentTeamMember ] = useState({});
   const [ editTaskActive, setEditTaskActive ] = useState(false);
   const [ currentTaskToEdit, setCurrentTaskToEdit ] = useState({});
+  const [ currentCandidateProject, setCurrentCandidateProject ] = useState(null);
   
   useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
@@ -118,6 +119,17 @@ function Hr_JobScreen({ currentUser }) {
 
   }, [jobSearchInput])
 
+  useEffect(() => {
+        
+    const foundCandidate = hiredCandidates.find(data => data.applicant === currentTeamMember);
+    
+    if (!foundCandidate) return;
+
+    const candidateProject = foundCandidate.others[mutableNewApplicationStateNames.assigned_project];
+    setCurrentCandidateProject(candidateProject);
+    
+  }, [currentTeamMember])
+
   return (
     <>
     {
@@ -185,7 +197,7 @@ function Hr_JobScreen({ currentUser }) {
             }
 
             {
-              showCurrentCandidateTask ? <TaskScreen className="hr__Page" currentUser={currentTeamMember} handleAddTaskBtnClick={() => setShowAddTaskModal(true)} handleEditBtnClick={handleEditTaskBtnClick} /> :
+              showCurrentCandidateTask ? <TaskScreen className="hr__Page" currentUser={currentTeamMember} handleAddTaskBtnClick={() => setShowAddTaskModal(true)} handleEditBtnClick={handleEditTaskBtnClick} assignedProject={currentCandidateProject} /> :
           
               <>
 
