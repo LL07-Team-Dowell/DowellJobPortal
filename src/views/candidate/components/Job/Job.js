@@ -51,8 +51,7 @@ function JobScreen({ currentUser }) {
         
         Object.keys(jobIcons).forEach(iconTitle => {
             let newIcon = {};
-            const foundJobWithIcon = allJobs.find(job => job.title.indexOf(iconTitle) !== -1);
-
+            const foundJobWithIcon = allJobs.find(job => job.title.indexOf(iconTitle.replaceAll("_", " ")) !== -1);
             if (foundJobWithIcon) {
                 newIcon.id = foundJobWithIcon.id;
                 newIcon.iconPath = jobIcons[iconTitle];
