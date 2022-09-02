@@ -124,6 +124,7 @@
       color: #838383;
       align-items: center;
       width: 50%;
+      white-space: nowrap;
 
   }
   li:first-child > *:first-child{
