@@ -32,7 +32,7 @@ const SideNavigationBar = ({ className, sideNavRef, closeSideNavbar, isNotificat
                 {
                     hrPageActive ? <>
                     
-                        <Link to={'/tasks'}>
+                        <Link to={'/tasks'} onClick={() => closeSideNavbar()}>
                             <li>
                                 Task
                                 <ImStack className="nav-link-icon" />
@@ -44,7 +44,7 @@ const SideNavigationBar = ({ className, sideNavRef, closeSideNavbar, isNotificat
                     </>:
 
                     isNotificationEnabled && <>
-                        <Link to={''}>
+                        <Link to={''} onClick={() => closeSideNavbar()}>
                             <li>
                                 Task
                                 <ImStack className="nav-link-icon" />
@@ -55,7 +55,7 @@ const SideNavigationBar = ({ className, sideNavRef, closeSideNavbar, isNotificat
                     </>
                 }
 
-                <Link to={''}><li>Support</li></Link>
+                <Link to={''} onClick={() => closeSideNavbar()}><li>Support</li></Link>
                 <CustomHr />
 
                 <button className="sidebar-logout-btn" onClick={() => navigate("/logout")}>Logout</button>
