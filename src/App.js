@@ -27,6 +27,7 @@ import { CandidateTaskContextProvider } from './contexts/CandidateTasksContext';
 import { NewJobTermsContextProvider } from './contexts/NewJobTermsContext';
 import SingleJobScreen from './views/candidate/screens/JobApplicationScreen/SingleJobScreen';
 import JobScreen from './views/candidate/components/Job/Job';
+import { useDetectOffline } from './hooks/useDetectOffline';
 
 function App() {
 
@@ -37,6 +38,7 @@ function App() {
 
   useDowellLogin(setUser, setLoading);
   useTitle("Dowell Job Portal");
+  useDetectOffline();
 
   if (loading) return <></>
 
