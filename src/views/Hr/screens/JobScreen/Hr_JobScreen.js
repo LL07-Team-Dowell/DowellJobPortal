@@ -134,6 +134,12 @@ function Hr_JobScreen({ currentUser }) {
 
   useEffect(() => {
 
+    setShowCurrentCandidateTask(false);
+    
+  }, [location])
+
+  useEffect(() => {
+
     if (!currentSortOption) return;
 
     const categories = {};

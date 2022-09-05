@@ -22,7 +22,6 @@ import { HrCandidateContextProvider } from './contexts/HrCandidateContext';
 import useDowellLogin from './hooks/useDowellLogin';
 import useTitle from './hooks/useTitle';
 import AfterSelectionScreen from './views/candidate/screens/AfterSelectionScreen/AfterSelectionScreen';
-import TeamsScreen from './views/candidate/screens/TeamsScreen/TeamsScreen';
 import { CandidateTaskContextProvider } from './contexts/CandidateTasksContext';
 import { NewJobTermsContextProvider } from './contexts/NewJobTermsContext';
 import SingleJobScreen from './views/candidate/screens/JobApplicationScreen/SingleJobScreen';
@@ -199,8 +198,7 @@ function App() {
       }>
         <Route path=':section' element={<AfterSelectionScreen />} />
       </Route>
-      <Route path='/teams' element={<TeamsScreen />}></Route>
-      <Route path='/user' element={<UserScreen afterSelection={true} currentUser={user} />}></Route>
+      
       <Route path="/logout" element={<Logout/>}/>
 
       <Route path='*' element={<ErrorPage />} />

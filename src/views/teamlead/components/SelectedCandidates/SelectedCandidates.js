@@ -3,8 +3,7 @@ import FilterIcon from "../FilterIcon/FilterIcon";
 import { IoCalendarClearOutline } from "react-icons/io5";
 
 import "./style.css";
-import { MdOutlineWorkOutline } from "react-icons/md";
-import { GiPencil } from "react-icons/gi";
+import { MdOutlineWorkOutline, MdHourglassDisabled } from "react-icons/md";
 import { useEffect, useRef, useState } from "react";
 import useClickOutside from "../../../../hooks/useClickOutside";
 
@@ -76,6 +75,10 @@ const SelectedCandidates = ({ showTasks, candidatesCount, tasksCount, hrPageActi
                                 <li onClick={() => handleOptionClick("date")}>
                                     <span>Date</span>
                                     <IoCalendarClearOutline />
+                                </li>
+                                <li onClick={() => handleOptionClick(null)}>
+                                    <span>Reset</span>
+                                    <MdHourglassDisabled />
                                 </li>
                             </ul>
                         </div>

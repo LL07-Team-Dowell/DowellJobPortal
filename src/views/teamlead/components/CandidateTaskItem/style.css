@@ -15,6 +15,10 @@
     justify-content: space-between;
 }
 
+.candidate-task-container .candidate-task-details {
+    width: 78%;
+}
+
 .candidate-task-status-container .candidate-task-details .edit-icon{
     color: var(--grey-color);
     cursor: pointer;
@@ -30,10 +34,11 @@
 
 .candidate-task-status-container .candidate-task-details span.task__Description{
     margin: 12% 0 4%;
+    white-space: pre-line;
 }
 
 .candidate-task-container{
-    margin: 18% auto 11%;
+    margin: 8% auto 11%;
     position: relative;
 }
 
@@ -69,29 +74,45 @@
     color: #fff;
 }
 
+.candidate-task-container hr {
+    position: relative;
+    width: 60% !important;
+    margin: 5% 0;
+}
+
+
 @media (min-width: 768px) and (max-width: 991.98px) {
     .candidate-task-status-container .candidate-task-details span.task__Description{
         margin: 14% 0 4%;   
     }
     .candidate-task-container .candidate-task-status-container .task__Status__Container{
-        flex-direction: row;
-        width: 35%;
+        flex-direction: column;
+        justify-content: flex-end;
     }
     .candidate-task-container .candidate-task-status-container .task__Status__Container .dropdown-btn{
         padding: 8% 10%;
-    }    
-    .candidate-task-container .candidate-task-status-container .task__Status__Container .dropdown-btn:last-child{
-        margin-left: 7%;
+    }
+    .candidate-task-container .candidate-task-details {
+        max-width: 60%;
+    }
+    .candidate-task-container hr {
+        margin: 4% 0;
+    }
+    .candidate-task-container {
+        margin: 0;
     }
 }
 @media (min-width: 992px){
     .candidate-task-container{
-        width: 82%;
-        margin: 10% auto 5%;
+        margin: 0;
+    }
+
+    .candidate-task-container hr {
+        margin: 3% 0 6%;
     }
 
     .candidate-task-container .candidate-task-details {
-        max-width: 70%;
+        max-width: 50%;
     }
     
     .candidate-task-status-container .candidate-task-details span.task__Description{

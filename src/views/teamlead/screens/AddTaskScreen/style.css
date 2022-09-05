@@ -21,7 +21,7 @@
 
 .add__New__Task__Container {
     background-color: var(--white);
-    width: 80%;
+    width: 90%;
     border-radius: 10px;
     overflow-y: auto;
     padding: 4% 2%;
