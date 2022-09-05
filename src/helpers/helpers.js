@@ -89,3 +89,11 @@ export const changeToTitleCase = (testStr) => {
     return testStr[0].toLocaleUpperCase() + testStr.slice(1).toLocaleLowerCase();
 
 }
+
+export const getDaysInMonth = (date) => {
+    const validDateFormat = new Date(date);
+
+    if ( validDateFormat == "Invalid Date" ) return 0;
+
+    return new Date(validDateFormat.getFullYear(), validDateFormat.getMonth() + 1, 0).getDate();
+}

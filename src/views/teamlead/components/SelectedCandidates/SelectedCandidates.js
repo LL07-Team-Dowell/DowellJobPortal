@@ -3,17 +3,27 @@ import FilterIcon from "../FilterIcon/FilterIcon";
 import { IoCalendarClearOutline } from "react-icons/io5";
 
 import "./style.css";
-import { BsTelephone } from "react-icons/bs";
-import { AiOutlineMail } from "react-icons/ai";
-import { useRef, useState } from "react";
+import { MdOutlineWorkOutline, MdHourglassDisabled } from "react-icons/md";
+import { useEffect, useRef, useState } from "react";
 import useClickOutside from "../../../../hooks/useClickOutside";
 
 
-const SelectedCandidates = ({ showTasks, candidatesCount, tasksCount, hrPageActive, title, className }) => {
+const SelectedCandidates = ({ showTasks, candidatesCount, tasksCount, hrPageActive, title, className, sortActive, handleSortOptionClick }) => {
     const [showSortOptions, setShowSortOptions] = useState(false);
     const sortOptionsRef = useRef(null);
 
     useClickOutside(sortOptionsRef, () => setShowSortOptions(false));
+
+    useEffect(() => {
+
+    }, [showSortOptions])
+
+    const handleOptionClick = (option) => {
+        if (!handleSortOptionClick) return setShowSortOptions(false);
+
+        handleSortOptionClick(option);
+        setShowSortOptions(false);
+    }
 
     return <>
 
@@ -30,6 +40,13 @@ const SelectedCandidates = ({ showTasks, candidatesCount, tasksCount, hrPageActi
                         <p>{`${candidatesCount ? candidatesCount : '0'} new candidates are applied for the roles` }</p>    
                     </div>
                 </>: 
+
+                sortActive ? <>
+                    <div className="selected-candidates-count-container">
+                        <h2>Task</h2>
+                        <p>{`Showing ${tasksCount ? tasksCount : '0'} results`}</p>
+                    </div>
+                </> :
 
                 <div className="selected-candidates-count-container">
                     <h2>{ showTasks ? "Task" : "Selected Candidates" }</h2>
@@ -51,21 +68,17 @@ const SelectedCandidates = ({ showTasks, candidatesCount, tasksCount, hrPageActi
                             <p>Sort By</p>
                             <div className="vertical-line"></div>
                             <ul>
-                                <li>
-                                    <span>Applied Date</span>
+                                <li onClick={() => handleOptionClick("project")}>
+                                    <span>Project</span>
+                                    <MdOutlineWorkOutline />
+                                </li>
+                                <li onClick={() => handleOptionClick("date")}>
+                                    <span>Date</span>
                                     <IoCalendarClearOutline />
                                 </li>
-                                <li>
-                                    <span>Phone Number</span>
-                                    <BsTelephone />
-                                </li>
-                                <li>
-                                    <span>Email Address</span>
-                                    <AiOutlineMail />
-                                </li>
-                                <li>
-                                    <span>Skill</span>
-                                    <IoCalendarClearOutline />
+                                <li onClick={() => handleOptionClick(null)}>
+                                    <span>Reset</span>
+                                    <MdHourglassDisabled />
                                 </li>
                             </ul>
                         </div>

@@ -7,6 +7,8 @@ import AddTaskScreen from "../../../teamlead/screens/AddTaskScreen/AddTaskScreen
 import TaskScreen from "../../../teamlead/screens/TaskScreen/TaskScreen";
 import Navbar from "../../components/Navbar/Navbar";
 import { afterSelectionLinks } from "../../utils/afterSelectionLinks";
+import TeamsScreen from "../TeamsScreen/TeamsScreen";
+import UserScreen from "../UserScreen/UserScreen";
 
 import "./style.css";
 
@@ -32,6 +34,14 @@ const AfterSelectionScreen = ({ user, assignedProject }) => {
                 
                 <BottomNavigationBar links={afterSelectionLinks} />
             </> : 
+
+            section === "teams" ?
+
+            <TeamsScreen /> :
+
+            section === "user" ?
+            
+            <UserScreen afterSelection={true} currentUser={user} /> :
             
             <ErrorPage />
         }

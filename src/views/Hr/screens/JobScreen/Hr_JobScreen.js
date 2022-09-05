@@ -50,6 +50,8 @@ function Hr_JobScreen({ currentUser }) {
   const [ editTaskActive, setEditTaskActive ] = useState(false);
   const [ currentTaskToEdit, setCurrentTaskToEdit ] = useState({});
   const [ currentCandidateProject, setCurrentCandidateProject ] = useState(null);
+  const [ currentSortOption, setCurrentSortOption ] = useState(null);
+  const [ sortResults, setSortResults ] = useState([]);
   
   useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
@@ -130,6 +132,77 @@ function Hr_JobScreen({ currentUser }) {
     
   }, [currentTeamMember])
 
+  useEffect(() => {
+
+    setShowCurrentCandidateTask(false);
+    
+  }, [location])
+
+  useEffect(() => {
+
+    if (!currentSortOption) return;
+
+    const categories = {};
+    const newArray = [];
+
+    const getCategoryArray = (propertyName, date) => {
+
+      allTasks.forEach(task => {
+        if (date) {
+
+          if (categories.hasOwnProperty(new Date(task[`${propertyName}`]).toDateString())) return
+
+          categories[`${new Date(task[propertyName]).toDateString()}`] = new Date(task[`${propertyName}`]).toDateString();
+          return
+
+        }
+
+        if (!categories.hasOwnProperty(task[`${propertyName}`])){
+          categories[`${task[propertyName]}`] = task[`${propertyName}`]
+        }
+      })
+
+      let categoryObj = {};
+
+      Object.keys(categories || {}).forEach(key => {
+
+        if (key === "undefined") return;
+        
+        if (date) {
+          const matchingTasks = allTasks.filter(task => new Date(task[`${propertyName}`]).toDateString() === key);
+          categoryObj.name = key;
+          categoryObj.data = matchingTasks;
+          newArray.push(categoryObj);
+          categoryObj = {};    
+          return
+        }
+        
+        const matchingTasks = allTasks.filter(task => task[`${propertyName}`] === key);
+        categoryObj.name = key;
+        categoryObj.data = matchingTasks;
+        newArray.push(categoryObj);
+        categoryObj = {};
+      })
+
+      return newArray;
+    }
+
+    switch (currentSortOption) {
+      case "project":
+        const projectCategoryData = getCategoryArray("assigned_project");
+        setSortResults(projectCategoryData);
+        break;
+      case "date":
+        const dateCategoryData = getCategoryArray("updated", true);
+        setSortResults(dateCategoryData);
+        break;
+      default:
+        setSortResults([]);
+        break;
+    }
+
+  }, [currentSortOption])
+
   return (
     <>
     {
@@ -203,19 +276,49 @@ function Hr_JobScreen({ currentUser }) {
 
                 <SelectedCandidates 
                   showTasks={true} 
-                  tasksCount={allTasks.length}
+                  sortActive={currentSortOption ? true : false}
+                  tasksCount={currentSortOption ? sortResults.length : allTasks.length}
                   className={"hr__Page"}
+                  handleSortOptionClick={(data) => setCurrentSortOption(data)}
                 />
 
-                <div className="tasks-container hr__Page">
-                  {
-                    React.Children.toArray(allTasks.map(dataitem => {
-                      return <JobTile showTask={true} setShowCandidateTask={setShowCurrentCandidateTask} taskData={dataitem} handleJobTileClick={setCurrentTeamMember} />
-                    }))
-                  }
+                {
+                  currentSortOption ?
 
-                  <Button text={"Add Task"} icon={<AddCircleOutlineIcon />} handleClick={() => setShowAddTaskModal(true)} />
-                </div>
+                  <>
+                    {
+                      sortResults.length === 0 ? <p className='sort__Title__Item'> No tasks found matching '{currentSortOption}' sort selection </p>  :
+                      
+                      React.Children.toArray(sortResults.map(result => {
+                        return <>
+                          <p className='sort__Title__Item'>{result.name}</p>
+                          <>
+                            <div className="tasks-container hr__Page sort__Active">
+                              {
+                                React.Children.toArray(result.data.map(dataitem => {
+                                  return <JobTile showTask={true} setShowCandidateTask={setShowCurrentCandidateTask} taskData={dataitem} handleJobTileClick={setCurrentTeamMember} />
+                                }))
+                              }
+                              
+                              <Button text={"Add Task"} icon={<AddCircleOutlineIcon />} handleClick={() => setShowAddTaskModal(true)} />
+                            </div>
+                          </>
+                        </>
+                      }))
+                    }
+                  </> :
+
+                  <>
+                    <div className="tasks-container hr__Page">
+                      {
+                        React.Children.toArray(allTasks.map(dataitem => {
+                          return <JobTile showTask={true} setShowCandidateTask={setShowCurrentCandidateTask} taskData={dataitem} handleJobTileClick={setCurrentTeamMember} />
+                        }))
+                      }
+                      <Button text={"Add Task"} icon={<AddCircleOutlineIcon />} handleClick={() => setShowAddTaskModal(true)} />
+                    </div>
+                  </>
+                }
               </>
             }
           </>
