@@ -101,7 +101,7 @@ const NewJobDetails = () => {
             <CustomHr />
 
             <span className="display__Flex edit__Page__Font__Size">
-                <b>Type of job: </b> <DropdownButton currentSelection={newJobDetails[jobKeys.jobType] ? newJobDetails[jobKeys.jobType] : "Freelance"} selections={["Freelance", "Employee", "Internship"]} handleSelectionClick={(selection) => setNewJobDetails(prevValue => { return { ...prevValue, [jobKeys.jobType]: selection } })} />
+                <b>Type of job: </b> <DropdownButton currentSelection={newJobDetails[jobKeys.jobType] ? newJobDetails[jobKeys.jobType] : "Freelancer"} selections={["Freelancer", "Employee", "Internship"]} handleSelectionClick={(selection) => setNewJobDetails(prevValue => { return { ...prevValue, [jobKeys.jobType]: selection } })} />
             </span>
 
             <CustomHr />

@@ -71,19 +71,28 @@ const EditJobDetails = ({ currentJob, currentJobState, updateJobDetails }) => {
 
     useEffect(() => {
 
-        const allGenTerms = Object.assign({}, ...newJobTerms[newJobStateDataNames.generalTerms]);
+        const removePropertyWithEmptyValue = (obj) => {
+            for (const key in obj) {
+                if (obj[key] === null || obj[key] === "") {
+                    delete obj[key]
+                }
+            }
+            return obj
+        }
+
+        const allGenTerms = removePropertyWithEmptyValue(Object.assign({}, ...newJobTerms[newJobStateDataNames.generalTerms]));
         updateJobDetails(prevDetails => { return { ...prevDetails, "general_terms": allGenTerms } });
 
-        const allTechTerms = Object.assign({}, ...newJobTerms[newJobStateDataNames.technicalTerms]);
+        const allTechTerms = removePropertyWithEmptyValue(Object.assign({}, ...newJobTerms[newJobStateDataNames.technicalTerms]));
         updateJobDetails(prevDetails => { return { ...prevDetails, "Technical_Specifications": allTechTerms } });
 
-        const allPayTerms = Object.assign({}, ...newJobTerms[newJobStateDataNames.paymentTerms]);
+        const allPayTerms = removePropertyWithEmptyValue(Object.assign({}, ...newJobTerms[newJobStateDataNames.paymentTerms]));
         updateJobDetails(prevDetails => { return { ...prevDetails, "Payment_terms": allPayTerms } });
 
-        const allWorkTerms = Object.assign({}, ...newJobTerms[newJobStateDataNames.workflowTerms]);
+        const allWorkTerms = removePropertyWithEmptyValue(Object.assign({}, ...newJobTerms[newJobStateDataNames.workflowTerms]));
         updateJobDetails(prevDetails => { return { ...prevDetails, "workflow": allWorkTerms } });
 
-        const allOtherTerms = Object.assign({}, ...newJobTerms[newJobStateDataNames.otherTerms]);
+        const allOtherTerms = removePropertyWithEmptyValue(Object.assign({}, ...newJobTerms[newJobStateDataNames.otherTerms]));
         updateJobDetails(prevDetails => { return { ...prevDetails, "others": { ...prevDetails["others"], ...allOtherTerms} } });
 
         if (Object.keys(allGenTerms || {}).length === 0) updateJobDetails(prevDetails => { return { ...prevDetails, "general_terms": null } });
