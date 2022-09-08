@@ -290,22 +290,27 @@ function Hr_JobScreen({ currentUser }) {
                     {
                       sortResults.length === 0 ? <p className='sort__Title__Item'> No tasks found matching '{currentSortOption}' sort selection </p>  :
                       
-                      React.Children.toArray(sortResults.map(result => {
-                        return <>
-                          <p className='sort__Title__Item'><b>{result.name}</b></p>
-                          <>
-                            <div className="tasks-container hr__Page sort__Active">
-                              {
-                                React.Children.toArray(result.data.map(dataitem => {
-                                  return <JobTile showTask={true} setShowCandidateTask={setShowCurrentCandidateTask} taskData={dataitem} handleJobTileClick={setCurrentTeamMember} />
-                                }))
-                              }
-                              
-                              <Button text={"Add Task"} icon={<AddCircleOutlineIcon />} handleClick={() => setShowAddTaskModal(true)} />
-                            </div>
-                          </>
-                        </>
-                      }))
+                      <>
+                        {
+                          React.Children.toArray(sortResults.map(result => {
+                            return <>
+                              <p className='sort__Title__Item'><b>{result.name}</b></p>
+                              <>
+                                <div className="tasks-container hr__Page sort__Active">
+                                  {
+                                    React.Children.toArray(result.data.map(dataitem => {
+                                      return <JobTile showTask={true} setShowCandidateTask={setShowCurrentCandidateTask} taskData={dataitem} handleJobTileClick={setCurrentTeamMember} />
+                                    }))
+                                  }
+                                  
+                                  <Button text={"Add Task"} icon={<AddCircleOutlineIcon />} handleClick={() => setShowAddTaskModal(true)} />
+                                </div>
+                              </>
+                            </>
+                          }))
+                        }
+                        <div className='sort__Margin__Bottom'></div>
+                      </>
                     }
                   </> :
 

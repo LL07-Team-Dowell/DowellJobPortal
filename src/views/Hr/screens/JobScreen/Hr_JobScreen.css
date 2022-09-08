@@ -53,6 +53,11 @@
   margin: 0 auto 4%;
 }
 
+.sort__Margin__Bottom {
+  margin-top: 5%;
+  padding-bottom: 5%;
+}
+
 @media screen and (max-width: 300px) {
   .search{
     margin-top: 30%;
