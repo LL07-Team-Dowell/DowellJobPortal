@@ -144,10 +144,11 @@ function Hr_JobScreen({ currentUser }) {
 
     const categories = {};
     const newArray = [];
+    const tasksWithProjectAdded = allTasks.map(task => ( {...task, [mutableNewApplicationStateNames.assigned_project]: hiredCandidates.find(data => data.applicant === task.user) && hiredCandidates.find(data => data.applicant === task.user).others[mutableNewApplicationStateNames.assigned_project] }));
 
     const getCategoryArray = (propertyName, date) => {
 
-      allTasks.forEach(task => {
+      tasksWithProjectAdded.forEach(task => {
         if (date) {
 
           if (categories.hasOwnProperty(new Date(task[`${propertyName}`]).toDateString())) return
@@ -169,7 +170,7 @@ function Hr_JobScreen({ currentUser }) {
         if (key === "undefined") return;
         
         if (date) {
-          const matchingTasks = allTasks.filter(task => new Date(task[`${propertyName}`]).toDateString() === key);
+          const matchingTasks = tasksWithProjectAdded.filter(task => new Date(task[`${propertyName}`]).toDateString() === key);
           categoryObj.name = key;
           categoryObj.data = matchingTasks;
           newArray.push(categoryObj);
@@ -177,7 +178,7 @@ function Hr_JobScreen({ currentUser }) {
           return
         }
         
-        const matchingTasks = allTasks.filter(task => task[`${propertyName}`] === key);
+        const matchingTasks = tasksWithProjectAdded.filter(task => task[`${propertyName}`] === key);
         categoryObj.name = key;
         categoryObj.data = matchingTasks;
         newArray.push(categoryObj);
@@ -189,7 +190,7 @@ function Hr_JobScreen({ currentUser }) {
 
     switch (currentSortOption) {
       case "project":
-        const projectCategoryData = getCategoryArray("assigned_project");
+        const projectCategoryData = getCategoryArray(mutableNewApplicationStateNames.assigned_project);
         setSortResults(projectCategoryData);
         break;
       case "date":
@@ -289,22 +290,27 @@ function Hr_JobScreen({ currentUser }) {
                     {
                       sortResults.length === 0 ? <p className='sort__Title__Item'> No tasks found matching '{currentSortOption}' sort selection </p>  :
                       
-                      React.Children.toArray(sortResults.map(result => {
-                        return <>
-                          <p className='sort__Title__Item'>{result.name}</p>
-                          <>
-                            <div className="tasks-container hr__Page sort__Active">
-                              {
-                                React.Children.toArray(result.data.map(dataitem => {
-                                  return <JobTile showTask={true} setShowCandidateTask={setShowCurrentCandidateTask} taskData={dataitem} handleJobTileClick={setCurrentTeamMember} />
-                                }))
-                              }
-                              
-                              <Button text={"Add Task"} icon={<AddCircleOutlineIcon />} handleClick={() => setShowAddTaskModal(true)} />
-                            </div>
-                          </>
-                        </>
-                      }))
+                      <>
+                        {
+                          React.Children.toArray(sortResults.map(result => {
+                            return <>
+                              <p className='sort__Title__Item'><b>{result.name}</b></p>
+                              <>
+                                <div className="tasks-container hr__Page sort__Active">
+                                  {
+                                    React.Children.toArray(result.data.map(dataitem => {
+                                      return <JobTile showTask={true} setShowCandidateTask={setShowCurrentCandidateTask} taskData={dataitem} handleJobTileClick={setCurrentTeamMember} />
+                                    }))
+                                  }
+                                  
+                                  <Button text={"Add Task"} icon={<AddCircleOutlineIcon />} handleClick={() => setShowAddTaskModal(true)} />
+                                </div>
+                              </>
+                            </>
+                          }))
+                        }
+                        <div className='sort__Margin__Bottom'></div>
+                      </>
                     }
                   </> :
 
