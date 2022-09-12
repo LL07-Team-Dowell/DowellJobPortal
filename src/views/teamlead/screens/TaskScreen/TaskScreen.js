@@ -48,6 +48,12 @@ const TaskScreen = ({ currentUser, handleAddTaskBtnClick, candidateAfterSelectio
 
     }, [])
 
+    useEffect(() => {
+
+        setTasksToShow(userTasks.filter(task => new Date(task.created).toDateString() === new Date().toDateString()));
+    
+    }, [userTasks])
+
     const isSameDay = (a, b) => differenceInCalendarDays(a, b) === 0;
 
     const tileClassName = ({ date, view }) => {

@@ -195,7 +195,7 @@ function Hr_JobScreen({ currentUser }) {
         break;
       case "date":
         const dateCategoryData = getCategoryArray("updated", true);
-        setSortResults(dateCategoryData);
+        setSortResults(dateCategoryData.sort((a, b) => new Date(b.name) - new Date(a.name)));
         break;
       default:
         setSortResults([]);
@@ -266,7 +266,7 @@ function Hr_JobScreen({ currentUser }) {
           <>
             {
               showAddTaskModal && <>
-                <AddTaskScreen closeTaskScreen={() => setShowAddTaskModal(false)} teamMembers={hiredCandidates} updateTasks={setAllTasks} editPage={editTaskActive} setEditPage={setEditTaskActive} taskToEdit={currentTaskToEdit} />
+                <AddTaskScreen closeTaskScreen={() => setShowAddTaskModal(false)} teamMembers={hiredCandidates} updateTasks={setAllTasks} editPage={editTaskActive} setEditPage={setEditTaskActive} taskToEdit={currentTaskToEdit} hrPageActive={true} />
               </>
             }
 

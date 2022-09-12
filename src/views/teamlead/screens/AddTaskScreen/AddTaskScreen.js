@@ -9,7 +9,7 @@ import { routes } from "../../../../lib/routes";
 import { useNavigate } from "react-router-dom";
 
 
-const AddTaskScreen = ({ teamMembers , closeTaskScreen, updateTasks, afterSelectionScreen, currentUser, editPage, setEditPage, taskToEdit }) => {
+const AddTaskScreen = ({ teamMembers , closeTaskScreen, updateTasks, afterSelectionScreen, currentUser, editPage, setEditPage, taskToEdit, hrPageActive }) => {
 
     const ref = useRef(null);
     const [ showTaskForm, setShowTaskForm ] = useState(false);
@@ -81,7 +81,7 @@ const AddTaskScreen = ({ teamMembers , closeTaskScreen, updateTasks, afterSelect
             if (!afterSelectionScreen) updateTasks(prevTasks => { return [ ...prevTasks.filter(task => task.user !== dataToSend.user) ] });
             updateTasks(prevTasks => { return [ response.data, ...prevTasks ] } );
             closeTaskScreen();
-            { afterSelectionScreen ? navigate("/tasks") : navigate("/task"); }
+            { (afterSelectionScreen || hrPageActive) ? navigate("/tasks") : navigate("/task"); }
 
         } catch (err) {
             console.log(err);
