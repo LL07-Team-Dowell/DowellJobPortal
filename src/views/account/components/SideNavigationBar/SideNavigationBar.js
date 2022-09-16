@@ -1,4 +1,5 @@
 import Close from "@mui/icons-material/Close";
+import { AiTwotoneCalendar } from "react-icons/ai";
 import { FiBell } from "react-icons/fi";
 import { ImStack } from "react-icons/im";
 import { Link, useNavigate } from "react-router-dom";
@@ -40,6 +41,15 @@ const SideNavigationBar = ({ className, sideNavRef, closeSideNavbar, isNotificat
                         </Link>
                         
                         <CustomHr /> 
+
+                        <Link to={'/attendance'} onClick={() => closeSideNavbar()}>
+                            <li>
+                                Attendance
+                                <AiTwotoneCalendar className="nav-link-icon" />
+                            </li>
+                        </Link>
+                        
+                        <CustomHr />
 
                     </>:
 

@@ -47,7 +47,7 @@ const CandidateTaskItem = ({ taskNum, currentTask, candidatePage, handleEditBtnC
         <div className="candidate-task-container">
             <div className="candidate-task-status-container">
                 <div className="candidate-task-details">
-                    <span> {taskNum}. Task: {currentTask.title} { !candidatePage && <BiEdit className="edit-icon" onClick={handleEditBtnClick} /> }</span>
+                    <span className="task__Title"> {taskNum}. Task: {currentTask.title} { !candidatePage && <BiEdit className="edit-icon" onClick={handleEditBtnClick} /> }</span>
                     <span className="task__Description">Task Description: <br />{currentTask.description}</span>
                 </div>
                 

@@ -3,10 +3,10 @@
   max-width: 100%;
   top: -43px;
   padding-top: 114px;
-  background: #E5E5E5;
+  background: #fff;
 }
 .card {
-    box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.12);
+    box-shadow: 0 10px 10px 0 rgba(0, 0, 0, 0.12);
     transition: 0.3s;
     height: 11.5rem;
     border-left: 1px solid #C09F2C;

@@ -24,6 +24,7 @@ import Button from '../../../admin/components/Button/Button';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddTaskScreen from '../../../teamlead/screens/AddTaskScreen/AddTaskScreen';
 import TaskScreen from '../../../teamlead/screens/TaskScreen/TaskScreen';
+import AttendanceScreen from '../AttendanceScreen/AttendanceScreen';
 
 
 
@@ -52,6 +53,7 @@ function Hr_JobScreen({ currentUser }) {
   const [ currentCandidateProject, setCurrentCandidateProject ] = useState(null);
   const [ currentSortOption, setCurrentSortOption ] = useState(null);
   const [ sortResults, setSortResults ] = useState([]);
+  const [ showCurrentCandidateAttendance, setShowCurrentCandidateAttendance ] = useState(false);
   
   useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
@@ -258,6 +260,66 @@ function Hr_JobScreen({ currentUser }) {
           sub_section === undefined && section === "shortlisted" ? <>
             <ShortlistedScreen shortlistedCandidates={candidateData} jobData={jobs} />
           </> :
+
+          sub_section === undefined && section === "attendance" ? 
+
+          isLoading ? <LoadingSpinner /> :
+
+          showCurrentCandidateAttendance ? <AttendanceScreen className="hr__Page" currentUser={currentTeamMember} assignedProject={currentCandidateProject} /> :
+          
+          <>
+
+            <SelectedCandidates 
+              showTasks={true} 
+              sortActive={currentSortOption ? true : false}
+              tasksCount={currentSortOption ? sortResults.length : allTasks.length}
+              className={"hr__Page"}
+              title={"Attendance"}
+              hrAttendancePageActive={true}
+              handleSortOptionClick={(data) => setCurrentSortOption(data)}
+            />
+
+            {
+              currentSortOption ?
+
+              <>
+                {
+                  sortResults.length === 0 ? <p className='sort__Title__Item'> No tasks found matching '{currentSortOption}' sort selection </p>  :
+                  
+                  <>
+                    {
+                      React.Children.toArray(sortResults.map(result => {
+                        return <>
+                          <p className='sort__Title__Item'><b>{result.name}</b></p>
+                          <>
+                            <div className="tasks-container hr__Page sort__Active">
+                              {
+                                React.Children.toArray(result.data.map(dataitem => {
+                                  return <JobTile showTask={true} setShowCandidateTask={setShowCurrentCandidateAttendance} taskData={dataitem} handleJobTileClick={setCurrentTeamMember} />
+                                }))
+                              }
+                            </div>
+                          </>
+                        </>
+                      }))
+                    }
+                    <div className='sort__Margin__Bottom'></div>
+                  </>
+                }
+              </> :
+
+              <>
+                <div className="tasks-container hr__Page">
+                  {
+                    React.Children.toArray(allTasks.map(dataitem => {
+                      return <JobTile showTask={true} setShowCandidateTask={setShowCurrentCandidateAttendance} taskData={dataitem} handleJobTileClick={setCurrentTeamMember} />
+                    }))
+                  }
+                </div>
+              </>
+            }
+          </>
+          :
 
           sub_section === undefined && section === "tasks" ? 
 

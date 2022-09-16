@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import useClickOutside from "../../../../hooks/useClickOutside";
 
 
-const SelectedCandidates = ({ showTasks, candidatesCount, tasksCount, hrPageActive, title, className, sortActive, handleSortOptionClick }) => {
+const SelectedCandidates = ({ showTasks, candidatesCount, tasksCount, hrPageActive, title, className, sortActive, handleSortOptionClick, hrAttendancePageActive }) => {
     const [showSortOptions, setShowSortOptions] = useState(false);
     const sortOptionsRef = useRef(null);
 
@@ -41,15 +41,22 @@ const SelectedCandidates = ({ showTasks, candidatesCount, tasksCount, hrPageActi
                     </div>
                 </>: 
 
+                hrAttendancePageActive ? <>
+                    <div className="selected-candidates-count-container">
+                        <h2>{title}</h2>
+                        <p>{`Showing ${tasksCount ? tasksCount : '0'} results`}</p>
+                    </div>
+                </> :
+
                 sortActive ? <>
                     <div className="selected-candidates-count-container">
-                        <h2>Task</h2>
+                        <h2>{hrAttendancePageActive ? title : "Task"}</h2>
                         <p>{`Showing ${tasksCount ? tasksCount : '0'} results`}</p>
                     </div>
                 </> :
 
                 <div className="selected-candidates-count-container">
-                    <h2>{ showTasks ? "Task" : "Selected Candidates" }</h2>
+                    <h2>{ showTasks ? hrAttendancePageActive ? title : "Task" : "Selected Candidates" }</h2>
                     <p>{ showTasks ? `Task given to ${tasksCount ? tasksCount : '0'} candidates`: `${candidatesCount ? candidatesCount : '0'} candidates are selected for the roles` }</p>    
                 </div>
             }
