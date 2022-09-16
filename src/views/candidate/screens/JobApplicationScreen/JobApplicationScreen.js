@@ -453,18 +453,18 @@ const JobApplicationScreen = () => {
                                 currentJob.others && currentJob.others[jobKeys.paymentForJob] &&
                                 <span>
                                     <BsCashStack />
-                                    Stipend: { currentJob.others[jobKeys.paymentForJob]}
+                                    Payment: { currentJob.others[jobKeys.paymentForJob]}
                                 </span>
                             }
                         </div>
                         <CustomHr className={'relative-hr hr-2'} />
                         <div className="job__Skills__Info">
                             <span>
-                                Skills: { currentJob.skills }
+                                Qualifications: { currentJob.skills }
                             </span>
                         </div>
 
-                        <h2><b>Job Description</b></h2>
+                        <h2><b>Skills</b></h2>
 
                         <p className="about__Dowell">{currentJob.description}</p>
 

@@ -37,6 +37,11 @@
     white-space: pre-line;
 }
 
+.candidate-task-status-container .candidate-task-details span.task__Title {
+    font-size: 0.975rem;
+    font-weight: 600;
+}
+
 .candidate-task-container{
     margin: 8% auto 11%;
     position: relative;

@@ -1,22 +1,20 @@
-import ApplicantIntro from "../../components/ApplicantIntro/ApplicantIntro";
-import AssignedProjectDetails from "../../components/AssignedProjectDetails/AssignedProjectDetails";
-import CustomHr from "../../components/CustomHr/CustomHr";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import CandidateTaskItem from "../../components/CandidateTaskItem/CandidateTaskItem";
 import React, { useEffect, useState } from "react";
-
 import "./style.css";
-import { myAxiosInstance } from "../../../../lib/axios";
-import { routes } from "../../../../lib/routes";
 import { useNavigate } from "react-router-dom";
-import { useCandidateTaskContext } from "../../../../contexts/CandidateTasksContext";
 import { Calendar } from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
-import { getDaysInMonth } from "../../../../helpers/helpers";
 import { differenceInCalendarDays } from 'date-fns';
+import { useCandidateTaskContext } from "../../../../contexts/CandidateTasksContext";
+import { myAxiosInstance } from "../../../../lib/axios";
+import { routes } from "../../../../lib/routes";
+import ApplicantIntro from "../../../teamlead/components/ApplicantIntro/ApplicantIntro";
+import CustomHr from "../../../teamlead/components/CustomHr/CustomHr";
+import AssignedProjectDetails from "../../../teamlead/components/AssignedProjectDetails/AssignedProjectDetails";
+import CandidateTaskItem from "../../../teamlead/components/CandidateTaskItem/CandidateTaskItem";
+import { getDaysInMonth } from "../../../../helpers/helpers";
 
 
-const TaskScreen = ({ currentUser, handleAddTaskBtnClick, candidateAfterSelectionScreen, handleEditBtnClick, className, assignedProject }) => {
+const AttendanceScreen = ({ currentUser, className, assignedProject }) => {
     const { userTasks, setUserTasks } = useCandidateTaskContext();
     const navigate = useNavigate();
     const [ tasksToShow, setTasksToShow ] = useState([]);
@@ -79,36 +77,14 @@ const TaskScreen = ({ currentUser, handleAddTaskBtnClick, candidateAfterSelectio
     return <>
         <div className={`candidate-task-screen-container ${className ? className : ''}`}>
             
-            { 
-                !candidateAfterSelectionScreen &&
-                <>
-                    <ApplicantIntro showTask={true} applicant={currentUser} />
+            <ApplicantIntro showTask={true} applicant={currentUser} />
 
-                    <CustomHr />
-                </>
-            }
+            <CustomHr />
 
-            <AssignedProjectDetails showTask={true} availableProjects={null} removeDropDownIcon={true} assignedProject={assignedProject} />
+            <AssignedProjectDetails showTask={true} availableProjects={null} removeDropDownIcon={true} assignedProject={assignedProject} hrAttendancePageActive={true} />
 
             <div className="all__Tasks__Container">
                 <Calendar onChange={handleDateChange} tileClassName={tileClassName} />
-                
-                <div className="task__Details__Item">
-                    <h3 className="month__Title">{currentMonth}</h3>
-                    {
-                        tasksToShow.length === 0 ? <p className="empty__Task__Content">No tasks found for today</p> :
-
-                        React.Children.toArray(tasksToShow.map((task, index) => {
-                            return <CandidateTaskItem currentTask={task} taskNum={index + 1} candidatePage={candidateAfterSelectionScreen} handleEditBtnClick={() => handleEditBtnClick(task)} updateTasks={setUserTasks} />
-                        }))
-                    }
-                </div>
-
-            </div>
-
-            <div className="add-task-btn" onClick={handleAddTaskBtnClick}>
-                <span>Add</span>
-                <AddCircleOutlineIcon />
             </div>
 
         </div>
@@ -116,4 +92,4 @@ const TaskScreen = ({ currentUser, handleAddTaskBtnClick, candidateAfterSelectio
 
 }
 
-export default TaskScreen;
+export default AttendanceScreen;
