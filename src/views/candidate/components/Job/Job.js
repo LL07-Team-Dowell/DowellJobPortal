@@ -47,7 +47,7 @@ function JobScreen({ currentUser }) {
             try {
                 
                 const request = await myAxiosInstance.get(routes.Jobs);
-                setJobs(request.data);
+                setJobs(request.data.sort((a, b) => a.title.localeCompare(b.title)));
                 setJobsLoading(false);
                 return;
 

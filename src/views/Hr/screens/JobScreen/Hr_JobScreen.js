@@ -251,8 +251,8 @@ function Hr_JobScreen({ currentUser }) {
           handleMenuIconClick={() => setSideNavbarActive(true)}
           className={'hr_navigation'}
           title={section === "shortlisted" ? "Shortlisted" : section === "user" ? "User" : ""}
-          changeToBackIcon={sub_section !== undefined ? true : section === "tasks" && showCurrentCandidateTask ? true : false}
-          handleBackIconClick={section === "tasks" && showCurrentCandidateTask ? () => setShowCurrentCandidateTask(false) : () => navigate(-1)}
+          changeToBackIcon={sub_section !== undefined ? true : section === "tasks" && showCurrentCandidateTask ? true : section === "attendance" && showCurrentCandidateAttendance ? true : false}
+          handleBackIconClick={section === "tasks" && showCurrentCandidateTask ? () => setShowCurrentCandidateTask(false) : section === "attendance" && showCurrentCandidateAttendance ? () => setShowCurrentCandidateAttendance(false) : () => navigate(-1)}
         />
         
         { 

@@ -26,7 +26,7 @@ const AttendanceScreen = ({ currentUser, className, assignedProject }) => {
         const response = await myAxiosInstance.get(routes.Tasks);
         const tasksForCurrentUser = response.data.filter(task => task.user === currentUser).reverse();
         setUserTasks(tasksForCurrentUser);
-        setTasksToShow(tasksForCurrentUser.filter(task => new Date(task.created).toDateString() === new Date().toDateString()));
+        setTasksToShow(tasksForCurrentUser.filter(task => new Date(task.created).toLocaleDateString() === new Date().toLocaleDateString()));
 
         const datesUserHasTask = [...new Set(tasksForCurrentUser.map(task => [ new Date(task.created) ])).values()].flat();
         setDatesToStyle(datesUserHasTask);
@@ -83,7 +83,7 @@ const AttendanceScreen = ({ currentUser, className, assignedProject }) => {
 
             <AssignedProjectDetails showTask={true} availableProjects={null} removeDropDownIcon={true} assignedProject={assignedProject} hrAttendancePageActive={true} />
 
-            <div className="all__Tasks__Container">
+            <div className="attendances__Container">
                 <Calendar onChange={handleDateChange} tileClassName={tileClassName} />
             </div>
 
