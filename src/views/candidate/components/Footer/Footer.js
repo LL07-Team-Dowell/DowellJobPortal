@@ -2,13 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import RestoreIcon from '@mui/icons-material/Restore';
-import SendIcon from '@mui/icons-material/Send';
-// import NotificationIcon from '@mui/icons-material/Notification';
-import HomeIcon from '@mui/icons-material/Home';
 import Paper from '@mui/material/Paper';
-import * as FaIcons from 'react-icons/fa';
-import * as IoIcons from 'react-icons/io';
 import * as RiIcons from 'react-icons/ri';
 import * as AiIcons from 'react-icons/ai';
 import * as BsIcons from 'react-icons/bs';
@@ -33,7 +27,7 @@ const useStyles = makeStyles(() => ({
 
 
 
-export default function SimpleBottomNavigation() {
+export default function SimpleBottomNavigation({ currentCategory }) {
   const [value, setValue] = React.useState(0);
   const classes = useStyles();
   const ref1 = useRef(null);
@@ -57,6 +51,12 @@ export default function SimpleBottomNavigation() {
         link.current.firstChild.classList.add("footer__Link__Active");
         return;
       }
+
+      if (window.location.href.includes("?") && link.current.href.split("?")[0].split("#")[1] === window.location.href.split("?")[0].split("#")[1]){
+        link.current.classList.add("footer__Link__Active");
+        link.current.firstChild.classList.add("footer__Link__Active");
+        return
+      }
     })
 
   }, [])
@@ -76,16 +76,16 @@ export default function SimpleBottomNavigation() {
 
         <BottomNavigationAction classes={classes} 
         style={{color: '#838383', activeColor:'#000000'}} label="Home" 
-        icon={<AiIcons.AiOutlineHome  fontSize="24px"  color="#838383"/>}  component={Link} to="/home" ref={ref1}/>
+        icon={<AiIcons.AiOutlineHome  fontSize="24px"  color="#838383"/>}  component={Link} to={currentCategory ? `/jobs?jobCategory=${currentCategory}` : "/jobs"} ref={ref1}/>
         <BottomNavigationAction label="Applied" 
         style={{color: '#838383'}} 
-        icon={<RiIcons.RiSendPlaneLine fontSize="24px" color="#838383"/>} component={Link} to="/applied" ref={ref2}/>
+        icon={<RiIcons.RiSendPlaneLine fontSize="24px" color="#838383"/>} component={Link} to={currentCategory ? `/applied?jobCategory=${currentCategory}` : "/applied"} ref={ref2}/>
         <BottomNavigationAction label="Alerts" 
         style={{color: '#838383'}} 
-        icon={<BsIcons.BsBell fontSize="24px" color="#838383"/>} component={Link} to="/alerts" ref={ref3}/>
+        icon={<BsIcons.BsBell fontSize="24px" color="#838383"/>} component={Link} to={currentCategory ? `/alerts?jobCategory=${currentCategory}` : "/alerts"} ref={ref3}/>
         <BottomNavigationAction label="user" 
         style={{color: '#838383'}} 
-        icon={<BiIcons.BiUser fontSize="24px" color="#838383" /> } component={Link} to="/user" ref={ref4}/>
+        icon={<BiIcons.BiUser fontSize="24px" color="#838383" /> } component={Link} to={currentCategory ? `/user?jobCategory=${currentCategory}` : "/user"} ref={ref4}/>
 
 
       </BottomNavigation>

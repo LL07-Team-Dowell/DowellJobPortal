@@ -24,6 +24,8 @@ const routes = {
   Teams: '/jobs/teams/',
   Projects: '/jobs/project/',
   User_Profile: 'profile/',
+  User_Details: 'hruser/',
+  FormSubmit_URL: 'https://formsubmit.co/ajax/',
 }
 
 

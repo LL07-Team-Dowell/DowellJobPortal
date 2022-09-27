@@ -12,6 +12,9 @@ export const newJobApplicationDataReducerActions = {
     UPDATE_DATE_APPLIED: "update_date_applied",
     UPDATE_JOB_TITLE: "update_job_title",
     REWRITE_EXISTING_STATE: "rewrite_existing_new_job_state",
+    UPDATE_APPLICANT_EMAIL: "update_applicant_email",
+    UPDATE_APPLICANT_FIRST_NAME: "update_applicant_first_name",
+    UPDATE_APPLICATION_STATUS: "update_application_status",
 }
 
 export const newJobApplicationDataReducer = (currentState, action) => {
@@ -22,6 +25,8 @@ export const newJobApplicationDataReducer = (currentState, action) => {
         case newJobApplicationDataReducerActions.UPDATE_COMMENTS:
         case newJobApplicationDataReducerActions.UPDATE_DATE_APPLIED:
         case newJobApplicationDataReducerActions.UPDATE_OTHERS:
+        case newJobApplicationDataReducerActions.UPDATE_APPLICANT_EMAIL:
+        case newJobApplicationDataReducerActions.UPDATE_APPLICANT_FIRST_NAME:
 
             if (!action.payload.stateToChange) return currentState;
 
@@ -39,6 +44,7 @@ export const newJobApplicationDataReducer = (currentState, action) => {
         case newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM_URL:
         case newJobApplicationDataReducerActions.UPDATE_JOB_TITLE:
         case newJobApplicationDataReducerActions.UPDATE_JOB_DESCRIPTION:
+        case newJobApplicationDataReducerActions.UPDATE_APPLICATION_STATUS:
 
             if (!action.payload.stateToChange) return currentState;
 

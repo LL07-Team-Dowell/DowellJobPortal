@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
 import BottomNavigationBar from '../../../Hr/component/BottomNavigation/BottomNavigation';
 import { afterSelectionLinks } from '../../utils/afterSelectionLinks';
 import "./style.css";
+import { useSearchParams } from 'react-router-dom';
 
 function UserScreen({ afterSelection, currentUser }) {
+
+  const [ params, setParams ] = useSearchParams();
+  const [ passedCategory, setPassedCategory ] = useState(null);
+
+  useEffect(() => {
+    
+    const jobCategoryParam = params.get("jobCategory");
+
+    if (!jobCategoryParam) return;
+
+    setPassedCategory(jobCategoryParam);
+
+  }, [params])
+
   return (
     <div>
       <Navbar title="User"/>
@@ -41,7 +56,7 @@ function UserScreen({ afterSelection, currentUser }) {
           </div>
                 
         </div>
-      { afterSelection ? <BottomNavigationBar links={afterSelectionLinks} /> : <Footer/> }
+      { afterSelection ? <BottomNavigationBar links={afterSelectionLinks} /> : <Footer currentCategory={passedCategory && passedCategory} /> }
     </div>
   )
 }

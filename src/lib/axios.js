@@ -13,6 +13,12 @@ const authAxiosInstance = axios.create({
     baseURL: loginBaseURL,
 })
 
+const mailAxiosInstance = axios.create({
+    headers: {
+        'Content-Type': 'application/json',
+    }
+})
+
 const dowellLoginUrl = "https://100014.pythonanywhere.com/";
 
-export { authAxiosInstance, myAxiosInstance, dowellLoginUrl };
+export { authAxiosInstance, myAxiosInstance, dowellLoginUrl, mailAxiosInstance };

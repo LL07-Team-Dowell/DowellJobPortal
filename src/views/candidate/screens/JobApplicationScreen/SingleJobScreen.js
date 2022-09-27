@@ -58,14 +58,14 @@ const SingleJobScreen = ({ user }) => {
     if (loading) return <LoadingSpinner />
     
     return <>
-        <Navbar changeToBackButton={true} backButtonLink={"/home"} removeShareOptions={currentJob ? false : true} handleShareJobBtnClick={() => handleShareBtnClick(currentJob.title, `Apply for ${currentJob.title} on Dowell!`, window.location)} />
+        <Navbar changeToBackButton={true} backButtonLink={"/jobs"} removeShareOptions={currentJob ? false : true} handleShareJobBtnClick={() => handleShareBtnClick(currentJob.title, `Apply for ${currentJob.title} on Dowell!`, window.location)} />
         <div className="container-wrapper candidate__Job__Application__Container">
             {
                 !currentJob ? <>
                     <h1><b>Job posting not available</b></h1>
 
                     <div className='apply_Btn_Container'>
-                        <button className="apply-btn" onClick={() => navigate("/home")}>Go To All Jobs</button>
+                        <button className="apply-btn" onClick={() => navigate("/jobs")}>Go To All Jobs</button>
                     </div>
                 </> : 
                 

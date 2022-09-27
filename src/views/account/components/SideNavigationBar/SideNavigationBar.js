@@ -32,6 +32,15 @@ const SideNavigationBar = ({ className, sideNavRef, closeSideNavbar, isNotificat
 
                 {
                     hrPageActive ? <>
+
+                        <Link to={'/guest-applications'} onClick={() => closeSideNavbar()}>
+                            <li>
+                                Guest Applications
+                                <ImStack className="nav-link-icon" />
+                            </li>
+                        </Link>
+
+                        <CustomHr />
                     
                         <Link to={'/tasks'} onClick={() => closeSideNavbar()}>
                             <li>

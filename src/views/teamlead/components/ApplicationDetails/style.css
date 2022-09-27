@@ -53,6 +53,10 @@
         margin-left: auto;
         margin-right: auto;
     }
+
+    .selected-applicant-info {
+        padding-bottom: 6%;
+    }
 }
 
 @media (min-width: 1200px){
