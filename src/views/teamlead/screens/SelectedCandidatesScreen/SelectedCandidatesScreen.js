@@ -346,7 +346,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                     {
                         hrPageActive ? <>
 
-                        <button className={`status-option ${initialMeet ? 'green-color' : 'orange-color'} ${initialMeet ? '' : selectedCandidateData.status === candidateStatuses.GUEST_PENDING_SELECTION ? 'active' : selectedCandidateData.status === candidateStatuses.SHORTLISTED ? 'active' : ''}`} ref={ref7} onClick={() => handleClick(ref7, true, initialMeet ? hrPageActions.MOVE_TO_SELECTED : guestApplication ? hrPageActions.MOVE_TO_PENDING : hrPageActions.MOVE_TO_SHORTLISTED)} disabled={initialMeet ? disabled : selectedCandidateData.status === candidateStatuses.GUEST_PENDING_SELECTION ? true : selectedCandidateData.status === candidateStatuses.SHORTLISTED ? true : disabled}>
+                        <button className={`status-option ${initialMeet ? 'green-color' : 'orange-color'} ${initialMeet ? '' : selectedCandidateData.status === candidateStatuses.SHORTLISTED ? 'active' : ''}`} ref={ref7} onClick={() => handleClick(ref7, true, initialMeet ? hrPageActions.MOVE_TO_SELECTED : guestApplication ? hrPageActions.MOVE_TO_PENDING : hrPageActions.MOVE_TO_SHORTLISTED)} disabled={initialMeet ? disabled : selectedCandidateData.status === candidateStatuses.SHORTLISTED ? true : disabled}>
                             <BsStopCircle className='status-icon' />
                             <br /><br/>
                             <div className='textt'>{`${initialMeet ? 'Selected' : guestApplication ? 'Pending' : 'Shortlisted'}`}</div>
