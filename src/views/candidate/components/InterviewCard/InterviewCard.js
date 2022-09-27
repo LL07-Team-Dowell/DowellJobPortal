@@ -1,5 +1,6 @@
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
+import { mutableNewApplicationStateNames } from "../../../../contexts/NewApplicationContext";
 import { formatDateAndTime } from "../../../../helpers/helpers";
 import { candidateStatuses } from "../../utils/candidateStatuses";
 import "./style.css";
@@ -20,7 +21,7 @@ const InterviewCard = ({ interviewDetails, job, currentApplicationStatus, hrDisc
     return <>
         <div className="candidate__Interview__Card" style={guestUser ? guestStyle : {}}>
             <p className="job__Title">{job ? job.title : ""}</p>
-            <p className="interview__Schedule__Item">{guestUser ? 'Interview to be scheduled' : `Interview scheduled (${formatDateAndTime(interviewDetails.created)})`}</p>
+            <p className="interview__Schedule__Item">{guestUser ? 'Interview to be scheduled' : `Interview scheduled (${(job.others[mutableNewApplicationStateNames.others_scheduled_interview_date] && job.others[mutableNewApplicationStateNames.others_scheduled_interview_date] !== "") ? formatDateAndTime(job.others[mutableNewApplicationStateNames.others_scheduled_interview_date]) : formatDateAndTime(interviewDetails.created)})`}</p>
             <Link className="view__Interview__Btn" to={"/applied/view-applications"} onClick={handleClick}>
                 View details
             </Link>
