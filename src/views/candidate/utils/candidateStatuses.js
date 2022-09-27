@@ -7,4 +7,5 @@ export const candidateStatuses = {
     TEAMLEAD_TOREHIRE: "teamlead_rehire",
     ONBOARDING: "hired",
     PENDING_SELECTION: "Pending",
+    GUEST_PENDING_SELECTION: "Guest_Pending",
 }

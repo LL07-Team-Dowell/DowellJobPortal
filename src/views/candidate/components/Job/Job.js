@@ -4,7 +4,7 @@ import { FaToolbox } from 'react-icons/fa';
 import { IconContext } from 'react-icons';
 import { myAxiosInstance } from '../../../../lib/axios';
 import { routes } from '../../../../lib/routes';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useNavigationContext } from '../../../../contexts/NavigationContext';
 import ErrorPage from '../../../error/ErrorPage';
 import Search from '../../../Hr/component/Search/Search';
@@ -28,17 +28,38 @@ function JobScreen({ currentUser }) {
     const location = useLocation();
     const [ jobsMatchingCategory, setJobsMatchingCategory ] = useState([]);
     const [ currentCategory, setCurrentCategory ] = useState("all");
+    const [ params, setParams ] = useSearchParams();
 
     useEffect(() => {
+
+        const findJobsMatchingCategory = (category) => jobs.filter(job => job.typeof.toLocaleLowerCase().includes(category.toLocaleLowerCase()) || category.toLocaleLowerCase().includes(job.typeof.toLocaleLowerCase()));
+
+        const jobCategoryParam = params.get('jobCategory');
+
+        if (jobCategoryParam) {
+            setCurrentCategory(jobCategoryParam);
+
+            if (jobCategoryParam === "all") return setJobsMatchingCategory(jobs);
+
+            const matchedJobs = findJobsMatchingCategory(jobCategoryParam);
+            setJobsMatchingCategory(matchedJobs)
+            return
+        }
 
         if ((!location.state) || (!location.state.jobCategory)) return setJobsMatchingCategory(jobs);
 
         setCurrentCategory(location.state.jobCategory);
-        const matchedJobs = jobs.filter(job => job.typeof.toLocaleLowerCase().includes(location.state.jobCategory.toLocaleLowerCase()) || location.state.jobCategory.toLocaleLowerCase().includes(job.typeof.toLocaleLowerCase()));
+        
+        if (location.state.jobCategory === "all") return setJobsMatchingCategory(jobs);
+
+        const matchedJobs = findJobsMatchingCategory(location.state.jobCategory);
         setJobsMatchingCategory(matchedJobs);
+
+        if (!location.state.appliedJobs) return
+
         setAppliedJobs(location.state.appliedJobs);
         
-    }, [jobs, location])
+    }, [jobs, location, params])
     
     useEffect(() => {
 
@@ -157,7 +178,7 @@ function JobScreen({ currentUser }) {
                     }
 
                     
-                {currentUser && <Footer />}
+                {currentUser && <Footer currentCategory={currentCategory} />}
                     
                 </div>
                 </div>

@@ -16,7 +16,10 @@ export const newApplicationState = {
         academic_qualification: "",
         comments: "",
         date_applied: "",
-        team_lead_remarks: ""
+        team_lead_remarks: "",
+        applicant_email: "",
+        applicant_first_name: "",
+        scheduled_interview_date: "",
     },
     applicant: "",
     job: "",
@@ -38,6 +41,7 @@ export const excludedApplicantInfo = [
     "updated",
     "hr_discord_link",
     "assigned_project",
+    "scheduled_interview_date",
 ]
 
 export const mutableNewApplicationStateNames = {
@@ -54,9 +58,13 @@ export const mutableNewApplicationStateNames = {
     others_comments: "comments",
     others_date_applied: "date_applied",
     others_team_lead_remarks: "team_lead_remarks",
+    others_applicant_email: "applicant_email",
+    others_applicant_first_name: "applicant_first_name",
     hr_remarks: "hr_remarks",
     hr_discord_link: "hr_discord_link",
     assigned_project: "assigned_project",
+    status: "status",
+    others_scheduled_interview_date: "scheduled_interview_date"
 }
 
 export const useNewApplicationContext = () => useContext(NewApplicationContext);

@@ -61,6 +61,7 @@ function Applied({ currentUser }) {
                   React.Children.toArray(userInterviews.map(interview => {
                     return <>
                       <InterviewCard 
+                        guestUser={currentUser.role === process.env.REACT_APP_GUEST_ROLE ? true : false}
                         interviewDetails={interview} 
                         job={appliedJobs.find(appliedJob => appliedJob.id === interview.job_applied)} 
                         currentApplicationStatus={currentUserApplications.find(application => application.job === interview.job_applied).status} 

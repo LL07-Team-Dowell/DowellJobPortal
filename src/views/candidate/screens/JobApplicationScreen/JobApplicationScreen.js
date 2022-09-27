@@ -17,6 +17,7 @@ import { routes } from "../../../../lib/routes";
 import { jobKeys } from "../../../admin/utils/jobKeys";
 import { BsCashStack } from "react-icons/bs";
 import LoadingSpinner from "../../../admin/components/LoadingSpinner/LoadingSpinner";
+import { candidateStatuses } from "../../utils/candidateStatuses";
 
 const JobApplicationScreen = () => {
     const location = useLocation();
@@ -99,7 +100,25 @@ const JobApplicationScreen = () => {
             delete currentState[mutableNewApplicationStateNames.freelancePlatform];
             delete currentState[mutableNewApplicationStateNames.freelancePlatformUrl];
 
+            if (location.state.currentUser.role !== process.env.REACT_APP_GUEST_ROLE) {
+                delete currentState.others[mutableNewApplicationStateNames.others_applicant_first_name];
+                delete currentState.others[mutableNewApplicationStateNames.others_applicant_email];
+            }
+
             dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.REWRITE_EXISTING_STATE, payload: { newState: currentState }});
+        }
+
+        if ((currentJob.typeof !== "Employee" || currentJob.typeof !== "Internship") && (location.state.currentUser.role !== process.env.REACT_APP_GUEST_ROLE)) {
+            delete currentState.others[mutableNewApplicationStateNames.others_applicant_first_name];
+            delete currentState.others[mutableNewApplicationStateNames.others_applicant_email];
+
+            dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.REWRITE_EXISTING_STATE, payload: { newState: currentState }});
+        }
+
+        if (location.state.currentUser.role === process.env.REACT_APP_GUEST_ROLE) {
+            dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_APPLICANT_FIRST_NAME, payload: { stateToChange: mutableNewApplicationStateNames.others_applicant_first_name, value: location.state.currentUser.username.split("_")[1] }});
+            dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_APPLICANT_EMAIL, payload: { stateToChange: mutableNewApplicationStateNames.others_applicant_email, value: location.state.currentUser.email }});
+            dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_APPLICATION_STATUS, payload: { stateToChange: mutableNewApplicationStateNames.status, value: candidateStatuses.GUEST_PENDING_SELECTION }});
         }
         
         Object.keys(currentJob.others || {}).forEach(item => {
@@ -262,7 +281,7 @@ const JobApplicationScreen = () => {
     if (jobsLoading) return <LoadingSpinner />
 
     return <>
-        <Navbar changeToBackButton={true} backButtonLink={'/home'} handleShareJobBtnClick={() => handleShareBtnClick(currentJob.title, `Apply for ${currentJob.title} on Dowell!`, `${process.env.PUBLIC_URL}/#/jobs/${currentJob.title.slice(-1) === " " ? currentJob.title.slice(0, -1).toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-") : currentJob.title.toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-")}`)} />
+        <Navbar changeToBackButton={true} backButtonLink={-1} handleShareJobBtnClick={() => handleShareBtnClick(currentJob.title, `Apply for ${currentJob.title} on Dowell!`, `${process.env.PUBLIC_URL}/#/jobs/${currentJob.title.slice(-1) === " " ? currentJob.title.slice(0, -1).toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-") : currentJob.title.toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-")}`)} />
             <div className="container-wrapper candidate__Job__Application__Container">
 
                 {
@@ -491,7 +510,7 @@ const JobApplicationScreen = () => {
                 }
                 
             </div>
-        {newApplicationData.others[mutableNewApplicationStateNames.applicant] && newApplicationData.others[mutableNewApplicationStateNames.applicant] !== "" && <Footer />}
+        {newApplicationData.others[mutableNewApplicationStateNames.applicant] && newApplicationData.others[mutableNewApplicationStateNames.applicant] !== "" && <Footer currentCategory={currentJob.typeof} />}
     </>
 }
 

@@ -5,7 +5,7 @@ import { candidateStatuses } from "../../utils/candidateStatuses";
 import "./style.css";
 
 
-const InterviewCard = ({ interviewDetails, job, currentApplicationStatus, hrDiscordLink }) => {
+const InterviewCard = ({ interviewDetails, job, currentApplicationStatus, hrDiscordLink, guestUser }) => {
     const navigate = useNavigate();
     
     const handleClick = (e) => {
@@ -13,10 +13,14 @@ const InterviewCard = ({ interviewDetails, job, currentApplicationStatus, hrDisc
         // navigate("/applied/view_job_application", { state: { jobToView: job, applicationDetails: applicationDetails } });
     }
 
+    const guestStyle = {
+        height: 'unset',
+    }
+
     return <>
-        <div className="candidate__Interview__Card">
+        <div className="candidate__Interview__Card" style={guestUser ? guestStyle : {}}>
             <p className="job__Title">{job ? job.title : ""}</p>
-            <p className="interview__Schedule__Item">Interview scheduled ({formatDateAndTime(interviewDetails.created)})</p>
+            <p className="interview__Schedule__Item">{guestUser ? 'Interview to be scheduled' : `Interview scheduled (${formatDateAndTime(interviewDetails.created)})`}</p>
             <Link className="view__Interview__Btn" to={"/applied/view-applications"} onClick={handleClick}>
                 View details
             </Link>
@@ -41,14 +45,16 @@ const InterviewCard = ({ interviewDetails, job, currentApplicationStatus, hrDisc
                     
                 </div>
                 
-                <div className="discord__Btn__Container">
-                    <button onClick={() => window.location.href = currentApplicationStatus === candidateStatuses.SELECTED ? hrDiscordLink : "https://discord.gg/FkBxVUKsAq"}><a href={currentApplicationStatus === candidateStatuses.SELECTED ? hrDiscordLink : "https://discord.gg/FkBxVUKsAq"} rel="noopener" aria-label="join meeting on discord">Discord</a></button>
-                    {
-                        currentApplicationStatus === candidateStatuses.SELECTED ? 
-                        <span>Join link to have meeting with Teamlead</span> :
-                        <span>Join link to have meeting with HR</span>
-                    }
-                </div>
+                {
+                    !guestUser && <div className="discord__Btn__Container">
+                        <button onClick={() => window.location.href = currentApplicationStatus === candidateStatuses.SELECTED ? hrDiscordLink : "https://discord.gg/FkBxVUKsAq"}><a href={currentApplicationStatus === candidateStatuses.SELECTED ? hrDiscordLink : "https://discord.gg/FkBxVUKsAq"} rel="noopener" aria-label="join meeting on discord">Discord</a></button>
+                        {
+                            currentApplicationStatus === candidateStatuses.SELECTED ? 
+                            <span>Join link to have meeting with Teamlead</span> :
+                            <span>Join link to have meeting with HR</span>
+                        }
+                    </div>
+                }
             </div>
         </div>
     </>

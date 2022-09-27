@@ -54,6 +54,7 @@ function Hr_JobScreen({ currentUser }) {
   const [ currentSortOption, setCurrentSortOption ] = useState(null);
   const [ sortResults, setSortResults ] = useState([]);
   const [ showCurrentCandidateAttendance, setShowCurrentCandidateAttendance ] = useState(false);
+  const [ guestApplications, setGuestApplications ] = useState([]);
   
   useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
 
@@ -68,6 +69,7 @@ function Hr_JobScreen({ currentUser }) {
   const getJobApplications = async () => {
     const response = await myAxiosInstance.get(routes.Applications);
     setAppliedJobs(response.data.filter(application => application.status === candidateStatuses.PENDING_SELECTION));
+    setGuestApplications(response.data.filter(application => application.status === candidateStatuses.GUEST_PENDING_SELECTION));
     setCandidateData(response.data.filter(application => application.status === candidateStatuses.SHORTLISTED));
     setHiredCandidates(response.data.filter(application => application.status === candidateStatuses.ONBOARDING));
     return;
@@ -94,7 +96,13 @@ function Hr_JobScreen({ currentUser }) {
 
   const goToJobDetails = (jobData, candidateData) => navigate("/home/job", { state: { job: jobData, appliedCandidates: candidateData } });
 
-  const goToJobApplicationDetails = (candidateData) => navigate(`/home/job/${candidateData[mutableNewApplicationStateNames.applicant]}`, { state: { candidate: candidateData } });
+  const goToGuestJobDetails = (jobData, candidateData) => navigate("/guest-applications/job", { state: { job: jobData, appliedCandidates: candidateData } });
+
+  const goToJobApplicationDetails = (candidateData) => {
+    if (section === "guest-applications") return navigate(`/guest-applications/job/${candidateData[mutableNewApplicationStateNames.applicant]}`, { state: { candidate: candidateData } })
+  
+    navigate(`/home/job/${candidateData[mutableNewApplicationStateNames.applicant]}`, { state: { candidate: candidateData } })
+  };
 
   useEffect(() => {
 
@@ -250,7 +258,7 @@ function Hr_JobScreen({ currentUser }) {
         <NavigationBar
           handleMenuIconClick={() => setSideNavbarActive(true)}
           className={'hr_navigation'}
-          title={section === "shortlisted" ? "Shortlisted" : section === "user" ? "User" : ""}
+          title={section === "shortlisted" ? "Shortlisted" : section === "user" ? "User" : section === "guest-applications" ? "Guest Applications" : ""}
           changeToBackIcon={sub_section !== undefined ? true : section === "tasks" && showCurrentCandidateTask ? true : section === "attendance" && showCurrentCandidateAttendance ? true : false}
           handleBackIconClick={section === "tasks" && showCurrentCandidateTask ? () => setShowCurrentCandidateTask(false) : section === "attendance" && showCurrentCandidateAttendance ? () => setShowCurrentCandidateAttendance(false) : () => navigate(-1)}
         />
@@ -260,6 +268,40 @@ function Hr_JobScreen({ currentUser }) {
           sub_section === undefined && section === "shortlisted" ? <>
             <ShortlistedScreen shortlistedCandidates={candidateData} jobData={jobs} />
           </> :
+
+          sub_section === undefined && section === "guest-applications" ?
+
+          <>
+            {
+              isLoading ? <LoadingSpinner /> :
+
+              <div className='hr__wrapper'>
+          
+                <div className='search'>
+                  <Search searchValue={jobSearchInput} updateSearchValue={setJobSearchInput} />
+                </div>
+
+                <div className='job__wrapper'>
+                  {
+                    searchActive ? matchedJobs.length === 0 ? <>No jobs found matching your query</> :
+                    
+                    React.Children.toArray(matchedJobs.map(job => {
+                      return <>
+                        <JobTile jobData={job} routeToJob={true} handleJobTileClick={() => goToGuestJobDetails(job, guestApplications.filter(application => application.job === job.id))} candidateForJobCount={guestApplications.filter(application => application.job === job.id).length} />
+                      </>
+                    })) :
+
+                    React.Children.toArray(jobs.map(job => {
+                      return <>
+                        <JobTile jobData={job} routeToJob={true} handleJobTileClick={() => goToGuestJobDetails(job, guestApplications.filter(application => application.job === job.id))} candidateForJobCount={guestApplications.filter(application => application.job === job.id).length} />
+                      </>
+                    }))
+                  }
+                </div>
+                
+              </div>
+            }
+          </>:
 
           sub_section === undefined && section === "attendance" ? 
 
@@ -430,9 +472,11 @@ function Hr_JobScreen({ currentUser }) {
             <>
               <SelectedCandidatesScreen
                 hrPageActive={true}
+                guestApplication={location.state.candidate.state === candidateStatuses.GUEST_PENDING_SELECTION ? true : false}
                 selectedCandidateData={location.state.candidate}
-                updateCandidateData={setCandidateData}
-                updateAppliedData={setAppliedJobs}
+                updateCandidateData={setAppliedJobs}
+                updateAppliedData={section === "guest-applications" ? setGuestApplications : setAppliedJobs}
+                jobTitle={jobs.find(job => job.id === location.state.candidate.job)?.title}
               />
             </>
           </div>

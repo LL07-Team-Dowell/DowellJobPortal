@@ -37,7 +37,7 @@ const ApplicantDetails = ({ hrPageActive, applicantData, candidateApplicationPag
 
                             if (typeof applicantData[key] === "object") return <></>
 
-                            if (key === mutableNewApplicationStateNames.applicant) return <span>Name: {applicantData[key]}</span>
+                            if (key === mutableNewApplicationStateNames.applicant) return <span> {applicantData[key].split("_")[0] === 'guest' ? 'Username' : 'Name' }: {applicantData[key]}</span>
                             if (key === mutableNewApplicationStateNames.country) return <span>Country: {applicantData[key]}</span>
                             if (key === mutableNewApplicationStateNames.freelancePlatform) return <span>Freelance Platform: {applicantData[key]}</span>
                             if (key === mutableNewApplicationStateNames.freelancePlatformUrl) return <span>Freelance Platform Url: {applicantData[key]}</span>
@@ -55,6 +55,8 @@ const ApplicantDetails = ({ hrPageActive, applicantData, candidateApplicationPag
                             if (key === mutableNewApplicationStateNames.others_property_qualification) return <span>Academic Qualification: {applicantData.others[key]}</span>
                             if (key === mutableNewApplicationStateNames.others_property_qualification_type) return <span>Qualification Type: {applicantData.others[key]}</span>
                             if (key === mutableNewApplicationStateNames.others_comments) return <span>Comments: {applicantData.others[key]}</span>
+                            if (key === mutableNewApplicationStateNames.others_applicant_first_name) return <span>First Name: {applicantData.others[key]}</span>
+                            if (key === mutableNewApplicationStateNames.others_applicant_email) return <span>Email: {applicantData.others[key]}</span>
                             
                             return <span>{key}: {applicantData.others[key]}</span>
                         }))
