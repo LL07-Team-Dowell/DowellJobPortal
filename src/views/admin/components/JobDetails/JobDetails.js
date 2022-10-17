@@ -17,9 +17,15 @@ const JobDetails = ({ currentJob }) => {
                 <span>Skills: {currentJob[jobKeys.skillsRequired]}</span>
                 <span className="display__Flex"><BusinessCenterIcon />{currentJob[jobKeys.jobTimePeriod]}</span>
             </div>
+            
+            {
+                currentJob[jobKeys.jobType] && currentJob[jobKeys.jobType] === "Employee" && <>
+                    <span className="display__Flex grey__Color">Job category: {currentJob.others[jobKeys.othersEmployeeJobType]}</span>
+                </>
+            }
 
             <span className="display__Flex grey__Color">Payment <DropdownButton currentSelection={currentJob.others && currentJob.others[jobKeys.paymentForJob] ? currentJob.others[jobKeys.paymentForJob] : "$30"} removeDropDownIcon={true} /></span>
-            
+
             <span className="description__Text display__Flex">
                 <b>Job {jobKeys.jobDescription}</b>
                 <div className="job__Type">{currentJob[jobKeys.jobType]}</div>
@@ -67,6 +73,7 @@ const JobDetails = ({ currentJob }) => {
                 {
                     React.Children.toArray(Object.keys(currentJob[jobKeys.others] || {}).map(key => {
                         if (key === jobKeys.paymentForJob) return <></>
+                        if (key === jobKeys.othersEmployeeJobType) return <></>
                         return <p>{currentJob[jobKeys.others][key]} <br /></p>
                     }))
                 }

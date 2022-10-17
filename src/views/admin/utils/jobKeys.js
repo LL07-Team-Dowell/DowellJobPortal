@@ -11,4 +11,5 @@ export const jobKeys = {
     workflowOfJob: "workflow",
     others: "others",
     paymentForJob: "paymentForJob",
+    othersEmployeeJobType: "othersEmployeeJobType",
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AiFillCloseCircle, AiOutlinePlus } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { newJobStateDataNames, useNewJobTermsContext } from "../../../../contexts/NewJobTermsContext";
 import { myAxiosInstance } from "../../../../lib/axios";
 import { routes } from "../../../../lib/routes";
@@ -16,7 +17,7 @@ const NewJobDetails = () => {
         "description": "",
         "skills": "",
         "is_active": false,
-        "typeof": "Freelance",
+        "typeof": "Freelancer",
         "time_period": "",
         "general_terms": {},
         "Technical_Specifications": {},
@@ -26,6 +27,7 @@ const NewJobDetails = () => {
     });
     const { newJobTerms, dispatchToNewJobTerms } = useNewJobTermsContext();
     const [ disableSaveJobBtn, setDisableSaveJobBtn ] = useState(false);
+    const [ showEmployeeJobType, setShowEmployeeJobType ] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -71,12 +73,29 @@ const NewJobDetails = () => {
 
     }, [newJobTerms])
 
+    useEffect(() => {
+
+        if (newJobDetails.typeof && newJobDetails.typeof === "Employee") return setShowEmployeeJobType(true);
+
+        setShowEmployeeJobType(false);
+
+    }, [newJobDetails.typeof])
+
     const handleSaveNewJobBtnClick = async () => {
+        if (newJobDetails.typeof === "Employee" && !newJobDetails.others[jobKeys.othersEmployeeJobType]) return toast.info("Please specify whether it is a 'Full time' or 'Part time' job.")
         setDisableSaveJobBtn(true);
 
-        await myAxiosInstance.post(routes.Admin_Add_Job, newJobDetails);
-        dispatchToNewJobTerms({ type: newJobTermsReducerActions.RESET_STATE });
-        navigate("/home");
+        try {
+            
+            await myAxiosInstance.post(routes.Admin_Add_Job, newJobDetails);
+            dispatchToNewJobTerms({ type: newJobTermsReducerActions.RESET_STATE });
+            navigate("/home");
+
+        } catch (error) {
+            console.log(error);
+            setDisableSaveJobBtn(false);
+        }
+        
 
     }
     
@@ -106,8 +125,20 @@ const NewJobDetails = () => {
 
             <CustomHr />
 
+            {
+                showEmployeeJobType && <>
+
+                <span className="display__Flex edit__Page__Font__Size">
+                    <b>Full time or part-time job: </b> <DropdownButton currentSelection={newJobDetails.others[jobKeys.othersEmployeeJobType] ? newJobDetails.others[jobKeys.othersEmployeeJobType] : "Select type"} selections={["Full time", "Part time"]} handleSelectionClick={(selection) => setNewJobDetails(prevValue => { return { ...prevValue, [jobKeys.others]: { ...prevValue["others"], [jobKeys.othersEmployeeJobType]: selection } } })} />
+                </span>
+
+                <CustomHr />
+
+                </>
+            }
+
             <span className="display__Flex edit__Page__Font__Size">
-                <b>State of job: </b> <DropdownButton currentSelection={newJobDetails[jobKeys.jobIsActive] === true ? "Active" : "InActive"} selections={["Active", "Inactive"]} handleSelectionClick={(selection) => setNewJobDetails(prevValue => { return { ...prevValue, [jobKeys.jobIsActive]: selection === "Active" ? true : false } })} />
+                <b>State of job: </b> <DropdownButton currentSelection={newJobDetails[jobKeys.jobIsActive] === true ? "Active" : "Inactive"} selections={["Active", "Inactive"]} handleSelectionClick={(selection) => setNewJobDetails(prevValue => { return { ...prevValue, [jobKeys.jobIsActive]: selection === "Active" ? true : false } })} />
             </span>
 
             <CustomHr />
