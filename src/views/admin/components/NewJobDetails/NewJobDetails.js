@@ -27,7 +27,7 @@ const NewJobDetails = () => {
     });
     const { newJobTerms, dispatchToNewJobTerms } = useNewJobTermsContext();
     const [ disableSaveJobBtn, setDisableSaveJobBtn ] = useState(false);
-    const [ showEmployeeJobType, setShowEmployeeJobType ] = useState(false);
+    const [ showInternJobType, setShowInternJobType ] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -75,14 +75,14 @@ const NewJobDetails = () => {
 
     useEffect(() => {
 
-        if (newJobDetails.typeof && newJobDetails.typeof === "Employee") return setShowEmployeeJobType(true);
+        if (newJobDetails.typeof && newJobDetails.typeof === "Internship") return setShowInternJobType(true);
 
-        setShowEmployeeJobType(false);
+        setShowInternJobType(false);
 
     }, [newJobDetails.typeof])
 
     const handleSaveNewJobBtnClick = async () => {
-        if (newJobDetails.typeof === "Employee" && !newJobDetails.others[jobKeys.othersEmployeeJobType]) return toast.info("Please specify whether it is a 'Full time' or 'Part time' job.")
+        if (newJobDetails.typeof === "Internship" && !newJobDetails.others[jobKeys.othersInternJobType]) return toast.info("Please specify whether it is a 'Full time' or 'Part time' job.")
         setDisableSaveJobBtn(true);
 
         try {
@@ -126,10 +126,10 @@ const NewJobDetails = () => {
             <CustomHr />
 
             {
-                showEmployeeJobType && <>
+                showInternJobType && <>
 
                 <span className="display__Flex edit__Page__Font__Size">
-                    <b>Full time or part-time job: </b> <DropdownButton currentSelection={newJobDetails.others[jobKeys.othersEmployeeJobType] ? newJobDetails.others[jobKeys.othersEmployeeJobType] : "Select type"} selections={["Full time", "Part time"]} handleSelectionClick={(selection) => setNewJobDetails(prevValue => { return { ...prevValue, [jobKeys.others]: { ...prevValue["others"], [jobKeys.othersEmployeeJobType]: selection } } })} />
+                    <b>Full time or part-time job: </b> <DropdownButton currentSelection={newJobDetails.others[jobKeys.othersInternJobType] ? newJobDetails.others[jobKeys.othersInternJobType] : "Select type"} selections={["Full time", "Part time"]} handleSelectionClick={(selection) => setNewJobDetails(prevValue => { return { ...prevValue, [jobKeys.others]: { ...prevValue["others"], [jobKeys.othersInternJobType]: selection } } })} />
                 </span>
 
                 <CustomHr />

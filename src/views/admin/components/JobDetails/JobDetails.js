@@ -19,8 +19,8 @@ const JobDetails = ({ currentJob }) => {
             </div>
             
             {
-                currentJob[jobKeys.jobType] && currentJob[jobKeys.jobType] === "Employee" && <>
-                    <span className="display__Flex grey__Color">Job category: {currentJob.others[jobKeys.othersEmployeeJobType]}</span>
+                currentJob[jobKeys.jobType] && currentJob[jobKeys.jobType] === "Internship" && <>
+                    <span className="display__Flex grey__Color">Job category: {currentJob.others[jobKeys.othersInternJobType]}</span>
                 </>
             }
 
@@ -73,7 +73,7 @@ const JobDetails = ({ currentJob }) => {
                 {
                     React.Children.toArray(Object.keys(currentJob[jobKeys.others] || {}).map(key => {
                         if (key === jobKeys.paymentForJob) return <></>
-                        if (key === jobKeys.othersEmployeeJobType) return <></>
+                        if (key === jobKeys.othersInternJobType) return <></>
                         return <p>{currentJob[jobKeys.others][key]} <br /></p>
                     }))
                 }

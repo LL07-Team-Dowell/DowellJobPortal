@@ -2,6 +2,7 @@ import axios from "axios";
 
 const baseURL = 'https://100055.pythonanywhere.com/api/';
 const loginBaseURL = 'https://100014.pythonanywhere.com/api/';
+const communityBaseURL = 'https://100081.pythonanywhere.com/mainapp/';
 
 const myAxiosInstance = axios.create({
     withCredentials: true,
@@ -19,6 +20,11 @@ const mailAxiosInstance = axios.create({
     }
 })
 
+const communityAxiosInstance = axios.create({
+    withCredentials: true,
+    baseURL: communityBaseURL,
+})
+
 const dowellLoginUrl = "https://100014.pythonanywhere.com/";
 
-export { authAxiosInstance, myAxiosInstance, dowellLoginUrl, mailAxiosInstance };
+export { authAxiosInstance, myAxiosInstance, dowellLoginUrl, mailAxiosInstance, communityAxiosInstance };
