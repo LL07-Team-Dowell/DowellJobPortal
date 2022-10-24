@@ -12,4 +12,6 @@ export const jobKeys = {
     others: "others",
     paymentForJob: "paymentForJob",
     othersInternJobType: "othersInternJobType",
+    othersResearchAssociateJobType: "othersResearchAssociateJobType",
+    othersFreelancerJobType: "othersFreelancerJobType",
 }

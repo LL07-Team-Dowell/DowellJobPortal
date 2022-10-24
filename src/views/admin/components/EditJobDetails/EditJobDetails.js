@@ -136,7 +136,7 @@ const EditJobDetails = ({ currentJob, currentJobState, updateJobDetails }) => {
             {
                 currentJob[jobKeys.jobType] && currentJob[jobKeys.jobType] === "Internship" && <>
                     <span className="display__Flex edit__Page__Font__Size">
-                    <b>Full time or part-time job: </b> <DropdownButton currentSelection={currentJob.others[jobKeys.othersInternJobType] ? currentJob.others[jobKeys.othersInternJobType] : "Select type"} selections={["Full time", "Part time"]} handleSelectionClick={(selection) => updateJobDetails(prevValue => { return { ...prevValue, [jobKeys.others]: { ...prevValue["others"], [jobKeys.paymentForJob]: selection } } })} />
+                    <b>Full time or part-time job: </b> <DropdownButton currentSelection={currentJob.others[jobKeys.othersInternJobType] ? currentJob.others[jobKeys.othersInternJobType] : "Select type"} selections={["Full time", "Part time"]} handleSelectionClick={(selection) => updateJobDetails(prevValue => { return { ...prevValue, [jobKeys.others]: { ...prevValue["others"], [jobKeys.othersInternJobType]: selection } } })} />
                     </span>
 
                     <CustomHr />

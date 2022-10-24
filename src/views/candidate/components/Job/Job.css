@@ -179,9 +179,30 @@
   margin: 1% auto;
 }
 
+.container-wrapper .job__Categories__Container span {
+  background-color: #C4C4C4;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  padding: 3% 5%;
+}
+
+.container-wrapper .job__Categories__Container span.active {
+  background-color: #53CA5F;
+  color: #045632;
+}
+
+.container-wrapper .job__Categories__Container {
+  width: 97%;
+  margin: 4% auto 10%;
+}
+
 @media screen and (min-width: 992px) {
   .container-wrapper .search__wrapper .search__container, .row{
     width: 87%;
+  }
+  .container-wrapper .job__Categories__Container {
+    width: 90%;
   }
 
   .card{
@@ -205,6 +226,12 @@
   }
   .row {
     padding-bottom: 4%;
+  }
+  .container-wrapper .job__Categories__Container {
+    margin: 2% auto;
+  }
+  .container-wrapper .job__Categories__Container span {
+    padding: 1% 2%;
   }
 }
    
@@ -231,6 +258,13 @@
   }
   .container .share__Job__Btn {
     top: 10%;
+  }
+  .container-wrapper .job__Categories__Container {
+    margin: 3% auto;
+    width: 89%;
+  }
+  .container-wrapper .job__Categories__Container span {
+    padding: 2% 4%;
   }
 }
   

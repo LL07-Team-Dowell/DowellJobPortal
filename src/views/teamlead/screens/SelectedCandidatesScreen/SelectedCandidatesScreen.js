@@ -218,7 +218,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
             case hrPageActions.MOVE_TO_PENDING:
                 if (!selectedCandidateData) return
 
-                selectedCandidateData[mutableNewApplicationStateNames.hr_remarks] = remarks;
+                // selectedCandidateData[mutableNewApplicationStateNames.hr_remarks] = remarks;
 
                 let newFormData = new FormData();
 
@@ -279,10 +279,13 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                 <></> :
 
                 hrPageActive ? <>
-                    <div className="comments-container hr__Comments__Container">
-                        <h2>{initialMeet ? <>Remarks {<span>&#x00028;by Hr&#x00029;</span>}</> : <>Add Remarks</>}</h2>
-                        <textarea placeholder={`${initialMeet ? "Remarks given": "Add remarks"}`} readOnly={initialMeet ? true : false} value={initialMeet ? selectedCandidateData[mutableNewApplicationStateNames.hr_remarks] : remarks} onChange={(e) => setRemarks(e.target.value)}></textarea>
-                    </div>
+                    {
+                        guestApplication ? <></> :
+                        <div className="comments-container hr__Comments__Container">
+                            <h2>{initialMeet ? <>Remarks {<span>&#x00028;by Hr&#x00029;</span>}</> : <>Add Remarks</>}</h2>
+                            <textarea placeholder={`${initialMeet ? "Remarks given": "Add remarks"}`} readOnly={initialMeet ? true : false} value={initialMeet ? selectedCandidateData[mutableNewApplicationStateNames.hr_remarks] : remarks} onChange={(e) => setRemarks(e.target.value)}></textarea>
+                        </div>   
+                    }
                 </> :
 
                 <>
