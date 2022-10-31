@@ -29,6 +29,9 @@ function JobScreen({ currentUser }) {
     const [ jobsMatchingCategory, setJobsMatchingCategory ] = useState([]);
     const [ currentCategory, setCurrentCategory ] = useState("all");
     const [ params, setParams ] = useSearchParams();
+    const [ jobSelectionHasCategory, setJobSelectionHasCategory ] = useState(false);
+    const [ jobSelectionCategories, setJobSelectionCategories ] = useState(null);
+    const [ currentJobCategory, setCurrentJobCategory ] = useState(null);
 
     useEffect(() => {
 
@@ -41,6 +44,13 @@ function JobScreen({ currentUser }) {
 
             if (jobCategoryParam === "all") return setJobsMatchingCategory(jobs);
 
+            setJobSelectionHasCategory(true);
+
+            if (jobCategoryParam === "Intern") setJobSelectionCategories(["Full time", "Part time"])
+            if (jobCategoryParam === "Employee") setJobSelectionCategories(["Full time"])
+            if (jobCategoryParam === "Research Associate") setJobSelectionCategories(["Full time", "Part time"])
+            if (jobCategoryParam === "Freelancer") setJobSelectionCategories(["Task based", "Time based"])
+
             const matchedJobs = findJobsMatchingCategory(jobCategoryParam);
             setJobsMatchingCategory(matchedJobs)
             return
@@ -52,6 +62,13 @@ function JobScreen({ currentUser }) {
         
         if (location.state.jobCategory === "all") return setJobsMatchingCategory(jobs);
 
+        setJobSelectionHasCategory(true);
+
+        if (location.state.jobCategory === "Intern") setJobSelectionCategories(["Full time", "Part time"])
+        if (location.state.jobCategory === "Employee") setJobSelectionCategories(["Full time"])
+        if (location.state.jobCategory === "Research Associate") setJobSelectionCategories(["Full time", "Part time"])
+        if (location.state.jobCategory === "Freelancer") setJobSelectionCategories(["Task based", "Time based"])
+
         const matchedJobs = findJobsMatchingCategory(location.state.jobCategory);
         setJobsMatchingCategory(matchedJobs);
 
@@ -60,6 +77,45 @@ function JobScreen({ currentUser }) {
         setAppliedJobs(location.state.appliedJobs);
         
     }, [jobs, location, params])
+
+    useEffect(() => {
+        
+        if (!jobSelectionCategories) return
+        setCurrentJobCategory(jobSelectionCategories[0]);
+
+    }, [jobSelectionCategories])
+
+    useEffect(() => {
+
+        if (!currentJobCategory) return
+
+        if (currentCategory === "Intern") {
+
+            const matchedJobs = jobsMatchingCategory.filter(job => job.others[jobKeys.othersInternJobType] === currentJobCategory);
+            if (matchedJobs.length === 0) return setJobsMatchingCategory(jobs.filter(job => job.typeof.toLocaleLowerCase().includes(currentCategory.toLocaleLowerCase()) || currentCategory.toLocaleLowerCase().includes(job.typeof.toLocaleLowerCase())))
+            setJobsMatchingCategory(matchedJobs);
+
+        }
+
+        if (location.state.jobCategory === "Employee") return
+
+        if (location.state.jobCategory === "Research Associate") {
+
+            const matchedJobs = jobsMatchingCategory.filter(job => job.others[jobKeys.othersResearchAssociateJobType] === currentJobCategory);
+            if (matchedJobs.length === 0) return setJobsMatchingCategory(jobs.filter(job => job.typeof.toLocaleLowerCase().includes(currentCategory.toLocaleLowerCase()) || currentCategory.toLocaleLowerCase().includes(job.typeof.toLocaleLowerCase())))
+            setJobsMatchingCategory(matchedJobs);
+
+        }
+
+        if (location.state.jobCategory === "Freelancer") {
+            
+            const matchedJobs = jobsMatchingCategory.filter(job => job.others[jobKeys.othersFreelancerJobType] === currentJobCategory);
+            if (matchedJobs.length === 0) return setJobsMatchingCategory(jobs.filter(job => job.typeof.toLocaleLowerCase().includes(currentCategory.toLocaleLowerCase()) || currentCategory.toLocaleLowerCase().includes(job.typeof.toLocaleLowerCase())))
+            setJobsMatchingCategory(matchedJobs);
+
+        }
+
+    }, [currentJobCategory])
     
     useEffect(() => {
 
@@ -106,6 +162,15 @@ function JobScreen({ currentUser }) {
               <div className='container-wrapper'>
 
                 {/* <Search searchValue={jobSearchInput} updateSearchValue={setSearchInput} /> */}
+
+                <div className='job__Categories__Container'>
+                    {
+                        jobsLoading || !jobSelectionHasCategory ? <></> :
+                        React.Children.toArray(jobSelectionCategories.map(category => {
+                            return <span className={`${category === currentJobCategory ? 'active' : ''}`} onClick={() => setCurrentJobCategory(category)}>{category}</span>
+                        }))
+                    }
+                </div>
 
                 <div className="row">
                     {

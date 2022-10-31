@@ -93,7 +93,9 @@ const EditJobDetails = ({ currentJob, currentJobState, updateJobDetails }) => {
         updateJobDetails(prevDetails => { return { ...prevDetails, "workflow": allWorkTerms } });
 
         const allOtherTerms = removePropertyWithEmptyValue(Object.assign({}, ...newJobTerms[newJobStateDataNames.otherTerms]));
-        updateJobDetails(prevDetails => { return { ...prevDetails, "others": { ...prevDetails["others"], ...allOtherTerms} } });
+        if (currentJob.others[jobKeys.paymentForJob]) allOtherTerms[jobKeys.paymentForJob] = currentJob.others[jobKeys.paymentForJob]
+        if (currentJob.others[jobKeys.othersInternJobType]) allOtherTerms[jobKeys.othersInternJobType] = currentJob.others[jobKeys.othersInternJobType]
+        updateJobDetails(prevDetails => { return { ...prevDetails, "others": allOtherTerms } });
 
         if (Object.keys(allGenTerms || {}).length === 0) updateJobDetails(prevDetails => { return { ...prevDetails, "general_terms": null } });
         if (Object.keys(allTechTerms || {}).length === 0) updateJobDetails(prevDetails => { return { ...prevDetails, "Technical_Specifications": null } });
@@ -131,8 +133,18 @@ const EditJobDetails = ({ currentJob, currentJobState, updateJobDetails }) => {
 
             <CustomHr />
 
+            {
+                currentJob[jobKeys.jobType] && currentJob[jobKeys.jobType] === "Internship" && <>
+                    <span className="display__Flex edit__Page__Font__Size">
+                    <b>Full time or part-time job: </b> <DropdownButton currentSelection={currentJob.others[jobKeys.othersInternJobType] ? currentJob.others[jobKeys.othersInternJobType] : "Select type"} selections={["Full time", "Part time"]} handleSelectionClick={(selection) => updateJobDetails(prevValue => { return { ...prevValue, [jobKeys.others]: { ...prevValue["others"], [jobKeys.othersInternJobType]: selection } } })} />
+                    </span>
+
+                    <CustomHr />
+                </>
+            }
+
             <span className="display__Flex edit__Page__Font__Size">
-                <b>State of job: </b> <DropdownButton currentSelection={currentJob[jobKeys.jobIsActive] === true ? "Active" : "InActive"} selections={["Active", "Inactive"]} handleSelectionClick={(selection) => updateJobDetails(prevValue => { return { ...prevValue, [jobKeys.jobIsActive]: selection === "Active" ? true : false } })} />
+                <b>State of job: </b> <DropdownButton currentSelection={currentJob[jobKeys.jobIsActive] === true ? "Active" : "Inactive"} selections={["Active", "Inactive"]} handleSelectionClick={(selection) => updateJobDetails(prevValue => { return { ...prevValue, [jobKeys.jobIsActive]: selection === "Active" ? true : false } })} />
             </span>
 
             <CustomHr />
@@ -240,6 +252,7 @@ const EditJobDetails = ({ currentJob, currentJobState, updateJobDetails }) => {
                     React.Children.toArray(newJobTerms[newJobStateDataNames.otherTerms].map((item, index) => {
                         if (index === 0) return <></>
                         if (Object.keys(item)[0] === jobKeys.paymentForJob) return <></>
+                        if (Object.keys(item)[0] === jobKeys.othersInternJobType) return <></>
                         
                         return <div className="new__Key__Value__Container">
                             <input type={'text'} placeholder={'KEY'} value={Object.keys(item || {})[0]} onChange={(e) => dispatchToNewJobTerms({ type: newJobTermsReducerActions.UPDATE_KEY, payload: { stateToChange: jobKeys.others, currentKeyIndex: index, value: e.target.value } })} />

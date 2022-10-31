@@ -464,6 +464,34 @@ const JobApplicationScreen = () => {
                                 <AiOutlinePlayCircle />
                                 Start Date: Immediately
                             </span>
+                            {
+                                currentJob.others && currentJob.others[jobKeys.othersInternJobType] &&
+                                <span>
+                                    <BusinessCenterIcon className="small-icon" />
+                                    Job Type: { currentJob.others[jobKeys.othersInternJobType]}
+                                </span>
+                            }
+                            {
+                                currentJob.others && currentJob.others[jobKeys.othersResearchAssociateJobType] &&
+                                <span>
+                                    <BusinessCenterIcon className="small-icon" />
+                                    Job Type: { currentJob.others[jobKeys.othersResearchAssociateJobType]}
+                                </span>
+                            }
+                            {
+                                currentJob.others && currentJob.others[jobKeys.othersFreelancerJobType] && 
+                                <span>
+                                    <BusinessCenterIcon className="small-icon" />
+                                    Job Type: { currentJob.others[jobKeys.othersFreelancerJobType]}
+                                </span>
+                            }
+                            {
+                                currentJob.typeof === "Employee" && 
+                                <span>
+                                    <BusinessCenterIcon className="small-icon" />
+                                    Job Type: Full time
+                                </span>
+                            }
                             <span>
                                 <BusinessCenterIcon className="small-icon" />
                                 Duration: { currentJob.time_period}

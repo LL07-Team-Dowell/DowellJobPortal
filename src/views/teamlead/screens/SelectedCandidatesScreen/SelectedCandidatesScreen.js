@@ -218,7 +218,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
             case hrPageActions.MOVE_TO_PENDING:
                 if (!selectedCandidateData) return
 
-                selectedCandidateData[mutableNewApplicationStateNames.hr_remarks] = remarks;
+                // selectedCandidateData[mutableNewApplicationStateNames.hr_remarks] = remarks;
 
                 let newFormData = new FormData();
 
@@ -279,10 +279,13 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                 <></> :
 
                 hrPageActive ? <>
-                    <div className="comments-container hr__Comments__Container">
-                        <h2>{initialMeet ? <>Remarks {<span>&#x00028;by Hr&#x00029;</span>}</> : <>Add Remarks</>}</h2>
-                        <textarea placeholder={`${initialMeet ? "Remarks given": "Add remarks"}`} readOnly={initialMeet ? true : false} value={initialMeet ? selectedCandidateData[mutableNewApplicationStateNames.hr_remarks] : remarks} onChange={(e) => setRemarks(e.target.value)}></textarea>
-                    </div>
+                    {
+                        guestApplication ? <></> :
+                        <div className="comments-container hr__Comments__Container">
+                            <h2>{initialMeet ? <>Remarks {<span>&#x00028;by Hr&#x00029;</span>}</> : <>Add Remarks</>}</h2>
+                            <textarea placeholder={`${initialMeet ? "Remarks given": "Add remarks"}`} readOnly={initialMeet ? true : false} value={initialMeet ? selectedCandidateData[mutableNewApplicationStateNames.hr_remarks] : remarks} onChange={(e) => setRemarks(e.target.value)}></textarea>
+                        </div>   
+                    }
                 </> :
 
                 <>
@@ -346,7 +349,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                     {
                         hrPageActive ? <>
 
-                        <button className={`status-option ${initialMeet ? 'green-color' : 'orange-color'} ${initialMeet ? '' : selectedCandidateData.status === candidateStatuses.GUEST_PENDING_SELECTION ? 'active' : selectedCandidateData.status === candidateStatuses.SHORTLISTED ? 'active' : ''}`} ref={ref7} onClick={() => handleClick(ref7, true, initialMeet ? hrPageActions.MOVE_TO_SELECTED : guestApplication ? hrPageActions.MOVE_TO_PENDING : hrPageActions.MOVE_TO_SHORTLISTED)} disabled={initialMeet ? disabled : selectedCandidateData.status === candidateStatuses.GUEST_PENDING_SELECTION ? true : selectedCandidateData.status === candidateStatuses.SHORTLISTED ? true : disabled}>
+                        <button className={`status-option ${initialMeet ? 'green-color' : 'orange-color'} ${initialMeet ? '' : selectedCandidateData.status === candidateStatuses.SHORTLISTED ? 'active' : ''}`} ref={ref7} onClick={() => handleClick(ref7, true, initialMeet ? hrPageActions.MOVE_TO_SELECTED : guestApplication ? hrPageActions.MOVE_TO_PENDING : hrPageActions.MOVE_TO_SHORTLISTED)} disabled={initialMeet ? disabled : selectedCandidateData.status === candidateStatuses.SHORTLISTED ? true : disabled}>
                             <BsStopCircle className='status-icon' />
                             <br /><br/>
                             <div className='textt'>{`${initialMeet ? 'Selected' : guestApplication ? 'Pending' : 'Shortlisted'}`}</div>

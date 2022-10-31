@@ -48,6 +48,8 @@
 
 .dropdown-selections.active_{
     display: block;
+    max-height: 30rem;
+    overflow-y: auto;
 }
 
 .dropdown-selections .dropdown-selection-item{

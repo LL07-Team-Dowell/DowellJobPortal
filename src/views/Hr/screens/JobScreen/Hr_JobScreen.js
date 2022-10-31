@@ -472,7 +472,7 @@ function Hr_JobScreen({ currentUser }) {
             <>
               <SelectedCandidatesScreen
                 hrPageActive={true}
-                guestApplication={location.state.candidate.state === candidateStatuses.GUEST_PENDING_SELECTION ? true : false}
+                guestApplication={location.state.candidate.status === candidateStatuses.GUEST_PENDING_SELECTION ? true : false}
                 selectedCandidateData={location.state.candidate}
                 updateCandidateData={setAppliedJobs}
                 updateAppliedData={section === "guest-applications" ? setGuestApplications : setAppliedJobs}

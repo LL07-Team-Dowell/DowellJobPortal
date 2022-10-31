@@ -217,6 +217,14 @@
     bottom: 0;
 }
 
+.admin__Page__Container .current__Job__Display span.edit__Page__Font__Size input {
+    border: 1px solid #E0E0E0;
+    transition: 0.2s ease-in-out;
+}
+
+.admin__Page__Container .current__Job__Display span.edit__Page__Font__Size input:focus-within {
+    border-color: #57A639;
+}
 
 @media (min-width: 768px) and (max-width: 991.98px){
     .admin__Page__Container .search__wrapper{
