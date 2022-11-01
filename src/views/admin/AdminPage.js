@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { myAxiosInstance } from "../../lib/axios";
+import { communityAxiosInstance, myAxiosInstance } from "../../lib/axios";
 import { useNavigationContext } from "../../contexts/NavigationContext";
 import { routes } from "../../lib/routes";
 import SideNavigationBar from "../account/components/SideNavigationBar/SideNavigationBar";
@@ -48,7 +48,8 @@ const AdminPage = ({ currentUser }) => {
         try{
         
             const response = await myAxiosInstance.get(routes.Jobs);
-            setJobs(response.data);
+            const researchJobs = await (await communityAxiosInstance.get(routes.Get_Research_Jobs)).data;
+            setJobs(response.data.concat(researchJobs));
             return;
 
         }catch (err){

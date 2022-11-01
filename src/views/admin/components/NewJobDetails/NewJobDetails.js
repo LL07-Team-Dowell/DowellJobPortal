@@ -113,13 +113,13 @@ const NewJobDetails = () => {
         setDisableSaveJobBtn(true);
 
         const detailsForNewResearchJob = {
-            country: country,
+            location: country,
             title: newJobDetails.title,
             description: newJobDetails.description,
             skills: newJobDetails.skills,
             is_active: newJobDetails.is_active,
             typeof: newJobDetails.typeof,
-            location: state,
+            city: state,
             others: newJobDetails.others,
         }
 

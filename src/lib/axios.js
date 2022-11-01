@@ -21,8 +21,10 @@ const mailAxiosInstance = axios.create({
 })
 
 const communityAxiosInstance = axios.create({
-    withCredentials: true,
     baseURL: communityBaseURL,
+    headers: {
+        'Content-Type': 'multipart/form-data',
+    }   
 })
 
 const dowellLoginUrl = "https://100014.pythonanywhere.com/";
