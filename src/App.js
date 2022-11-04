@@ -27,6 +27,7 @@ import { NewJobTermsContextProvider } from './contexts/NewJobTermsContext';
 import SingleJobScreen from './views/candidate/screens/JobApplicationScreen/SingleJobScreen';
 import JobScreen from './views/candidate/components/Job/Job';
 import { useDetectOffline } from './hooks/useDetectOffline';
+import ResearchAssociateJobScreen from './views/candidate/screens/ResearchAssociateJobScreen/ResearchAssociateJobScreen';
 
 function App() {
 
@@ -51,6 +52,7 @@ function App() {
       } />
       <Route path='/jobs/:jobTitle' element={<SingleJobScreen />} />
       <Route path='/jobs' element={<JobScreen />} />
+      <Route exact path='/jobs/research-associate' element={<ResearchAssociateJobScreen />} />
       <Route path="*" element={<CandidateHomeScreen />} />
 
     </Routes>
@@ -220,6 +222,7 @@ function App() {
       </Route>
 
       <Route path='/jobs' element={<JobScreen currentUser={user} />} />
+      <Route exact path='/jobs/research-associate' element={<ResearchAssociateJobScreen />} />
       <Route path="/logout" element={<Logout/>}/>
       <Route path="/alerts" element={<AlertScreen/>}/>
       <Route path="/user" element={<UserScreen currentUser={user}/>}/>
