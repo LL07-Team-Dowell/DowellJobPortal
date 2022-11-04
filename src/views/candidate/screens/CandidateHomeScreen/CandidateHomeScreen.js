@@ -52,6 +52,7 @@ function Home({ user, setHired, setAssignedProject }) {
 
   const handleLinkClick = (e, category) => {
     e.preventDefault();
+    if (category === "Research Associate") return navigate("/jobs/research-associate", { state: { appliedJobs: appliedJobs, currentUser: user }});
     navigate("/jobs", { state: { jobCategory: category, appliedJobs: appliedJobs }});
   }
 

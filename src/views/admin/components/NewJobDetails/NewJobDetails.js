@@ -3,7 +3,7 @@ import { AiFillCloseCircle, AiOutlinePlus } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { newJobStateDataNames, useNewJobTermsContext } from "../../../../contexts/NewJobTermsContext";
-import { communityAxiosInstance, myAxiosInstance } from "../../../../lib/axios";
+import { communityAxiosInstance, locationAxiosInstance, myAxiosInstance } from "../../../../lib/axios";
 import { routes } from "../../../../lib/routes";
 import { newJobTermsReducerActions } from "../../../../reducers/NewJobTermsReducer";
 import { countriesData } from "../../../candidate/utils/jobFormApplicationData";
@@ -12,6 +12,7 @@ import DropdownButton from "../../../teamlead/components/DropdownButton/Dropdown
 import { jobKeys } from "../../utils/jobKeys";
 import Button from "../Button/Button";
 import stateCountry from "state-country";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 const NewJobDetails = () => {
     const [ newJobDetails, setNewJobDetails ] = useState({
@@ -35,6 +36,10 @@ const NewJobDetails = () => {
     const [ country, setCountry ] = useState(null);
     const [ state, setState ] = useState(null);
     const [ allStates, setAllStates ] = useState([]);
+    const [ regionsLoading, setRegionsLoading ] = useState(false);
+    const testSessionId = "haikalsb1234";
+    const locationProjectCode = "100074";
+    const testUsername = "johnDoe123";
 
     const navigate = useNavigate();
 
@@ -93,14 +98,31 @@ const NewJobDetails = () => {
 
     }, [newJobDetails.typeof])
 
+    const fetchRegionsForCountry = async (country) => {
+        if (!country) return
+        
+        try {
+
+            const response = await locationAxiosInstance.get("/region/name/" + country + "/" + testUsername + "/" + testSessionId + "/" + locationProjectCode);
+            setAllStates(response.data.map(region => region.name));
+            setRegionsLoading(false)
+            return    
+
+        } catch (error) {
+            console.log(error)
+            setRegionsLoading(false)
+        }
+        
+    }
+
     useEffect(() => {
 
         if (!country) return
         
         setState(null)
+        setRegionsLoading(true);
 
-        const statesInCurrentCountry = stateCountry.getAllStatesInCountry(country).map(state => state.name);
-        setAllStates(statesInCurrentCountry);
+        fetchRegionsForCountry(country);
 
     }, [country])
 
@@ -113,15 +135,17 @@ const NewJobDetails = () => {
         setDisableSaveJobBtn(true);
 
         const detailsForNewResearchJob = {
-            country: country,
+            location: country,
             title: newJobDetails.title,
             description: newJobDetails.description,
             skills: newJobDetails.skills,
             is_active: newJobDetails.is_active,
             typeof: newJobDetails.typeof,
-            location: state,
-            others: newJobDetails.others,
+            others: { ...newJobDetails.others, city: state },
         }
+
+        console.log(detailsForNewResearchJob)
+        return
 
         if (newJobDetails.typeof === "Research Associate") {
             
@@ -210,7 +234,7 @@ const NewJobDetails = () => {
                 {
                     country && <>
                         <span className="display__Flex edit__Page__Font__Size">
-                            <b>City: </b> <DropdownButton currentSelection={state ? state : "Select city"} selections={allStates} handleSelectionClick={(selection) => setState(selection)} />
+                            <b>City: </b> {regionsLoading ? <LoadingSpinner marginRight={"0"} /> : <DropdownButton currentSelection={state ? state : "Select city"} selections={allStates} handleSelectionClick={(selection) => setState(selection)} />}
                         </span>
 
                         <CustomHr />

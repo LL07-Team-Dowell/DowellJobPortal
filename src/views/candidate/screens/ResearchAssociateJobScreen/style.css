@@ -1,0 +1,239 @@
+.candidate__Homepage__Nav__Container.research {
+    position: relative;
+    padding-top: 5%;
+}
+.candidate__Homepage__Nav__Container.research {
+    height: 5rem;
+}
+.candidate__Homepage__Nav__Container .nav__Title__Abs {
+    font-size: 2.1rem;
+    font-weight: 700;
+    font-family: 'Poppins' sans-serif;
+    color: #a6a6a6;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15%;
+}
+.candidate__Homepage__Container {
+    height: calc(100vh - 5rem);
+    padding-bottom: 0;
+    position: relative;
+}
+.candidate__Homepage__Container .research__Content__Container {
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar {
+    width: 25%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .logo__Img__Container {
+    position: relative;
+    width: 50%;
+    top: -4rem;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar__Outline {
+    border: 1px solid #6fb78e;
+    width: 90%;
+    border-radius: 10px;
+    position: relative;
+    top: -3rem;
+    padding: 4%;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: hidden;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .selections__Container input[type=radio] {
+    display: block;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .selections__Container  {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 70%;
+    margin: 3% 0 5%;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .selections__Container label {
+    display: flex;
+    cursor: pointer;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .research__City__Search__Container {
+    width: 100%;
+    border: 1px solid #a6a6a6;
+    border-left: 4px solid #6fb78e;
+    transition: 0.35s ease-in-out;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .research__City__Search__Container input[type=text] {
+    width: 100%;
+    padding: 3%;
+    outline: none;
+    border: none;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .research__City__Search__Container:focus-within {
+    border-color: #008037;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .research__Search__Results {
+    border: 1px solid #6fb78e;
+    padding: 2%;
+    margin-top: 6%;
+    max-height: 62%;
+    overflow-y: auto;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .research__Search__Results .continent__Item {
+    margin: 2% 0;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .research__Search__Results .continent__Item:hover {
+    color: #6fb78e;
+    cursor: pointer;
+    transition: 0.35s ease-in-out;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .research__Search__Results .continent__Item .country__Item {
+    margin-left: 8%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .research__Search__Results .continent__Item .region__Item {
+    margin-left: 12%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .research__Search__Results .continent__Item .country__Item:hover,
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .research__Search__Results .continent__Item .region__Item:hover {
+    color: #6fb78e;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .research__Apply__Container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 2%;
+    width: calc(100% - calc(4% * 2));
+    left: 50%;
+    transform: translateX(-50%);
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .research__Apply__Container .info__Icon {
+    color: #ffc85e;
+    cursor: pointer;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .research__Apply__Container .research__Apply__Btn {
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    padding: 3% 6%;
+    transition: 0.35s ease-in-out;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .research__Apply__Container .research__Apply__Btn:hover {
+    filter: opacity(0.7);
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .research__Apply__Container .research__Apply__Btn p {
+    color: #008037;
+    font-size: 0.875rem;
+    margin-left: 4%;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .research__Apply__Container .research__Apply__Btn.grey__Bg {
+    background-color: #c4c4c4;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .research__Location__SideBar__Outline .research__Apply__Container .research__Apply__Btn.green__Bg {
+    background-color: #bef4a6;
+}
+.candidate__Homepage__Container .research__Content__Container .research__Location__Map {
+    width: 75%;
+    background: url(https://images.pexels.com/photos/7412074/pexels-photo-7412074.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.candidate__Homepage__Container .research__Job__Modal__Overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.35s ease-in-out;
+}
+.candidate__Homepage__Container .research__Job__Modal {
+    background-color: #fff;
+    width: 60%;
+    border-radius: 10px;
+    max-height: 85%;
+    overflow-y: auto;
+}
+.candidate__Homepage__Container .research__Job__Modal .close__Icon {
+    margin: 3% 3% 3% auto;
+    display: block;
+    cursor: pointer;
+}
+.candidate__Homepage__Container .research__Job__Modal .close__Icon.back__Icon {
+    margin-right: auto;
+    margin-left: 3%;
+}
+.candidate__Homepage__Container .research__Job__Modal .job__Title {
+    width: 92%;
+    margin: 0 auto 5%;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.5rem;
+}
+.candidate__Homepage__Container .research__Job__Modal .job__Item {
+    padding: 3%;
+    margin: 2%;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    border-radius: 30px;
+}
+.candidate__Homepage__Container .research__Job__Modal .job__Item:hover {
+    background-color: #6fb78e;
+    color: #008037;
+}
+.candidate__Homepage__Container .research__Job__Modal__Overlay .research__Job__Modal form {
+    width: 92%;
+    margin: 0 auto 4%;
+}
+.candidate__Homepage__Container .research__Job__Modal__Overlay .research__Job__Modal form input {
+    width: 100%;
+    padding: 1%;
+    margin-top: 1.5%;
+    margin-bottom: 3%;
+    outline: none;
+    border: none;
+    border: 1px solid #6fb78e;
+    border-radius: 5px;
+}
+.candidate__Homepage__Container .research__Job__Modal__Overlay .research__Job__Modal .submit__Btn {
+    outline: none;
+    border: none;
+    padding: 1.4% 4%;
+    border-radius: 15px;
+    cursor: pointer;
+    background-color: #6fb78e;
+    color: #fff;
+    transition: 0.35s ease-in-out;
+}
+.candidate__Homepage__Container .research__Job__Modal__Overlay .research__Job__Modal .submit__Btn:hover {
+    filter: brightness(0.9);
+}
+.candidate__Homepage__Container .research__Job__Modal__Overlay .research__Job__Modal .submit__Btn:disabled,
+.candidate__Homepage__Container .research__Job__Modal__Overlay .research__Job__Modal .submit__Btn[disabled] {
+    background-color: #008037;
+    cursor: not-allowed;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    } to {
+        opacity: 1;
+    }
+}

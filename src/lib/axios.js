@@ -3,6 +3,7 @@ import axios from "axios";
 const baseURL = 'https://100055.pythonanywhere.com/api/';
 const loginBaseURL = 'https://100014.pythonanywhere.com/api/';
 const communityBaseURL = 'https://100081.pythonanywhere.com/mainapp/';
+const locationBaseURL = 'https://100074.pythonanywhere.com/';
 
 const myAxiosInstance = axios.create({
     withCredentials: true,
@@ -21,10 +22,17 @@ const mailAxiosInstance = axios.create({
 })
 
 const communityAxiosInstance = axios.create({
-    withCredentials: true,
     baseURL: communityBaseURL,
+    headers: {
+        'Content-Type': 'multipart/form-data',
+    }   
 })
 
-const dowellLoginUrl = "https://100014.pythonanywhere.com/";
+const locationAxiosInstance = axios.create({
+    baseURL: locationBaseURL,
+    withCredentials: true,
+})
 
-export { authAxiosInstance, myAxiosInstance, dowellLoginUrl, mailAxiosInstance, communityAxiosInstance };
+const dowellLoginUrl = "https://100014.pythonanywhere.com/?redirect_url=" + window.location.origin + "/DowellJobPortal/%23/";
+
+export { authAxiosInstance, myAxiosInstance, dowellLoginUrl, mailAxiosInstance, communityAxiosInstance, locationAxiosInstance };
