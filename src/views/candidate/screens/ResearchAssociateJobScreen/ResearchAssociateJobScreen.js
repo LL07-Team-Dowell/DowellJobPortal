@@ -47,7 +47,7 @@ const ResearchAssociateJobScreen = () => {
         phone: "",
     });
     const [ disableSubmitBtn, setDisableSubmitBtn ] = useState(false);
-    const [ submitLoading, setSubmitLoading ] = useState(true);
+    const [ submitLoading, setSubmitLoading ] = useState(false);
     const location = useLocation();
     const testSessionId = "haikalsb1234";
     const locationProjectCode = "100074";
@@ -223,7 +223,7 @@ const ResearchAssociateJobScreen = () => {
         if (!countrySelected) return toast.info("Please select a country");
         if (!regionSelected) return toast.info("Please select a city");
         
-        const jobsExistingForRegionAndCountry = researchJobs.filter(job => job.location === countrySelected && job.others && others["city"] === regionSelected);
+        const jobsExistingForRegionAndCountry = researchJobs.filter(job => job.location === countrySelected && job.city && job.city === regionSelected);
         if (jobsExistingForRegionAndCountry.length < 1) return toast.info("Sorry there are currently no jobs available in " + regionSelected.name + ", " + countrySelected);
         setJobsForCurrentRegion(jobsExistingForRegionAndCountry);
         setShowJobModal(true);
@@ -249,7 +249,7 @@ const ResearchAssociateJobScreen = () => {
             setSubmitLoading(false);
             setShowJobForm(false);
             setShowJobModal(false);
-            toast.success("Successfully subbmitted your application!");
+            toast.success("Successfully submitted your application!");
         } catch (error) {
             toast.error(error.response ? error.response.data : error.message);
             setDisableSubmitBtn(false);
