@@ -187,11 +187,12 @@
     font-size: 1.5rem;
 }
 .candidate__Homepage__Container .research__Job__Modal .job__Item {
-    padding: 3%;
+    padding: 2%;
     margin: 2%;
     cursor: pointer;
     transition: 0.3s ease-in-out;
     border-radius: 30px;
+    text-transform: capitalize;
 }
 .candidate__Homepage__Container .research__Job__Modal .job__Item:hover {
     background-color: #6fb78e;
@@ -214,12 +215,13 @@
 .candidate__Homepage__Container .research__Job__Modal__Overlay .research__Job__Modal .submit__Btn {
     outline: none;
     border: none;
-    padding: 1.4% 4%;
-    border-radius: 15px;
+    padding: 2% 6%;
+    border-radius: 20px;
     cursor: pointer;
     background-color: #6fb78e;
     color: #fff;
     transition: 0.35s ease-in-out;
+    width: 8rem;
 }
 .candidate__Homepage__Container .research__Job__Modal__Overlay .research__Job__Modal .submit__Btn:hover {
     filter: brightness(0.9);

@@ -49,7 +49,6 @@ const AdminPage = ({ currentUser }) => {
         
             const response = await myAxiosInstance.get(routes.Jobs);
             const researchJobs = await (await communityAxiosInstance.get(routes.Get_Research_Jobs)).data;
-            console.log(researchJobs)
             setJobs(response.data.concat(researchJobs));
             return;
 

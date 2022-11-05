@@ -141,11 +141,9 @@ const NewJobDetails = () => {
             skills: newJobDetails.skills,
             is_active: newJobDetails.is_active,
             typeof: newJobDetails.typeof,
-            others: { ...newJobDetails.others, city: state },
+            city: state,
+            others: { ...newJobDetails.others },
         }
-
-        console.log(detailsForNewResearchJob)
-        return
 
         if (newJobDetails.typeof === "Research Associate") {
             
