@@ -222,8 +222,7 @@ const ResearchAssociateJobScreen = () => {
     const handleApplyBtnClick = () => {
         if (!countrySelected) return toast.info("Please select a country");
         if (!regionSelected) return toast.info("Please select a city");
-        
-        const jobsExistingForRegionAndCountry = researchJobs.filter(job => job.location === countrySelected && job.city && job.city === regionSelected);
+        const jobsExistingForRegionAndCountry = researchJobs.filter(job => job.location === countrySelected && job.city && job.city === regionSelected.name);
         if (jobsExistingForRegionAndCountry.length < 1) return toast.info("Sorry there are currently no jobs available in " + regionSelected.name + ", " + countrySelected);
         setJobsForCurrentRegion(jobsExistingForRegionAndCountry);
         setShowJobModal(true);
@@ -426,7 +425,7 @@ const ResearchAssociateJobScreen = () => {
                                         <p>Phone number</p>
                                         <input type={"number"} value={candidateDetails.phone} onChange={(e) => updateCandidateDetails("phone", e.target.value)} />
                                     </label>
-                                    <button className='submit__Btn' disabled={disableSubmitBtn} onClick={handleSubmitApplication}>{submitLoading ? <LoadingSpinner width={"1rem"} height={"1rem"} color={"#fff"} /> : "Apply"}</button>
+                                    <button className='submit__Btn' disabled={disableSubmitBtn} onClick={handleSubmitApplication}>{submitLoading ? <LoadingSpinner width={"0.7rem"} height={"0.7rem"} color={"#fff"} /> : "Apply"}</button>
                                 </form>
                             </> : <>
                                 <AiOutlineClose className='close__Icon' onClick={() => setShowJobModal(false)} />
