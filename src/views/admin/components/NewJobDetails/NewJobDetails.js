@@ -56,7 +56,7 @@ const NewJobDetails = () => {
 
         if (newJobDetails.title.length < 1) return setDisableSaveJobBtn(true);
         if (newJobDetails.description.length < 1) return setDisableSaveJobBtn(true);
-        if (newJobDetails.time_period.length < 1) return setDisableSaveJobBtn(true);
+        if (newJobDetails.typeof && newJobDetails.typeof !== "Research Associate" && newJobDetails.time_period.length < 1) return setDisableSaveJobBtn(true);
         
         setDisableSaveJobBtn(false);
 
@@ -88,9 +88,21 @@ const NewJobDetails = () => {
 
     useEffect(() => {
 
-        if (newJobDetails.typeof && newJobDetails.typeof === "Internship") return setShowInternJobType(true);
-        if (newJobDetails.typeof && newJobDetails.typeof === "Freelancer") return setShowFreelancerJobType(true);
-        if (newJobDetails.typeof && newJobDetails.typeof === "Research Associate") return setShowResearchJobType(true);
+        if (newJobDetails.typeof && newJobDetails.typeof === "Internship") {
+            setShowFreelancerJobType(false);
+            setShowResearchJobType(false);
+            return setShowInternJobType(true);
+        }
+        if (newJobDetails.typeof && newJobDetails.typeof === "Freelancer") {
+            setShowInternJobType(false);
+            setShowResearchJobType(false);
+            return setShowFreelancerJobType(true);
+        }
+        if (newJobDetails.typeof && newJobDetails.typeof === "Research Associate") {
+            setShowInternJobType(false);
+            setShowFreelancerJobType(false);
+            return setShowResearchJobType(true);
+        }
         
         setShowInternJobType(false);
         setShowFreelancerJobType(false);
@@ -145,11 +157,16 @@ const NewJobDetails = () => {
             others: { ...newJobDetails.others },
         }
 
+        const newFormData = new FormData();
+        Object.keys(detailsForNewResearchJob || {}).forEach(key => {
+            if (key === "others") return newFormData.append(key, JSON.stringify(detailsForNewResearchJob[key]))
+            newFormData.append(key, detailsForNewResearchJob[key])
+        });
+
         if (newJobDetails.typeof === "Research Associate") {
             
             try {
-                
-                await communityAxiosInstance.post(routes.Admin_Add_Research_Job, detailsForNewResearchJob);
+                await communityAxiosInstance.post(routes.Admin_Add_Research_Job, newFormData);
                 dispatchToNewJobTerms({ type: newJobTermsReducerActions.RESET_STATE });
                 navigate("/home");
 
@@ -191,14 +208,16 @@ const NewJobDetails = () => {
             <CustomHr />
 
             <span className="display__Flex edit__Page__Font__Size">
-                <b>Time period: </b> <input type={"text"} name={jobKeys.jobTimePeriod} value={newJobDetails[jobKeys.jobTimePeriod]} onChange={handleChange} />
+                <b>Type of job: </b> <DropdownButton currentSelection={newJobDetails[jobKeys.jobType] ? newJobDetails[jobKeys.jobType] : "Select type"} selections={["Freelancer", "Employee", "Internship", "Research Associate"]} handleSelectionClick={(selection) => setNewJobDetails(prevValue => { return { ...prevValue, [jobKeys.jobType]: selection } })} />
             </span>
 
             <CustomHr />
 
-            <span className="display__Flex edit__Page__Font__Size">
-                <b>Type of job: </b> <DropdownButton currentSelection={newJobDetails[jobKeys.jobType] ? newJobDetails[jobKeys.jobType] : "Select type"} selections={["Freelancer", "Employee", "Internship", "Research Associate"]} handleSelectionClick={(selection) => setNewJobDetails(prevValue => { return { ...prevValue, [jobKeys.jobType]: selection } })} />
-            </span>
+            {
+                !showResearchJobType && <span className="display__Flex edit__Page__Font__Size">
+                    <b>Time period: </b> <input type={"text"} name={jobKeys.jobTimePeriod} value={newJobDetails[jobKeys.jobTimePeriod]} onChange={handleChange} />
+                </span>
+            }
 
             <CustomHr />
 

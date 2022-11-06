@@ -23,9 +23,6 @@ const mailAxiosInstance = axios.create({
 
 const communityAxiosInstance = axios.create({
     baseURL: communityBaseURL,
-    headers: {
-        'Content-Type': 'multipart/form-data',
-    }   
 })
 
 const locationAxiosInstance = axios.create({
