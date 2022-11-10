@@ -5,7 +5,7 @@ import NavigationBar from "../../../teamlead/components/NavigationBar/Navigation
 import { adminNavigationLinks } from "../../adminNavigationLinks";
 import Button from "../../components/Button/Button";
 import { AiOutlineSave } from "react-icons/ai";
-import { myAxiosInstance } from "../../../../lib/axios";
+import { communityAxiosInstance, myAxiosInstance } from "../../../../lib/axios";
 import { routes } from "../../../../lib/routes";
 import EditJobDetails from "../../components/EditJobDetails/EditJobDetails";
 
@@ -36,6 +36,24 @@ const EditJobScreen = () => {
 
     const handleSaveBtnClick = async () => {
         setDisabled(true);
+
+        if (updatedJobDetails.typeof === "Research Associate") {
+
+            try {
+                
+                if (!updatedJobDetails.others) updatedJobDetails.others = {};
+                
+                await communityAxiosInstance.put(routes.Admin_Update_Research_Job + updatedJobDetails.id + "/", updatedJobDetails);
+                setDisabled(false);
+                navigate("/");
+
+            } catch (error) {
+                console.log(error);
+                setDisabled(false);
+            }
+
+            return
+        }
 
         try{
 

@@ -15,6 +15,7 @@ const routes = {
   Accounts_View: '/jobs/account_view/',
   Admin_Add_Job: '/jobs/add_job/',
   Admin_Add_Research_Job: '/research_job/',
+  Admin_Update_Research_Job: '/research_job/update/',
   Get_Research_Jobs: '/research_job/',
   Submit_Research_Job_Application: 'catagaries_form/',
   Admin_Update_Job: '/jobs/update_job/',
