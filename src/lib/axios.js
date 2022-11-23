@@ -30,6 +30,6 @@ const locationAxiosInstance = axios.create({
     withCredentials: true,
 })
 
-const dowellLoginUrl = "https://100014.pythonanywhere.com/?redirect_url=" + window.location.origin + "/DowellJobPortal/%23/";
+const dowellLoginUrl = "https://100014.pythonanywhere.com/?redirect_url=" + window.location.origin + "/DowellJobPortal/%23";
 
 export { authAxiosInstance, myAxiosInstance, dowellLoginUrl, mailAxiosInstance, communityAxiosInstance, locationAxiosInstance };

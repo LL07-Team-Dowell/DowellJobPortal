@@ -48,7 +48,7 @@ const SingleJobScreen = ({ user }) => {
 
     const handleApplyBtnClick = () => {
 
-        if (!user) return window.location.href = dowellLoginUrl;
+        if (!user) return window.location.href = dowellLoginUrl + `/apply/job/${currentJob.id}/`;
 
         navigate(`/apply/job/${currentJob.id}/form/`, { state: { currentUser: user } });
 

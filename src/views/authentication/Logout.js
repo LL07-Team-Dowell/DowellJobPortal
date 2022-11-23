@@ -5,8 +5,8 @@ function Logout() {
   useEffect(() => {
 
     localStorage.removeItem('user');
-    
-    window.location.href = "/DowellJobPortal";
+    localStorage.clear();
+    window.location.href = "https://100014.pythonanywhere.com/sign-out?redirect_url=" + window.location.origin + "/DowellJobPortal/%23";
       
   }, [])
     
