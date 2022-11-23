@@ -39,6 +39,7 @@ const JobApplicationScreen = () => {
     const [removeFreelanceOptions, setRemoveFreelanceOptions] = useState(false);
     const [allJobs, setAllJobs] = useState([]);
     const [jobsLoading, setJobsLoading] = useState(true);
+    const [ currentUser, setCurrentUser ] = useState(null);
     
     const [formPage, setFormPage] = useState(1);
 
@@ -58,7 +59,13 @@ const JobApplicationScreen = () => {
     useEffect(() => {
 
         fetchAllJobs();
-    
+        
+        const savedUser = localStorage.getItem("user");
+
+        if (!savedUser) return;
+
+        setCurrentUser(JSON.parse(savedUser));
+
     }, []);
 
     useEffect(() => {
@@ -78,13 +85,18 @@ const JobApplicationScreen = () => {
     }, [id, jobsLoading, allJobs]);
 
     useEffect(() => {
+        
+        if (location.pathname.includes("form") || location.pathname.split("/").includes("form")) return setDisableNextBtn(true);
+
+        setDisableApplyBtn(false);
+
+    }, [location])
+
+    useEffect(() => {
 
         if (jobsLoading) return;
-
-        if (!location.state) return 
+        if (!currentUser) return;
         
-        if (!location.state.currentUser) return;
-
         setDisableApplyBtn(false);
         setDisableNextBtn(true);
 
@@ -100,7 +112,7 @@ const JobApplicationScreen = () => {
             delete currentState[mutableNewApplicationStateNames.freelancePlatform];
             delete currentState[mutableNewApplicationStateNames.freelancePlatformUrl];
 
-            if (location.state.currentUser.role !== process.env.REACT_APP_GUEST_ROLE) {
+            if (currentUser.role !== process.env.REACT_APP_GUEST_ROLE) {
                 delete currentState.others[mutableNewApplicationStateNames.others_applicant_first_name];
                 delete currentState.others[mutableNewApplicationStateNames.others_applicant_email];
             }
@@ -108,16 +120,16 @@ const JobApplicationScreen = () => {
             dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.REWRITE_EXISTING_STATE, payload: { newState: currentState }});
         }
 
-        if ((currentJob.typeof !== "Employee" || currentJob.typeof !== "Internship") && (location.state.currentUser.role !== process.env.REACT_APP_GUEST_ROLE)) {
+        if ((currentJob.typeof !== "Employee" || currentJob.typeof !== "Internship") && (currentUser.role !== process.env.REACT_APP_GUEST_ROLE)) {
             delete currentState.others[mutableNewApplicationStateNames.others_applicant_first_name];
             delete currentState.others[mutableNewApplicationStateNames.others_applicant_email];
 
             dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.REWRITE_EXISTING_STATE, payload: { newState: currentState }});
         }
 
-        if (location.state.currentUser.role === process.env.REACT_APP_GUEST_ROLE) {
-            dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_APPLICANT_FIRST_NAME, payload: { stateToChange: mutableNewApplicationStateNames.others_applicant_first_name, value: location.state.currentUser.username.split("_")[1] }});
-            dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_APPLICANT_EMAIL, payload: { stateToChange: mutableNewApplicationStateNames.others_applicant_email, value: location.state.currentUser.email }});
+        if (currentUser.role === process.env.REACT_APP_GUEST_ROLE) {
+            dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_APPLICANT_FIRST_NAME, payload: { stateToChange: mutableNewApplicationStateNames.others_applicant_first_name, value: currentUser.username.split("_")[1] }});
+            dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_APPLICANT_EMAIL, payload: { stateToChange: mutableNewApplicationStateNames.others_applicant_email, value: currentUser.email }});
             dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_APPLICATION_STATUS, payload: { stateToChange: mutableNewApplicationStateNames.status, value: candidateStatuses.GUEST_PENDING_SELECTION }});
         }
         
@@ -126,7 +138,7 @@ const JobApplicationScreen = () => {
         })
 
         dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_JOB, payload: { stateToChange: mutableNewApplicationStateNames.job, value: currentJob.id }})
-        dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_APPLICANT, payload: { stateToChange: mutableNewApplicationStateNames.applicant, value: location.state.currentUser.username }})
+        dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_APPLICANT, payload: { stateToChange: mutableNewApplicationStateNames.applicant, value: currentUser.username }})
         dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_DATE_APPLIED, payload: { stateToChange: mutableNewApplicationStateNames.others_date_applied, value: new Date() }})
         dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_JOB_TITLE, payload: { stateToChange: mutableNewApplicationStateNames.title, value: currentJob.title }})
         dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_JOB_DESCRIPTION, payload: { stateToChange: mutableNewApplicationStateNames.jobDescription, value: currentJob.description }})
@@ -135,7 +147,7 @@ const JobApplicationScreen = () => {
 
         setRemoveFreelanceOptions(false);
 
-    }, [location, currentJob]);
+    }, [currentJob]);
 
     useEffect(() => {
 
@@ -232,7 +244,7 @@ const JobApplicationScreen = () => {
 
     const handleSubmitApplicationBtnClick = () => {
 
-        if ((!location.state) || (!location.state.currentUser)) return window.location.href = dowellLoginUrl;
+        if (!currentUser) return window.location.href = dowellLoginUrl + `/apply/job/${id}/`;
 
         setDisableApplyBtn(true);
         setDisableNextBtn(true);
