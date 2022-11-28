@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
+import TitleNavigationBar from "../../../../components/TitleNavigationBar/TitleNavigationBar";
 import ApplicantDetails from "../../../teamlead/components/ApplicationDetails/ApplicationDetails";
-import NavigationBar from "../../../teamlead/components/NavigationBar/NavigationBar";
 import Footer from "../../components/Footer/Footer";
 
 import "./style.css";
@@ -13,7 +13,7 @@ const ViewAppliedJobScreen = ( { job, applicationDetails }) => {
     return <>
 
         <div className="view__Applied__Jobs__Container">
-            <NavigationBar changeToBackIcon={true} handleBackIconClick={() => navigate(-1)} />
+            <TitleNavigationBar title={"Application Details"} handleBackBtnClick={() => navigate(-1)} />
             <div className="view__Job__Details">
                 <h2><b>{job.title}</b></h2>
                 <ApplicantDetails candidateApplicationPageActive={true} applicantData={applicationDetails} />

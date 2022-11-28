@@ -42,6 +42,7 @@ export const excludedApplicantInfo = [
     "hr_discord_link",
     "assigned_project",
     "scheduled_interview_date",
+    "paymentForJob"
 ]
 
 export const mutableNewApplicationStateNames = {

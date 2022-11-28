@@ -12,10 +12,10 @@
   border-color: red !important;
 }
 
-#root, html{
-  background-color: #fff;
+/* #root, html{
+  background-color: transparent;
   height: 100%;
-}
+} */
 
 /* body {
   height: 100%;

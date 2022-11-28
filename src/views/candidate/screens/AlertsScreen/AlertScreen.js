@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
 import { PageUnderConstruction } from '../../../under_construction/ConstructionPage';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import "./style.css";
+import TitleNavigationBar from '../../../../components/TitleNavigationBar/TitleNavigationBar';
 
 function AlertScreen() {
   const [ params, setParams ] = useSearchParams();
   const [ passedCategory, setPassedCategory ] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const jobCategoryParam = params.get("jobCategory");
@@ -18,10 +20,10 @@ function AlertScreen() {
   }, [params])
 
   return (
-    <div>
-        <Navbar title="Alerts"/>
-        <PageUnderConstruction />
-        <Footer currentCategory={passedCategory && passedCategory}/>
+    <div className='candidate__Alerts__Page'>
+      <TitleNavigationBar title={"Alerts"} handleBackBtnClick={() => navigate(-1)} />
+      <PageUnderConstruction />
+      <Footer currentCategory={passedCategory && passedCategory}/>
     </div>
   )
 }
