@@ -3,6 +3,10 @@
     align-items: center;
 }
 
+.selected-applicant-info span.highlight__Item {
+    font-weight: 600;
+}
+
 .selected-applicant-details.teamlead__Page{
     margin-bottom: 5%;
 }

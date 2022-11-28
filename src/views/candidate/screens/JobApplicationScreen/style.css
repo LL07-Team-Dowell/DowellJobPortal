@@ -1,534 +1,401 @@
 .candidate__Job__Application__Container{
-    --grey-color: #838383;
-    --light-grey-color: #C4C4C4;
-    --white: #fff;
-    --box-shadow-color: rgba(0, 0, 0, 0.15);
-    --green-bg-color: linear-gradient(163.78deg, #045632 -13.94%, #57A639 110.54%);
-    --dark-green-color: #5CA19C;
-    --yellow-color: #F1FA0D;
-    --green-color: #57A639;
-    --deep-yellow-color: #C09F2C;
-    font-family: 'Inter', sans-serif;
+    --white-color: #fff;
+    --green-color: #005734;
+    --grey-color: #7C7C7C;
+    --pale-grey-color: #F3F8F4;
+    font-family: 'Poppins', sans-serif;
+    --light-grey-color: #B8B8B8;
+    --light-blue-grey-color: #A6A5A5;
+    --apply-btn-box-shadow: rgba(0, 87, 52, 0.49);
+    --red-color: #FE0000;
+    --pale-grey-color-2: #F4F4F4;
 }
 
-.candidate__Job__Application__Container{
-    padding-left: 6%;
-    padding-right: 8%;
-    margin-top: 3%;
-    height: 100%;
+.candidate__Job__Application__Container .required-indicator {
+    color: var(--red-color);
 }
 
-.yellow-color{
-    color: var(--yellow-color) !important;
-}
-
-.candidate__Job__Application__Container .job__Application__Title{
-    padding: 7% 8%;
-    background: var(--green-bg-color);
-    color: var(--white);
-}
-
-.candidate__Job__Application__Container .about__Dowell__Title {
-    margin-top: 12%;
-    display: flex;
-    align-items: center;
-    margin-bottom: 0;
-}
-
-.candidate__Job__Application__Container .dowell__Title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-.candidate__Job__Application__Container .about__Dowell__Title img,
-.candidate__Job__Application__Container .dowell__Title img {
-    display: block;
-    margin-left: auto;
+.candidate__Job__Application__Container img,
+.bottom__About__Dowell__Container img {
     max-width: 100%;
-    width: 25%;
 }
 
-.candidate__Job__Application__Container div:nth-child(2) {
-    width: 20%;
-}
-.candidate__Job__Application__Container .dowell__Title img {
+.candidate__Job__Application__Container .title__Navigation__Bar__Container {
     width: 100%;
 }
 
-.candidate__Job__Application__Container .about__Dowell {
-    white-space: pre-wrap;
-    line-height: 24px;
+.candidate__Job__Application__Container .title__Navigation__Bar__Container .title__Item .back__Icon__Container {
+    width: 3rem;
 }
 
-.candidate__Job__Application__Container .social__Icons__Container{
-    display: flex;
-    margin: 8% 0;
-    justify-content: space-between;
+.candidate__Job__Application__Container {
     width: 80%;
+    margin: 3% auto;
 }
 
-.candidate__Job__Application__Container .social__Icons__Container .social__Icon__Item {
-    transition: 0.3s ease-in-out;
+.candidate__Job__Application__Container .job__Title__Container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.candidate__Job__Application__Container .job__Title__Container .job__Title__Items .job__Title {
+    color: var(--green-color);
+    font-size: 1.8rem;
 }
 
-.candidate__Job__Application__Container .social__Icons__Container .social__Icon__Item:hover,
-.candidate__Job__Application__Container .social__Icons__Container .social__Icon__Item:focus {
-    filter: brightness(0.7);
-}
-
-.candidate__Job__Application__Container .job__Application__Title, 
-.candidate__Job__Application__Container .job__Application__Item, 
-.candidate__Job__Application__Container .job__Application__Items{
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px var(--box-shadow-color);
-}
-
-.candidate__Job__Application__Container .job__Application__Title h1{
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 1.5rem;
-    line-height: 29px;
-    text-align: center;
-}
-
-.candidate__Job__Application__Container .job__Application__Items,
-.candidate__Job__Application__Container .job__Application__Item{
-    background: var(--white);
-    border-left: 1px solid var(--deep-yellow-color);
-}
-
-.candidate__Job__Application__Container .job__Application__Items{
-    margin: 8% auto;
-    padding: 2% 4%;
-}
-
-.candidate__Job__Application__Container .job__Application__Item{
-    font-size: 0.875rem;
-    padding: 4%;
-    margin: 8% auto;
-}
-
-.candidate__Job__Application__Container .job__Application__Item label.input__Text__Container,
-.candidate__Job__Application__Container .job__Application__Item h2{
-    margin: 0;
-}
-
-.candidate__Job__Application__Container .job__Application__Item h2{
-    font-size: 0.875rem;
-    line-height: 16px;
-    font-weight: 400;
-    margin-bottom: 4%;
-}
-
-.candidate__Job__Application__Container .job__Application__Item span.required-indicator{
-    margin-left: 3%;
-}
-
-.candidate__Job__Application__Container .job__Application__Item .select__Dropdown__Container{
-    width: 50%;
-}
-
-.candidate__Job__Application__Container .job__Application__Item .select__Dropdown__Container, .candidate__Job__Application__Container .job__Application__Item input{
-    border: 1px solid var(--dark-green-color);
-    border-radius: 5px;
-    padding: 1.8% 0;
-}
-
-.candidate__Job__Application__Container .job__Application__Item input{
-    background: transparent;
-    padding-left: 1.8%;
-    width: 100%;
-}
-
-.candidate__Job__Application__Container .relative-hr{
+.candidate__Job__Application__Container .job__Title__Container .job__Title__Items p {
+    color: var(--grey-color);
+    letter-spacing: 0.05em;
+    font-size: 1rem;
     position: relative;
-    margin: 5% auto 6%;
-    width: 100%;
+    top: -0.2rem;
 }
 
-.candidate__Job__Application__Container .relative-hr.hr-2 {
-    margin: 1% auto 6%;
+.candidate__Job__Application__Container button {
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.35s ease-in-out;
 }
 
-h1, h2 {
-    font-weight: 500;
-    text-transform: capitalize;
+.candidate__Job__Application__Container button:disabled,
+.candidate__Job__Application__Container button[disabled] {
+    cursor: not-allowed;
+    filter: brightness(0.8);
 }
 
-h1{
-    font-size: 1.25rem;
-    line-height: 24px;
-    margin-bottom: 10%;
+.candidate__Job__Application__Container button span {
+    font-family: "Poppins", sans-serif;
 }
 
-h1.job__Title{
+.candidate__Job__Application__Container button:hover {
+    filter: brightness(0.8);
+}
+
+.candidate__Job__Application__Container button.grey__Btn {
+    background-color: var(--pale-grey-color);
+    color: var(--light-grey-color);
+}
+
+.candidate__Job__Application__Container button.green__Btn {
+    background-color: var(--green-color);
+    color: var(--white-color);
+}
+
+.candidate__Job__Application__Container .job__Title__Container .job__Share__Items {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: auto;
+}
+
+.candidate__Job__Application__Container button.save__Btn,
+.candidate__Job__Application__Container button.share__Btn {
+    border-radius: 10px;
+    padding: 4%;
+    width: 6.46875rem;
+    height: 2.59375rem;
+}
+
+.candidate__Job__Application__Container .job__Title__Container button.save__Btn {
+    margin-right: 8%;
+}
+
+.candidate__Job__Application__Container button.save__Btn.active {
+    color: var(--green-color);
+}
+
+.candidate__Job__Application__Container .job__Title__Container button.save__Btn.active .save__Icon {
+    color: var(--green-color);
+}
+
+.candidate__Job__Application__Container .job__Info__Container {
+    width: 60%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 6%;
+}
+
+.candidate__Job__Application__Container .job__Info__Container .job__Skills__Info,
+.candidate__Job__Application__Container .job__Info__Container .job__Skills__Info span {
+    display: flex;
+}
+
+.candidate__Job__Application__Container .job__Info__Container .job__Skills__Info {
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    margin-top: 5%;
+}
+
+.candidate__Job__Application__Container .job__Info__Container .job__Skills__Info span.job__Skill__Wrapper {
+    margin-bottom: 5%;
+    white-space: nowrap;
+}
+
+.candidate__Job__Application__Container .job__Info__Container .job__Skills__Info span {
+    align-items: center;
+    justify-content: center;
+    color: var(--grey-color);
+}
+
+.candidate__Job__Application__Container .job__Info__Container .job__Skills__Info span.highlight__Job__Info {
+    color: var(--light-blue-grey-color);
+}
+
+.candidate__Job__Application__Container .job__Info__Container .job__Skills__Info .info__Icon {
+    font-size: 1.4rem;
+    margin-right: 4%;
+}
+
+.candidate__Job__Application__Container .job__Info__Container .job__Quick__Apply__Container .apply__Btn {
+    width: 6.46875rem;
+    height: 2.59375rem;
+    border-radius: 50px;
+    box-shadow: 0px 3px 20px var(--apply-btn-box-shadow);
+}
+
+.candidate__Job__Application__Container .job__Info__Container .job__Quick__Apply__Container .apply__Btn span {
+    white-space: nowrap;
+}
+
+.candidate__Job__Application__Container .job__About__Info {
+    margin-bottom: 3%;
+}
+
+.candidate__Job__Application__Container .paragraph__Title__Item {
+    color: var(--grey-color);
+    letter-spacing: 0.05em;
+    font-size: 1.2rem;
+    font-weight: 600;
     margin-bottom: 1%;
 }
 
-h2{
-    font-size: 1.125rem;
-    line-height: 22px;
-    margin: 8% 0 6%;
+.candidate__Job__Application__Container .job__About__Info span,
+.candidate__Job__Application__Container .job__Skills__Info span {
+    color: var(--light-blue-grey-color);
 }
 
-p{
-    font-weight: 400;
-    font-size: 1rem;
-    line-height: 19px;
+.candidate__Job__Application__Container .job__About__Info span {
+    white-space: pre-wrap;
 }
 
-.candidate__Job__Application__Container .job__Skills__Info span, p{
-    color: var(--grey-color);
-}
-
-.candidate__Job__Application__Container .job__Skills__Info{
-    display: flex;
-    align-items: flex-start;
-    flex-direction: column;
-}
-
-.candidate__Job__Application__Container .job__Skills__Info span{
-    margin-left: 0;
-    margin-bottom: 6%;
-    font-size: 0.875rem;
-    line-height: 17px;
+.candidate__Job__Application__Container .apply_Btn_Container {
+    margin: 5% 0 0;
     display: flex;
     align-items: center;
-    width: 100%;
 }
 
-.candidate__Job__Application__Container .job__Skills__Info span .small-icon{
-    font-size: 0.875rem;
+.candidate__Job__Application__Container .apply_Btn_Container .apply__Btn {
+    width: 14.03125rem;
+    height: 3.28125rem;
+    border-radius: 12.5px;
+    margin-right: 5%;
+    box-shadow: 0px 3.81132px 25.4088px var(--apply-btn-box-shadow);
 }
 
-.candidate__Job__Application__Container .job__Skills__Info span > *:first-child{
-    margin-right: 3%;
+.candidate__Job__Application__Container .apply_Btn_Container .save__Btn {
+    height: 3.28125rem;
+    padding: 0;
 }
 
-.candidate__Job__Application__Container textarea, .candidate__Job__Application__Container .apply-btn{
-    outline: none;
-    border: none;
-}
-
-.candidate__Job__Application__Container textarea{
-    background: var(--white);
-    box-shadow: 0px 4px 8px var(--box-shadow-color), 0px -4px 8px var(--box-shadow-color);
-    resize: none;
-    display: block;
-    width: 100%;
-    font-family: 'Inter', sans-serif;
-    font-size: 1rem;
-    line-height: 19px;
-    color: var(--grey-color);
-    padding: 3% 1.5%;
-}
-
-.candidate__Job__Application__Container .apply_Btn_Container{
-    display: flex;
-    margin: 20% auto 10%;
-    justify-content: center;
-}
-
-.candidate__Job__Application__Container .apply_Btn_Container .apply-btn, .candidate__Job__Application__Container form button{
-    background: var(--green-color);
+.candidate__Job__Application__Container .job__Application__Form__Wrapper {
+    background-color: var(--pale-grey-color);
     border-radius: 10px;
-    padding: 6% 35%;
-    font-size: 1.25rem;
-    font-weight: 500;
-    line-height: 24px;
-    cursor: pointer;
-    color: var(--white);
-    width: 100%;
-}
-
-.candidate__Job__Application__Container form button[type=submit]{
-    margin-bottom: 20%;
-}
-
-.candidate__Job__Application__Container form p{
-    margin: 0 auto 2%;
-}
-
-.candidate__Job__Application__Container .select__Dropdown__Container, .candidate__Job__Application__Container form label{
-    display: flex;
-    align-items: center;
-}
-
-.candidate__Job__Application__Container form label{
-    margin: 14% 0;
-    cursor: pointer;
-}
-
-.candidate__Job__Application__Container form input{
-    display: block;
-}
-
-
-.candidate__Job__Application__Container form label.input__Text__Container{
-    flex-direction: column;
-    align-items: flex-start;
-    margin: 10% 0 2%;
-}
-
-.candidate__Job__Application__Container form label h2.qualification__Title__Text {
-    margin: 2% 0;
-}
-
-.candidate__Job__Application__Container form label.input__Text__Container input[type=text]{
-    margin: 5% 0;
-}
-
-.candidate__Job__Application__Container form label.input__Text__Container input{
-    margin: 3% 0 2%;
-    transition: 0.35s ease-in-out;
-}
-
-.candidate__Job__Application__Container form label.text__Container{
-    margin: 8% 0 5%;
-}
-
-.candidate__Job__Application__Container .skip__Option{
-    color: var(--grey-color);
-    font-size: 0.8rem;
-}
-
-.candidate__Job__Application__Container form label.comments__Text__Container{
-    margin: 2% 0;
-}
-
-.candidate__Job__Application__Container form label.input__Text__Container input:focus{
-    border-bottom: 1px solid var(--grey-color);
-}
-
-.candidate__Job__Application__Container .select__Dropdown__Container{
-    align-items: center;
-    justify-content: space-between;
+    width: 110%;
+    margin: 4% auto;
+    left: -5%;
     position: relative;
+    padding: 3% 8%;
 }
 
-.candidate__Job__Application__Container .select__Dropdown__Container .dropdown__Icon{
-    position: absolute;
-    right: 10%;
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .required__Indicator__Item {
+    color: var(--red-color);
+    margin-bottom: 3.5%;
 }
 
-.candidate__Job__Application__Container .select__Dropdown__Container div{
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 30%;
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form {
+    background-color: var(--white-color);
+    padding-bottom: 4%;
+}
+
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form .form__Title__Item {
+    background-color: var(--green-color);
+    color: var(--white-color);
+    border-radius: 10px 10px 0px 0px;
+    padding: 1.5% 0;
+    padding-left: 4%;
+}
+
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form .job__Application__Items > *:not(.form__Title__Item),
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Item > * {
+    padding-left: 4%;
+}
+
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form .job__Application__Items .form__Tick__Item,
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form .job__Application__Items .form__Salutations__Item {
+    color: var(--light-blue-grey-color);
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form .job__Application__Items .form__Tick__Item {
+    margin: 2% 0 1%;
+}
+
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form .job__Application__Items .form__Salutations__Item {
+    margin-bottom: 4%;
+}
+
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form .job__Application__Items label.form__Label {
+    padding-left: 8%;
+}
+
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form input[type=checkbox] {
+    accent-color: var(--green-color);
+}
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form .job__Application__Items label {
+    display: block;
+    margin-bottom: 3%;
+    font-size: 0.85rem;
     cursor: pointer;
-    padding: 4% 0;
+    color: var(--light-blue-grey-color);
 }
 
-.candidate__Job__Application__Container .select__Dropdown__Container div > input {
-    cursor: text;
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form .job__Application__Items label span {
+    margin-left: 3%;
 }
 
-.candidate__Job__Application__Container form input, .candidate__Job__Application__Container form button, .candidate__Job__Application__Container .select__Dropdown__Container select, .candidate__Job__Application__Container .select__Dropdown__Container input{
-    outline: none;
-    border: none;
-    font-family: 'Inter', sans-serif;
-    transition: 0.35s ease-in-out;
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form .apply__Btn {
+    padding: 1.6% 6.5%;
+    font-family: "Poppins", sans-serif;
+    border-radius: 12.5px;
+    margin-left: 4%;
+    margin-top: 6%;
 }
 
-.candidate__Job__Application__Container .select__Dropdown__Container select{
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form .apply__Btn svg {
+    font-size: 1.2rem;
+}
+
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Item{
+    margin: 3% 0 4%;
+}
+
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Item h2 {
+    font-size: 1rem;
+    color: var(--green-color);
+}
+
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form  select { 
     appearance: none;
     background: transparent;
+    border: none;
     width: 100%;
+    height: 100%;
+    font-family: "Poppins", sans-serif;
     cursor: pointer;
-    z-index: 2;
 }
 
-.candidate__Job__Application__Container .select__Dropdown__Container input:focus{
-    border-bottom: 1px solid var(--grey-color);
-}
-
-.candidate__Job__Application__Container .select__Dropdown__Container select::-ms-expand{
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form select::-ms-expand{
     display: none;
 }
 
-.candidate__Job__Application__Container .apply_Btn_Container .apply-btn:disabled, 
-.candidate__Job__Application__Container .apply_Btn_Container .apply-btn[disabled],
-.candidate__Job__Application__Container form button:disabled,
-.candidate__Job__Application__Container form[disabled]
-{
-    cursor: not-allowed;
-    opacity: 0.7;
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form .select__Dropdown__Container {
+    position: relative;
+    background-color: var(--pale-grey-color-2);
+    width: 92%;
+    margin: 0 auto;
+    border-radius: 10px;
+    border: 1.5px solid var(--green-color);
+    margin-top: 1%;
+    padding: 1.5%;
+    cursor: pointer;
 }
 
-.candidate__Job__Application__Container form button.previous-btn{
-    margin-right: 3%;
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form .select__Dropdown__Container .dropdown__Icon {
+    position: absolute;
+    right: 3%;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
-@media screen and (min-width: 992px) {
-    h1{
-        margin-bottom: 1%;
-    }
-    h2{
-        margin: 3% 0 2%;
-    }
-
-    h1.job__Title,
-    h1.job__Title ~ p {
-        white-space: nowrap;
-    }
-
-    .candidate__Job__Application__Container{
-        margin-top: 1%;
-    }
-
-    .candidate__Job__Application__Container .relative-hr{
-        margin: 1% auto 4%;
-    }
-
-    .candidate__Job__Application__Container .relative-hr.hr-2{
-        margin: 1% auto 3%;
-    }
-
-    .candidate__Job__Application__Container .social__Icons__Container{
-        width: 30%;
-        margin: 3% 0 4%;
-    }
-
-    .candidate__Job__Application__Container .job__Skills__Info span{
-        margin-bottom: 2%;
-    }
-
-    .candidate__Job__Application__Container .apply_Btn_Container{
-        margin: 0;
-        margin-bottom: 5%;
-        width: 30%;
-    }
-
-    .candidate__Job__Application__Container .apply_Btn_Container .apply-btn{
-        position: relative;
-        margin: 10% auto;
-    }
-
-    .candidate__Job__Application__Container form label{
-        margin: 2% 0;
-    }
-
-    .candidate__Job__Application__Container form label.input__Text__Container{
-        margin: 4% 0;
-    }
-
-
-    .candidate__Job__Application__Container .apply_Btn_Container .apply-btn {
-        padding: 8%;
-    }
-
-    .candidate__Job__Application__Container form button{
-        padding: 2.5% 8%;
-        width: 30%;
-    }
-
-    .candidate__Job__Application__Container form button{
-        margin: 3% 0 8%;
-    }
-
-    .candidate__Job__Application__Container .select__Dropdown__Container{
-        width: 30%;
-        margin: 5% 0;
-    }
-
-    .candidate__Job__Application__Container form label.input__Text__Container input[type=text]{
-        margin: 3% 0;
-    }
-
-    .candidate__Job__Application__Container form label.input__Text__Container input{
-        margin: 3% 0 2%;
-    } 
-    
-    .candidate__Job__Application__Container form label.text__Container{
-        margin: 3% 0 5%;
-    }
-    
-    .candidate__Job__Application__Container .job__Application__Title{
-        padding: 2% 0;
-    }
-
-    .candidate__Job__Application__Container .job__Application__Title div{
-        padding-left: 3.8%;
-    }
-
-    .candidate__Job__Application__Container .job__Application__Item{
-        padding-top: 3%;
-        padding-bottom: 3%;
-        margin: 4% auto;
-    }
-
-    .candidate__Job__Application__Container .job__Application__Item h2{
-        margin-bottom: 2%;
-        width: 100%;
-    }
-
-    .candidate__Job__Application__Container .job__Application__Item .select__Dropdown__Container, .candidate__Job__Application__Container .job__Application__Item input{
-        padding: 1% 0;
-    }
-    
-    .candidate__Job__Application__Container .job__Application__Item span.required-indicator{
-        margin-left: 1%;
-    }
-
-    .candidate__Job__Application__Container .job__Application__Item input{
-        padding-left: 1%;
-    }
-
-    .candidate__Job__Application__Container .job__Application__Item .select__Dropdown__Container{
-        margin: 0;
-    }
-
-    .candidate__Job__Application__Container .job__Application__Items {
-        margin-bottom: 4%;
-        margin-top: 4%;
-    }
-
-    .candidate__Job__Application__Container .about__Dowell__Title {
-        margin-top: 4%;
-        margin-bottom: 0;
-    }
-
-    .candidate__Job__Application__Container div:nth-child(2) {
-        width: unset;
-    }
-
-    .candidate__Job__Application__Container .about__Dowell__Title img,
-    .candidate__Job__Application__Container .dowell__Title img {
-        margin-left: auto;
-        width: 9%;
-    }
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form input[type=text] {
+    font-family: "Poppins", sans-serif;
+    margin-top: 1%;
+    width: 92%;
+    padding: 1.5% 2%;
+    outline: none;
+    background-color: var(--pale-grey-color-2);
+    border-radius: 10px;
+    border: 1.5px solid var(--green-color);
 }
 
-@media (min-width: 768px) and (max-width: 991.98px) {
-    h1.job__Title{
-        margin-bottom: 2%;
-    }
-    h1.job__Title, 
-    h1.job__Title ~ p {
-        white-space: nowrap;
-    }
-    .candidate__Job__Application__Container{
-        margin-top: 2%;
-    }
-    .candidate__Job__Application__Container .apply_Btn_Container .apply-btn, .candidate__Job__Application__Container form button{
-        padding: 4% 15%;
-        width: max-content;
-    }
-    .candidate__Job__Application__Container .about__Dowell__Title {
-        margin-top: 8%;
-        margin-bottom: 1%;
-    }
-    .candidate__Job__Application__Container .social__Icons__Container{
-        width: 50%;
-    }
-    .candidate__Job__Application__Container .about__Dowell__Title img,
-    .candidate__Job__Application__Container .dowell__Title img {
-        width: 12%;
-    }
-    .candidate__Job__Application__Container div:nth-child(2) {
-        width: unset;
-    }
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form input[type=text]:focus-within {
+    background-color: var(--pale-grey-color);
+}
+
+.candidate__Job__Application__Container .job__Application__Form__Wrapper .job__Application__Form .form__Label__Accept__All {
+    padding-left: 4%;
+    cursor: pointer;
+}
+
+.candidate__Job__Application__Container .comments {
+    padding-left: 4%;
+}
+
+.candidate__Job__Application__Container .comments input[type=text] {
+    width: 96% !important;
+}
+
+
+.bottom__About__Dowell__Container {
+    background-color: #005734;
+    width: 100%;
+    color: #fff;
+    font-family: "Poppins", sans-serif;
+    margin-top: 12%;
+    padding: 3% 5%;
+}
+
+.bottom__About__Dowell__Container .intro__Container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bottom__About__Dowell__Container .intro__Container .img__Container {
+    width: 15%;
+    background-color: #fff;
+    height: 10rem;
+}
+
+.bottom__About__Dowell__Container .intro__Container .info__Container {
+    width: 80%;
+}
+
+.bottom__About__Dowell__Container .intro__Container .info__Container .about__Dowell {
+    font-size: 0.7rem;
+    line-height: 22px;
+    margin-top: 1%;
+}
+
+.bottom__About__Dowell__Container .social__Icons__Container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 25%;
+    margin-top: 4%;
+}
+
+.bottom__About__Dowell__Container .social__Icons__Container .social__Icon__Item {
+    color: #fff;
+}
+
+.bottom__About__Dowell__Container .social__Icons__Container .social__Icon__Item:hover {
+    filter: brightness(0.8);
 }

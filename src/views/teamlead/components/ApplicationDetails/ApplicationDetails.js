@@ -37,10 +37,10 @@ const ApplicantDetails = ({ hrPageActive, applicantData, candidateApplicationPag
 
                             if (typeof applicantData[key] === "object") return <></>
 
-                            if (key === mutableNewApplicationStateNames.applicant) return <span> {applicantData[key].split("_")[0] === 'guest' ? 'Username' : 'Name' }: {applicantData[key]}</span>
-                            if (key === mutableNewApplicationStateNames.country) return <span>Country: {applicantData[key]}</span>
-                            if (key === mutableNewApplicationStateNames.freelancePlatform) return <span>Freelance Platform: {applicantData[key]}</span>
-                            if (key === mutableNewApplicationStateNames.freelancePlatformUrl) return <span>Freelance Platform Url: {applicantData[key]}</span>
+                            if (key === mutableNewApplicationStateNames.applicant) return <span> <span className="highlight__Item">{applicantData[key].split("_")[0] === 'guest' ? 'Username' : 'Name' }:</span> {applicantData[key]}</span>
+                            if (key === mutableNewApplicationStateNames.country) return <span><span className="highlight__Item">Country:</span> {applicantData[key]}</span>
+                            if (key === mutableNewApplicationStateNames.freelancePlatform) return <span><span className="highlight__Item">Freelance Platform:</span> {applicantData[key]}</span>
+                            if (key === mutableNewApplicationStateNames.freelancePlatformUrl) return <span><span className="highlight__Item">Freelance Platform Url:</span> {applicantData[key]}</span>
                             
                             return <span>{key}: {applicantData[key]}</span>
 
@@ -52,13 +52,13 @@ const ApplicantDetails = ({ hrPageActive, applicantData, candidateApplicationPag
 
                             if ( excludedApplicantInfo.includes(key) ) return <></>
 
-                            if (key === mutableNewApplicationStateNames.others_property_qualification) return <span>Academic Qualification: {applicantData.others[key]}</span>
-                            if (key === mutableNewApplicationStateNames.others_property_qualification_type) return <span>Qualification Type: {applicantData.others[key]}</span>
-                            if (key === mutableNewApplicationStateNames.others_comments) return <span>Comments: {applicantData.others[key]}</span>
-                            if (key === mutableNewApplicationStateNames.others_applicant_first_name) return <span>First Name: {applicantData.others[key]}</span>
-                            if (key === mutableNewApplicationStateNames.others_applicant_email) return <span>Email: {applicantData.others[key]}</span>
+                            if (key === mutableNewApplicationStateNames.others_property_qualification) return <span><span className="highlight__Item">Academic Qualification:</span> {applicantData.others[key]}</span>
+                            if (key === mutableNewApplicationStateNames.others_property_qualification_type) return <span><span className="highlight__Item">Qualification Type:</span> {applicantData.others[key]}</span>
+                            if (key === mutableNewApplicationStateNames.others_comments) return <span><span className="highlight__Item">Comments:</span> {applicantData.others[key]}</span>
+                            if (key === mutableNewApplicationStateNames.others_applicant_first_name) return <span><span className="highlight__Item">First Name:</span> {applicantData.others[key]}</span>
+                            if (key === mutableNewApplicationStateNames.others_applicant_email) return <span><span className="highlight__Item">Email:</span> {applicantData.others[key]}</span>
                             
-                            return <span>{key}: {applicantData.others[key]}</span>
+                            return <span><span className="highlight__Item">{key}:</span> {applicantData.others[key]}</span>
                         }))
                     }
                     </>

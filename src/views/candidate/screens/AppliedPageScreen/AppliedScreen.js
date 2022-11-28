@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import Navbar from '../../components/Navbar/Navbar';
 import Footer from '../../components/Footer/Footer';
 import './AppliedScreen.css';
 import Applied from '../../components/AppliedScreen/Applied';
 import { useNavigationContext } from '../../../../contexts/NavigationContext';
 import ViewAppliedJobScreen from '../ViewAppliedJobScreen/ViewAppliedJobScreen';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import TitleNavigationBar from '../../../../components/TitleNavigationBar/TitleNavigationBar';
 
 function AppliedScreen({ user }) {
   const { section } = useNavigationContext();
   const location = useLocation();
   const [ params, setParams ] = useSearchParams();
   const [ passedCategory, setPassedCategory ] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const jobCategoryParam = params.get("jobCategory");
@@ -31,8 +32,7 @@ function AppliedScreen({ user }) {
     }
     {
       section === undefined && <div className='applied__screen'>
-      
-      <Navbar title="Application status"/>
+      <TitleNavigationBar title={"Application Status"} handleBackBtnClick={() => navigate(-1)} />
         <Applied currentUser={user} />
       <Footer currentCategory={passedCategory && passedCategory}/>
       

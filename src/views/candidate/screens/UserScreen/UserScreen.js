@@ -4,12 +4,14 @@ import Footer from '../../components/Footer/Footer';
 import BottomNavigationBar from '../../../Hr/component/BottomNavigation/BottomNavigation';
 import { afterSelectionLinks } from '../../utils/afterSelectionLinks';
 import "./style.css";
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+import TitleNavigationBar from '../../../../components/TitleNavigationBar/TitleNavigationBar';
 
 function UserScreen({ afterSelection, currentUser }) {
 
   const [ params, setParams ] = useSearchParams();
   const [ passedCategory, setPassedCategory ] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     
@@ -22,8 +24,8 @@ function UserScreen({ afterSelection, currentUser }) {
   }, [params])
 
   return (
-    <div>
-      <Navbar title="User"/>
+    <div className='candidate__User__Profile__Page'>
+      <TitleNavigationBar title={"Profile"} handleBackBtnClick={() => navigate(-1)} />
       <div className="user__Page__Container user">
 
         <div className="user__Intro__Item__Container">

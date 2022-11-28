@@ -18,6 +18,12 @@ import { jobKeys } from "../../../admin/utils/jobKeys";
 import { BsCashStack } from "react-icons/bs";
 import LoadingSpinner from "../../../admin/components/LoadingSpinner/LoadingSpinner";
 import { candidateStatuses } from "../../utils/candidateStatuses";
+import TitleNavigationBar from "../../../../components/TitleNavigationBar/TitleNavigationBar";
+import { IoBookmarkSharp } from "react-icons/io5";
+import { RiShareBoxFill } from "react-icons/ri";
+import { IoMdShare, IoIosArrowRoundForward } from "react-icons/io";
+import { VscCalendar } from "react-icons/vsc";
+import { BsClock } from "react-icons/bs";
 
 const JobApplicationScreen = () => {
     const location = useLocation();
@@ -39,6 +45,7 @@ const JobApplicationScreen = () => {
     const [removeFreelanceOptions, setRemoveFreelanceOptions] = useState(false);
     const [allJobs, setAllJobs] = useState([]);
     const [jobsLoading, setJobsLoading] = useState(true);
+    const [jobSaved, setJobSaved] = useState(false);
     
     const [formPage, setFormPage] = useState(1);
 
@@ -254,7 +261,7 @@ const JobApplicationScreen = () => {
     const createCheckBoxData = (data, arrayRef) => {
         
         return (
-            <label onClick={() => setLabelClicked(!labelClicked)}>
+            <label className="form__Label" onClick={() => setLabelClicked(!labelClicked)}>
                 <input type={'checkbox'} ref={elem => addToRefsArray(elem, arrayRef)} />
                 <span>{data}</span>
             </label>
@@ -264,12 +271,12 @@ const JobApplicationScreen = () => {
 
     const createInputData = (key, data) => {
         
-        if (key === jobKeys.paymentForJob) return <></>
+        if (key === jobKeys.paymentForJob || key === jobKeys.othersFreelancerJobType || key === jobKeys.othersInternJobType || key === jobKeys.othersResearchAssociateJobType) return <></>
 
         return (
             <>
                 <div className="job__Application__Item">
-                    <h2>{data}<span className="yellow-color required-indicator">*</span></h2>
+                    <h2>{data}<span className="required-indicator">*</span></h2>
                     <label className="text__Container">
                         <input type={'text'} placeholder={data} value={newApplicationData.others[key] ? newApplicationData.others[key] : ""} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_OTHERS, payload: { stateToChange: key, value: e.target.value } })} />
                     </label>
@@ -281,263 +288,323 @@ const JobApplicationScreen = () => {
     if (jobsLoading) return <LoadingSpinner />
 
     return <>
-        <Navbar changeToBackButton={true} backButtonLink={-1} handleShareJobBtnClick={() => handleShareBtnClick(currentJob.title, `Apply for ${currentJob.title} on Dowell!`, `${process.env.PUBLIC_URL}/#/jobs/${currentJob.title.slice(-1) === " " ? currentJob.title.slice(0, -1).toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-") : currentJob.title.toLocaleLowerCase().replaceAll("/", "-").replaceAll(" ", "-")}`)} />
-            <div className="container-wrapper candidate__Job__Application__Container">
-
+            <div className="candidate__Job__Application__Container">
+                <TitleNavigationBar handleBackBtnClick={() => navigate(-1)} />
                 {
                     section === "form" ? <>
-                        <div className="job__Application__Title">
-                            <h1><b>Job Application Form for {currentJob.title}</b></h1>
-                            <CustomHr className={'relative-hr'} />
-                            <div>
-                                <span className="yellow-color">*</span>
-                                <span className="yellow-color">Required</span>
+                        <div className="job__Title__Container">
+                            <div className="job__Title__Items">
+                                <h1 className="job__Title"><b>Job Application Form for {currentJob.title}</b></h1>
+                                <p>Dowell Ux living lab</p>  
+                            </div>
+                            <div className="job__Share__Items">
+                                <button className={`save__Btn grey__Btn ${jobSaved ? 'active' : ''}`} onClick={() => setJobSaved(!jobSaved)}>
+                                    <span>{jobSaved ? "Saved": "Save"}</span>
+                                    <IoBookmarkSharp className="save__Icon" />
+                                </button>
+                                <button className="share__Btn grey__Btn" onClick={() => handleShareBtnClick(currentJob.title, `Apply for ${currentJob.title} on Dowell!`, window.location)}>
+                                    <span>Share</span>
+                                    <IoMdShare />
+                                </button>
                             </div>
                         </div>
 
-                        <form onSubmit={handleSubmitNewApplication}>
-                            {
-                                
-                                formPage === 1 && <>
-
-                                <div className="job__Application__Items">
-                                    <h2><b>General Terms and Conditions</b></h2>
-                                    <p>Tick each box to continue</p>
-                                    <p>Thank you for applying to freelancing opportunity in uxlivinglab. Read following terms and conditions and accept</p>
-                                    {React.Children.toArray(Object.keys(currentJob.general_terms || {}).map((key) => createCheckBoxData(currentJob.general_terms[key], generalTermsSelectionsRef)))}
-                                </div>
-                                </>
-                            }
-
-                            {
-                                formPage === 2 && <>
-                                
-                                <div className="job__Application__Items">
-                                    <h2><b>Technical Specifications</b></h2>
-                                    <p>Tick each box to approve</p>
-                                    <p>Thank you for accepting terms and conditions. Read following technical specifications and accept</p>
-                                    {React.Children.toArray(Object.keys(currentJob.Technical_Specifications || {}).map((key) => createCheckBoxData(currentJob.Technical_Specifications[key], technicalTermsSelectionsRef)))}
-                                </div>    
-                                </>
-                            }
-
-                            {
-                                formPage === 3 && <>
-
-                                <div className="job__Application__Items">
-                                    <h2><b>Payment Terms</b></h2>
-                                    <p></p>
-                                    <p>Thank you for accepting technical specifications. Read following payment terms and accept</p>
-                                    {React.Children.toArray(Object.keys(currentJob.Payment_terms || {}).map((key) => createCheckBoxData(currentJob.Payment_terms[key], paymentTermsSelectionsRef)))}
-                                </div>
-                                </>
-                            }
-
-                            {
-
-                                formPage === 4 && <>
-
-                                <div className="job__Application__Items">
-                                    <h2><b>Workflow Terms</b></h2>
-                                    <p></p>
-                                    <p>Thank you for accepting payment terms. Read following work flow to proceed</p>
-                                    {React.Children.toArray(Object.keys(currentJob.workflow || {}).map((key) => createCheckBoxData(currentJob.workflow[key], workflowTermsSelectionsRef)))}
-                                </div>
-                                </>
-                            }
-
-                            {
-                                formPage === 5 && <>
-
-                                    <div className="job__Application__Item">
-
-                                        <h2>Select Country<span className="yellow-color required-indicator">*</span></h2>
-                                        <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
-                                            <select name="country" ref={selectCountryOptionRef} defaultValue={'default_'}>
-                                                <option value={'default_'} disabled>Select Option</option>
-                                                {React.Children.toArray(countriesData.map(country => {
-                                                    return <option value={country.toLocaleLowerCase()}>{country}</option>
-                                                }))}
-                                            </select>
-                                            <AiOutlineDown className="dropdown__Icon" />
-                                        </div>
-                                    </div>
+                        <div className="job__Application__Form__Wrapper">
+                            <p className="required__Indicator__Item">
+                                *Required
+                            </p>
+                            <form className="job__Application__Form" onSubmit={handleSubmitNewApplication}>
+                                {
                                     
-                                    {
-                                        removeFreelanceOptions ? <></> : 
-                                        
-                                        <>
-                                            <div className="job__Application__Item">
-                                                <h2>Freelancing Profile<span className="yellow-color required-indicator">*</span></h2>
-                                                
-                                                <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
-                                                    <select name="freelancePlaform" ref={freelancePlatformRef} defaultValue={'default_'}>
-                                                        <option value={'default_'} disabled>Select Option</option>
-                                                        {React.Children.toArray(freelancingPlatforms.map(platform => {
-                                                            return <option value={platform.toLocaleLowerCase()}>{platform}</option>
-                                                        }))}
-                                                    </select>
-                                                    <AiOutlineDown className="dropdown__Icon" />
-                                                </div>
-                                            </div>
+                                    formPage === 1 && <>
 
-                                            <div className="job__Application__Item">
+                                    <div className="job__Application__Items">
+                                        <div className="form__Title__Item">
+                                            <h2><b>General Terms and Conditions</b></h2>
+                                        </div>
+                                        <p className="form__Tick__Item">Tick each box to continue</p>
+                                        <p className="form__Salutations__Item">Thank you for applying to freelancing opportunity in uxlivinglab. Read following terms and conditions and accept</p>
+                                        {React.Children.toArray(Object.keys(currentJob.general_terms || {}).map((key) => createCheckBoxData(currentJob.general_terms[key], generalTermsSelectionsRef)))}
+                                    </div>
+                                    </>
+                                }
+
+                                {
+                                    formPage === 2 && <>
+                                    
+                                    <div className="job__Application__Items">
+                                        <div className="form__Title__Item">
+                                            <h2><b>Technical Specifications</b></h2>
+                                        </div>
+                                        <p className="form__Tick__Item">Tick each box to approve</p>
+                                        <p className="form__Salutations__Item">Thank you for accepting terms and conditions. Read following technical specifications and accept</p>
+                                        {React.Children.toArray(Object.keys(currentJob.Technical_Specifications || {}).map((key) => createCheckBoxData(currentJob.Technical_Specifications[key], technicalTermsSelectionsRef)))}
+                                    </div>    
+                                    </>
+                                }
+
+                                {
+                                    formPage === 3 && <>
+
+                                    <div className="job__Application__Items">
+                                        <div className="form__Title__Item">
+                                            <h2><b>Payment Terms</b></h2>
+                                        </div>
+                                        <p className="form__Tick__Item">Tick each box to continue</p>
+                                        <p className="form__Salutations__Item">Thank you for accepting technical specifications. Read following payment terms and accept</p>
+                                        {React.Children.toArray(Object.keys(currentJob.Payment_terms || {}).map((key) => createCheckBoxData(currentJob.Payment_terms[key], paymentTermsSelectionsRef)))}
+                                    </div>
+                                    </>
+                                }
+
+                                {
+
+                                    formPage === 4 && <>
+
+                                    <div className="job__Application__Items">
+                                        <div className="form__Title__Item">
+                                            <h2><b>Workflow Terms</b></h2>
+                                        </div>
+                                        <p className="form__Tick__Item">Tick each box to continue</p>
+                                        <p className="form__Salutations__Item">Thank you for accepting payment terms. Read following work flow to proceed</p>
+                                        {React.Children.toArray(Object.keys(currentJob.workflow || {}).map((key) => createCheckBoxData(currentJob.workflow[key], workflowTermsSelectionsRef)))}
+                                    </div>
+                                    </>
+                                }
+
+                                {
+                                    formPage === 5 && <>
+
+                                        <div className="form__Title__Item">
+                                            <h2><b>Basic Information</b></h2>
+                                        </div>
+                                        <div className="job__Application__Item">
+
+                                            <h2>Select Country<span className="required-indicator">*</span></h2>
+                                            <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
+                                                <select name="country" ref={selectCountryOptionRef} defaultValue={'default_'}>
+                                                    <option value={'default_'} disabled>Select Option</option>
+                                                    {React.Children.toArray(countriesData.map(country => {
+                                                        return <option value={country.toLocaleLowerCase()}>{country}</option>
+                                                    }))}
+                                                </select>
+                                                <AiOutlineDown className="dropdown__Icon" onClick={() => { if (!selectCountryOptionRef.current) return; selectCountryOptionRef.current.click() }} />
+                                            </div>
+                                        </div>
+                                        
+                                        {
+                                            removeFreelanceOptions ? <></> : 
+                                            
+                                            <>
+                                                <div className="job__Application__Item">
+                                                    <h2>Freelancing Profile<span className="required-indicator">*</span></h2>
+                                                    
+                                                    <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
+                                                        <select name="freelancePlaform" ref={freelancePlatformRef} defaultValue={'default_'}>
+                                                            <option value={'default_'} disabled>Select Option</option>
+                                                            {React.Children.toArray(freelancingPlatforms.map(platform => {
+                                                                return <option value={platform.toLocaleLowerCase()}>{platform}</option>
+                                                            }))}
+                                                        </select>
+                                                        <AiOutlineDown className="dropdown__Icon" />
+                                                    </div>
+                                                </div>
+
+                                                <div className="job__Application__Item">
+                                                    <label className="input__Text__Container">
+                                                        <h2>Link to profile on freelancing platform<span className="required-indicator">*</span></h2>
+                                                        <input aria-label="link to profile on freelance platform" type={'text'} placeholder={'Link to profile on platform'} value={newApplicationData.freelancePlatformUrl} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM_URL, payload: { stateToChange: mutableNewApplicationStateNames.freelancePlatformUrl, value: e.target.value }})} />
+                                                    </label>
+                                                </div>
+
+                                            </>
+                                        }
+                                        
+
+                                        <div className="job__Application__Item">
+                                            <h2>Academic Qualifications<span className="required-indicator">*</span></h2>
+                                            <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
+                                                <select name="qualifications" ref={qualificationSelectionRef} defaultValue={'default_'}>
+                                                    <option value={'default_'} disabled>Select Option</option>
+                                                    {React.Children.toArray(qualificationsData.map(qualification => {
+                                                        return <option value={qualification.toLocaleLowerCase()} onClick={() => setLabelClicked(!labelClicked)}>{qualification}</option>
+                                                    }))}
+                                                </select>
+                                                <AiOutlineDown className="dropdown__Icon" />
+                                            </div>
+                                        </div>
+
+                                        { 
+                                            showQualificationInput && <div className="job__Application__Item">
                                                 <label className="input__Text__Container">
-                                                    <h2>Link to profile on freelancing platform<span className="yellow-color required-indicator">*</span></h2>
-                                                    <input aria-label="link to profile on freelance platform" type={'text'} placeholder={'Link to profile on platform'} value={newApplicationData.freelancePlatformUrl} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_FREELANCE_PLATFORM_URL, payload: { stateToChange: mutableNewApplicationStateNames.freelancePlatformUrl, value: e.target.value }})} />
+                                                    <h2 className="qualification__Title__Text">Qualification<span className="required-indicator">*</span></h2>
+                                                    <input aria-label="your academic qualification" type={'text'} placeholder={'Academic Qualification'} value={newApplicationData.others[mutableNewApplicationStateNames.others_property_qualification_type]} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_QUALIFICATIONS, payload: { stateToChange: mutableNewApplicationStateNames.others_property_qualification_type, value: e.target.value }})} />
                                                 </label>
                                             </div>
+                                        }
 
-                                        </>
-                                    }
+                                        {React.Children.toArray(Object.keys(currentJob.others || {}).map((key) => createInputData(key, currentJob.others[key])))}
                                     
-
-                                    <div className="job__Application__Item">
-                                        <h2>Academic Qualifications<span className="yellow-color required-indicator">*</span></h2>
-                                        <div className="select__Dropdown__Container" onClick={() => setLabelClicked(!labelClicked)}>
-                                            <select name="qualifications" ref={qualificationSelectionRef} defaultValue={'default_'}>
-                                                <option value={'default_'} disabled>Select Option</option>
-                                                {React.Children.toArray(qualificationsData.map(qualification => {
-                                                    return <option value={qualification.toLocaleLowerCase()} onClick={() => setLabelClicked(!labelClicked)}>{qualification}</option>
-                                                }))}
-                                            </select>
-                                            <AiOutlineDown className="dropdown__Icon" />
-                                        </div>
-                                    </div>
-
-                                    { 
-                                        showQualificationInput && <div className="job__Application__Item">
+                                        <label className="form__Label__Accept__All" onClick={() => setLabelClicked(!labelClicked)}>
+                                            <input type={'checkbox'} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_AGREE_TO_ALL, payload: { stateToChange: mutableNewApplicationStateNames.others_property_agreeToAll, value: e.target.checked } }) } />
+                                            <span>Agree/Disagree to all terms</span>
+                                        </label>
+                                        
+                                        <div className="job__Application__Item comments">
                                             <label className="input__Text__Container">
-                                                <h2 className="qualification__Title__Text">Qualification<span className="yellow-color required-indicator">*</span></h2>
-                                                <input aria-label="your academic qualification" type={'text'} placeholder={'Academic Qualification'} value={newApplicationData.others[mutableNewApplicationStateNames.others_property_qualification_type]} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_QUALIFICATIONS, payload: { stateToChange: mutableNewApplicationStateNames.others_property_qualification_type, value: e.target.value }})} />
+                                                <h2>Comments/Suggestions</h2>
+                                                <input type={'text'} placeholder={'Any comments'} value={newApplicationData.others[mutableNewApplicationStateNames.others_comments]} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_COMMENTS, payload: { stateToChange: mutableNewApplicationStateNames.others_comments, value: e.target.value } })} />
                                             </label>
                                         </div>
-                                    }
 
-                                    {React.Children.toArray(Object.keys(currentJob.others || {}).map((key) => createInputData(key, currentJob.others[key])))}
-                                
-                                    <label onClick={() => setLabelClicked(!labelClicked)}>
-                                        <input type={'checkbox'} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_AGREE_TO_ALL, payload: { stateToChange: mutableNewApplicationStateNames.others_property_agreeToAll, value: e.target.checked } }) } />
-                                        <span>Agree/Disagree to all terms</span>
-                                    </label>
+                                    </>
+                                }
+        
+                                {
                                     
-                                    <div className="job__Application__Item">
-                                        <label className="input__Text__Container">
-                                            Comments/Suggestions
-                                            <input type={'text'} placeholder={'Any comments'} value={newApplicationData.others[mutableNewApplicationStateNames.others_comments]} onChange={(e) => dispatchToNewApplicationData({ type: newJobApplicationDataReducerActions.UPDATE_COMMENTS, payload: { stateToChange: mutableNewApplicationStateNames.others_comments, value: e.target.value } })} />
-                                        </label>
-                                    </div>
+                                    formPage !== 5 &&
+                                    <>
+                                        <button className="apply__Btn green__Btn" type="button" disabled={disableNextBtn} onClick={() => { setFormPage(formPage + 1); } }>
+                                            <span>Next</span>
+                                            <IoIosArrowRoundForward />
+                                        </button>
+                                    </>
+                                }
 
-                                </>
-                            }
-    
-                            {
-                                
-                                formPage !== 5 &&
-                                <>
-                                    <button type="button" disabled={disableNextBtn} onClick={() => { setFormPage(formPage + 1); } }>Next</button>
-                                </>
-                            }
+                                {
+                                    formPage === 5 && <>
+                                        <button className="apply__Btn green__Btn" type="submit" disabled={disableNextBtn} onClick={handleSubmitNewApplication}>
+                                            <span>Submit</span>
+                                            <IoIosArrowRoundForward />
+                                        </button>
+                                    </>
+                                }
 
-                            {
-                                formPage === 5 && <>
-                                    <button type="submit" disabled={disableNextBtn} onClick={handleSubmitNewApplication}>Submit</button>
-                                </>
-                            }
-
-                        </form>
+                            </form>
+                        </div>
                     </>:
 
                     <>
-                        <div className="dowell__Title">
-                            <div>
-                                <h1 className="job__Title"><b>{ currentJob.title }</b></h1>
-                                <p>Dowell Ux living lab</p>    
+                        <div className="job__Title__Container">
+                            <div className="job__Title__Items">
+                                <h1 className="job__Title"><b>{currentJob.title}</b></h1>
+                                <p>Dowell Ux living lab</p>  
                             </div>
-                            <div>
-                                <img src={process.env.PUBLIC_URL + "/logos/logo-1.png"} alt="dowell logo" />
+                            <div className="job__Share__Items">
+                                <button className={`save__Btn grey__Btn ${jobSaved ? 'active' : ''}`} onClick={() => setJobSaved(!jobSaved)}>
+                                    <span>{jobSaved ? "Saved": "Save"}</span>
+                                    <IoBookmarkSharp className="save__Icon" />
+                                </button>
+                                <button className="share__Btn grey__Btn" onClick={() => handleShareBtnClick(currentJob.title, `Apply for ${currentJob.title} on Dowell!`, window.location)}>
+                                    <span>Share</span>
+                                    <IoMdShare />
+                                </button>
                             </div>
                         </div>
-                        <CustomHr className={'relative-hr'} />
-                        <div className="job__Skills__Info">
-                            <span>
-                                <AiOutlinePlayCircle />
-                                Start Date: Immediately
-                            </span>
-                            {
-                                currentJob.others && currentJob.others[jobKeys.othersInternJobType] &&
-                                <span>
-                                    <BusinessCenterIcon className="small-icon" />
-                                    Job Type: { currentJob.others[jobKeys.othersInternJobType]}
+                        <div className="job__Info__Container">
+                            <div className="job__Skills__Info">
+                                <span className="job__Skill__Wrapper">
+                                    <VscCalendar className="info__Icon" />
+                                    <span>Start Date:&nbsp;<span className="highlight__Job__Info">Immediately</span></span>
                                 </span>
-                            }
-                            {
-                                currentJob.others && currentJob.others[jobKeys.othersResearchAssociateJobType] &&
-                                <span>
-                                    <BusinessCenterIcon className="small-icon" />
-                                    Job Type: { currentJob.others[jobKeys.othersResearchAssociateJobType]}
+                                {
+                                    currentJob.others && currentJob.others[jobKeys.othersInternJobType] &&
+                                    <span className="job__Skill__Wrapper">
+                                        <BusinessCenterIcon className="info__Icon" />
+                                        <span>Job Type:&nbsp;<span className="highlight__Job__Info">{ currentJob.others[jobKeys.othersInternJobType]}</span></span>
+                                    </span>
+                                }
+                                {
+                                    currentJob.others && currentJob.others[jobKeys.othersResearchAssociateJobType] &&
+                                    <span className="job__Skill__Wrapper">
+                                        <BusinessCenterIcon className="info__Icon" />
+                                        <span>Job Type:&nbsp;<span className="highlight__Job__Info">{ currentJob.others[jobKeys.othersResearchAssociateJobType]}</span></span>
+                                    </span>
+                                }
+                                {
+                                    currentJob.others && currentJob.others[jobKeys.othersFreelancerJobType] && 
+                                    <span className="job__Skill__Wrapper">
+                                        <BusinessCenterIcon className="info__Icon" />
+                                        <span>Job Type:&nbsp;<span className="highlight__Job__Info">{ currentJob.others[jobKeys.othersFreelancerJobType]}</span></span>
+                                    </span>
+                                }
+                                {
+                                    currentJob.typeof === "Employee" && 
+                                    <span className="job__Skill__Wrapper">
+                                        <BusinessCenterIcon className="info__Icon" />
+                                        <span>Job Type:&nbsp;<span className="highlight__Job__Info">Full time</span></span>
+                                    </span>
+                                }
+                                <span className="job__Skill__Wrapper">
+                                    <BsClock className="info__Icon" />
+                                    <span>Duration:&nbsp;<span className="highlight__Job__Info">{ currentJob.time_period}</span></span>
                                 </span>
-                            }
-                            {
-                                currentJob.others && currentJob.others[jobKeys.othersFreelancerJobType] && 
-                                <span>
-                                    <BusinessCenterIcon className="small-icon" />
-                                    Job Type: { currentJob.others[jobKeys.othersFreelancerJobType]}
-                                </span>
-                            }
-                            {
-                                currentJob.typeof === "Employee" && 
-                                <span>
-                                    <BusinessCenterIcon className="small-icon" />
-                                    Job Type: Full time
-                                </span>
-                            }
-                            <span>
-                                <BusinessCenterIcon className="small-icon" />
-                                Duration: { currentJob.time_period}
-                            </span>
-                            {
-                                currentJob.others && currentJob.others[jobKeys.paymentForJob] &&
-                                <span>
-                                    <BsCashStack />
-                                    Payment: { currentJob.others[jobKeys.paymentForJob]}
-                                </span>
-                            }
+                                {
+                                    currentJob.others && currentJob.others[jobKeys.paymentForJob] &&
+                                    <span className="job__Skill__Wrapper">
+                                        <BsCashStack className="info__Icon" />
+                                        <span>Payment:&nbsp;<span className="highlight__Job__Info">{currentJob.others[jobKeys.paymentForJob]}</span></span>
+                                    </span>
+                                }
+                            </div>
+                            <div className="job__Quick__Apply__Container">
+                                <button className="apply__Btn green__Btn" onClick={handleSubmitApplicationBtnClick} disabled={disableApplyBtn}>
+                                    <span>Apply</span>
+                                    <RiShareBoxFill />
+                                </button>
+                            </div>
                         </div>
-                        <CustomHr className={'relative-hr hr-2'} />
-                        <div className="job__Skills__Info">
-                            <span>
-                                Qualifications: { currentJob.skills }
-                            </span>
+
+                        <div className="job__About__Info">
+                            <p className="job__About__Title paragraph__Title__Item">Description: </p>
+                            <span>{currentJob.description}</span>
                         </div>
 
-                        <h2><b>Skills</b></h2>
-
-                        <p className="about__Dowell">{currentJob.description}</p>
-
-                        <h2 className="about__Dowell__Title">
-                            <b>About D'Well Research</b>
-                            <img src={process.env.PUBLIC_URL + "/logos/logo-1.png"} alt="dowell logo" loading="lazy" />
-                        </h2>
-                        <p className="about__Dowell">{dowellInfo}</p>
-
-                        <div className="social__Icons__Container">
-                            {
-                                React.Children.toArray(dowellLinks.map(dowellLink => {
-                                    return <a aria-label={dowellLink.title} href={dowellLink.link} rel="noopener" target="_blank" className="social__Icon__Item">
-                                        {dowellLink.icon}
-                                    </a>
-                                }))
-                            }
+                        <div className="job__Skills__Info">
+                            <p className="paragraph__Title__Item">Skills:</p>
+                            <span>
+                                { currentJob.skills }
+                            </span>
                         </div>
 
                         <div className='apply_Btn_Container'>
-                            <button className="apply-btn" onClick={handleSubmitApplicationBtnClick} disabled={disableApplyBtn}>Apply</button>
+                            <button className="apply__Btn green__Btn" onClick={handleSubmitApplicationBtnClick} disabled={disableApplyBtn}>
+                                <span>Apply for Job</span>
+                                <RiShareBoxFill />
+                            </button>
+                            <button className={`save__Btn grey__Btn ${jobSaved ? 'active' : ''}`} onClick={() => setJobSaved(!jobSaved)}>
+                                <span>{jobSaved ? "Saved": "Save"}</span>
+                                <IoBookmarkSharp />
+                            </button>
                         </div>
                     </>
                 }
                 
             </div>
+            {
+                section !== "form" ? <div className="bottom__About__Dowell__Container">
+                    <div className="intro__Container">
+                        <div className="img__Container">
+                            <img src={process.env.PUBLIC_URL + "/logos/logo-1.png"} alt="dowell logo" loading="lazy" />
+                        </div>
+                        <div className="info__Container">
+                            <h2 className="about__Dowell__Title"><b>About D'Well Research</b></h2>
+                            <p className="about__Dowell">{dowellInfo}</p>
+                        </div>
+                    </div>
+
+                    <div className="social__Icons__Container">
+                        {
+                            React.Children.toArray(dowellLinks.map(dowellLink => {
+                                return <a aria-label={dowellLink.title} href={dowellLink.link} rel="noopener" target="_blank" className="social__Icon__Item">
+                                    {dowellLink.icon}
+                                </a>
+                            }))
+                        }
+                    </div>
+                </div> 
+                : <></>
+            }
         {newApplicationData.others[mutableNewApplicationStateNames.applicant] && newApplicationData.others[mutableNewApplicationStateNames.applicant] !== "" && <Footer currentCategory={currentJob.typeof} />}
     </>
 }

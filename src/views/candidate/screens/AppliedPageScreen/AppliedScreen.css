@@ -1,9 +1,13 @@
-.applied__body{
-    position: relative;
-    padding-top: 30%;
-    margin-left: auto;
-    margin-left: auto;
+.applied__screen {
+    margin-top: 2%;
 }
-.applied__body > h1{
-    text-align: center;
+
+.applied__screen .applied__Nav__Toggler {
+    width: 84%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.applied__screen .title__Navigation__Bar__Container .title__Item .back__Icon__Container{
+    width: 4.5rem;
 }
