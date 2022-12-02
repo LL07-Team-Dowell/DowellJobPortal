@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { mutableNewApplicationStateNames } from '../../../../contexts/NewApplicationContext';
-import { myAxiosInstance } from '../../../../lib/axios';
+import { dowellLoginUrl, myAxiosInstance } from '../../../../lib/axios';
 import { routes } from '../../../../lib/routes';
 import LoadingSpinner from '../../../admin/components/LoadingSpinner/LoadingSpinner';
 import Navbar from '../../components/Navbar/Navbar';
@@ -56,12 +56,19 @@ function Home({ user, setHired, setAssignedProject }) {
     navigate("/jobs", { state: { jobCategory: category, appliedJobs: appliedJobs }});
   }
 
+  const handleLoginLinkClick = (e) => {
+    e.preventDefault();
+    window.location = dowellLoginUrl
+  }
+
   if (loading) return <LoadingSpinner />
 
   return (
     <>
       <nav>
-        <div className='candidate__Homepage__Nav__Container'></div>
+        <div className='candidate__Homepage__Nav__Container'>
+          {!user && <Link className='login__Link' to={dowellLoginUrl} onClick={handleLoginLinkClick}>Login</Link>}
+        </div>
       </nav>
       <main className='candidate__Homepage__Container'>
         <section className='main__Content'>
