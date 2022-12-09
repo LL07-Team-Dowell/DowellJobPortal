@@ -1,6 +1,7 @@
 import React from 'react';
 import "./style.css";
 import { useNavigate } from 'react-router-dom';
+import JobLandingLayout from '../../../../layouts/CandidateJobLandingLayout/LandingLayout';
 
 function UserScreen({ currentUser }) {
 
@@ -9,6 +10,7 @@ function UserScreen({ currentUser }) {
   const handleLogout = () => navigate("/logout");
 
   return (
+    <JobLandingLayout user={currentUser} afterSelection={true}>
     <div className='candidate__User__Profile__Page'>
       <div className="user__Page__Container user">
 
@@ -45,6 +47,7 @@ function UserScreen({ currentUser }) {
           </button>  
         </div>
     </div>
+    </JobLandingLayout>
   )
 }
 

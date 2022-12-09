@@ -81,7 +81,7 @@
 @media screen and (min-width: 992px) {
     .user__Page__Container.user {
         width: 80%;
-        margin-top: 7%;
+        margin-top: 0;
         padding: 4%;
         margin-bottom: 12%
     }

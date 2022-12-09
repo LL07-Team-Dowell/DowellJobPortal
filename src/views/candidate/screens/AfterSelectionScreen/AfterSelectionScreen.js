@@ -18,9 +18,9 @@ const AfterSelectionScreen = ({ user, assignedProject }) => {
     const { setUserTasks } = useCandidateTaskContext();
     
     return <>
-        <JobLandingLayout user={user} afterSelection={true}>
         {
             section === undefined || section === "tasks" ? <>
+                <JobLandingLayout user={user} afterSelection={true}>
                 {
                     showAddTaskModal && <AddTaskScreen teamMembers={[]} afterSelectionScreen={true} currentUser={user.username} closeTaskScreen={() => setShowAddTaskModal(false)} updateTasks={setUserTasks} />
                 }
@@ -28,11 +28,12 @@ const AfterSelectionScreen = ({ user, assignedProject }) => {
                 <div className="candidate__After__Selection__Screen">
                     <TaskScreen currentUser={user.username} candidateAfterSelectionScreen={true} handleAddTaskBtnClick={() => setShowAddTaskModal(true)} assignedProject={assignedProject} />
                 </div>
+                </JobLandingLayout>
             </> : 
 
             section === "teams" ?
 
-            <TeamsScreen /> :
+            <TeamsScreen currentUser={user} /> :
 
             section === "user" ?
             
@@ -40,7 +41,6 @@ const AfterSelectionScreen = ({ user, assignedProject }) => {
             
             <ErrorPage />
         }
-        </JobLandingLayout>
     </>
 }
 
