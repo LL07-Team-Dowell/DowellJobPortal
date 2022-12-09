@@ -49,3 +49,13 @@
 .title__Navigation__Bar__Container .title__Item .back__Icon__Container .back__Icon {
     font-size: 1.2rem;
 }
+
+@media screen and (max-width: 991px) {
+    .title__Navigation__Bar__Container {
+        width: 90%;
+        margin-top: 6%;
+    }
+    .title__Navigation__Bar__Container .title__Item h1 {
+        font-size: 1.4rem;
+    }
+}

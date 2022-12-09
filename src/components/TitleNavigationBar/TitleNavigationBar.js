@@ -1,17 +1,23 @@
+import { useMediaQuery } from "@mui/material";
 import { IoIosArrowBack } from "react-icons/io";
 import SearchBar from "../SearchBar/SearchBar";
 import "./style.css";
 
-const TitleNavigationBar = ({ title, showSearchBar, handleBackBtnClick }) => {
+const TitleNavigationBar = ({ title, showSearchBar, handleBackBtnClick, hideBackBtn }) => {
+    const isLargeScreen = useMediaQuery("(min-width: 992px)");
+
     return <>
         <div className="title__Navigation__Bar__Container">
             <div className="title__Item">
-                <div className="back__Icon__Container" onClick={handleBackBtnClick}>
-                    <IoIosArrowBack className="back__Icon" />
-                </div>
+                { 
+                    !hideBackBtn &&
+                    <div className="back__Icon__Container" onClick={handleBackBtnClick}>
+                        <IoIosArrowBack className="back__Icon" />
+                    </div>
+                }
                 { title && <h1>{title}</h1> }
             </div>
-            { showSearchBar && <SearchBar />}
+            { isLargeScreen && showSearchBar && <SearchBar />}
         </div>
     </>
 }

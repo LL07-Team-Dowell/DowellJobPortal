@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Footer from '../../components/Footer/Footer';
 import './AppliedScreen.css';
 import Applied from '../../components/AppliedScreen/Applied';
 import { useNavigationContext } from '../../../../contexts/NavigationContext';
@@ -32,10 +31,8 @@ function AppliedScreen({ user }) {
     }
     {
       section === undefined && <div className='applied__screen'>
-      <TitleNavigationBar title={"Application Status"} handleBackBtnClick={() => navigate(-1)} />
+        <TitleNavigationBar title={"Application Status"} handleBackBtnClick={() => navigate(-1)} />
         <Applied currentUser={user} />
-      <Footer currentCategory={passedCategory && passedCategory}/>
-      
       </div>
     }
     

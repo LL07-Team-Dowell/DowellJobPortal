@@ -10,6 +10,9 @@
 
 @media screen and (min-width: 992px) {
     .candidate__After__Selection__Screen .candidate-task-screen-container .project-details-container {
-        margin-top: 6%;
+        margin-top: 0;
+    }
+    .candidate__After__Selection__Screen .candidate-task-screen-container .all__Tasks__Container {
+        padding-bottom: 3%;
     }
 }

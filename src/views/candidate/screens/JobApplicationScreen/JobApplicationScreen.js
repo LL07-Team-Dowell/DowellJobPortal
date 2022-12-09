@@ -24,6 +24,7 @@ import { RiShareBoxFill } from "react-icons/ri";
 import { IoMdShare, IoIosArrowRoundForward } from "react-icons/io";
 import { VscCalendar } from "react-icons/vsc";
 import { BsClock } from "react-icons/bs";
+import { useMediaQuery } from "@mui/material";
 
 const JobApplicationScreen = () => {
     const location = useLocation();
@@ -47,7 +48,8 @@ const JobApplicationScreen = () => {
     const [jobsLoading, setJobsLoading] = useState(true);
     const [ currentUser, setCurrentUser ] = useState(null);
     const [jobSaved, setJobSaved] = useState(false);
-    
+    const isLargeScreen = useMediaQuery("(min-width: 992px)");
+
     const [formPage, setFormPage] = useState(1);
 
     const addToRefsArray = (elem, arrayToAddTo) => {
@@ -311,11 +313,11 @@ const JobApplicationScreen = () => {
                             </div>
                             <div className="job__Share__Items">
                                 <button className={`save__Btn grey__Btn ${jobSaved ? 'active' : ''}`} onClick={() => setJobSaved(!jobSaved)}>
-                                    <span>{jobSaved ? "Saved": "Save"}</span>
+                                    { isLargeScreen && <span>{jobSaved ? "Saved": "Save"}</span> }
                                     <IoBookmarkSharp className="save__Icon" />
                                 </button>
                                 <button className="share__Btn grey__Btn" onClick={() => handleShareBtnClick(currentJob.title, `Apply for ${currentJob.title} on Dowell!`, window.location)}>
-                                    <span>Share</span>
+                                    { isLargeScreen && <span>Share</span> }
                                     <IoMdShare />
                                 </button>
                             </div>
@@ -504,11 +506,11 @@ const JobApplicationScreen = () => {
                             </div>
                             <div className="job__Share__Items">
                                 <button className={`save__Btn grey__Btn ${jobSaved ? 'active' : ''}`} onClick={() => setJobSaved(!jobSaved)}>
-                                    <span>{jobSaved ? "Saved": "Save"}</span>
+                                    { isLargeScreen && <span>{jobSaved ? "Saved": "Save"}</span> }
                                     <IoBookmarkSharp className="save__Icon" />
                                 </button>
                                 <button className="share__Btn grey__Btn" onClick={() => handleShareBtnClick(currentJob.title, `Apply for ${currentJob.title} on Dowell!`, window.location)}>
-                                    <span>Share</span>
+                                    { isLargeScreen && <span>Share</span> }
                                     <IoMdShare />
                                 </button>
                             </div>

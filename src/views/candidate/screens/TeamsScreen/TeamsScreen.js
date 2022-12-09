@@ -1,14 +1,11 @@
-import BottomNavigationBar from "../../../Hr/component/BottomNavigation/BottomNavigation"
+import { useNavigate } from "react-router-dom"
 import { PageUnderConstruction } from "../../../under_construction/ConstructionPage"
-import Navbar from "../../components/Navbar/Navbar"
-import { afterSelectionLinks } from "../../utils/afterSelectionLinks"
 
 const TeamsScreen = () => {
+    const navigate = useNavigate();
     return <>
         
-        <Navbar title={"Teams"} />
         <PageUnderConstruction />
-        <BottomNavigationBar links={afterSelectionLinks} />
 
     </>
 }

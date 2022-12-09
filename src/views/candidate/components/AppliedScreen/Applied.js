@@ -8,13 +8,12 @@ import JobCard from '../../../../components/JobCard/JobCard';
 import { candidateStatuses } from '../../utils/candidateStatuses';
 import { useNavigate } from 'react-router-dom';
 import LoadingSpinner from '../../../admin/components/LoadingSpinner/LoadingSpinner';
+import { useCandidateJobsContext } from '../../../../contexts/CandidateJobsContext';
 
 
 function Applied({ currentUser }) {
   const [ currentNavigationTab, setCurrentNavigationTab ] = useState("Applied");
-  const [appliedJobs, setAppliedJobs] = useState([]);
-  const [currentUserApplications, setCurrentUserApplications] = useState([]);
-  const [userInterviews, setUserInterviews] = useState([]);
+  const { candidateJobs, setCandidateJobs } = useCandidateJobsContext();
   const [ loading, setLoading ] = useState(true);
   const navigate = useNavigate();
   
@@ -22,16 +21,18 @@ function Applied({ currentUser }) {
     const response = await myAxiosInstance.get(routes.Applications);
     const jobsResponse = await myAxiosInstance.get(routes.Jobs);
 
+    if (Array.isArray(candidateJobs.appliedJobs) && candidateJobs.appliedJobs.length > 1) return setLoading(false);
+
     const currentUserApplications = response.data.filter(application => application.applicant === currentUser.username);
     const currentUserAppliedJobs = jobsResponse.data.filter((currentJob) => currentUserApplications.find(({ job }) => currentJob.id === job));
-    setAppliedJobs(currentUserAppliedJobs);
-    setCurrentUserApplications(currentUserApplications);
+    setCandidateJobs((prevJobs) => { return { ...prevJobs, "appliedJobs": currentUserAppliedJobs }});
+    setCandidateJobs((prevJobs) => { return { ...prevJobs, "currentUserApplications": currentUserApplications }});
     return setLoading(false);
   }
 
   const getUserInterviews = async () => {
     const response = await myAxiosInstance.get(routes.Meeting);
-    setUserInterviews(response.data.filter(meeting => meeting.applicant === currentUser.username));
+    setCandidateJobs((prevJobs) => { return { ...prevJobs, "userInterviews": response.data.filter(meeting => meeting.applicant === currentUser.username) }});
     return
   }
 
@@ -48,7 +49,7 @@ function Applied({ currentUser }) {
 
       currentNavigationTab === "Applied" ? <>
         {
-          React.Children.toArray(appliedJobs.map(appliedJob => {
+          React.Children.toArray(candidateJobs.appliedJobs.map(appliedJob => {
             return <JobCard 
               job={appliedJob} 
               showCandidateAppliedJob={true}
@@ -61,16 +62,16 @@ function Applied({ currentUser }) {
 
       currentNavigationTab === "Interview" ? <>
         {
-          React.Children.toArray(userInterviews.map(interview => {
+          React.Children.toArray(candidateJobs.userInterviews.map(interview => {
             return <JobCard 
               job={appliedJobs.find(appliedJob => appliedJob.id === interview.job_applied)} 
               interviewDetails={interview} 
               showCandidateInterview={true}
               guestUser={currentUser.role === process.env.REACT_APP_GUEST_ROLE ? true : false}
-              currentApplicationStatus={currentUserApplications.find(application => application.job === interview.job_applied).status} 
+              currentApplicationStatus={candidateJobs.currentUserApplications.find(application => application.job === interview.job_applied).status} 
               handleBtnClick={
-                () => currentUserApplications.find(application => application.job === interview.job_applied).others[mutableNewApplicationStateNames.hr_discord_link] ? 
-                window.location = currentUserApplications.find(application => application.job === interview.job_applied).others[mutableNewApplicationStateNames.hr_discord_link] : 
+                () => candidateJobs.currentUserApplications.find(application => application.job === interview.job_applied).others[mutableNewApplicationStateNames.hr_discord_link] ? 
+                window.location = candidateJobs.currentUserApplications.find(application => application.job === interview.job_applied).others[mutableNewApplicationStateNames.hr_discord_link] : 
                 () => {}
               }
               buttonText={"Discord"}
@@ -81,10 +82,10 @@ function Applied({ currentUser }) {
 
       currentNavigationTab === "Declined" ? <>
         {
-          React.Children.toArray(appliedJobs.filter(job => job.status === candidateStatuses.REJECTED).map(appliedJob => {
+          React.Children.toArray(candidateJobs.appliedJobs.filter(job => job.status === candidateStatuses.REJECTED).map(appliedJob => {
             return <JobCard 
               job={appliedJob}
-              applicationDetails={currentUserApplications.find(application => application.job === appliedJob.id)}
+              applicationDetails={candidateJobs.currentUserApplications.find(application => application.job === appliedJob.id)}
               showCandidateDeclinedJob={true}
               buttonText={"Closed"}
             />

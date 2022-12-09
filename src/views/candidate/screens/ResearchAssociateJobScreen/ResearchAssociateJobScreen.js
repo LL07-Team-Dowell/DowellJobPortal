@@ -1,3 +1,4 @@
+import { useMediaQuery } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { AiOutlineClose, AiOutlineCloudUpload, AiOutlineLogout } from 'react-icons/ai';
 import { BsInfoCircle } from 'react-icons/bs';
@@ -52,6 +53,7 @@ const ResearchAssociateJobScreen = () => {
     const testSessionId = "haikalsb1234";
     const locationProjectCode = "100074";
     const testUsername = "johnDoe123";
+    const isLargeScreen = useMediaQuery("(min-width: 992px)");
 
     const fetchResearchJobs = async () => {
         try {
@@ -259,7 +261,7 @@ const ResearchAssociateJobScreen = () => {
     return <>
         <nav>
             <div className='candidate__Homepage__Nav__Container research'>
-                <h1 className='nav__Title__Abs'>Join DoWell Team as a Research Associate</h1>
+                { isLargeScreen && <h1 className='nav__Title__Abs'>Join DoWell Team as a Research Associate</h1> }
             </div>
         </nav>
         <main className='candidate__Homepage__Container'>

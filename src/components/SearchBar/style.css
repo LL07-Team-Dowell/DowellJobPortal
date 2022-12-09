@@ -28,3 +28,9 @@
     font-size: 1.4rem;
     color: var(--green-color);
 }
+
+@media screen and (max-width: 991px) {
+    .search__Navigation__Bar {
+        padding: 2%;
+    }
+}

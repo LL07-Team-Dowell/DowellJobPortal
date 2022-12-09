@@ -28,6 +28,10 @@ import SingleJobScreen from './views/candidate/screens/JobApplicationScreen/Sing
 import JobScreen from './views/candidate/components/Job/Job';
 import { useDetectOffline } from './hooks/useDetectOffline';
 import ResearchAssociateJobScreen from './views/candidate/screens/ResearchAssociateJobScreen/ResearchAssociateJobScreen';
+import EmployeeJobScreen from './views/candidate/screens/JobsLandingScreens/EmployeeJobLandingScreen';
+import InternJobScreen from './views/candidate/screens/JobsLandingScreens/InternJobLandingScreen';
+import FreelancerJobScreen from './views/candidate/screens/JobsLandingScreens/FreelancerJobScreen';
+import { CandidateJobsContextProvider } from './contexts/CandidateJobsContext';
 
 function App() {
 
@@ -52,7 +56,10 @@ function App() {
       } />
       <Route path='/jobs/:jobTitle' element={<SingleJobScreen />} />
       <Route path='/jobs' element={<JobScreen />} />
-      <Route exact path='/jobs/research-associate' element={<ResearchAssociateJobScreen />} />
+      <Route exact path='/jobs/c/research-associate' element={<ResearchAssociateJobScreen />} />
+      <Route exact path='/jobs/c/employee' element={<EmployeeJobScreen />} />
+      <Route exact path='/jobs/c/intern' element={<InternJobScreen />} />
+      <Route exact path='/jobs/c/freelancer' element={<FreelancerJobScreen />} />
       <Route path="*" element={<CandidateHomeScreen />} />
 
     </Routes>
@@ -194,7 +201,9 @@ function App() {
       <Route path='/' element={
         <NavigationContextProvider>
           <CandidateTaskContextProvider>
-            <AfterSelectionScreen user={user} assignedProject={assignedProject} />
+            <CandidateJobsContextProvider>
+              <AfterSelectionScreen user={user} assignedProject={assignedProject} />
+            </CandidateJobsContextProvider>
           </CandidateTaskContextProvider>
         </NavigationContextProvider>
       }>
@@ -211,47 +220,62 @@ function App() {
 
       <Route path="/" element={
         <NavigationContextProvider>
-          <CandidateHomeScreen user={user} setHired={setCandidateHired} setAssignedProject={setAssignedProject} />
+          <CandidateJobsContextProvider>
+            <CandidateHomeScreen user={user} setHired={setCandidateHired} setAssignedProject={setAssignedProject} />
+          </CandidateJobsContextProvider>
         </NavigationContextProvider>
       }>
         <Route path=":section" element={
           <NavigationContextProvider>
-            <CandidateHomeScreen />
+            <CandidateJobsContextProvider>
+              <CandidateHomeScreen />
+            </CandidateJobsContextProvider>
           </NavigationContextProvider>
         } />
       </Route>
 
-      <Route path='/jobs' element={<JobScreen currentUser={user} />} />
-      <Route exact path='/jobs/research-associate' element={<ResearchAssociateJobScreen />} />
-      <Route path="/logout" element={<Logout/>}/>
-      <Route path="/alerts" element={<AlertScreen/>}/>
-      <Route path="/user" element={<UserScreen currentUser={user}/>}/>
+      <Route path='/jobs' element={<CandidateJobsContextProvider><JobScreen currentUser={user} /></CandidateJobsContextProvider>} />
+      <Route exact path='/jobs/c/research-associate' element={<CandidateJobsContextProvider><ResearchAssociateJobScreen /></CandidateJobsContextProvider>} />
+      <Route exact path='/jobs/c/employee' element={<CandidateJobsContextProvider><EmployeeJobScreen currentUser={user} /></CandidateJobsContextProvider>} />
+      <Route exact path='/jobs/c/intern' element={<CandidateJobsContextProvider><InternJobScreen currentUser={user} /></CandidateJobsContextProvider>} />
+      <Route exact path='/jobs/c/freelancer' element={<CandidateJobsContextProvider><FreelancerJobScreen currentUser={user} /></CandidateJobsContextProvider>} />
+      <Route path="/logout" element={<CandidateJobsContextProvider><Logout/></CandidateJobsContextProvider>}/>
+      <Route path="/alerts" element={<CandidateJobsContextProvider><AlertScreen/></CandidateJobsContextProvider>}/>
+      <Route path="/user" element={<CandidateJobsContextProvider><UserScreen currentUser={user}/></CandidateJobsContextProvider>}/>
 
       <Route path="/applied" element={ 
         <NavigationContextProvider>
-          <AppliedScreen user={user} />
+          <CandidateJobsContextProvider>
+            <AppliedScreen user={user} />
+          </CandidateJobsContextProvider>
         </NavigationContextProvider>
       } >
         <Route path=":section" element={
           <NavigationContextProvider>
-            <AppliedScreen user={user} />
+            <CandidateJobsContextProvider>
+              <AppliedScreen user={user} />
+            </CandidateJobsContextProvider>
           </NavigationContextProvider>
         } />
       </Route>
       
       <Route path="/apply/job/:id" element={
         <NewApplicationContextProvider>
-            <JobApplicationScreen />
+            <CandidateJobsContextProvider>
+              <JobApplicationScreen />
+            </CandidateJobsContextProvider>
         </NewApplicationContextProvider>
         }>
           <Route path=":section" element={
             <NewApplicationContextProvider>
-                <JobApplicationScreen />
+                <CandidateJobsContextProvider>
+                  <JobApplicationScreen />
+                </CandidateJobsContextProvider>
             </NewApplicationContextProvider>
           } />
       </Route>
 
-      <Route path='/jobs/:jobTitle' element={<SingleJobScreen user={user} />} />
+      <Route path='/jobs/:jobTitle' element={<CandidateJobsContextProvider><SingleJobScreen user={user} /></CandidateJobsContextProvider>} />
       <Route path='*' element={<ErrorPage />} />
 
     </Routes>

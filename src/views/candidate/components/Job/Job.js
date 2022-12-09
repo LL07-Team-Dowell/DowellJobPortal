@@ -5,19 +5,19 @@ import { routes } from '../../../../lib/routes';
 import { Link, useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import { useNavigationContext } from '../../../../contexts/NavigationContext';
 import ErrorPage from '../../../error/ErrorPage';
-import Footer from "../Footer/Footer";
 import LoadingSpinner from '../../../admin/components/LoadingSpinner/LoadingSpinner';
 import { jobKeys } from '../../../admin/utils/jobKeys';
 import TogglerNavMenuBar from '../../../../components/TogglerNavMenuBar/TogglerNavMenuBar';
 import JobCard from '../../../../components/JobCard/JobCard';
 import TitleNavigationBar from '../../../../components/TitleNavigationBar/TitleNavigationBar';
 import { changeToTitleCase } from '../../../../helpers/helpers';
+import { useCandidateJobsContext } from '../../../../contexts/CandidateJobsContext';
 
 
 function JobScreen({ currentUser }) {
     const [jobs, setJobs] = useState([]);
     const [jobsLoading, setJobsLoading] = useState(true);
-    const [appliedJobs, setAppliedJobs] = useState([]);
+    const { candidateJobs } = useCandidateJobsContext();
     const navigate = useNavigate();
     const { section } = useNavigationContext();
     const [ isLoading, setLoading ] = useState(true);
@@ -68,10 +68,6 @@ function JobScreen({ currentUser }) {
 
         const matchedJobs = findJobsMatchingCategory(location.state.jobCategory);
         setJobsMatchingCategory(matchedJobs);
-
-        if (!location.state.appliedJobs) return
-
-        setAppliedJobs(location.state.appliedJobs);
         
     }, [jobs, location, params])
 
@@ -156,7 +152,7 @@ function JobScreen({ currentUser }) {
             isLoading ? <></> :
 
             <>
-                <TitleNavigationBar title={`${changeToTitleCase(currentCategory)} Jobs`} showSearchBar={true} handleBackBtnClick={() => navigate("/home")} />
+                <TitleNavigationBar title={`${changeToTitleCase(currentCategory)} Jobs`} showSearchBar={true} handleBackBtnClick={() => currentCategory ? navigate(-1) : navigate("/home")} />
 
                 <div className='candidate__Jobs__Container'>
                     {
@@ -182,8 +178,8 @@ function JobScreen({ currentUser }) {
                                             job={job} 
                                             candidateViewJob={true}
                                             subtitle={currentCategory} 
-                                            disableActionBtn={appliedJobs.find(appliedJob => appliedJob.job === job.id ) == undefined ? false : true} 
-                                            buttonText={appliedJobs.find(appliedJob => appliedJob.job === job.id ) == undefined ? "Apply" : "Applied"} 
+                                            disableActionBtn={currentUser ? candidateJobs.appliedJobs.find(appliedJob => appliedJob.job === job.id ) == undefined ? false : true : false} 
+                                            buttonText={currentUser ? candidateJobs.appliedJobs.find(appliedJob => appliedJob.job === job.id ) == undefined ? "Apply" : "Applied": "Apply"} 
                                             handleBtnClick={(job) => handleApplyButtonClick(job)}
                                         /> 
                                     }))
@@ -195,8 +191,6 @@ function JobScreen({ currentUser }) {
                         }
                     </div>
                 </div>
-                    
-                {currentUser && <Footer currentCategory={currentCategory} />}
             </>
         }
  

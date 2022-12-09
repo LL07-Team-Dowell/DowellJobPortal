@@ -232,6 +232,33 @@
     cursor: not-allowed;
 }
 
+@media screen and (max-width: 991px) {
+    .candidate__Homepage__Container .research__Content__Container {
+        flex-direction: column;
+    }
+    .candidate__Homepage__Container .research__Content__Container .research__Location__SideBar {
+        width: 100%;
+    }
+    .candidate__Homepage__Container .research__Content__Container .research__Location__SideBar__Outline {
+        margin-top: 6%;
+        padding-bottom: 14%;
+    }
+    .candidate__Homepage__Container .research__Content__Container .research__Location__Map {
+        width: 100%;
+        height: 100%;
+        flex-grow: 1;
+    }
+    .candidate__Homepage__Container .research__Content__Container .research__Location__SideBar .logo__Img__Container {
+        width: 20%;
+        top: -2rem;
+        margin-right: auto;
+        margin-left: 5%;
+    }
+    .candidate__Homepage__Nav__Container.research {
+        height: 3.8rem;
+    }
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
