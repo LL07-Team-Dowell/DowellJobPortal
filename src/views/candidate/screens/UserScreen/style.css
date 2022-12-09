@@ -1,7 +1,13 @@
+.candidate__User__Profile__Page {
+    margin-top: 2%;
+}
+
 .user__Page__Container.user {
     width: 80%;
     margin: 16% auto 0;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    background-color: #F3F8F4;
+    border-radius: 10px;
 }
 
 .user__Page__Container .user__Intro__Item__Container {
@@ -52,8 +58,10 @@
 
 @media screen and (min-width: 992px) {
     .user__Page__Container.user {
-        width: 84%;
+        width: 80%;
         margin-top: 7%;
+        padding: 4%;
+        margin-bottom: 12%
     }
 
     .user__Page__Container .user__Intro__Item__Container .user__Intro__Item{

@@ -1,6 +1,7 @@
 .candidate__Homepage__Nav__Container {
     background-color: #008037;
     height: 5rem;
+    position: relative;
 }
 
 .candidate__Homepage__Container img {
@@ -90,6 +91,14 @@
     backdrop-filter: blur(100px);
 }
 
+.candidate__Homepage__Nav__Container .login__Link {
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 3.5%;
+}
+
 @media (min-width: 768px) and (max-width: 991.98px) {
     .container-wrapper .home__Title__Text {
         width: 85%;
@@ -162,5 +171,8 @@
     .candidate__Homepage__Container .side__Content p {
         margin-top: 8%;
         width: 95%;
+    }
+    .candidate__Homepage__Nav__Container .login__Link {
+        right: 3.5%;
     }
 }
