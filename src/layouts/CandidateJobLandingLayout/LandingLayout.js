@@ -13,7 +13,7 @@ import TitleNavigationBar from "../../components/TitleNavigationBar/TitleNavigat
 import { afterSelectionLinks, loggedInCandidateNavLinks } from "../../views/candidate/utils/afterSelectionLinks";
 import { dowellLoginUrl } from "../../lib/axios";
 
-const JobLandingLayout = ({ children, user, afterSelection }) => {
+const JobLandingLayout = ({ children, user, afterSelection, hideSideNavigation }) => {
     const [ searchValue, setSearchValue ] = useState("");
     const isLargeScreen = useMediaQuery("(min-width: 992px)");
     const [ screenTitle, setScreenTitle ] = useState("Tasks");
@@ -66,7 +66,7 @@ const JobLandingLayout = ({ children, user, afterSelection }) => {
         </nav>
         <main>
             <div className="jobs__Layout__Content__Container">
-                { user && <NewSideNavigationBar links={afterSelection ? afterSelectionLinks : loggedInCandidateNavLinks} /> }
+                { !hideSideNavigation && user && <NewSideNavigationBar links={afterSelection ? afterSelectionLinks : loggedInCandidateNavLinks} /> }
                 <div className="jobs__Layout__Content">
                     { children }
                 </div>

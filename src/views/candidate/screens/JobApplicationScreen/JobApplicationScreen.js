@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import CustomHr from "../../../teamlead/components/CustomHr/CustomHr";
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import { dowellLoginUrl, myAxiosInstance } from "../../../../lib/axios";
 import { AiOutlineDown, AiOutlinePlayCircle } from "react-icons/ai";

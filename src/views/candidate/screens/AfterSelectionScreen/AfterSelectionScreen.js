@@ -20,7 +20,7 @@ const AfterSelectionScreen = ({ user, assignedProject }) => {
     return <>
         {
             section === undefined || section === "tasks" ? <>
-                <JobLandingLayout user={user} afterSelection={true}>
+                <JobLandingLayout user={user} afterSelection={true} hideSideNavigation={showAddTaskModal}>
                 {
                     showAddTaskModal && <AddTaskScreen teamMembers={[]} afterSelectionScreen={true} currentUser={user.username} closeTaskScreen={() => setShowAddTaskModal(false)} updateTasks={setUserTasks} />
                 }
