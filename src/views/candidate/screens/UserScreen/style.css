@@ -4,7 +4,7 @@
 
 .user__Page__Container.user {
     width: 80%;
-    margin: 16% auto 0;
+    margin: 3% auto 60%;
     font-family: 'Poppins', sans-serif;
     /* background-color: #F3F8F4; */
     border-radius: 10px;
@@ -71,6 +71,7 @@
     }   
     .user__Page__Container.user {
         margin-top: 8%;
+        margin-bottom: 6%;
     } 
     .user__Page__Container .logout__Btn {
         padding: 2% 4%;

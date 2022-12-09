@@ -7,7 +7,7 @@
 .add__New__Task__Overlay{
     background: var(--background-blur);
     backdrop-filter: blur(30px);
-    height: 100%;
+    height: 100vmax;
     width: 100%;
     position: fixed;
     top: 0;
