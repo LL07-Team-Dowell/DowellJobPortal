@@ -15,7 +15,7 @@ const EmployeeJobScreen = ({ currentUser }) => {
     const navigate = useNavigate();
     
     const handleJobCategoryCardClick = () => {
-        navigate("/jobs", { state: { jobCategory: "Employee" }})
+        navigate("/jobs?jobCategory=Employee")
     }
 
     const handlePlayBtnClick = () => {

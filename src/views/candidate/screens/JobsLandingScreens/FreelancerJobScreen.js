@@ -15,7 +15,7 @@ const FreelancerJobScreen = ({ currentUser }) => {
     const navigate = useNavigate();
 
     const handleJobCategoryCardClick = () => {
-        navigate("/jobs", { state: { jobCategory: "Freelancer" }})
+        navigate("/jobs?jobCategory=Freelancer")
     }
 
     const handlePlayBtnClick = () => {

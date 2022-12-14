@@ -16,7 +16,7 @@ const InternJobScreen = ({ currentUser }) => {
     
     const handleJobCategoryCardClick = (category) => {
         console.log("stream -> ", category)
-        navigate("/jobs", { state: { jobCategory: "Intern" }})
+        navigate(`/jobs?jobCategory=Intern&stream=${encodeURIComponent(category)}`)
     }
 
     const handlePlayBtnClick = () => {
