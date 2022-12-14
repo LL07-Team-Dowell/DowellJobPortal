@@ -1,14 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Hr_JobScreen.css';
-import Search from '../../component/Search/Search';
-import { hrNavigationLinks } from '../hrNavigationLinks';
-import BottomNavigationBar from '../../component/BottomNavigation/BottomNavigation';
-import JobTile from '../../../teamlead/components/JobTile/JobTile';
 import { myAxiosInstance } from '../../../../lib/axios';
 import { useNavigationContext } from '../../../../contexts/NavigationContext';
-import NavigationBar from '../../../teamlead/components/NavigationBar/NavigationBar';
-import useClickOutside from '../../../../hooks/useClickOutside';
-import SideNavigationBar from '../../../account/components/SideNavigationBar/SideNavigationBar';
 import ShortlistedScreen from '../ShortlistedScreen/ShortlistedScreen';
 import { useLocation, useNavigate } from 'react-router-dom';
 import SelectedCandidates from '../../../teamlead/components/SelectedCandidates/SelectedCandidates';
@@ -25,7 +18,10 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddTaskScreen from '../../../teamlead/screens/AddTaskScreen/AddTaskScreen';
 import TaskScreen from '../../../teamlead/screens/TaskScreen/TaskScreen';
 import AttendanceScreen from '../AttendanceScreen/AttendanceScreen';
-
+import TitleNavigationBar from '../../../../components/TitleNavigationBar/TitleNavigationBar';
+import TogglerNavMenuBar from '../../../../components/TogglerNavMenuBar/TogglerNavMenuBar';
+import JobCard from '../../../../components/JobCard/JobCard';
+import StaffJobLandingLayout from '../../../../layouts/StaffJobLandingLayout/StaffJobLandingLayout';
 
 
 function Hr_JobScreen({ currentUser }) {
@@ -33,8 +29,6 @@ function Hr_JobScreen({ currentUser }) {
   const { section, sub_section, path, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
   const [jobs, setJobs] = useState([]);
   const [ appliedJobs, setAppliedJobs ] = useState([]);
-  const sideNavbarRef = useRef(null);
-  const [sideNavbarActive, setSideNavbarActive] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const [jobSearchInput, setJobSearchInput] = useState("");
@@ -55,9 +49,8 @@ function Hr_JobScreen({ currentUser }) {
   const [ sortResults, setSortResults ] = useState([]);
   const [ showCurrentCandidateAttendance, setShowCurrentCandidateAttendance ] = useState(false);
   const [ guestApplications, setGuestApplications ] = useState([]);
+  const [ currentActiveItem, setCurrentActiveItem ] = useState("Received");
   
-  useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
-
   const getJobs = async () => {
 
     const response = await myAxiosInstance.get(routes.Jobs);
@@ -78,7 +71,7 @@ function Hr_JobScreen({ currentUser }) {
   const getProjects = async () => {
     const response = await myAxiosInstance.get(routes.Projects);
     setCurrentProjects(response.data.map(project => project.project_name));
-    return
+    return setLoading(false);
   }
 
   const getTasks = async () => {
@@ -118,7 +111,6 @@ function Hr_JobScreen({ currentUser }) {
     getJobs();
     getProjects();
     getTasks();
-    setLoading(false);
 
   }, [])
 
@@ -145,7 +137,13 @@ function Hr_JobScreen({ currentUser }) {
   useEffect(() => {
 
     setShowCurrentCandidateTask(false);
+    const currentPath = location.pathname.split("/")[1];
     
+    if (!currentPath) return setCurrentActiveItem("Received");
+    if (currentPath === "guest-applications") return setCurrentActiveItem("Guests");
+    if (currentPath === "shortlisted") return setCurrentActiveItem("Shortlisted");
+    if (currentPath === "" || currentPath === "home") return setCurrentActiveItem("Received");
+
   }, [location])
 
   useEffect(() => {
@@ -214,19 +212,36 @@ function Hr_JobScreen({ currentUser }) {
 
   }, [currentSortOption])
 
+  const handleMenuItemClick = (item) => {
+    if (item === "Guests") return navigate("/guest-applications");
+    if (item === "Shortlisted") return navigate("/shortlisted");
+    
+    navigate("/");
+  }
+
+  const handleTaskItemClick = (data) => {
+    setCurrentTeamMember(data.user);
+    setShowCurrentCandidateTask(true);
+  }
+
+  const handleAttendanceItemClick = (data) => {
+    setCurrentTeamMember(data.user);
+    setShowCurrentCandidateAttendance(true);
+  }
+
+  const hideTaskAndAttendaceView = () => {
+    setShowCurrentCandidateAttendance(false);
+    setShowCurrentCandidateTask(false);
+  }
+
   return (
-    <>
+    <StaffJobLandingLayout hrView={true} runExtraFunctionOnNavItemClick={hideTaskAndAttendaceView} hideSideBar={showAddTaskModal}>
+    <div className="hr__Page__Container">
+    <TitleNavigationBar className={path === undefined ? "": "view__Application__Navbar"} title={path === undefined ? section === "user" ? "Profile" : section === "tasks" ? "Tasks" : section === "attendance" ? "Attendance" : "Applications" : "Application Details"} hideBackBtn={path === undefined && sub_section === undefined ? true : false} handleBackBtnClick={() => navigate(-1)} />
+    { section !== "user" && section !== "attendance" && section !== "tasks" && path === undefined && sub_section === undefined && <TogglerNavMenuBar menuItems={["Received", "Guests", "Shortlisted"]} currentActiveItem={currentActiveItem} handleMenuItemClick={handleMenuItemClick} /> }
     {
       sub_section === undefined && section === "home" || section === undefined ? <>
         <div className='hr__wrapper'>
-          <NavigationBar 
-            title={'Jobs'} 
-            className={'hr_navigation'} 
-            handleMenuIconClick={() => setSideNavbarActive(true)}
-          />
-          <div className='search'>
-            <Search searchValue={jobSearchInput} updateSearchValue={setJobSearchInput} />
-          </div>
 
           {
             isLoading ? <LoadingSpinner /> :
@@ -237,13 +252,27 @@ function Hr_JobScreen({ currentUser }) {
                 
                 React.Children.toArray(matchedJobs.map(job => {
                   return <>
-                    <JobTile jobData={job} routeToJob={true} handleJobTileClick={() => goToJobDetails(job, appliedJobs.filter(application => application.job === job.id))} candidateForJobCount={appliedJobs.filter(application => application.job === job.id).length} />
+                    <JobCard 
+                      job={job}
+                      subtitle={job.typeof}
+                      buttonText={"View"}
+                      viewJobApplicationDetails={true}
+                      applicationsCount={appliedJobs.filter(application => application.job === job.id).length}
+                      handleBtnClick={() => goToJobDetails(job, appliedJobs.filter(application => application.job === job.id))}
+                    />
                   </>
                 })) :
 
                 React.Children.toArray(jobs.map(job => {
                   return <>
-                    <JobTile jobData={job} routeToJob={true} handleJobTileClick={() => goToJobDetails(job, appliedJobs.filter(application => application.job === job.id))} candidateForJobCount={appliedJobs.filter(application => application.job === job.id).length} />
+                    <JobCard 
+                      job={job}
+                      subtitle={job.typeof}
+                      buttonText={"View"}
+                      viewJobApplicationDetails={true}
+                      applicationsCount={appliedJobs.filter(application => application.job === job.id).length}
+                      handleBtnClick={() => goToJobDetails(job, appliedJobs.filter(application => application.job === job.id))}
+                    />
                   </>
                 }))
               }
@@ -255,13 +284,6 @@ function Hr_JobScreen({ currentUser }) {
       </> :
       
       <>
-        <NavigationBar
-          handleMenuIconClick={() => setSideNavbarActive(true)}
-          className={'hr_navigation'}
-          title={section === "shortlisted" ? "Shortlisted" : section === "user" ? "User" : section === "guest-applications" ? "Guest Applications" : ""}
-          changeToBackIcon={sub_section !== undefined ? true : section === "tasks" && showCurrentCandidateTask ? true : section === "attendance" && showCurrentCandidateAttendance ? true : false}
-          handleBackIconClick={section === "tasks" && showCurrentCandidateTask ? () => setShowCurrentCandidateTask(false) : section === "attendance" && showCurrentCandidateAttendance ? () => setShowCurrentCandidateAttendance(false) : () => navigate(-1)}
-        />
         
         { 
 
@@ -276,10 +298,6 @@ function Hr_JobScreen({ currentUser }) {
               isLoading ? <LoadingSpinner /> :
 
               <div className='hr__wrapper'>
-          
-                <div className='search'>
-                  <Search searchValue={jobSearchInput} updateSearchValue={setJobSearchInput} />
-                </div>
 
                 <div className='job__wrapper'>
                   {
@@ -287,13 +305,27 @@ function Hr_JobScreen({ currentUser }) {
                     
                     React.Children.toArray(matchedJobs.map(job => {
                       return <>
-                        <JobTile jobData={job} routeToJob={true} handleJobTileClick={() => goToGuestJobDetails(job, guestApplications.filter(application => application.job === job.id))} candidateForJobCount={guestApplications.filter(application => application.job === job.id).length} />
+                        <JobCard 
+                          job={job}
+                          subtitle={job.typeof}
+                          buttonText={"View"}
+                          viewJobApplicationDetails={true}
+                          applicationsCount={guestApplications.filter(application => application.job === job.id).length}
+                          handleBtnClick={() => goToGuestJobDetails(job, guestApplications.filter(application => application.job === job.id))}
+                        />
                       </>
                     })) :
 
                     React.Children.toArray(jobs.map(job => {
                       return <>
-                        <JobTile jobData={job} routeToJob={true} handleJobTileClick={() => goToGuestJobDetails(job, guestApplications.filter(application => application.job === job.id))} candidateForJobCount={guestApplications.filter(application => application.job === job.id).length} />
+                        <JobCard 
+                          job={job}
+                          subtitle={job.typeof}
+                          buttonText={"View"}
+                          viewJobApplicationDetails={true}
+                          applicationsCount={guestApplications.filter(application => application.job === job.id).length}
+                          handleBtnClick={() => goToGuestJobDetails(job, guestApplications.filter(application => application.job === job.id))}
+                        />
                       </>
                     }))
                   }
@@ -337,7 +369,13 @@ function Hr_JobScreen({ currentUser }) {
                             <div className="tasks-container hr__Page sort__Active">
                               {
                                 React.Children.toArray(result.data.map(dataitem => {
-                                  return <JobTile showTask={true} setShowCandidateTask={setShowCurrentCandidateAttendance} taskData={dataitem} handleJobTileClick={setCurrentTeamMember} />
+                                  return <JobCard
+                                    buttonText={"View"}
+                                    candidateCardView={true}
+                                    candidateData={dataitem}
+                                    taskView={true}
+                                    handleBtnClick={handleAttendanceItemClick}
+                                  />
                                 }))
                               }
                             </div>
@@ -354,7 +392,13 @@ function Hr_JobScreen({ currentUser }) {
                 <div className="tasks-container hr__Page">
                   {
                     React.Children.toArray(allTasks.map(dataitem => {
-                      return <JobTile showTask={true} setShowCandidateTask={setShowCurrentCandidateAttendance} taskData={dataitem} handleJobTileClick={setCurrentTeamMember} />
+                      return <JobCard
+                        buttonText={"View"}
+                        candidateCardView={true}
+                        candidateData={dataitem}
+                        taskView={true}
+                        handleBtnClick={handleAttendanceItemClick}
+                      />
                     }))
                   }
                 </div>
@@ -403,7 +447,13 @@ function Hr_JobScreen({ currentUser }) {
                                 <div className="tasks-container hr__Page sort__Active">
                                   {
                                     React.Children.toArray(result.data.map(dataitem => {
-                                      return <JobTile showTask={true} setShowCandidateTask={setShowCurrentCandidateTask} taskData={dataitem} handleJobTileClick={setCurrentTeamMember} />
+                                      return <JobCard
+                                        buttonText={"View"}
+                                        candidateCardView={true}
+                                        candidateData={dataitem}
+                                        taskView={true}
+                                        handleBtnClick={handleTaskItemClick}
+                                      />
                                     }))
                                   }
                                   
@@ -422,7 +472,13 @@ function Hr_JobScreen({ currentUser }) {
                     <div className="tasks-container hr__Page">
                       {
                         React.Children.toArray(allTasks.map(dataitem => {
-                          return <JobTile showTask={true} setShowCandidateTask={setShowCurrentCandidateTask} taskData={dataitem} handleJobTileClick={setCurrentTeamMember} />
+                          return <JobCard
+                            buttonText={"View"}
+                            candidateCardView={true}
+                            candidateData={dataitem}
+                            taskView={true}
+                            handleBtnClick={handleTaskItemClick}
+                          />
                         }))
                       }
                       <Button text={"Add Task"} icon={<AddCircleOutlineIcon />} handleClick={() => setShowAddTaskModal(true)} />
@@ -457,7 +513,13 @@ function Hr_JobScreen({ currentUser }) {
             <div className='hr__Job__Tile__Container'>
               {
                 React.Children.toArray(location.state.appliedCandidates.map(candidate => {
-                  return <JobTile hrPageActive={true} jobsSkills={location.state.job.skills} candidateData={candidate} setShowCandidate={() => {}} handleJobTileClick={goToJobApplicationDetails} />
+                  return <JobCard
+                    buttonText={"View"}
+                    candidateCardView={true}
+                    candidateData={candidate}
+                    handleBtnClick={goToJobApplicationDetails}
+                    jobAppliedFor={jobs.find(job => job.id === candidate.job) ? jobs.find(job => job.id === candidate.job).title : ""}
+                  />
                 }))
               }
             </div>
@@ -502,21 +564,8 @@ function Hr_JobScreen({ currentUser }) {
       <></>
     }
 
-    {
-      sideNavbarActive && 
-      <SideNavigationBar 
-        className={'hr_side_navigation'}
-        sideNavRef={sideNavbarRef} 
-        closeSideNavbar={() => setSideNavbarActive(false)}
-        isNotificationEnabled={isNotificationEnabled}
-        setNotificationStatus={() => setNotificationStatus(prevValue => { return !prevValue })}
-        hrPageActive={true}
-      />
-    }
-
-    <BottomNavigationBar links={hrNavigationLinks} />
-
-    </>
+    </div>
+    </StaffJobLandingLayout>
   )
 }
 

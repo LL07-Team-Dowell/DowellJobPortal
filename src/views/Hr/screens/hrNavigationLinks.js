@@ -1,18 +1,21 @@
-import { FiHome, FiUser } from "react-icons/fi";
-import {CgFileDocument} from "react-icons/cg";
-
+import { FiHome } from "react-icons/fi";
+import { ImStack } from "react-icons/im";
+import { IoCalendarOutline } from "react-icons/io5";
 
 export const hrNavigationLinks = [
     {
-        address: "home",
+        linkAddress: "/",
         icon: <FiHome />,
+        text: "Home",
     },
     {
-        address: "shortlisted",
-        icon: <CgFileDocument />
+        linkAddress: "/tasks",
+        icon: <ImStack />,
+        text: "Tasks"
     },
     {
-        address: "user",
-        icon: <FiUser />
+        linkAddress: "/attendance",
+        icon: <IoCalendarOutline />,
+        text: "Attendance",
     }
 ]

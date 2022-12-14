@@ -1,8 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./style.css";
 
-const NewSideNavigationBar = ({ links }) => {
+const NewSideNavigationBar = ({ links, runExtraFunctionOnNavItemClick }) => {
+    
+    const navigate = useNavigate();
+
+    const handleNavItemClick = (e, addressToNavigateTo) => {
+        e.preventDefault();
+        
+        if (runExtraFunctionOnNavItemClick && typeof runExtraFunctionOnNavItemClick === "function") runExtraFunctionOnNavItemClick();
+
+        navigate(addressToNavigateTo)
+    }
+
     return <>
         <div className="new__Side__Navigation__Bar">
             {
@@ -15,7 +26,7 @@ const NewSideNavigationBar = ({ links }) => {
                                 if (!link.linkAddress) return <></>
 
                                 return <li>
-                                    <Link to={link.linkAddress}>
+                                    <Link to={link.linkAddress} onClick={(e) => handleNavItemClick(e, link.linkAddress)}>
                                         {link.icon ? link.icon : <></>}
                                         {link.text ? <span>{link.text}</span> : <></>}
                                     </Link>

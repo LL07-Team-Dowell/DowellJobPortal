@@ -7,8 +7,8 @@ const TogglerNavMenuBar = ({ menuItems, className, handleMenuItemClick, currentA
     return <div className={`toggler_Nav_Container ${className ? className : ''}`}>
         {
             React.Children.toArray(menuItems.map(item => {
-                return <div className={`toggler_Nav_Item ${currentActiveItem === item ? 'active' : ''}`} onClick={handleMenuItemClick ? () => handleMenuItemClick(item) : () => {}}>
-                    <span>{item}</span>
+                return <div className={`toggler_Nav_Item ${currentActiveItem === item ? 'active' :  typeof item === "object" && item.text ? currentActiveItem === item.text ? 'active' : '' : ''}`} onClick={handleMenuItemClick ? () => handleMenuItemClick(item) : () => {}}>
+                    <span>{typeof item === "object" && item.icon ? item.icon : item}</span>
                 </div>
             }))
         }

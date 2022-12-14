@@ -54,6 +54,10 @@
     padding-left: 3%;
 }
 
+.job__Card__Container .job__Details__Info.task__View {
+    padding-left: 0;
+}
+
 .job__Card__Container .job__Details__Info.mt__5 {
     margin-top: 5%;
 }
@@ -64,6 +68,14 @@
     justify-content: flex-start;
     width: 50%;
     flex-wrap: wrap;
+}
+
+.job__Card__Container .job__Details__Info.task__View .detail__Item {
+    width: 100%;
+}
+
+.job__Card__Container .job__Details__Info .detail__Item.full__Width {
+    width: 100%;
 }
 
 .job__Card__Container .job__Details__Info .detail__Item > *:not(:last-child) {
@@ -121,6 +133,12 @@
     justify-content: space-between;
     font-size: 0.9rem;
     font-family: "Poppins", sans-serif;
+}
+
+.job__Card__Container .cta__Button.rel {
+    position: relative;
+    margin-left: auto;
+    margin-top: 3%;
 }
 
 .job__Card__Container .cta__Button span {

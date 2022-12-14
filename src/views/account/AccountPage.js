@@ -1,22 +1,23 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { myAxiosInstance } from "../../lib/axios";
 import { useCandidateContext, initialCandidatesDataStateNames } from "../../contexts/CandidatesContext";
 import { useNavigationContext } from "../../contexts/NavigationContext";
 import { candidateDataReducerActions } from "../../reducers/CandidateDataReducer";
 import ErrorPage from "../error/ErrorPage";
-import BottomNavigationBar from "../teamlead/components/BottomNavigationBar/BottomNavigationBar";
-import JobTile from "../teamlead/components/JobTile/JobTile";
-import NavigationBar from "../teamlead/components/NavigationBar/NavigationBar";
-import NavigationItemSelection from "../teamlead/components/NavigationItemSelection/NavigationItemSelection";
 import SelectedCandidates from "../teamlead/components/SelectedCandidates/SelectedCandidates";
 import SelectedCandidatesScreen from "../teamlead/screens/SelectedCandidatesScreen/SelectedCandidatesScreen";
 import RejectedCandidates from "./components/RejectedCandidates/RejectedCandidates";
-import SideNavigationBar from "./components/SideNavigationBar/SideNavigationBar";
-import useClickOutside from "../../hooks/useClickOutside";
 import { routes } from "../../lib/routes";
 import { candidateStatuses } from "../candidate/utils/candidateStatuses";
 import UserScreen from "./screens/UserScreen/UserScreen";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import StaffJobLandingLayout from "../../layouts/StaffJobLandingLayout/StaffJobLandingLayout";
+import TitleNavigationBar from "../../components/TitleNavigationBar/TitleNavigationBar";
+import TogglerNavMenuBar from "../../components/TogglerNavMenuBar/TogglerNavMenuBar";
+import JobCard from "../../components/JobCard/JobCard";
+import { useMediaQuery } from "@mui/material";
+import { BsPersonCheck, BsPersonPlus, BsPersonX } from "react-icons/bs";
+import { AiOutlineRedo } from "react-icons/ai";
 
 const AccountPage = ({ currentUser }) => {
     const { section, searchParams, isNotificationEnabled, setNotificationStatus } = useNavigationContext();
@@ -26,13 +27,12 @@ const AccountPage = ({ currentUser }) => {
     const [ rehireTabActive, setRehireTabActive ] = useState(false);
     const [ hireTabActive, setHireTabActive ] = useState(false);
     const [ showOnboarding, setShowOnboarding ] = useState(false);
-    const [ isSideNavbarActive, setSideNavbarActive ] = useState(false);
-    const sideNavbarRef = useRef(null);
     const [jobs, setJobs] = useState([]);
     const [showApplicationDetails, setShowApplicationDetails] = useState(false);
     const location = useLocation();
-
-    useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
+    const [ currentActiveItem, setCurrentActiveItem ] = useState("Hire");
+    const navigate = useNavigate();
+    const isLargeScreen = useMediaQuery("(min-width: 992px)");
 
     async function getAccount (){
         const response = await myAxiosInstance.get(routes.Accounts_View);
@@ -90,6 +90,7 @@ const AccountPage = ({ currentUser }) => {
             setRehireTabActive(true);
             setHireTabActive(false);
             setShowOnboarding(false);
+            setCurrentActiveItem("Rehire");
             return
         }
 
@@ -97,6 +98,7 @@ const AccountPage = ({ currentUser }) => {
             setShowOnboarding(true);
             setHireTabActive(false);
             setRehireTabActive(false);
+            setCurrentActiveItem("Onboarding");
             return
         }
 
@@ -110,25 +112,36 @@ const AccountPage = ({ currentUser }) => {
 
         setShowCandidate(false);
 
+        const currentPath = location.pathname.split("/")[1];
+        const currentTab = searchParams.get("tab");
+
+        if (!currentPath && !currentTab) return setCurrentActiveItem("Hire");
+        if (currentPath && currentPath === "rejected") return setCurrentActiveItem("Reject")
+
     }, [location])
 
+    const handleMenuItemClick = (item) => {
+        typeof item === "object" ? setCurrentActiveItem(item.text) : setCurrentActiveItem(item);
+        
+        if (item === "Reject") return navigate("/rejected")
+        
+        const passedItemInLowercase = typeof item === "object" ? item.text.toLocaleLowerCase(): item.toLocaleLowerCase();
+        return navigate(`/?tab=${passedItemInLowercase}`);
+    }
+
+    const handleBackBtnClick = () => {
+        setShowCandidate(false);
+    }
+
+    const handleViewBtnClick = (passedData) => {
+        setShowCandidate(true);
+        setCurrentCandidate(passedData);
+    }
+
     return <>
-        <NavigationBar 
-            showCandidate={showCandidate} 
-            setShowCandidate={setShowCandidate} 
-            handleMenuIconClick={() => setSideNavbarActive(true)} 
-        />
-
-        {
-            isSideNavbarActive && 
-            <SideNavigationBar 
-                sideNavRef={sideNavbarRef}
-                closeSideNavbar={() => setSideNavbarActive(false)} 
-                isNotificationEnabled={isNotificationEnabled}
-                setNotificationStatus={() => setNotificationStatus(prevValue => { return !prevValue } )}
-            />
-        }
-
+        <StaffJobLandingLayout accountView={true}>
+        <TitleNavigationBar title={showCandidate ? "Application Details" : section === "user" ? "Profile" : "Applications"} hideBackBtn={!showCandidate ? true : false} handleBackBtnClick={handleBackBtnClick} />
+        { section !== "user" && !showCandidate && <TogglerNavMenuBar menuItems={isLargeScreen ? ["Hire", "Onboarding", "Rehire", "Reject"] : [{icon: <BsPersonPlus />, text: "Hire"}, {icon: <BsPersonCheck />, text: "Onboarding"}, {icon: <AiOutlineRedo />, text: "Rehire"}, {icon: <BsPersonX />, text: "Reject"}]} currentActiveItem={currentActiveItem} handleMenuItemClick={handleMenuItemClick} /> }
         {   
             section === "home" || section == undefined ?
             showCandidate ? 
@@ -148,12 +161,11 @@ const AccountPage = ({ currentUser }) => {
                     []
                 }
                 jobTitle={jobs.filter(job => job.id === currentCandidate.job).length >=1 ? jobs.filter(job => job.id === currentCandidate.job)[0].title : ""}
-                showApplicationDetails={showApplicationDetails}
+                showApplicationDetails={true}
                 handleViewApplicationBtnClick={() => setShowApplicationDetails(!showApplicationDetails)}
             /> 
             
             : <>
-                <NavigationItemSelection items={["Hire", "Onboarding", "Rehire"]} searchParams={searchParams} />
                 <SelectedCandidates 
                     candidatesCount={
                         hireTabActive ? candidatesData.candidatesToHire.length :
@@ -167,19 +179,37 @@ const AccountPage = ({ currentUser }) => {
                     {
                         hireTabActive ?
                         React.Children.toArray(candidatesData.candidatesToHire.map(dataitem => {
-                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} jobTitle={jobs.filter(job => job.id === dataitem.job).length >=1 ? jobs.filter(job => job.id === dataitem.job)[0].title : ""} />
+                            return <JobCard
+                                buttonText={"View"}
+                                candidateCardView={true}
+                                candidateData={dataitem}
+                                jobAppliedFor={jobs.find(job => job.id === dataitem.job) ? jobs.find(job => job.id === dataitem.job).title : ""}
+                                handleBtnClick={handleViewBtnClick}
+                            />
                         })) : 
                         
                         showOnboarding ? 
 
                         React.Children.toArray(candidatesData.onboardingCandidates.map(dataitem => {
-                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} jobTitle={jobs.filter(job => job.id === dataitem.job).length >=1 ? jobs.filter(job => job.id === dataitem.job)[0].title : ""} />
+                            return <JobCard
+                                buttonText={"View"}
+                                candidateCardView={true}
+                                candidateData={dataitem}
+                                jobAppliedFor={jobs.find(job => job.id === dataitem.job) ? jobs.find(job => job.id === dataitem.job).title : ""}
+                                handleBtnClick={handleViewBtnClick}
+                            />
                         })) :
                         
                         rehireTabActive ? 
                         
                         React.Children.toArray(candidatesData.candidatesToRehire.map(dataitem => {
-                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} jobTitle={jobs.filter(job => job.id === dataitem.job).length >=1 ? jobs.filter(job => job.id === dataitem.job)[0].title : ""} />
+                            return <JobCard
+                                buttonText={"View"}
+                                candidateCardView={true}
+                                candidateData={dataitem}
+                                jobAppliedFor={jobs.find(job => job.id === dataitem.job) ? jobs.find(job => job.id === dataitem.job).title : ""}
+                                handleBtnClick={handleViewBtnClick}
+                            />
                         })) : 
 
                         <></>
@@ -193,7 +223,13 @@ const AccountPage = ({ currentUser }) => {
                 <div className="jobs-container">
                     {
                         React.Children.toArray(candidatesData.rejectedCandidates.map(dataitem => {
-                            return  <JobTile disableClick={true} candidateData={dataitem} jobTitle={jobs.filter(job => job.id === dataitem.job).length >=1 ? jobs.filter(job => job.id === dataitem.job)[0].title : ""} />
+                            return <JobCard
+                                buttonText={"View"}
+                                candidateCardView={true}
+                                candidateData={dataitem}
+                                jobAppliedFor={jobs.find(job => job.id === dataitem.job) ? jobs.find(job => job.id === dataitem.job).title : ""}
+                                handleBtnClick={handleViewBtnClick}
+                            />
                         }))
                     }
                 </div>
@@ -204,15 +240,7 @@ const AccountPage = ({ currentUser }) => {
             </>
 
         }
-
-        <BottomNavigationBar
-            updateNav={showCandidate ? setShowCandidate : () => {} }
-            currentPage={'account'}
-            firstLink={'home'}
-            secondLink={'rejected'}
-            thirdLink={'user'}
-            changeSecondIcon={true}
-         />
+        </StaffJobLandingLayout>
     </>
 }
 

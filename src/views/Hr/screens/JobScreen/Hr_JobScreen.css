@@ -58,6 +58,28 @@
   padding-bottom: 5%;
 }
 
+.title__Navigation__Bar__Container {
+  margin-top: 0;
+}
+
+.hr__wrapper {
+  margin-top: 5%;
+  margin-bottom: 52%;
+}
+
+.hr__wrapper .job__wrapper .job__Card__Container {
+  margin-top: 4%;
+}
+
+.hr__Page__Container .tasks-container.hr__Page .job__Card__Container {
+  width: 100%;
+  margin-bottom: 4%;
+}
+
+.hr__Page__Container .tasks-container.hr__Page {
+  margin-bottom: 30%;
+}
+
 @media screen and (max-width: 300px) {
   .search{
     margin-top: 30%;
@@ -130,8 +152,17 @@
     margin-right: 0;
   }
   .job__wrapper > * {
-    width: calc(92% / 3);
+    width: calc(94% / 2);
     margin-right: 4%;
+    margin-left: 0;
+    margin-top: 4%;
+    display: inline-block;
+  }
+  .job__wrapper > *:nth-child(2n + 2) {
+    margin-right: 0;
+  }
+  .job__wrapper > *:last-child {
+    margin-bottom: 15%;
   }
   .job-tile-container:last-child{
     margin-bottom: 10%;
@@ -142,16 +173,20 @@
   .hr__Job__Tile__Container{
     width: 82%;
   }
-  .hr__Job__Tile__Container .job-tile-container{
-    width: calc(92% /3);
+  .hr__Job__Tile__Container .job__Card__Container{
+    width: calc(96% / 2);
     display: inline-block;
     margin-right: 4%;
+    margin-bottom: 4%;
   }
-  .hr__Job__Tile__Container .job-tile-container:nth-child(3n + 3){
+  .hr__Job__Tile__Container .job__Card__Container:nth-child(2n + 2){
     margin-right: 0;
   }
   .hr__Job__Tile__Container .selected-candidate-screen-container{
     width: 100%;
+    padding-left: 7.8%;
+    padding-right: 7.8%;
+    padding-top: 4%;
   }
   .hr__Job__Tile__Container .selected-candidate-screen-container .selected-applicant-details{
     width: 100%;
@@ -187,6 +222,39 @@
   }
   .tasks-container .add__Btn{
     margin-right: 0;
+  }
+  .hr__Page__Container {
+    margin-bottom: 10%;
+  }
+  .hr__wrapper {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .hr__Page__Container .title__Navigation__Bar__Container {
+    margin-top: 2%;
+    width: 82%;
+  }
+  .hr__Page__Container .toggler_Nav_Container {
+    width: 48%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .hr__Page__Container .title__Navigation__Bar__Container.view__Application__Navbar .title__Item .back__Icon__Container {
+    width: 4.6rem;
+  }
+  .hr__Page__Container .tasks-container.hr__Page .job__Card__Container {
+    width: calc(96% / 2);
+    margin-right: 4%;
+    margin-bottom: 4%;
+  }
+  .hr__Page__Container .tasks-container.hr__Page .job__Card__Container:nth-child(2n + 2) {
+    margin-right: 0;
+  }
+  .hr__Page__Container .selected-applicant-info {
+    padding-bottom: 0;
+  }
+  .hr__Page__Container .tasks-container.hr__Page {
+    margin-bottom: 0;
   }
 }
 

@@ -1,7 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import "./style.css";
 
 
 const UserScreen = ({ currentUser }) => {
+    const navigate = useNavigate();
+    
+    const handleLogout = () => navigate("/logout");
+
     return <>
         <div className="user__Page__Container hr">
 
@@ -33,7 +38,9 @@ const UserScreen = ({ currentUser }) => {
                 <h2>Role</h2>
                 <span>{currentUser.role}</span>
             </div>
-            
+            <button className="logout__Btn" onClick={handleLogout}>
+                Logout
+            </button>  
         </div>
     </>
 }

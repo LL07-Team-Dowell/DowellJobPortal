@@ -37,12 +37,18 @@
         padding-bottom: 8%;
     }
     .jobs-container > *, .tasks-container > *{
-        width: calc(96% /3);
+        width: calc(94% /2);
         display: inline-block;
-        margin-right: 2%;
+        margin-right: 4%;
+        margin-bottom: 4%;
     }
-    .jobs-container > *:nth-child(3n + 3), .tasks-container > *:nth-child(3n + 3) {
+    .jobs-container > *:nth-child(2n + 2), .tasks-container > *:nth-child(2n + 2):not(.add__Btn) {
         margin-right: 0;
+    }
+    .jobs-container > *:last-child,
+    .tasks-container > *:last-child:not(.add__Btn) {
+        margin-bottom: 15%;
+        background-color: rebeccapurple;
     }
     .tasks-container .add__Btn {
         padding-top: 2%;
