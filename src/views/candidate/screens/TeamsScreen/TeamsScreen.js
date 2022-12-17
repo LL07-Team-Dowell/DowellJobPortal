@@ -1,15 +1,13 @@
-import BottomNavigationBar from "../../../Hr/component/BottomNavigation/BottomNavigation"
+import { useNavigate } from "react-router-dom"
+import JobLandingLayout from "../../../../layouts/CandidateJobLandingLayout/LandingLayout";
 import { PageUnderConstruction } from "../../../under_construction/ConstructionPage"
-import Navbar from "../../components/Navbar/Navbar"
-import { afterSelectionLinks } from "../../utils/afterSelectionLinks"
 
-const TeamsScreen = () => {
+const TeamsScreen = ({ currentUser }) => {
+    const navigate = useNavigate();
     return <>
-        
-        <Navbar title={"Teams"} />
-        <PageUnderConstruction />
-        <BottomNavigationBar links={afterSelectionLinks} />
-
+        <JobLandingLayout user={currentUser} afterSelection={true}>
+            <PageUnderConstruction />
+        </JobLandingLayout>
     </>
 }
 

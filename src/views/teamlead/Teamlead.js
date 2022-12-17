@@ -1,13 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { myAxiosInstance } from "../../lib/axios";
 import { initialCandidatesDataStateNames, useCandidateContext } from "../../contexts/CandidatesContext";
 import { useNavigationContext } from "../../contexts/NavigationContext";
-import SideNavigationBar from "../account/components/SideNavigationBar/SideNavigationBar";
-import useClickOutside from "../../hooks/useClickOutside";
 import ErrorPage from "../error/ErrorPage";
-import BottomNavigationBar from "./components/BottomNavigationBar/BottomNavigationBar";
 import JobTile from "./components/JobTile/JobTile";
-import NavigationBar from "./components/NavigationBar/NavigationBar";
 import NavigationItemSelection from "./components/NavigationItemSelection/NavigationItemSelection";
 import SelectedCandidates from "./components/SelectedCandidates/SelectedCandidates";
 import SelectedCandidatesScreen from "./screens/SelectedCandidatesScreen/SelectedCandidatesScreen";
@@ -21,8 +17,12 @@ import Button from "../admin/components/Button/Button";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import AddTaskScreen from "./screens/AddTaskScreen/AddTaskScreen";
 import UserScreen from "./screens/UserScreen/UserScreen";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { mutableNewApplicationStateNames } from "../../contexts/NewApplicationContext";
+import StaffJobLandingLayout from "../../layouts/StaffJobLandingLayout/StaffJobLandingLayout";
+import TitleNavigationBar from "../../components/TitleNavigationBar/TitleNavigationBar";
+import TogglerNavMenuBar from "../../components/TogglerNavMenuBar/TogglerNavMenuBar";
+import JobCard from "../../components/JobCard/JobCard";
 
 
 const Teamlead = ({ currentUser }) => {
@@ -32,7 +32,6 @@ const Teamlead = ({ currentUser }) => {
     const [ showCandidateTask, setShowCandidateTask ] = useState(false);
     const [ rehireTabActive, setRehireTabActive ] = useState(false);
     const [ selectedTabActive, setSelectedTabActive ] = useState(false);
-    const [ isSideNavbarActive, setSideNavbarActive ] = useState(false);
     const [ currentCandidate, setCurrentCandidate ] = useState({});
     const [ currentTeamMember, setCurrentTeamMember ] = useState({});
     const [ currentUserProject, setCurrentUserProject ] = useState(null);
@@ -43,10 +42,8 @@ const Teamlead = ({ currentUser }) => {
     const [ editTaskActive, setEditTaskActive ] = useState(false);
     const [ currentTaskToEdit, setCurrentTaskToEdit ] = useState({});
     const location = useLocation();
-
-    const sideNavbarRef = useRef(null);
-
-    useClickOutside(sideNavbarRef, () => setSideNavbarActive(false));
+    const [ currentActiveItem, setCurrentActiveItem ] = useState("Approval");
+    const navigate = useNavigate();
 
     async function getTeamlead () {
         const response = await myAxiosInstance.get(routes.Teamlead_View);
@@ -116,6 +113,7 @@ const Teamlead = ({ currentUser }) => {
         if (currentTab === "rehire") {
             setRehireTabActive(true);
             setSelectedTabActive(false);
+            setCurrentActiveItem("Rehire");
             return
         }
 
@@ -127,7 +125,12 @@ const Teamlead = ({ currentUser }) => {
     useEffect(() => {
 
         setShowCandidateTask(false);
-        
+        const currentPath = location.pathname.split("/")[1];
+        const currentTab = searchParams.get("tab");
+
+        if (!currentPath && !currentTab) return setCurrentActiveItem("Approval");
+        if (currentPath && currentPath === "task") return setCurrentActiveItem("Tasks")
+
     }, [location])
 
     const handleEditTaskBtnClick = (currentData) => {
@@ -136,26 +139,35 @@ const Teamlead = ({ currentUser }) => {
         setShowAddTaskModal(true);
     }
 
-    return <>
+    const handleBackBtnClick = () => {
+        setShowCandidate(false);
+        setShowCandidateTask(false);
+    }
 
-        <NavigationBar 
-            showCandidate={showCandidate} 
-            setShowCandidate={setShowCandidate} 
-            showCandidateTask={showCandidateTask} 
-            setShowCandidateTask={setShowCandidateTask} 
-            handleMenuIconClick={() => setSideNavbarActive(true)}
-        />
+    const handleMenuItemClick = (item) => {
+        setCurrentActiveItem(item);
         
-        {
-            isSideNavbarActive &&
-            <SideNavigationBar 
-                sideNavRef={sideNavbarRef}
-                closeSideNavbar={() => setSideNavbarActive(false)} 
-                isNotificationEnabled={isNotificationEnabled}
-                setNotificationStatus={() => setNotificationStatus(prevValue => { return !prevValue } )}
-            />
-        }
+        if (item === "Tasks") return navigate("/task")
 
+        const passedItemInLowercase = item.toLocaleLowerCase();
+        return navigate(`/?tab=${passedItemInLowercase}`);
+    }
+
+    const handleViewTaskBtnClick = (data) => {
+        setCurrentTeamMember(data.user);
+        setShowCandidateTask(true);
+    }
+
+    const handleViewBtnClick = (data) => {
+        setShowCandidate(true);
+        setCurrentCandidate(data);
+    }
+
+    return <>
+        <StaffJobLandingLayout teamleadView={true} hideSideBar={showAddTaskModal}>
+        <TitleNavigationBar title={section === "task" ? "Tasks" : section === "user" ? "Profile" : showCandidate ? "Application Details" : "Applications"} hideBackBtn={(showCandidate || showCandidateTask) ? false : true} handleBackBtnClick={handleBackBtnClick} />
+        { section !== "user" && !showCandidate && <TogglerNavMenuBar className={"teamlead"} menuItems={["Approval", "Tasks", "Rehire"]} currentActiveItem={currentActiveItem} handleMenuItemClick={handleMenuItemClick} /> }
+        
         {
             showAddTaskModal && 
             <AddTaskScreen closeTaskScreen={() => setShowAddTaskModal(false)} teamMembers={candidatesData.onboardingCandidates} updateTasks={setAllTasks} editPage={editTaskActive} setEditPage={setEditTaskActive} taskToEdit={currentTaskToEdit} />
@@ -182,7 +194,6 @@ const Teamlead = ({ currentUser }) => {
             /> 
             
             : <>
-                <NavigationItemSelection items={["Selected", "Rehire"]} searchParams={searchParams} />
                 <SelectedCandidates
                     candidatesCount={
                         selectedTabActive ? candidatesData.selectedCandidates.length :
@@ -196,12 +207,24 @@ const Teamlead = ({ currentUser }) => {
 
                         selectedTabActive ? 
                         React.Children.toArray(candidatesData.selectedCandidates.map(dataitem => {
-                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} jobTitle={jobs.filter(job => job.id === dataitem.job).length >=1 ? jobs.filter(job => job.id === dataitem.job)[0].title : ""} />
+                            return <JobCard
+                                buttonText={"View"}
+                                candidateCardView={true}
+                                candidateData={dataitem}
+                                jobAppliedFor={jobs.find(job => job.id === dataitem.job) ? jobs.find(job => job.id === dataitem.job).title : ""}
+                                handleBtnClick={handleViewBtnClick}
+                            />
                         })) :
 
                         rehireTabActive ?
                         React.Children.toArray(candidatesData.candidatesToRehire.map(dataitem => {
-                            return  <JobTile setShowCandidate={setShowCandidate} candidateData={dataitem} handleJobTileClick={setCurrentCandidate} jobTitle={jobs.filter(job => job.id === dataitem.job).length >=1 ? jobs.filter(job => job.id === dataitem.job)[0].title : ""} />
+                            return <JobCard
+                                buttonText={"View"}
+                                candidateCardView={true}
+                                candidateData={dataitem}
+                                jobAppliedFor={jobs.find(job => job.id === dataitem.job) ? jobs.find(job => job.id === dataitem.job).title : ""}
+                                handleBtnClick={handleViewBtnClick}
+                            />
                         })) :
 
                         <></>                        
@@ -221,7 +244,14 @@ const Teamlead = ({ currentUser }) => {
                 <div className="tasks-container">
                     {
                         React.Children.toArray(allTasks.map(dataitem => {
-                            return <JobTile showTask={true} setShowCandidateTask={setShowCandidateTask} taskData={dataitem} handleJobTileClick={setCurrentTeamMember} />
+                            return <JobCard
+                                buttonText={"View"}
+                                candidateCardView={true}
+                                candidateData={dataitem}
+                                jobAppliedFor={jobs.find(job => job.id === dataitem.job) ? jobs.find(job => job.id === dataitem.job).title : ""}
+                                handleBtnClick={handleViewTaskBtnClick}
+                                taskView={true}
+                            />
                         }))
                     }
 
@@ -234,12 +264,7 @@ const Teamlead = ({ currentUser }) => {
             </>
         }
         
-        <BottomNavigationBar 
-        currentPage={'teamlead'}
-        firstLink={'home'}
-        secondLink={'task'}
-        thirdLink={'user'}
-        updateNav={showCandidate ? setShowCandidate: showCandidateTask ? setShowCandidateTask : () => {} } />
+    </StaffJobLandingLayout>
     </>
 }
 

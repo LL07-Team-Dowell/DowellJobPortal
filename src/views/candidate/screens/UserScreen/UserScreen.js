@@ -1,31 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import Navbar from '../../components/Navbar/Navbar';
-import Footer from '../../components/Footer/Footer';
-import BottomNavigationBar from '../../../Hr/component/BottomNavigation/BottomNavigation';
-import { afterSelectionLinks } from '../../utils/afterSelectionLinks';
+import React from 'react';
 import "./style.css";
-import { useSearchParams, useNavigate } from 'react-router-dom';
-import TitleNavigationBar from '../../../../components/TitleNavigationBar/TitleNavigationBar';
+import { useNavigate } from 'react-router-dom';
+import JobLandingLayout from '../../../../layouts/CandidateJobLandingLayout/LandingLayout';
 
-function UserScreen({ afterSelection, currentUser }) {
+function UserScreen({ currentUser }) {
 
-  const [ params, setParams ] = useSearchParams();
-  const [ passedCategory, setPassedCategory ] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    
-    const jobCategoryParam = params.get("jobCategory");
-
-    if (!jobCategoryParam) return;
-
-    setPassedCategory(jobCategoryParam);
-
-  }, [params])
+  const handleLogout = () => navigate("/logout");
 
   return (
+    <JobLandingLayout user={currentUser} afterSelection={true}>
     <div className='candidate__User__Profile__Page'>
-      <TitleNavigationBar title={"Profile"} handleBackBtnClick={() => navigate(-1)} />
       <div className="user__Page__Container user">
 
         <div className="user__Intro__Item__Container">
@@ -56,10 +42,12 @@ function UserScreen({ afterSelection, currentUser }) {
               <h2>Role</h2>
               <span>{currentUser.role}</span>
           </div>
-                
+          <button className="logout__Btn" onClick={handleLogout}>
+            Logout
+          </button>  
         </div>
-      { afterSelection ? <BottomNavigationBar links={afterSelectionLinks} /> : <Footer currentCategory={passedCategory && passedCategory} /> }
     </div>
+    </JobLandingLayout>
   )
 }
 

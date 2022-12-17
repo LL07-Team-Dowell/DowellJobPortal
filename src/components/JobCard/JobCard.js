@@ -4,12 +4,14 @@ import { jobKeys } from "../../views/admin/utils/jobKeys";
 import { IoMdTime } from "react-icons/io";
 import "./style.css";
 import { mutableNewApplicationStateNames } from "../../contexts/NewApplicationContext";
+import { BiTimeFive } from "react-icons/bi";
+import { IoAlertCircleOutline } from "react-icons/io5";
 
 
-const JobCard = ({ job, subtitle, candidateViewJob, disableActionBtn, buttonText, handleBtnClick, showCandidateAppliedJob, showCandidateDeclinedJob, showCandidateInterview, guestUser, interviewDetails }) => {
+const JobCard = ({ job, subtitle, candidateViewJob, disableActionBtn, buttonText, handleBtnClick, showCandidateAppliedJob, showCandidateDeclinedJob, showCandidateInterview, guestUser, interviewDetails, viewJobApplicationDetails, applicationsCount, candidateCardView, candidateData, jobAppliedFor, taskView }) => {
     return <div className="job__Card__Container">
         <div className="job__Card__Title__Info">
-            <h2><b>{changeToTitleCase(job.title)}</b></h2>
+            <h2><b>{changeToTitleCase(job ? job.title : candidateData ? taskView ? candidateData.user : candidateData.applicant : "")}</b></h2>
             { subtitle && <span className="subtitle__Item"><span>{subtitle}</span><span>- UX Living Lab</span></span> }
         </div>
         { 
@@ -80,8 +82,49 @@ const JobCard = ({ job, subtitle, candidateViewJob, disableActionBtn, buttonText
                 </div>
             </div>
         }
+        {
+            viewJobApplicationDetails && 
+            <div className="job__Details__Info">
+                <div className="detail__Item">
+                    <BiTimeFive className="status__Icon" />
+                    <span>Open {getDaysDifferenceFromPresentDate(job.updated)} {getDaysDifferenceFromPresentDate(job.updated) ? "days" : "day"} ago</span>
+                </div>
+                <div className="vertical__Seperator"></div>
+                <div className="detail__Item">
+                    <IoAlertCircleOutline className="status__Icon" />
+                    <span>{applicationsCount ? applicationsCount : 0} applications received</span>
+                </div>
+            </div>
+        }
+        {
+            candidateCardView && candidateData && !taskView &&
+            <div className="job__Details__Info">
+                <div className="detail__Item">
+                    <BiTimeFive className="status__Icon" />
+                    <span>Applied {getDaysDifferenceFromPresentDate(candidateData.created)} {getDaysDifferenceFromPresentDate(candidateData.updated) ? "days" : "day"} ago</span>
+                </div>
+                <div className="vertical__Seperator"></div>
+                <div className="detail__Item full__Width">
+                    <IoAlertCircleOutline className="status__Icon" />
+                    <span>Applied as {jobAppliedFor ? jobAppliedFor : ""}</span>
+                </div>
+            </div>
+        }
+        {
+            candidateCardView && candidateData && taskView &&
+            <div className="job__Details__Info task__View">
+                <div className="detail__Item">
+                    <span className="job__Highlight__Item">Description: </span>
+                    <span>{candidateData.title ? candidateData.title.length > 42 ? candidateData.title.slice(0, 43) + "..." : candidateData.title : ""}</span>
+                </div>
+                <div className="detail__Item">
+                    <span className="job__Highlight__Item">Given on: </span>
+                    <span>{formatDateAndTime(candidateData.created)}</span>
+                </div>
+            </div>
+        }
         
-        <button disabled={disableActionBtn} className="cta__Button" onClick={() => handleBtnClick(job)}>
+        <button disabled={disableActionBtn} className={`cta__Button ${candidateCardView && candidateData ? "rel" : ''}`} onClick={() => handleBtnClick(job ? job : candidateData ? candidateData : null)}>
             <span>{buttonText ? buttonText : "Apply"}</span>
             <AiOutlineArrowRight />
         </button>

@@ -11,3 +11,9 @@
 .applied__screen .title__Navigation__Bar__Container .title__Item .back__Icon__Container{
     width: 4.5rem;
 }
+
+@media screen and (max-width: 991px) {
+    .applied__screen .applied__Nav__Toggler {
+        width: 95%;
+    }
+}

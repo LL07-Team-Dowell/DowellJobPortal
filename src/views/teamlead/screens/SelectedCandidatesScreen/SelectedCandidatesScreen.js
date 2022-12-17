@@ -250,23 +250,17 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
         
         <div className="selected-candidate-screen-container">
             
-            <ApplicantIntro hrPageActive={hrPageActive} applicant={selectedCandidateData ? selectedCandidateData : {}} jobTitle={jobTitle} />
-
-            <ApplicantDetails hrPageActive={hrPageActive} applicantData={selectedCandidateData} showApplicationDetails={showApplicationDetails} handleViewApplicationBtnClick={() => handleViewApplicationBtnClick ? handleViewApplicationBtnClick() : () => {}} />
-
-            {!hrPageActive && <CustomHr />}
+            <ApplicantDetails hideIntro={true} hrPageActive={hrPageActive} applicantData={selectedCandidateData} showApplicationDetails={showApplicationDetails} handleViewApplicationBtnClick={() => handleViewApplicationBtnClick ? handleViewApplicationBtnClick() : () => {}} />
 
             {!hrPageActive && <AssignedProjectDetails assignedProject={selectedCandidateData.others[mutableNewApplicationStateNames.assigned_project]} removeDropDownIcon={true} />}
 
             {initialMeet && hrPageActive && <AssignedProjectDetails assignedProject={assignedProject} availableProjects={availableProjects} handleSelectionClick={(selection) => setAssignedProject(selection)} />}
 
-            {hrPageActive && <CustomHr className={'relative-hr'} />}
-
             {
                 hireTabActive ? <>
                     <div className="comments-container hire-comment">
                         <h2>Remarks <span>&#x00028;by Hr&#x00029;</span></h2>
-                        <textarea placeholder={"Add remarks"} value={selectedCandidateData[mutableNewApplicationStateNames.hr_remarks]} readOnly={true}></textarea>
+                        <textarea placeholder={"Write here"} value={selectedCandidateData[mutableNewApplicationStateNames.hr_remarks]} readOnly={true}></textarea>
                     </div>
                 </> : 
                 
@@ -282,8 +276,8 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                     {
                         guestApplication ? <></> :
                         <div className="comments-container hr__Comments__Container">
-                            <h2>{initialMeet ? <>Remarks {<span>&#x00028;by Hr&#x00029;</span>}</> : <>Add Remarks</>}</h2>
-                            <textarea placeholder={`${initialMeet ? "Remarks given": "Add remarks"}`} readOnly={initialMeet ? true : false} value={initialMeet ? selectedCandidateData[mutableNewApplicationStateNames.hr_remarks] : remarks} onChange={(e) => setRemarks(e.target.value)}></textarea>
+                            <h2>{initialMeet ? <>Remarks {<span>&#x00028;by Hr&#x00029;</span>}</> : <>Add Remarks:</>}</h2>
+                            <textarea placeholder={`${initialMeet ? "Remarks given": "Write here"}`} readOnly={initialMeet ? true : false} value={initialMeet ? selectedCandidateData[mutableNewApplicationStateNames.hr_remarks] : remarks} onChange={(e) => setRemarks(e.target.value)}></textarea>
                         </div>   
                     }
                 </> :
@@ -299,7 +293,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
 
                 <div className="comments-container">
                     <h2>{hireTabActive ? '' : 'Add'} Remarks {hireTabActive ? <span>&#x00028;by Team Lead&#x00029;</span> : <></>}</h2>
-                    <textarea placeholder={accountPage ? "Reason to Rehire" : "Add remarks"} value={hireTabActive ? selectedCandidateData.others[mutableNewApplicationStateNames.others_team_lead_remarks] : remarks} readOnly={hireTabActive ? true : false} onChange={(e) => setRemarks(e.target.value)}></textarea>
+                    <textarea placeholder={accountPage ? "Reason to Rehire" : "Write here"} value={hireTabActive ? selectedCandidateData.others[mutableNewApplicationStateNames.others_team_lead_remarks] : remarks} readOnly={hireTabActive ? true : false} onChange={(e) => setRemarks(e.target.value)}></textarea>
                 </div>
 
                 </>
@@ -332,7 +326,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
             }
 
             <div className={`candidate-status-container ${showOnboarding ? 'onboarding-active' : ''}`}>
-                <h2>Status {accountPage && rehireTabActive ? <span>&#x00028;by Team Lead&#x00029;</span> : ''}</h2>
+                {/* <h2>Status {accountPage && rehireTabActive ? <span>&#x00028;by Team Lead&#x00029;</span> : ''}</h2> */}
                 <div className={`status-options-container ${rehireTabActive ? 'rehire': ''}`}>
                     {
                         rehireTabActive ?
@@ -350,14 +344,14 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
                         hrPageActive ? <>
 
                         <button className={`status-option ${initialMeet ? 'green-color' : 'orange-color'} ${initialMeet ? '' : selectedCandidateData.status === candidateStatuses.SHORTLISTED ? 'active' : ''}`} ref={ref7} onClick={() => handleClick(ref7, true, initialMeet ? hrPageActions.MOVE_TO_SELECTED : guestApplication ? hrPageActions.MOVE_TO_PENDING : hrPageActions.MOVE_TO_SHORTLISTED)} disabled={initialMeet ? disabled : selectedCandidateData.status === candidateStatuses.SHORTLISTED ? true : disabled}>
-                            <BsStopCircle className='status-icon' />
-                            <br /><br/>
+                            {/* <BsStopCircle className='status-icon' /> */}
+                            {/* <br /><br/> */}
                             <div className='textt'>{`${initialMeet ? 'Selected' : guestApplication ? 'Pending' : 'Shortlisted'}`}</div>
                         </button>
 
                         </> : <button className={`status-option green-color ${accountPage && rehireTabActive ? selectedCandidateData.status === candidateStatuses.TEAMLEAD_TOREHIRE ? 'active' : 'none' : ''}`} ref={ref1} onClick={() => handleClick(ref1, true, hireTabActive ? accountPageActions.MOVE_TO_ONBOARDING : showOnboarding ? teamleadPageActive ? teamLeadActions.MOVE_TO_REHIRE : accountPageActions.MOVE_TO_REHIRE : rehireTabActive ? teamLeadActions.MOVE_TO_REHIRE : teamLeadActions.MOVE_TO_HIRED)} disabled={accountPage && rehireTabActive ? true : disabled}>
-                            <BsStopCircle className='status-icon' />
-                            <br /><br/>
+                            {/* <BsStopCircle className='status-icon' /> */}
+                            {/* <br /><br/> */}
                             <div className='textt'>{rehireTabActive ? 'ReHire' : hireTabActive ? 'Onboarding' : showOnboarding ? 'ReHire' : 'Hire'}</div>
                         </button>
                     }
@@ -369,9 +363,9 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
 
                         hrPageActive ? <>
                             <button className="status-option red-color" ref={ref6} onClick={() => handleClick(ref6, true, hrPageActions.MOVE_TO_REJECTED)} disabled={disabled}>
-                                <BsStopCircle className='status-icon' />
+                                {/* <BsStopCircle className='status-icon' />
                                 <br /><br/>
-                                
+                                 */}
                                 <div className='textt'>{'Rejected'}</div>
                             </button>
                         </> :
@@ -389,7 +383,7 @@ const SelectedCandidatesScreen = ({ selectedCandidateData, updateCandidateData, 
 
                 {
                     accountPage && rehireTabActive ? <>
-                        <CustomHr className="rehire-hr" />
+                        {/* <CustomHr className="rehire-hr" /> */}
                         <h2 className='top-m'>Status</h2>
                         <div className="status-options-container">
                             <button className="status-option green-color" ref={ref4} onClick={() => handleClick(ref4, true, accountPageActions.MOVE_TO_ONBOARDING)} disabled={disabled}>

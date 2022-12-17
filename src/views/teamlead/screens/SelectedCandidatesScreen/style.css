@@ -3,10 +3,13 @@
     --light-grey-color: #F8FAFB;
     --black: #000;
     --white-color: #fff;
-    --green-color: #53CA5F;
+    --green-color: #005734;
     --red-color: #FC3939;
     --orange-color: #FF843F;
-    font-family: 'Inter', sans-serif;
+    --light-green-color: #F3F8F4;
+    --grey-color-2: #7C7C7C;
+    --grey-color-3: #9A9A9A;
+    font-family: 'Poppins', sans-serif;
 }
 
 .selected-candidate-screen-container .relative-hr{
@@ -15,6 +18,8 @@
 
 .selected-candidate-screen-container{
     padding: 3% 7%;
+    background-color: var(--light-green-color);
+    border-radius: 20px;
 }
 
 .selected-candidate-screen-container > *{
@@ -48,8 +53,9 @@
     line-height: 17px;
     font-size: 0.7778rem;
     color: var(--grey-color);
-    background: var(--light-grey-color);
+    background: var(--white-color);
     border: none;
+    border: 1px solid var(--grey-color-2);
     outline: none;
     border-radius: 5px;
     padding: 4% 2%;
@@ -108,6 +114,9 @@
     align-items: center;
     margin-top: 4%;
     line-height: 17px;
+    justify-content: flex-end;
+    flex-direction: row-reverse;
+    margin-left: auto;
 }
 
 .status-options-container div > *{
@@ -116,8 +125,9 @@
     cursor: pointer;
 }
 
-.status-options-container > *:first-child{
-    margin-right: 25%;
+.status-options-container > *:last-child{
+    margin-right: 5%;
+    margin-left: auto;
 }
 
 .status-options-container.rehire > *{
@@ -133,8 +143,9 @@
     cursor: pointer;
     border: none;
     outline: none;
-    background: transparent;
-    color: var(--grey-color);
+    background: var(--grey-color-3);
+    color: var(--white-color);
+    border-radius: 9px;
     font-family: 'Inter', sans-serif;
     max-width: 100%;
 }
@@ -172,6 +183,9 @@
 @media screen and (min-width: 992px) {
     .comments-container.hr__Comments__Container, .comments-container.hr__Comments__Container ~ .candidate-status-container{
         width: 100%;
+    }
+    .status-options-container .status-option{
+        padding: 1.5% 3%;
     }
 }
 @media (min-width: 1200px){

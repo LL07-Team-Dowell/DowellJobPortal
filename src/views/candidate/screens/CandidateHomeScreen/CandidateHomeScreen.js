@@ -9,12 +9,15 @@ import { candidateStatuses } from '../../utils/candidateStatuses';
 import { availableJobCategories } from '../../utils/jobCategories';
 import * as assets from '../../../../assets/assetsIndex';
 import "./style.css";
+import { useCandidateJobsContext } from '../../../../contexts/CandidateJobsContext';
+import { useMediaQuery } from '@mui/material';
 
 function Home({ user, setHired, setAssignedProject }) {
 
   const navigate = useNavigate();
   const [ loading, setLoading ] = useState(true);
-  const [appliedJobs, setAppliedJobs] = useState([]);
+  const { candidateJobs, setCandidateJobs } = useCandidateJobsContext();
+  const isLargeScreen = useMediaQuery("(min-width: 992px)");
 
   useEffect(() => {
 
@@ -33,7 +36,7 @@ function Home({ user, setHired, setAssignedProject }) {
           return;
         }
 
-        setAppliedJobs(currentUserAppliedJobs);
+        setCandidateJobs((prevJobs) => { return {...prevJobs, "appliedJobs": currentUserAppliedJobs }});
         setLoading(false);
         return;
           
@@ -45,16 +48,11 @@ function Home({ user, setHired, setAssignedProject }) {
     }
 
     if (!user) return setLoading(false);
+    if (Array.isArray(candidateJobs.appliedJobs) && candidateJobs.appliedJobs.length > 1) return setLoading(false);
 
     fetchApplications();
 
   }, [])
-
-  const handleLinkClick = (e, category) => {
-    e.preventDefault();
-    if (category === "Research Associate") return navigate("/jobs/research-associate", { state: { appliedJobs: appliedJobs, currentUser: user }});
-    navigate("/jobs", { state: { jobCategory: category, appliedJobs: appliedJobs }});
-  }
 
   const handleLoginLinkClick = (e) => {
     e.preventDefault();
@@ -82,7 +80,7 @@ function Home({ user, setHired, setAssignedProject }) {
               <div className='bottom__Content'>
                 {
                   React.Children.toArray(availableJobCategories.slice(0, 2).map(category => {
-                    return <Link className='job__Link__Item' to={`/jobs/${category.toLocaleLowerCase().replaceAll(' ', '-')}`} onClick={(e) => handleLinkClick(e, category)}>
+                    return <Link className='job__Link__Item' to={`/jobs/c/${category.toLocaleLowerCase().replaceAll(' ', '-')}`}>
                       <>
                       Apply for
                       {
@@ -101,7 +99,7 @@ function Home({ user, setHired, setAssignedProject }) {
               <div className='bottom__Content'>
                 {
                   React.Children.toArray(availableJobCategories.slice(2).map(category => {
-                    return <Link className='job__Link__Item' to={`/jobs/${category.toLocaleLowerCase().replaceAll(' ', '-')}`} onClick={(e) => handleLinkClick(e, category)}>
+                    return <Link className='job__Link__Item' to={`/jobs/c/${category.toLocaleLowerCase().replaceAll(' ', '-')}`}>
                       <>
                       Apply for
                       {
@@ -117,7 +115,7 @@ function Home({ user, setHired, setAssignedProject }) {
             </div>
           </div>
         </section>
-        <aside>
+        { isLargeScreen && <aside>
           <div className='side__Content'>
             <img src={assets.map_img} alt='dowell on the map' />
             <video width={'100%'} controls>
@@ -125,7 +123,7 @@ function Home({ user, setHired, setAssignedProject }) {
             </video>
             <p>DoWell is the right place to "fail", if you are innovating !!</p>
           </div>
-        </aside>
+        </aside> }
       </main>
       {/* <div className='container-wrapper candidate__Home__Page'>
         <h1 className='home__Title__Text'>Welcome to dowell job portal!</h1>

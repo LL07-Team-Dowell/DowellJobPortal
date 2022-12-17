@@ -13,7 +13,7 @@
     top: 0;
     left: 0;
     animation: fadeIn 0.2s ease-in-out;
-    z-index: 20;
+    z-index: 99999;
     display: flex;
     align-items: center;
     justify-content: space-around;
